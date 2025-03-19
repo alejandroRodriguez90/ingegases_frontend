@@ -144,3 +144,28 @@ h2 {
     display: none;
 }
 
+.modal-content h2 {
+    font-size: 28px;
+    color: #ffffff;
+    margin-bottom: 30px;
+}
+
+.close:hover,
+.close:focus {
+    color: #f4fb32c6;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 90%; /* Ocupa más ancho en pantallas pequeñas */
+        padding: 30px; /* Reduce el padding para evitar desbordamiento */
+        margin: 20% auto; /* Ajusta el margen para pantallas pequeñas */
+    }
+    .login-container{
+        width: 90%; /* Ocupa más ancho en pantallas pequeñas */
+        padding: 30px; /* Reduce el padding para evitar desbordamiento */
+        margin: 20% auto; /* Ajusta el margen para pantallas pequeñas */
+    }
+}

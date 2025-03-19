@@ -13,16 +13,80 @@
 
 <body>
 
-    <div class="login-container">
+    <style>
+        /* Estilos para la ventana modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
 
+        /* Aplica los mismos estilos que el login-container */
+        .modal-content {
+            width: 350px;
+            padding: 60px 65px 55px;
+            backdrop-filter: blur(3px);
+            border-radius: 55px;
+            box-shadow: 0 4px 40px rgb(255, 255, 255);
+            text-align: center;
+            margin: 10% auto;
+            background-color: inherit;
+        }
+
+        .modal-content h2 {
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #f4fb32c6;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Media query para pantallas más pequeñas */
+        @media (max-width: 480px) {
+            .modal-content {
+                width: 90%;
+                padding: 30px;
+                margin: 20% auto;
+            }
+
+            .login-container {
+                width: 90%;
+                padding: 30px;
+                margin: 20% auto;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="login-container">
         <h2>Iniciar Sesión</h2>
         <form id="loginForm">
-
             <div class="input-group">
-                <span class="placeholder">Usuario</span>
-                <label for="username"></label>
-                <i class="fas fa-user icon"></i>
-                <input type="text" id="username" name="username" required placeholder=" ">
+                <span class="placeholder">Correo Electrónico</span>
+                <label for="email"></label>
+                <i class="fas fa-envelope icon"></i>
+                <input type="email" id="email" name="email" required placeholder=" ">
             </div>
             <div class="input-group">
                 <span class="placeholder">Contraseña</span>
@@ -30,51 +94,6 @@
                 <i class="fas fa-lock icon"></i>
                 <input type="password" id="password" name="password" required placeholder=" ">
             </div>
-
-            <script>
-                const inputGroups = document.querySelectorAll('.input-group');
-
-                inputGroups.forEach(inputGroup => {
-                    const input = inputGroup.querySelector('input');
-                    const icon = inputGroup.querySelector('.icon');
-
-                    let isHovered = false;
-                    let isFocused = false;
-
-                    inputGroup.addEventListener('mouseenter', () => {
-                        isHovered = true;
-                        setIconPosition();
-                    });
-
-                    inputGroup.addEventListener('mouseleave', () => {
-                        isHovered = false;
-                        setIconPosition();
-                    });
-
-                    input.addEventListener('focus', () => {
-                        isFocused = true;
-                        setIconPosition();
-                    });
-
-                    input.addEventListener('blur', () => {
-                        isFocused = false;
-                        setIconPosition();
-                    });
-
-                    input.addEventListener('input', () => {
-                        setIconPosition();
-                    });
-
-
-                    function setIconPosition() {
-                        if (isHovered || isFocused || input.value !== "") {
-                            icon.style.left = 'calc(100% - 30px)';
-                        } else {
-                            icon.style.left = '15px';
-                        }
-                    }
-                });
-            </script>
 
             <!-- Contenedor para "Recuérdame" y "recuperar contraseña" -->
             <div class="options-container">
@@ -87,12 +106,350 @@
 
             <button type="submit" class="login-submit">Ingresar</button>
             <button class="login-submit" onclick="window.location.href='../index/index.html'">Volver</button>
+            <button class="login-submit" id="registerBtn">Registrar</button>
 
             <div id="error-message" class="error-message hidden">Usuario o contraseña incorrectos</div>
         </form>
     </div>
 
-    <script src="login.js"></script>
+    <!-- Ventana Modal de Registro -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Registro</h2>
+            <form id="registerForm">
+                <div class="input-group">
+                    <span class="placeholder">Nombre</span>
+                    <label for="regNombre"></label>
+                    <i class="fas fa-user icon"></i>
+                    <input type="text" id="regNombre" name="regNombre" required placeholder=" ">
+                </div>
+                <div class="input-group">
+                    <span class="placeholder">Correo Electrónico</span>
+                    <label for="regEmail"></label>
+                    <i class="fas fa-envelope icon"></i>
+                    <input type="email" id="regEmail" name="regEmail" required placeholder=" ">
+                </div>
+                <div class="input-group">
+                    <span class="placeholder">Usuario</span>
+                    <label for="regUsername"></label>
+                    <i class="fas fa-user icon"></i>
+                    <input type="text" id="regUsername" name="regUsername" required placeholder=" ">
+                </div>
+                <div class="input-group">
+                    <span class="placeholder">Contraseña</span>
+                    <label for="regPassword"></label>
+                    <i class="fas fa-lock icon"></i>
+                    <input type="password" id="regPassword" name="regPassword" required placeholder=" ">
+                </div>
+                <div class="input-group">
+                    <span class="placeholder">Confirmar Contraseña</span>
+                    <label for="regConfirmPassword"></label>
+                    <i class="fas fa-lock icon"></i>
+                    <input type="password" id="regConfirmPassword" name="regConfirmPassword" required placeholder=" ">
+                </div>
+
+                <button type="submit" class="login-submit">Registrarse</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const apiURL = 'http://127.0.0.1:8000'; // Reemplaza con la URL de tu API
+
+        // --- LOGIN ---
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const correo = document.getElementById('email').value;
+            const contrasena = document.getElementById('password').value;
+
+            const loginData = {
+                correo: correo,
+                contrasena: contrasena
+            };
+
+            fetch(`${apiURL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(loginData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Login exitoso:', data);
+                    alert('Login exitoso!');
+                    // Redirigir a la página del dashboard
+                    window.location.href = '/ingegases_frontend/dashboard/admin-dashboard.html'; // **AQUI ESTA LA CORRECCION**
+                })
+                .catch(error => {
+                    console.error('Error al iniciar sesión:', error);
+                    alert('Usuario o contraseña incorrectos. Por favor, intenta de nuevo.');
+                });
+        });
+
+        // Obtener el modal
+        var modal = document.getElementById("registerModal");
+
+        // Obtener el botón que abre el modal
+        var btn = document.getElementById("registerBtn");
+
+        // Obtener el elemento <span> que cierra el modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // Cuando el usuario haga clic en el botón, abre el modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // Cuando el usuario haga clic en <span> (x), cierra el modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Cuando el usuario haga clic fuera del modal, cierra el modal
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // --- REGISTRO DE USUARIO ---
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe de la manera tradicional
+
+            // Recolecta los datos del formulario
+            const nombre = document.getElementById('regNombre').value;
+            const correo = document.getElementById('regEmail').value;
+            const usuario = document.getElementById('regUsername').value;
+            const contrasena = document.getElementById('regPassword').value;
+            const confirmarContrasena = document.getElementById('regConfirmPassword').value;
+
+            // Validar que las contraseñas coincidan
+            if (contrasena !== confirmarContrasena) {
+                alert("Las contraseñas no coinciden.");
+                return; // Detiene el proceso si las contraseñas no coinciden
+            }
+
+            // Crea el objeto de datos que se enviará al backend
+            const userData = {
+                nombre: nombre,
+                correo: correo,
+                usuario: usuario,
+                contrasena: contrasena,
+                rol_id: 1 // Asumiendo que el rol_id por defecto es 1
+            };
+
+            // Realiza la petición POST usando fetch
+            fetch(`${apiURL}/usuarios`, { // **AQUI ESTA LA CORRECCION**
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData) // Convierte el objeto a formato JSON
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // Parsea la respuesta JSON
+                })
+                .then(data => {
+                    console.log('Usuario registrado exitosamente:', data);
+                    alert('Usuario registrado exitosamente!');
+                    modal.style.display = "none"; // Cierra el modal después del registro
+                })
+                .catch(error => {
+                    console.error('Error al registrar usuario:', error);
+                    alert('Error al registrar usuario. Por favor, intenta de nuevo.');
+                });
+        });
+
+        // --- ANIMACIÓN DE LOS INPUTS (Mantener) ---
+        const inputGroups = document.querySelectorAll('.input-group');
+
+        inputGroups.forEach(inputGroup => {
+            const input = inputGroup.querySelector('input');
+            const icon = inputGroup.querySelector('.icon');
+
+            let isHovered = false;
+            let isFocused = false;
+
+            inputGroup.addEventListener('mouseenter', () => {
+                isHovered = true;
+                setIconPosition();
+            });
+
+            inputGroup.addEventListener('mouseleave', () => {
+                isHovered = false;
+                setIconPosition();
+            });
+
+            input.addEventListener('focus', () => {
+                isFocused = true;
+                setIconPosition();
+            });
+
+            input.addEventListener('blur', () => {
+                isFocused = false;
+                setIconPosition();
+            });
+
+            input.addEventListener('input', () => {
+                setIconPosition();
+            });
+
+            function setIconPosition() {
+                if (isHovered || isFocused || input.value !== "") {
+                    icon.style.left = 'calc(100% - 30px)';
+                } else {
+                    icon.style.left = '15px';
+                }
+            }
+        });
+
+        // Aplica la lógica de los input-group al formulario de registro en la modal
+        const registerInputGroups = document.querySelectorAll('#registerModal .input-group');
+
+        registerInputGroups.forEach(inputGroup => {
+            const input = inputGroup.querySelector('input');
+            const icon = inputGroup.querySelector('.icon');
+
+            let isHovered = false;
+            let isFocused = false;
+
+            inputGroup.addEventListener('mouseenter', () => {
+                isHovered = true;
+                setIconPosition();
+            });
+
+            inputGroup.addEventListener('mouseleave', () => {
+                isHovered = false;
+                setIconPosition();
+            });
+
+            input.addEventListener('focus', () => {
+                isFocused = true;
+                setIconPosition();
+            });
+
+            input.addEventListener('blur', () => {
+                isFocused = false;
+                setIconPosition();
+            });
+
+            input.addEventListener('input', () => {
+                setIconPosition();
+            });
+
+            function setIconPosition() {
+                if (isHovered || isFocused || input.value !== "") {
+                    icon.style.left = 'calc(100% - 30px)';
+                } else {
+                    icon.style.left = '15px';
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
