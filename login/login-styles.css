@@ -1,0 +1,146 @@
+/* Estilos generales para el cuerpo de la página */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-image: url('imagenes\ /bg.png');/* Ruta de la imagen de fondo */
+    background-size: 111;
+    background-repeat: no-repeat;/* Evita que la imagen se repita */
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+/* Estilos para el título del formulario */
+h2 {
+    font-size: 28px;
+    color: #ffffff;
+    margin-bottom: 30px;
+}
+
+ /* Contenedor principal del formulario de inicio de sesión */
+.login-container {
+    width: 350px;
+    padding: 60px 65px 55px; /* Espaciado interno */
+    backdrop-filter: blur(3px); /* Efecto de desenfoque */
+    border-radius: 55px; /* Bordes redondeados */
+    box-shadow: 0 4px 40px rgb(255, 255, 255); /* Sombra suave */
+    text-align: center; 
+}
+
+/* Estilos para los grupos de entrada (inputs) */
+.input-group {
+    position: relative; /* Para posicionar íconos y placeholders */
+    margin-bottom: 20px; /* Espacio entre los campos */
+}
+
+/* Estilos para los íconos dentro de los campos de entrada */
+.input-group .icon {
+    position: absolute;
+    left: 15px;  /* Posición inicial del icono */
+    top: 60%; /* Centrado vertical */
+    transform: translateY(-50%); /* Ajuste fino para centrar */
+    font-size: 18px; /* Tamaño del ícono */
+    color: #000000ef; /* Color del ícono */
+    transition: left 0.5s ease; /* Transición suave */
+}
+
+/* Efecto al hacer hover sobre los grupos de entrada */
+.input-group:hover .icon {
+    left: calc(100% - 30px); /* Desplaza el icono hacia la derecha */   
+}
+
+/* Estilos para los campos de entrada (inputs) */
+.login-container input {
+    width: 100%;
+    padding: 12px 20px; /* Espaciado interno */
+    margin: 10px 0; /* Margen superior e inferior */
+    border: 1px solid #c4c4c4; /* Borde del input */
+    border-radius: 20px; /* Bordes redondeados */
+    background-color: #a7bbce; /* Color de fondo del input */
+    color: #000000; /* Color del texto */
+    font-size: 16px; /* Tamaño de la fuente */
+    transition: border-color 0.3s ease;  /* Transición suave */
+}
+
+/* Estilos cuando el input está enfocado */
+.login-container input:focus {
+    border-color: #f4fb32c6; /* Cambia el color del borde */
+    outline: none; /* Elimina el contorno predeterminado */
+}
+
+/* Estilos para el placeholder del input */
+.login-container input::placeholder {
+    color: #ffffff; /* Color del placeholder */
+}
+
+
+/* Estilos para el botón de "Ingresar" */
+.login-submit {
+    padding: 13px; /* Espaciado interno */
+    width: 100%; /* Ancho completo */
+    border: none; /* Sin borde */
+    margin-top: 25px; /* Separa el botón de "Volver" del de "Ingresar" */
+    background-color: #6c757d; /* Color de fondo diferente (opcional) */
+    border-radius: 50px; /* Bordes redondeados */
+    background-color: #5575a5; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    font-size: 16px; /* Tamaño de la fuente */
+    font-weight: bold; /* Texto en negrita */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Efecto al hacer hover sobre el botón de "Ingresar" */
+.login-submit:hover {
+    background-color: #f4fb32c6; /* Cambia el color de fondo */
+}
+
+/* Estilos para el mensaje de error */
+.error-message {
+    color: #ff4444;/* Color del texto */
+    font-size: 14px; /* Tamaño de la fuente */
+    margin-top: 10px; /* Margen superior */
+}
+
+/* Contenedor para las opciones "Recuérdame" y "recuperar contraseña" */
+.options-container {
+    display: flex;
+    justify-content: space-between; /* Espacio entre elementos */
+    align-items: center; /* Alineación vertical */
+    margin: 15px 0; /* Margen superior e inferior */
+}
+
+/* Estilos para la opción "Recuérdame" */
+.remember-me {
+    display: flex;
+    align-items: center; /* Alineación vertical */
+    color:#f4fb32c6; /* Color del texto */
+}
+
+/* Estilos para el label de "Recuérdame" */
+.remember-me label {
+    margin-right: 10px; /* Margen derecho */
+    color: #ffffff; /* Color del texto */
+    font-size: 14px; /* Tamaño de la fuente */
+} 
+
+/* Estilos para el enlace "recuperar contraseña" */
+.forgot-password {
+    color: #ffffff; /* Color del texto */
+    font-size: 14px; /* Tamaño de la fuente */
+    text-decoration: none; /* Sin subrayado */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: color 0.3s ease; /* Transición suave */
+}
+/* Efecto al hacer hover sobre el enlace "recuperar contraseña" */
+.forgot-password:hover {
+    color: #f4fb32c6; /* Cambia a un gris más claro al hacer hover */
+}
+
+/* Clase para ocultar elementos */
+.hidden {
+    display: none;
+}
+

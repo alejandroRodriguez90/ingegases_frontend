@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin-dashboard.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Librería Chart.js para gráficas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><!-- Iconos de FontAwesome -->
+</head>
+
+<body>
+    <!-- Barra superior -->
+    <div class="top-bar">
+        <div class="logo"><!-- Logo o foto de usuario -->
+            <img src="imagenes /PHOTO-2025-01-22-08-45-11.jpg" alt="">
+        </div>
+        <div class="logout">   <!-- Botón de cerrar sesión -->
+            <button onclick="window.location.href='../login/login.html'">Cerrar sesión</button>
+        </div>
+    </div>
+    <div class="sidebar"><!-- Barra lateral vertical -->
+        <ul>
+            <li>
+                <a href="#" id="controlInventarioLink">
+                    <i class="fas fa-boxes icon"></i>
+                    <span class="text">Control de Inventario</span>
+                </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="#" onclick="loadTuberia()">
+                                <i class="fas fa-wrench icon"></i>
+                                <span class="text">Tubería</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="loadAccesorios()">
+                                <i class="fas fa-tools icon"></i>
+                                <span class="text">Accesorios</span>
+                            </a>
+                        </li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="proyectosLink">
+                    <i class="fas fa-project-diagram icon"></i>
+                    <span class="text">Proyecto</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="requisicionLink">
+                    <i class="fas fa-file-alt icon"></i>
+                    <span class="text">Requisición</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="proveedoresLink">
+                    <i class="fas fa-truck icon"></i>
+                    <span class="text">Proveedores</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="almacenLink">
+                    <i class="fas fa-warehouse icon"></i>
+                    <span class="text">Almacén</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="soporteLink">
+                    <i class="fas fa-headset icon"></i>
+                    <span class="text">Soporte</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <style>
+        /* Estilos para los menús desplegables */
+
+        /* Estilos para los campos de solo lectura (cantidad y valor) */
+    input[readonly] {
+        border: 1px solid #f1f1f1; /* Borde sutil */
+        border-radius: 4px; /* Bordes redondeados */
+        padding: 8px; /* Espaciado interno */
+        font-size: 14px; /* Tamaño de fuente */
+        color: #000000; /* Color de texto */
+        width: 100%; /* Ancho completo */
+        box-sizing: border-box; /* Incluye padding y borde en el ancho */
+        cursor: not-allowed; /* Cambia el cursor para indicar que no es editable */
+    }
+
+    /* Estilos para los campos editables (tipo y diámetro) */
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: transparent;
+        border: 1px solid #f1f1f1; /* Borde sutil */
+        border-radius: 4px; /* Bordes redondeados */
+        padding: 8px 30px 8px 10px; /* Espaciado interno */
+        font-size: 14px; /* Tamaño de fuente */
+        color: #000000; /* Color de texto */
+        cursor: pointer; /* Cambia el cursor para indicar que es editable */
+        width: 100%; /* Ancho completo */
+        box-sizing: border-box; /* Incluye padding y borde en el ancho */
+    }
+
+    /* Contenedor para la flecha personalizada */
+    .select-container {
+        position: relative;
+        display: inline-block;
+        width: 100%; /* Ancho completo */
+    }
+
+    /* Flecha personalizada */
+    .select-container::after {
+        content: "▼";
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #000;
+        font-size: 12px;
+    }
+
+    /* Estilos para la tabla */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px; /* Espacio superior */
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #34495e;
+        color: white;
+        font-weight: bold; /* Texto en negrita */
+    }
+
+    tr:hover {
+        background-color:#f1f1f1; /* Cambia el color al hacer hover */
+    }
+
+    /* Estilos para el título de la sección */
+    .section-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #34495e;
+    }
+
+    /* Estilos para el valor */
+    .valor {
+        background: #ffffff; /* Fondo blanco */
+        border: 1px solid #f1f1f1; /* Borde sutil */
+        border-radius: 4px; /* Bordes redondeados */
+        padding: 8px; /* Espaciado interno */
+        font-size: 14px; /* Tamaño de fuente */
+        color: #000000; /* Color de texto */
+        box-sizing: border-box; /* Incluye padding y borde en el ancho */
+        cursor: not-allowed; /* Cambia el cursor para indicar que no es editable */
+        display: block; /* Ocupa todo el ancho disponible */
+        width: 100%; /* Ancho completo */
+        text-align: left; /* Alineación del texto */
+}
+        
+    
+    </style>
+
+    
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <h1>Ingegases Y Redes s.a.s</h1>
+        <div id="dynamicContent"></div><!-- Contenedor para contenido dinámico -->
+    </div>
+
+    
+    <!-- Ventana modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Título de la Modal</h2> <!-- Título dinámico -->
+            <form id="projectForm">
+                <!-- Campos del formulario -->
+                <label for="projectId">ID:</label>
+                <input type="text" id="projectId" name="projectId" required>
+
+                <label for="projectName">Nombre:</label>
+                <input type="text" id="projectName" name="projectName" required>
+
+                <label for="projectDescription">Descripción:</label>
+                <textarea id="projectDescription" name="projectDescription" required></textarea>
+
+                <label for="projectStartDate">Fecha de Inicio:</label>
+                <input type="date" id="projectStartDate" name="projectStartDate" required>
+
+                <label for="projectEndDate">Fecha de Fin:</label>
+                <input type="date" id="projectEndDate" name="projectEndDate" required>
+
+                <label for="projectManager">Encargado:</label>
+                <input type="text" id="projectManager" name="projectManager" required>
+
+                <label for="projectStatus">Estado:</label>
+                <select id="projectStatus" name="projectStatus" required>
+                    <option value="Planificado">Planificado</option>
+                    <option value="En curso">En curso</option>
+                    <option value="Completado">Completado</option>
+                </select>
+
+                <label for="projectBudget">Presupuesto:</label>
+                <input type="text" id="projectBudget" name="projectBudget" required>
+
+                <button type="submit" id="saveButton">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ventana modal de confirmación para eliminar un proyecto -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>¿Realmente quieres eliminar el proyecto?</h2>
+            <button id="confirmDelete">Sí</button>
+            <button id="cancelDelete">No</button>
+        </div>
+    </div>
+
+            
+
+    <script>
+    
+// ---------------------------------------------------------------------------
+// Creacion Tuberia y Accesorios
+// ---------------------------------------------------------------------------
+const materialOptions = {
+    "Cobre": { tipos: ["M", "K", "L"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10"] },
+    "Acero inoxidable": { tipos: ["10", "40", "80"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10"] },
+    "Acero carbono": { tipos: ["10", "40", "80"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10"] },
+    "PVC": { tipos: ["Presion", "Electrica", "Sanitaria", "Ventilacion"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10"] }
+};
+
+const tuberiaData = [
+    { material: "Cobre", tipo: "M", diametro: "1/8 pulgadas", cantidad_mt_lineal: 10, valor: 15 },
+    { material: "Acero inoxidable", tipo: "10", diametro: "1/2 pulgadas", cantidad_mt_lineal: 5, valor: 25 },
+    { material: "Acero carbono", tipo: "80", diametro: "1 pulgada", cantidad_mt_lineal: 12, valor: 30 },
+    { material: "PVC", tipo: "Presion", diametro: "3 pulgadas", cantidad_mt_lineal: 8, valor: 10 }
+];
+
+// Generar la tabla de códigos predefinidos automáticamente
+let codigoCounter = 1;
+const codigosPredefinidos = [];
+
+for (const material in materialOptions) {
+    const tipos = materialOptions[material].tipos;
+    const diametros = materialOptions[material].diametros;
+
+    for (const tipo of tipos) {
+        for (const diametro of diametros) {
+            const codigo = "IYR" + codigoCounter.toString().padStart(4, '0');
+            codigosPredefinidos.push({ codigo: codigo, material: material, tipo: tipo, diametro: diametro });
+            codigoCounter++;
+        }
+    }
+}
+
+let chart; // Variable global para almacenar la instancia de la gráfica de tuberia
+
+function loadTuberia() {
+    const tableHeaders = `
+        <tr>
+            <th>Código</th>
+            <th>Material</th>
+            <th>Tipo</th>
+            <th>Diámetro</th>
+            <th>Cantidad (mt/lineal)</th>
+            <th>Valor</th>
+        </tr>
+    `;
+
+    const tableRows = tuberiaData.map((item, index) => {
+        const tipos = materialOptions[item.material].tipos;
+        const diametros = materialOptions[item.material].diametros;
+        const diametroSinUnidad = item.diametro.split(" ")[0];
+
+        // Busca el código predefinido
+        const codigoEncontrado = codigosPredefinidos.find(codigo =>
+            codigo.material === item.material &&
+            codigo.tipo === item.tipo &&
+            codigo.diametro === diametroSinUnidad
+        );
+
+        const codigo = codigoEncontrado ? codigoEncontrado.codigo : "Código no encontrado";
+
+        return `
+            <tr>
+                <td>${codigo}</td>
+                <td>${item.material}</td>
+                <td>
+                    <div class="select-container">
+                        <select class="tipo-select" data-index="${index}">
+                            ${tipos.map(tipo => `<option value="${tipo}" ${tipo === item.tipo ? "selected" : ""}>${tipo}</option>`).join('')}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="select-container">
+                        <select class="diametro-select" data-index="${index}">
+                            ${diametros.map(diametro => `<option value="${diametro}" ${diametro === diametroSinUnidad ? "selected" : ""}>${diametro}</option>`).join('')}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <input type="number" class="cantidad-input" data-index="${index}" value="${item.cantidad_mt_lineal}" readonly />
+                </td>
+                <td>
+                   <span class="valor">$${item.valor}</span>
+                </td>
+            </tr>
+        `;
+    }).join('');
+
+    const tableContent = `
+        <div class="section-title vertical-title">Tubería</div>
+        <div class="table-container">
+            <table>
+                <thead>${tableHeaders}</thead>
+                <tbody>${tableRows}</tbody>
+            </table>
+        </div>
+    `;
+
+    const chartContent = `
+        <h3>Gráfica de Cantidades (Tubería)</h3>
+        <canvas id="tuberiaChart"></canvas>
+    `;
+
+    const fullContent = tableContent + chartContent;
+
+    document.getElementById('dynamicContent').innerHTML = fullContent;
+
+    createChart(); // Crea la gráfica después de cargar la tubería
+    updateChart(); // Actualiza la gráfica con los datos iniciales
+    // --- Event Listeners Tubería ---
+    document.querySelectorAll('.tipo-select').forEach(select => {
+        select.addEventListener('change', (event) => {
+            const index = event.target.getAttribute('data-index');
+            tuberiaData[index].tipo = event.target.value;
+            actualizarCodigoEnTabla(index);
+            updateChart();
+        });
+    });
+
+    document.querySelectorAll('.diametro-select').forEach(select => {
+        select.addEventListener('change', (event) => {
+            const index = event.target.getAttribute('data-index');
+            tuberiaData[index].diametro = event.target.value + " pulgadas";
+            actualizarCodigoEnTabla(index);
+            updateChart();
+        });
+    });
+
+    document.querySelectorAll('.cantidad-input').forEach(input => {
+        input.addEventListener('change', (event) => {
+            const index = parseInt(event.target.getAttribute('data-index'));
+            tuberiaData[index].cantidad_mt_lineal = parseInt(event.target.value);
+            updateChart();
+        });
+    });
+}
+
+function createChart() {
+    const ctxTuberia = document.getElementById('tuberiaChart').getContext('2d');
+    chart = new Chart(ctxTuberia, {
+        type: 'bar',
+        data: {
+            labels: tuberiaData.map(item => `${item.material} - ${item.tipo}`),
+            datasets: [{
+                label: 'Cantidad (mt/lineal)',
+                data: tuberiaData.map(item => item.cantidad_mt_lineal),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y', // Esta línea cambia la orientación a horizontal
+            scales: {
+                x: {  // Ahora 'x' es el eje horizontal
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Cantidad (mt/lineal)',
+                        align: 'end'
+                    }
+                },
+                y: {  // Ahora 'y' es el eje vertical
+                    title: {
+                        display: true,
+                        text: 'Material - Tipo',
+                        align: 'end'
+                    },
+                    ticks: {
+                        autoSkip: false // Evita que las etiquetas se omitan automáticamente
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
+
+function updateChart() {
+
+    chart.data.labels = tuberiaData.map(item => `${item.material} - ${item.tipo}`);
+    chart.data.datasets[0].data = tuberiaData.map(item => item.cantidad_mt_lineal);
+    chart.update();
+}
+
+function actualizarCodigoEnTabla(index) {
+    const material = tuberiaData[index].material;
+    const tipo = tuberiaData[index].tipo;
+    const diametroSinUnidad = tuberiaData[index].diametro.split(" ")[0];
+
+    // Busca el código predefinido
+    const codigoEncontrado = codigosPredefinidos.find(codigo =>
+        codigo.material === material &&
+        codigo.tipo === tipo &&
+        codigo.diametro === diametroSinUnidad
+    );
+
+    const codigo = codigoEncontrado ? codigoEncontrado.codigo : "Código no encontrado";
+
+    const tdCodigo = document.querySelector(`#dynamicContent table tbody tr:nth-child(${parseInt(index) + 1}) td:first-child`);
+    tdCodigo.textContent = codigo;
+}
+
+// ---------------------------------------------------------------------------
+// Creacion Accesorios
+// ---------------------------------------------------------------------------
+
+const materialOptionsAccesorios = {
+    "Cobre": {
+        tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador"],
+        clases: ["M", "K", "L"],
+        diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10", "N/A"],
+        conexiones: ["Soldeo", "NPTH", "NPTM", "N/A"],
+        c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"],
+        c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"]
+    },
+    "Acero Inoxidable": {
+        tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Bushing", "Brida"],
+        clases: ["10", "40", "80"], // Clases base. Se agregará 150psi, 300psi, 3000psi para brida.
+        diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10", "N/A"],
+        conexiones: ["Soldeo", "NPTH", "NPTM", "N/A", "Socket"],
+        c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"],
+        c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"]
+    },
+    "Acero Carbon": {
+        tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Brida", "Bushing"],
+        clases: ["10", "40", "80"], // Clases base. Se agregará 150psi, 300psi, 3000psi para brida.
+        diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10", "N/A"],
+        conexiones: ["Soldeo", "NPTH", "NPTM", "N/A", "Socket"],
+        c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"],
+        c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"]
+    },
+    "Bronce": {
+        tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Bushing", "Brida"],
+        clases: [], // No tiene clases, se agregarán para brida.
+        diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10", "N/A"],
+        conexiones: ["Soldeo", "NPTH", "NPTM"],
+        c_entradas: ["H-M", "H-K", "H-L", "M-M", "M-K", "M-L", "H-10", "H-40", "H-80", "M-10", "M-40", "M-80", "NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"],
+        c_salidas: ["H-M", "H-K", "H-L", "M-M", "M-K", "M-L", "H-10", "H-40", "H-80", "M-10", "M-40", "M-80", "NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"]
+    },
+    "PVC": {
+        tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador"],
+        clases: ["Presion", "Electrica", "Sanitaria", "Ventilacion"],
+        diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10", "N/A"],
+        conexiones: ["Lisa", "NPTH", "NPTM", "N/A"],
+        c_entradas: ["Lisa", "NPTH", "NPTM", "N/A"],
+        c_salidas: ["Lisa", "NPTH", "NPTM", "N/A"]
+    }
+};
+
+const accesoriosData = [
+    {
+        material: "Cobre", tipo: "Union", clase: "M", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 2, valor: 5
+    },
+    {
+        material: "Acero Inoxidable", tipo: "Union", clase: "10", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 3, valor: 8
+    },
+    {
+        material: "Acero Carbon", tipo: "Union", clase: "10", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 1, valor: 12
+    },
+    {
+        material: "Bronce", tipo: "Union", clase: "", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 4, valor: 3
+    },
+    {
+        material: "PVC", tipo: "Union", clase: "Presion", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Lisa", c_entrada: "Lisa", c_salida: "Lisa", cantidad: 2, valor: 2
+    }
+];
+let chartAccesorios; // Variable global para almacenar la instancia de la gráfica de accesorios
+
+function loadAccesorios() {
+    const tableHeaders = `
+        <tr>
+            <th>Código</th>
+            <th>Material</th>
+            <th>Tipo</th>
+            <th>Clase</th>
+            <th>Diámetro</th>
+            <th>D_Entrada</th>
+            <th>D_Salida</th>
+            <th>Conexión</th>
+            <th>C_Entrada</th>
+            <th>C_Salida</th>
+            <th>Cantidad</th>
+            <th>Valor</th>
+        </tr>
+    `;
+
+    const tableRows = accesoriosData.map((item, index) => {
+        const tipos = materialOptionsAccesorios[item.material].tipos;
+        let clases = materialOptionsAccesorios[item.material].clases;
+        const diametros = materialOptionsAccesorios[item.material].diametros;
+        const conexiones = materialOptionsAccesorios[item.material].conexiones;
+        const c_entradas = materialOptionsAccesorios[item.material].c_entradas;
+        const c_salidas = materialOptionsAccesorios[item.material].c_salidas;
+
+        // Lógica para las clases de Brida (Acero Inoxidable, Acero Carbon, Bronce)
+        if (item.tipo === "Brida" && (item.material === "Acero Inoxidable" || item.material === "Acero Carbon" || item.material === "Bronce")) {
+            clases = ["150psi", "300psi", "3000psi"];
+        } else if (item.material === "Bronce") {
+            clases = []; // Limpiar clases para Bronce si no es Brida
+        }
+
+        return `
+            <tr>
+                <td></td>
+                <td>${item.material}</td>
+                <td>
+                    <select class="tipo-select-acc" data-index="${index}">
+                        ${tipos.map(tipo => `<option value="${tipo}" ${tipo === item.tipo ? 'selected' : ''}>${tipo}</option>`).join('')}
+                    </select>
+                </td>
+                <td>
+                    <select class="clase-select-acc" data-index="${index}" ${item.tipo === "Brida" || item.material === "Bronce" ? '' : ''}>
+                        ${clases.map(clase => `<option value="${clase}" ${clase === item.clase ? 'selected' : ''}>${clase}</option>`).join('')}
+                    </select>
+                </td>
+                <td>
+                    <select class="diametro-select-acc" data-index="${index}">
+                        ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.diametro ? 'selected' : ''}>${diametro}</option>`).join('')}
+                    </select>
+                </td>
+                <td>
+                    <select class="d-entrada-select-acc" data-index="${index}">
+                        ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.d_entrada ? 'selected' : ''}>${diametro}</option>`).join('')}
+                    </select>
+                </td>
+                <td>
+                    <select class="d-salida-select-acc" data-index="${index}">
+                        ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.d_salida ? 'selected' : ''}>${diametro}</option>`).join('')}
+                    </select>
+                </td>
+                <td>
+                    <select class="conexion-select-acc" data-index="${index}">
+                        ${conexiones.map(conexion => `<option value="${conexion}" ${conexion === item.conexion ? 'selected' : ''}>${conexion}</option>`).join('')}
+                    </select>
+                </td>
+                <td>
+                    <select class="c-entrada-select-acc" data-index="${index}">
+                        ${c_entradas.map(c_entrada => `<option value="${c_entrada}" ${c_entrada === item.c_entrada ? 'selected' : ''}>${c_entrada}</option>`).join('')}
+                    </select>
+                </td>
+                <td>
+                    <select class="c-salida-select-acc" data-index="${index}">
+                        ${c_salidas.map(c_salida => `<option value="${c_salida}" ${c_salida === item.c_salida ? 'selected' : ''}>${c_salida}</option>`).join('')}
+                    </select>
+                </td>
+                <td>
+                    <input type="number" class="cantidad-input-acc" data-index="${index}" value="${item.cantidad}" />
+                </td>
+                <td>
+                <span class="valor">$${item.valor}</span>
+                </td>
+            </tr>
+        `;
+    }).join('');
+
+    const tableContent = `
+        <div class="section-title vertical-title">Accesorios</div>
+        <div class="table-container">
+            <table>
+                <thead>${tableHeaders}</thead>
+                <tbody>${tableRows}</tbody>
+            </table>
+        </div>
+    `;
+    const chartContent = `
+        <h3>Gráfica de Cantidades (Accesorios)</h3>
+        <canvas id="accesoriosChart"></canvas>
+    `;
+
+    const fullContent = tableContent + chartContent; // Unir la tabla y la gráfica en un solo bloque
+
+    document.getElementById('dynamicContent').innerHTML = fullContent; // Asignar el contenido completo
+
+    createChartAccesorios(); // Crea la gráfica después de cargar la tabla.
+    updateChartAccesorios(); // Actualiza la gráfica con los datos iniciales
+
+    // --- Event Listeners Accesorios ---
+    document.querySelectorAll('.tipo-select-acc').forEach(select => {
+        select.addEventListener('change', (event) => {
+            const index = parseInt(event.target.getAttribute('data-index'));
+            accesoriosData[index].tipo = event.target.value;
+
+            // Actualizar las clases si el tipo es Brida
+            if (accesoriosData[index].tipo === "Brida" && (accesoriosData[index].material === "Acero Inoxidable" || accesoriosData[index].material === "Acero Carbon" || accesoriosData[index].material === "Bronce")) {
+                accesoriosData[index].clase = "150psi"; // Reset clase
+                loadAccesorios(); // Recargar tabla para mostrar las clases correctas
+            }
+            //inhabilitar clase en bronce
+            else if (accesoriosData[index].material === "Bronce") {
+                accesoriosData[index].clase = "";
+                loadAccesorios(); // Recargar tabla para mostrar las clases correctas
+            }
+            updateChartAccesorios() //actulizar grafica
+        });
+    });
+
+    document.querySelectorAll('.clase-select-acc').forEach(select => {
+        select.addEventListener('change', (event) => {
+            const index = parseInt(event.target.getAttribute('data-index'));
+            accesoriosData[index].clase = event.target.value;
+            updateChartAccesorios() //actulizar grafica
+        });
+    });
+
+    document.querySelectorAll('.diametro-select-acc').forEach(select => {
+        select.addEventListener('change', (event) => {
+            const index = parseInt(event.target.getAttribute('data-index'));
+            accesoriosData[index].diametro = event.target.value;
+            updateChartAccesorios() //actulizar grafica
+        });
+    });
+
+    document.querySelectorAll('.d-entrada-select-acc').forEach(select => {
+        select.addEventListener('change', (event) => {
+            const index = parseInt(event.target.getAttribute('data-index'));
+            accesoriosData[index].d_entrada = event.target.value;
+            updateChartAccesorios() //actulizar grafica
+        });
+    });
+
+    document.querySelectorAll('.d-salida-select-acc').forEach(select => {
+        select.addEventListener('change', (event) => {
+            const index = parseInt(event.target.getAttribute('data-index'));
+            accesoriosData[index].d_salida = event.target.value;
+            updateChartAccesorios() //actulizar grafica
+        });
+    });
+
+    document.querySelectorAll('.conexion-select-acc').forEach(select => {
+        select.addEventListener('change', (event) => {
+            const index = parseInt(event.target.getAttribute('data-index'));
+            accesoriosData[index].conexion = event.target.value;
+            updateChartAccesorios() //actulizar grafica
+        });
+    });
+
+    document.querySelectorAll('.c-entrada-select-acc').forEach(select => {
+        select.addEventListener('change', (event) => {
+            const index = parseInt(event.target.getAttribute('data-index'));
+            accesoriosData[index].c_entrada = event.target.value;
+            updateChartAccesorios() //actulizar grafica
+        });
+    });
+
+    document.querySelectorAll('.c-salida-select-acc').forEach(select => {
+        select.addEventListener('change', (event) => {
+            const index = parseInt(event.target.getAttribute('data-index'));
+            accesoriosData[index].c_salida = event.target.value;
+            updateChartAccesorios() //actulizar grafica
+        });
+    });
+
+    document.querySelectorAll('.cantidad-input-acc').forEach(input => {
+        input.addEventListener('change', (event) => {
+            const index = parseInt(event.target.getAttribute('data-index'));
+            accesoriosData[index].cantidad = parseInt(event.target.value);
+            updateChartAccesorios();
+        });
+    });
+}
+
+function createChartAccesorios() {
+    const ctxAccesorios = document.getElementById('accesoriosChart').getContext('2d');
+    chartAccesorios = new Chart(ctxAccesorios, {
+        type: 'bar',
+        data: {
+            labels: accesoriosData.map(item => `${item.material} - ${item.tipo}`),
+            datasets: [{
+                label: 'Cantidad',
+                data: accesoriosData.map(item => item.cantidad),
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',  // Cambia a horizontal
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Cantidad',
+                        align: 'end'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Material - Tipo',
+                        align: 'end'
+                    },
+                    ticks: {
+                        autoSkip: false  // Evita que las etiquetas se omitan automáticamente
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
+
+function updateChartAccesorios() {
+    chartAccesorios.data.labels = accesoriosData.map(item => `${item.material} - ${item.tipo}`);
+    chartAccesorios.data.datasets[0].data = accesoriosData.map(item => item.cantidad);
+    chartAccesorios.update();
+}
+
+// Cargar inicialmente
+function loadContent() {
+    document.getElementById('dynamicContent').innerHTML = "";
+    loadTuberia();
+    loadAccesorios();
+}
+
+window.onload = loadContent; // Asegura que el contenido se cargue después de que el DOM esté listo
+    
+
+        // ---------------------------------------------------------------------------
+        // Creacion Tabla de Proyectos add/edit/print/dowload/delete
+        // ---------------------------------------------------------------------------
+
+        // Constantes.
+        const PROJECT_ID_PREFIX = 'OT-';
+        const ADDITION_ID_PREFIX = 'AD-';
+        let proyectosData = [];
+        let proyectoEditandoId = null; // Variable para almacenar el ID del proyecto que se está editando
+
+        // Campos editables para proyectos principales
+        const MAIN_PROJECT_EDITABLE_FIELDS = ['descripcion', 'encargado', 'estado'];
+
+        // Campos editables para adiciones
+        const ADDITION_EDITABLE_FIELDS = ['nombre', 'descripcion', 'fechaInicio', 'fechaFin', 'encargado', 'estado', 'presupuesto'];
+
+        // ---------------------------------------------------------------------------
+        // Funciones de Utilidad
+        // ---------------------------------------------------------------------------
+
+        function generateId(prefix) {
+            return prefix + Math.floor(Math.random() * 10000);
+        }
+
+        // ---------------------------------------------------------------------------
+        // Funciones de Interfaz de Usuario (UI)
+        // ---------------------------------------------------------------------------
+
+        function renderTable() {
+            const dynamicContent = document.getElementById('dynamicContent');
+            const tableHeaders = `
+                <tr>
+                    <th></th> <!-- Columna para el icono del ojo -->
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Fin</th>
+                    <th>Encargado</th>
+                    <th>Estado</th>
+                    <th>Presupuesto</th>
+                    <th>Acciones</th>
+                </tr>
+            `;
+
+            function renderRow(proyecto) {
+                let actionIcons = '';
+
+                if (proyecto.isAddition) {
+                    actionIcons = `
+                        <i class="fas fa-edit edit-project" data-id="${proyecto.id}" title="Editar"></i>
+                        <i class="fas fa-trash delete-project" data-id="${proyecto.id}" title="Eliminar"></i>
+                    `;
+                } else {
+                    actionIcons = `
+                        <i class="fas fa-edit edit-project" data-id="${proyecto.id}" title="Editar"></i>
+                        <i class="fas fa-plus-square add-addition" data-id="${proyecto.id}" title="Adición"></i>
+                        <i class="fas fa-print print-project" data-id="${proyecto.id}" title="Imprimir"></i>
+                        <i class="fas fa-download download-project" data-id="${proyecto.id}" title="Descargar"></i>
+                        <i class="fas fa-trash delete-project" data-id="${proyecto.id}" title="Eliminar"></i>
+                    `;
+                }
+
+                // Determinar si la fila debe tener la clase "addition-row"
+                const rowClass = proyecto.isAddition ? 'project-row addition-row' : 'project-row';
+
+                // Agregar el icono del ojo si es el proyecto principal y tiene adiciones
+                let eyeIcon = '';
+                if (!proyecto.isAddition && proyectosData.some(p => p.parentId === proyecto.id)) {
+                    eyeIcon = `<i class="fas fa-eye toggle-additions" data-project-id="${proyecto.id}" title="Mostrar/Ocultar Adiciones"></i>`;
+                }
+
+                return `
+                    <tr class="${rowClass}" data-id="${proyecto.id}" data-parent-id="${proyecto.parentId || ''}">
+                        <td class="eye-icon-cell">${eyeIcon}</td>
+                        <td>${proyecto.id}</td>
+                        <td>${proyecto.nombre}</td>
+                        <td>${proyecto.descripcion}</td>
+                        <td>${proyecto.fechaInicio}</td>
+                        <td>${proyecto.fechaFin}</td>
+                        <td>${proyecto.encargado}</td>
+                        <td>${proyecto.estado}</td>
+                        <td>${proyecto.presupuesto}</td>
+                        <td class="action-icons">
+                            ${actionIcons}
+                        </td>
+                    </tr>
+                `;
+            }
+
+            function renderProyectosRecursivamente(proyectos, parentId = null) {
+                let html = '';
+                const proyectosFiltrados = proyectos.filter(proyecto => proyecto.parentId === parentId);
+
+                proyectosFiltrados.forEach(proyecto => {
+                    html += renderRow(proyecto);
+                    html += renderProyectosRecursivamente(proyectos, proyecto.id); // Llamada recursiva para las adiciones
+                });
+
+                return html;
+            }
+
+            dynamicContent.innerHTML = `
+                <h2 class="vertical-title">Proyectos</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>${tableHeaders}</thead>
+                        <tbody>${renderProyectosRecursivamente(proyectosData)}</tbody>
+                    </table>
+                    <button id="createProjectButton">Crear Proyecto</button>
+                </div>
+            `;
+        }
+
+        function assignEventListeners() {
+            // **DELEGACIÓN DE EVENTOS**
+            const tableBody = document.querySelector('#dynamicContent table tbody');
+            if (tableBody) {
+                tableBody.addEventListener('click', function(event) {
+                    const target = event.target;
+                    const projectId = target.dataset.id;
+
+                    if (target.classList.contains('edit-project')) {
+                        editProject(projectId);
+                    } else if (target.classList.contains('add-addition')) {
+                        addAddition(projectId);
+                    } else if (target.classList.contains('print-project')) {
+                        printProject(projectId);
+                    } else if (target.classList.contains('download-project')) {
+                        downloadProject(projectId);
+                    } else if (target.classList.contains('delete-project')) {
+                        proyectoEditandoId = projectId;
+                        openConfirmModal();
+                    }
+                    // Delegación de evento para el toggle de adiciones
+                    else if (target.classList.contains('toggle-additions')) {
+                        const parentProjectId = target.dataset.projectId;
+                        toggleAdditions(parentProjectId);
+                    }
+                });
+            }
+            // Crear proyecto
+            document.getElementById('createProjectButton').addEventListener('click', createProject);
+
+            // Cerrar modal con la "X"
+            document.querySelector('.close').addEventListener('click', closeModal);
+
+            // Evento para confirmar la eliminación
+            document.getElementById('confirmDelete').addEventListener('click', () => {
+                deleteProjectAndAdditions(proyectoEditandoId);
+                closeConfirmModal();
+                loadProyectos();
+            });
+
+            // Evento para cancelar la eliminación
+            document.getElementById('cancelDelete').addEventListener('click', closeConfirmModal);
+        }
+
+        function toggleAdditions(projectId) {
+            // Encuentra todas las filas de adición para el proyecto principal
+            const additionRows = document.querySelectorAll(`.project-row[data-parent-id="${projectId}"]`);
+            additionRows.forEach(row => {
+                row.classList.toggle('show-additions'); // Cambia la visibilidad
+            });
+        }
+
+        function loadProyectos() {
+            renderTable();
+            assignEventListeners();
+        }
+
+        // ---------------------------------------------------------------------------
+        // Funciones Modales
+        // ---------------------------------------------------------------------------
+
+        function openModal(title) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('projectModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').style.display = 'none';
+            proyectoEditandoId = null; // Restablecer proyectoEditandoId al cerrar el modal
+        }
+
+        function openConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'block';
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        // ---------------------------------------------------------------------------
+        // Funciones de CRUD (Crear, Leer, Actualizar, Eliminar) - Proyectos
+        // ---------------------------------------------------------------------------
+
+        function createProject() {
+            proyectoEditandoId = null;
+            openModal("Crear Proyecto");
+            const projectForm = document.getElementById('projectForm');
+            projectForm.reset();
+
+            const projectIdField = document.getElementById('projectId');
+            projectIdField.value = generateId(PROJECT_ID_PREFIX);
+            projectIdField.disabled = true; // Habilitar la edición del ID
+
+            //Habilitar el resto de los campos
+            document.getElementById('projectName').disabled = false;
+            document.getElementById('projectDescription').disabled = false;
+            document.getElementById('projectStartDate').disabled = false;
+            document.getElementById('projectEndDate').disabled = false;
+            document.getElementById('projectManager').disabled = false;
+            document.getElementById('projectStatus').disabled = false;
+            document.getElementById('projectBudget').disabled = false;
+
+            projectForm.dataset.mode = 'create'; // Indica que estamos en modo de creación
+        }
+
+        function editProject(projectId) {
+            proyectoEditandoId = projectId; //SETEAR EL ID DEL PROYECTO A EDITAR
+            const proyecto = proyectosData.find(p => p.id === projectId);
+
+            if (!proyecto) {
+                console.error(`Proyecto con ID ${projectId} no encontrado`);
+                return;
+            }
+
+            openModal("Editar Proyecto");
+            const projectForm = document.getElementById('projectForm');
+
+            document.getElementById('projectId').value = proyecto.id;
+            document.getElementById('projectName').value = proyecto.nombre;
+            document.getElementById('projectDescription').value = proyecto.descripcion;
+            document.getElementById('projectStartDate').value = proyecto.fechaInicio;
+            document.getElementById('projectEndDate').value = proyecto.fechaFin;
+            document.getElementById('projectManager').value = proyecto.encargado;
+            document.getElementById('projectStatus').value = proyecto.estado;
+            document.getElementById('projectBudget').value = proyecto.presupuesto;
+
+            // Deshabilitar campos no editables
+            document.getElementById('projectId').disabled = true;
+            document.getElementById('projectName').disabled = true;
+            document.getElementById('projectStartDate').disabled = true;
+            document.getElementById('projectEndDate').disabled = true;
+            document.getElementById('projectBudget').disabled = true;
+
+            // Habilitar solo los campos editables
+            document.getElementById('projectDescription').disabled = false;
+            document.getElementById('projectManager').disabled = false;
+            document.getElementById('projectStatus').disabled = false;
+
+            // Establecer el modo del formulario
+            projectForm.dataset.mode = 'edit';
+        }
+
+        function addAddition(projectId) {
+            proyectoEditandoId = null;
+            openModal("Adición a Proyecto");
+
+            const projectForm = document.getElementById('projectForm');
+            projectForm.reset();
+            const projectIdField = document.getElementById('projectId');
+
+            const newId = generateId(PROJECT_ID_PREFIX); // Genera ID con OT-
+            projectIdField.value = newId;
+            projectIdField.dataset.parentId = projectId; // Almacena el ID del padre
+            projectIdField.disabled = false; // Habilitar la edición del ID
+
+            // Habilitar todos los campos
+            document.getElementById('projectName').disabled = false;
+            document.getElementById('projectDescription').disabled = false;
+            document.getElementById('projectStartDate').disabled = false;
+            document.getElementById('projectEndDate').disabled = false;
+            document.getElementById('projectManager').disabled = false;
+            document.getElementById('projectStatus').disabled = false;
+            document.getElementById('projectBudget').disabled = false;
+
+            // Establecer el modo del formulario
+            projectForm.dataset.mode = 'add';
+        }
+
+        function saveProject(event) {
+            event.preventDefault();
+
+            const projectForm = document.getElementById('projectForm');
+
+            const projectData = {
+                id: document.getElementById('projectId').value,
+                nombre: document.getElementById('projectName').value,
+                descripcion: document.getElementById('projectDescription').value,
+                fechaInicio: document.getElementById('projectStartDate').value,
+                fechaFin: document.getElementById('projectEndDate').value,
+                encargado: document.getElementById('projectManager').value,
+                estado: document.getElementById('projectStatus').value,
+                presupuesto: document.getElementById('projectBudget').value,
+                parentId: document.getElementById('projectId').dataset.parentId || null,
+                isAddition: projectForm.dataset.mode === 'add'
+            };
+            const index = proyectosData.findIndex(p => p.id === proyectoEditandoId);
+
+            if (index !== -1) {
+                const existingProject = proyectosData[index];
+
+                // Update only the allowed fields
+                if (existingProject.isAddition) {
+                    ADDITION_EDITABLE_FIELDS.forEach(field => {
+                        existingProject[field] = projectData[field];
+                    });
+                } else {
+                    MAIN_PROJECT_EDITABLE_FIELDS.forEach(field => {
+                        existingProject[field] = projectData[field];
+                    });
+                }
+
+                proyectosData[index] = { ...existingProject }; // Use the updated existing project
+            } else {
+                // Creating a new project or addition
+                proyectosData.push(projectData);
+            }
+
+            closeModal();
+            loadProyectos();
+
+            // Restablecer proyectoEditandoId a null después de guardar
+            proyectoEditandoId = null;
+        }
+
+        function deleteProjectAndAdditions(projectId) {
+            // Eliminar el proyecto actual
+            proyectosData = proyectosData.filter(p => p.id !== projectId);
+
+            // Encontrar y eliminar adiciones del proyecto (recursivamente)
+            const additionsToDelete = proyectosData.filter(p => p.parentId === projectId).map(p => p.id);
+            additionsToDelete.forEach(addId => deleteProjectAndAdditions(addId));
+        }
+
+        // ---------------------------------------------------------------------------
+        // Funciones de Imprimir y Descargar
+        // ---------------------------------------------------------------------------
+
+        function printProject(projectId) {
+            const proyecto = proyectosData.find(p => p.id === projectId);
+            if (proyecto) {
+                const contenido = `
+                    ID: ${proyecto.id}
+                    Nombre: ${proyecto.nombre}
+                    Descripción: ${proyecto.descripcion}
+                    Fecha de Inicio: ${proyecto.fechaInicio}
+                    Encargado: ${proyecto.encargado}
+                    Estado: ${proyecto.estado}
+                    Presupuesto: ${proyecto.presupuesto}
+                `;
+                const ventanaImpresion = window.open('', '', 'height=500,width=500');
+                ventanaImpresion.document.write(`<pre>${contenido}</pre>`);
+                ventanaImpresion.document.close();
+                ventanaImpresion.print();
+            }
+        }
+
+        function downloadProject(projectId) {
+            const proyecto = proyectosData.find(p => p.id === projectId);
+            if (proyecto) {
+                const blob = new Blob([JSON.stringify(proyecto, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `proyecto_${proyecto.id}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        // ---------------------------------------------------------------------------
+        // Inicialización
+        // ---------------------------------------------------------------------------
+
+        // Cargar proyectos al hacer clic en el enlace
+        document.getElementById('proyectosLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            loadProyectos();
+        });
+
+        // Evento para el formulario de proyecto (guardar)
+        document.getElementById('projectForm').addEventListener('submit', saveProject);
+
+        // Carga inicial de proyectos
+        loadProyectos();
+
+        
+                    
+       
+
+        // Datos de ejemplo para Requisición
+        const requisicionData = [
+            {
+                item: 1,
+                descripcion: "Codo de cobre de 1/2\"",
+                unidad: "UND",
+                cantidadSolicitada: 20,
+                cantidadEntregada: 15,
+                cantidadPendiente: 5
+            },
+            {
+                item: 2,
+                descripcion: "Tee de cobre de 3/4\"",
+                unidad: "UND",
+                cantidadSolicitada: 10,
+                cantidadEntregada: 10,
+                cantidadPendiente: 0
+            },
+            {
+                item: 3,
+                descripcion: "Reductor de cobre de 1\" a 1/2\"",
+                unidad: "UND",
+                cantidadSolicitada: 5,
+                cantidadEntregada: 3,
+                cantidadPendiente: 2
+            },
+            {
+                item: 4,
+                descripcion: "Tubo de cobre de 1/2\" (3 metros)",
+                unidad: "MTS",
+                cantidadSolicitada: 2,
+                cantidadEntregada: 2,
+                cantidadPendiente: 0
+            },
+            {
+                item: 5,
+                descripcion: "Soldadura de plata",
+                unidad: "GR",
+                cantidadSolicitada: 50,
+                cantidadEntregada: 50,
+                cantidadPendiente: 0
+            },
+            {
+                item: 6,
+                descripcion: "Lija para cobre",
+                unidad: "UND",
+                cantidadSolicitada: 10,
+                cantidadEntregada: 8,
+                cantidadPendiente: 2
+            },
+            {
+                item: 7,
+                descripcion: "Cinta de teflón",
+                unidad: "UND",
+                cantidadSolicitada: 5,
+                cantidadEntregada: 5,
+                cantidadPendiente: 0
+            },
+            {
+                item: 8,
+                descripcion: "Brocha de 1\"",
+                unidad: "UND",
+                cantidadSolicitada: 2,
+                cantidadEntregada: 2,
+                cantidadPendiente: 0
+            },
+            {
+                item: 9,
+                descripcion: "Pintura anticorrosiva",
+                unidad: "GLN",
+                cantidadSolicitada: 1,
+                cantidadEntregada: 1,
+                cantidadPendiente: 0
+            },
+            {
+                item: 10,
+                descripcion: "Thinner",
+                unidad: "LT",
+                cantidadSolicitada: 1,
+                cantidadEntregada: 1,
+                cantidadPendiente: 0
+            }
+        ];
+
+        // Función para cargar la requisición y poblar la tabla
+        function loadRequisicion() {
+            const requisicionForm = `
+
+        <style>
+            body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 20px; /* Tamaño de fuente reducido */
+            color: #2c3e50;
+        }
+
+        p {
+            text-align: center;
+            margin: 5px 0;
+            font-size: 14px; /* Tamaño de fuente reducido */
+            color: #7f8c8d;
+        }
+
+        form {
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 15px; /* Padding reducido */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px; /* Tamaño de fuente reducido */
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        textarea {
+            width: calc(100% - 18px);
+            padding: 6px; /* Padding reducido */
+            margin-bottom: 8px; /* Margen reducido */
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 12px; /* Tamaño de fuente reducido */
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            border-color: #2c3e50;
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px; /* Margen reducido */
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            table-layout: fixed;
+        }
+
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 8px; /* Padding reducido */
+            text-align: center;
+            font-size: 12px; /* Tamaño de fuente reducido */
+            word-break: break-word;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        input[readonly] {
+            background-color: #ecf0f1;
+            cursor: not-allowed;
+        }
+
+        button {
+            display: inline-block;
+            padding: 8px 16px; /* Padding reducido */
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px; /* Tamaño de fuente reducido */
+            transition: background-color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        button:hover {
+            background-color: #233140;
+        }
+
+        /* Estilos específicos para la tabla */
+        table input {
+            width: calc(100% - 10px);
+            margin: 0 auto;
+            text-align: center;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            padding: 4px; /* Padding reducido */
+            font-size: 12px; /* Tamaño de fuente reducido */
+            box-sizing: border-box;
+        }
+
+        table input[type="number"] {
+            width: calc(90% - 10px);
+        }
+
+        table input[readonly] {
+            background-color: #ecf0f1;
+        }
+
+        /* Estilos para las observaciones y firmas */
+        textarea {
+            width: calc(100% - 18px);
+            height: 80px; /* Altura reducida */
+            margin-bottom: 15px; /* Margen reducido */
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            padding: 6px; /* Padding reducido */
+            font-size: 12px; /* Tamaño de fuente reducido */
+            box-sizing: border-box;
+        }
+
+        /* Estilos para las firmas y cargos */
+        .firma {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 15px; /* Margen reducido */
+        }
+
+        .firma div {
+            width: 48%;
+            box-sizing: border-box;
+            padding: 0 8px; /* Padding reducido */
+        }
+
+        .firma label {
+            display: block;
+            margin-bottom: 4px; /* Margen reducido */
+            font-size: 14px; /* Tamaño de fuente reducido */
+            color: #34495e;
+        }
+
+        .firma input {
+            width: calc(100% - 18px);
+            padding: 6px; /* Padding reducido */
+            margin-bottom: 8px; /* Margen reducido */
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 12px; /* Tamaño de fuente reducido */
+            box-sizing: border-box;
+        }
+
+        /* Media Queries para Responsive Design */
+        @media (max-width: 768px) {
+            form {
+                width: 90%;
+                padding: 10px; /* Padding reducido */
+            }
+
+            .firma div {
+                width: 100%;
+                margin-bottom: 8px; /* Margen reducido */
+                padding: 0;
+            }
+
+            table {
+                table-layout: auto;
+                border-collapse: collapse;
+                margin-bottom: 10px; /* Margen reducido */
+            }
+
+            th, td {
+                padding: 6px; /* Padding reducido */
+                font-size: 12px; /* Tamaño de fuente reducido */
+            }
+
+            table input {
+                font-size: 12px; /* Tamaño de fuente reducido */
+                padding: 4px; /* Padding reducido */
+            }
+
+            button {
+                display: inline-block;
+                padding: 6px 12px; /* Padding reducido */
+                background-color: #2c3e50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 12px; /* Tamaño de fuente reducido */
+                transition: background-color 0.3s ease;
+                white-space: nowrap;
+            }
+        }
+        </style>
+
+                <h2>SISTEMA INTEGRADO DE GESTION</h2>
+                <p>CÓDIGO: CP-RQ-01</p>
+                <p>FECHA: 2024-03-20</p>
+                <p>VERSIÓN: 1</p>
+                <p>PÁGINA: 1 DE 1</p>
+
+                <form>
+                    <label for="solicitante">SOLICITA:</label>
+                    <input type="text" id="solicitante" name="solicitante" value="NICOLAS SAAVEDRA"><br><br>
+                    </form>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ITEM</th>
+                                <th>DESCRIPCION</th>
+                                <th>UNIDAD</th>
+                                <th>FECHA DE NECESIDAD</th>
+                                <th>CANTIDAD SOLICITADA</th>
+                                <th>VALOR UNITARIO</th>
+                                <th>CANTIDAD ENTREGADA POR ALMACEN</th>
+                                <th>VALOR ENTREGADA POR ALMACEN</th>
+                                <th>CANTIDAD PENDIENTE</th>
+                                <th>CANTIDAD ENTREGADA POR COMPRAS</th>
+                                <th>VALOR ENTREGADA POR COMPRAS</th>
+                                <th>DEVOLUCIÓN DEL PROYECTO</th>
+                                <th>VALOR DEVOLUCIÓN DEL PROYECTO</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody> </table>
+                        <form>
+                    <h3>OBSERVACIONES / RELACIÓN DE ANEXOS:</h3>
+                    <textarea rows="4" cols="50"></textarea><br><br>
+
+                    <label for="solicito">Solicitó:</label>
+                    <input type="text" id="solicito" name="solicito" value="JAVIER SIERRA"><br><br>
+
+                    <label for="aprobo">Aprobó:</label>
+                    <input type="text" id="aprobo" name="aprobo" value="MELISSA GONZALES"><br><br>
+
+                    <button type="submit">Enviar</button>
+                    <button type="submit">Exportar Excel</button>
+                </form>
+            `;
+
+            document.getElementById('dynamicContent').innerHTML = requisicionForm;
+
+            const tbody = document.querySelector('tbody');
+
+            requisicionData.forEach(item => {
+                const row = tbody.insertRow();
+                row.insertCell().textContent = item.item;
+                row.insertCell().innerHTML = `<input type="text" value="${item.descripcion}">`;
+                row.insertCell().innerHTML = `<input type="text" value="${item.unidad}">`;
+                row.insertCell().innerHTML = `<input type="date">`;
+                row.insertCell().innerHTML = `<input type="number" value="${item.cantidadSolicitada}" onchange="calcularPendiente(this)">`;
+                row.insertCell().innerHTML = `<input type="number">`;
+                row.insertCell().innerHTML = `<input type="number" value="${item.cantidadEntregada}" onchange="calcularPendiente(this)">`;
+                row.insertCell().innerHTML = `<input type="number">`;
+                row.insertCell().innerHTML = `<input type="number" value="${item.cantidadPendiente}" readonly>`;
+                row.insertCell().innerHTML = `<input type="number" value="0" onchange="calcularPendiente(this)">`;
+                row.insertCell().innerHTML = `<input type="number">`;
+                row.insertCell().innerHTML = `<input type="number">`;
+                row.insertCell().innerHTML = `<input type="number" value="0" readonly>`;
+            });
+        }
+
+
+        function calcularPendiente(input) {
+            const row = input.parentNode.parentNode;
+            const cantidadSolicitada = parseFloat(row.cells[4].querySelector('input').value) || 0;
+            const cantidadEntregadaAlmacen = parseFloat(row.cells[6].querySelector('input').value) || 0;
+            const cantidadEntregadaCompras = parseFloat(row.cells[9].querySelector('input').value) || 0;
+            const cantidadPendiente = cantidadSolicitada - (cantidadEntregadaAlmacen + cantidadEntregadaCompras);
+            row.cells[8].querySelector('input').value = cantidadPendiente;
+        }
+
+        // Asignar evento al enlace de Requisición
+        document.getElementById('requisicionLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            clearDynamicContent();
+            loadRequisicion();
+        });
+
+        // Datos de ejemplo para Proveedores
+        const proveedoresData = [
+            { nombre: "Proveedor A", contacto: "contacto@proveedora.com", telefono: "+123456789" },
+            { nombre: "Proveedor B", contacto: "contacto@proveedorb.com", telefono: "+987654321" },
+            { nombre: "Proveedor C", contacto: "contacto@proveedorc.com", telefono: "+1122334455" }
+        ];
+
+        // Función para cargar la tabla de Proveedores
+        function loadProveedores() {
+            const tableHeaders = `
+                <tr>
+                    <th>Nombre</th>
+                    <th>Contacto</th>
+                    <th>Teléfono</th>
+                </tr>
+            `;
+
+            const tableRows = proveedoresData.map(item => `
+                <tr>
+                    <td>${item.nombre}</td>
+                    <td>${item.contacto}</td>
+                    <td>${item.telefono}</td>
+                </tr>
+            `).join('');
+
+            const tableContent = `
+                <h2>Proveedores</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>${tableHeaders}</thead>
+                        <tbody>${tableRows}</tbody>
+                    </table>
+                </div>
+            `;
+
+            document.getElementById('dynamicContent').innerHTML = tableContent;
+        }
+
+        document.getElementById('proveedoresLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            clearDynamicContent();
+            loadProveedores();
+        });
+
+
+        // Datos de ejemplo para Almacén
+        const almacenData = [
+            {
+                id: "A001",
+                nombre: "Almacén Central",
+                ubicacion: "Calle Principal #123",
+                capacidad: "1000 m3",
+                encargado: "Juan Pérez",
+                contacto: "juan.perez@almacen.com",
+                productos: [
+                    { id: "001", nombre: "Cilindro de Oxígeno", cantidad: 150 },
+                    { id: "002", nombre: "Regulador de Presión", cantidad: 75 },
+                    // ... otros productos
+                ]
+            },
+            {
+                id: "A002",
+                nombre: "Almacén Sucursal",
+                ubicacion: "Avenida Secundaria #456",
+                capacidad: "500 m3",
+                encargado: "María Gómez",
+                contacto: "maria.gomez@almacen.com",
+                productos: [
+                    { id: "003", nombre: "Nitrógeno Líquido", cantidad: 40 },
+                    { id: "004", nombre: "Mascarillas de Oxígeno", cantidad: 200 },
+                    // ... otros productos
+                ]
+            },
+            // ... otros almacenes
+        ];
+
+
+        // funcion de datos de ejemplo para Almacén
+        function loadAlmacen() {
+            let tableContent = "<h2>Almacenes</h2>";
+
+            almacenData.forEach(almacen => {
+                tableContent += `
+                    <h3>${almacen.nombre}</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Ubicación</th>
+                                    <th>Capacidad</th>
+                                    <th>Encargado</th>
+                                    <th>Contacto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>${almacen.id}</td>
+                                    <td>${almacen.nombre}</td>
+                                    <td>${almacen.ubicacion}</td>
+                                    <td>${almacen.capacidad}</td>
+                                    <td>${almacen.encargado}</td>
+                                    <td>${almacen.contacto}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>Productos en este almacén:</h4>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID del Producto</th>
+                                    <th>Nombre del Producto</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${almacen.productos.map(producto => `
+                                    <tr>
+                                        <td>${producto.id}</td>
+                                        <td>${producto.nombre}</td>
+                                        <td>${producto.cantidad}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            });
+
+            document.getElementById('dynamicContent').innerHTML = tableContent;
+        }
+
+        document.getElementById('almacenLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            clearDynamicContent();
+            loadAlmacen(); // Nueva función para cargar contenido de Almacén
+        });
+
+        // Función para cargar la sección de Soporte
+        function loadSoporte() {
+            const soporteContent = `
+                <h2>Soporte</h2>
+                <div class="soporte-container">
+                    <p>Para soporte técnico, contáctanos a través de:</p>
+                    <ul>
+                        <li>
+                            <a href="https://wa.me/1234567890" target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:davidalejandro.rx@live.com">
+                                <i class="fas fa-envelope"></i> davidalejandro.rx@live.com
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            `;
+
+            document.getElementById('dynamicContent').innerHTML = soporteContent;
+        }
+
+        document.getElementById('soporteLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            clearDynamicContent();
+            loadSoporte();
+        });
+
+        // Función para limpiar el contenido dinámico
+        function clearDynamicContent() {
+            document.getElementById('dynamicContent').innerHTML = '';
+        }
+
+    </script>
+
+
+</body>
+
+</html>

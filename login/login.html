@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login con Imagen de Fondo</title>
+    <link rel="stylesheet" href="login-styles.css">
+    <script src="dashboard/admin-dashboard.html"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm">
+
+            <div class="input-group">
+                <span class="placeholder">Usuario</span>
+                <label for="username"></label>
+                <i class="fas fa-user icon"></i>
+                <input type="text" id="username" name="username" required placeholder=" ">
+            </div>
+            <div class="input-group">
+                <span class="placeholder">Contraseña</span>
+                <label for="password"></label>
+                <i class="fas fa-lock icon"></i>
+                <input type="password" id="password" name="password" required placeholder=" ">
+            </div>
+
+            <script>
+                const inputGroups = document.querySelectorAll('.input-group');
+
+                inputGroups.forEach(inputGroup => {
+                    const input = inputGroup.querySelector('input');
+                    const icon = inputGroup.querySelector('.icon');
+
+                    let isHovered = false;
+                    let isFocused = false;
+
+                    inputGroup.addEventListener('mouseenter', () => {
+                        isHovered = true;
+                        setIconPosition();
+                    });
+
+                    inputGroup.addEventListener('mouseleave', () => {
+                        isHovered = false;
+                        setIconPosition();
+                    });
+
+                    input.addEventListener('focus', () => {
+                        isFocused = true;
+                        setIconPosition();
+                    });
+
+                    input.addEventListener('blur', () => {
+                        isFocused = false;
+                        setIconPosition();
+                    });
+
+                    input.addEventListener('input', () => {
+                        setIconPosition();
+                    });
+
+
+                    function setIconPosition() {
+                        if (isHovered || isFocused || input.value !== "") {
+                            icon.style.left = 'calc(100% - 30px)';
+                        } else {
+                            icon.style.left = '15px';
+                        }
+                    }
+                });
+            </script>
+
+            <!-- Contenedor para "Recuérdame" y "recuperar contraseña" -->
+            <div class="options-container">
+                <div class="remember-me">
+                    <label for="rememberMe">Recuérdame</label>
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                </div>
+                <span class="forgot-password">recuperar contraseña</span>
+            </div>
+
+            <button type="submit" class="login-submit">Ingresar</button>
+            <button class="login-submit" onclick="window.location.href='../index/index.html'">Volver</button>
+
+            <div id="error-message" class="error-message hidden">Usuario o contraseña incorrectos</div>
+        </form>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+
+</html>
