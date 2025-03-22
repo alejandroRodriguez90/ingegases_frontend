@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,114 +7,50 @@
     <link rel="stylesheet" href="login-styles.css">
     <script src="dashboard/admin-dashboard.html"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
-
 <body>
-
-    <style>
-        /* Estilos para la ventana modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        /* Aplica los mismos estilos que el login-container */
-        .modal-content {
-            width: 350px;
-            padding: 60px 65px 55px;
-            backdrop-filter: blur(3px);
-            border-radius: 55px;
-            box-shadow: 0 4px 40px rgb(255, 255, 255);
-            text-align: center;
-            margin: 10% auto;
-            background-color: inherit;
-        }
-
-        .modal-content h2 {
-            font-size: 28px;
-            color: #ffffff;
-            margin-bottom: 30px;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #f4fb32c6;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* Media query para pantallas más pequeñas */
-        @media (max-width: 480px) {
-            .modal-content {
-                width: 90%;
-                padding: 30px;
-                margin: 20% auto;
-            }
-
-            .login-container {
-                width: 90%;
-                padding: 30px;
-                margin: 20% auto;
-            }
-        }
-    </style>
-
 </head>
-
 <body>
-
-    <div class="login-container">
-        <h2>Iniciar Sesión</h2>
-        <form id="loginForm">
-            <div class="input-group">
-                <span class="placeholder">Correo Electrónico</span>
-                <label for="email"></label>
-                <i class="fas fa-envelope icon"></i>
-                <input type="email" id="email" name="email" required placeholder=" ">
-            </div>
-            <div class="input-group">
-                <span class="placeholder">Contraseña</span>
-                <label for="password"></label>
-                <i class="fas fa-lock icon"></i>
-                <input type="password" id="password" name="password" required placeholder=" ">
-            </div>
-
-            <!-- Contenedor para "Recuérdame" y "recuperar contraseña" -->
-            <div class="options-container">
-                <div class="remember-me">
-                    <label for="rememberMe">Recuérdame</label>
-                    <input type="checkbox" id="rememberMe" name="rememberMe">
+    <div class="login-container" id="loginContainer">
+        <!-- Formulario de Login -->
+        <div class="form-front">
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <span class="placeholder">Correo Electrónico</span>
+                    <label for="email"></label>
+                    <i class="fas fa-envelope icon"></i>
+                    <input type="email" id="email" name="email" required placeholder=" ">
                 </div>
-                <span class="forgot-password">recuperar contraseña</span>
-            </div>
+                <div class="input-group">
+                    <span class="placeholder">Contraseña</span>
+                    <label for="password"></label>
+                    <i class="fas fa-lock icon"></i>
+                    <input type="password" id="password" name="password" required placeholder=" ">
+                </div>
 
-            <button type="submit" class="login-submit">Ingresar</button>
-            <button class="login-submit" onclick="window.location.href='../index/index.html'">Volver</button>
-            <button class="login-submit" id="registerBtn">Registrar</button>
+                <!-- Contenedor para "Recuérdame" y "recuperar contraseña" -->
+                <div class="options-container">
+                    <div class="remember-me">
+                        <label for="rememberMe">Recuérdame</label>
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                    </div>
+                    <span class="forgot-password">recuperar contraseña</span>
+                </div>
 
-            <div id="error-message" class="error-message hidden">Usuario o contraseña incorrectos</div>
-        </form>
-    </div>
+                <!-- Botones de Ingresar y Registrar -->
+                <button type="submit" class="login-submit">Ingresar</button>
+                <button type="button" class="login-submit" id="registerBtn">Registrar</button>
+                <button class="login-submit back-button" onclick="window.location.href='../index/index.html'">Volver</button>
 
-    <!-- Ventana Modal de Registro -->
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
+                <!-- Mensaje de Error -->
+                <div id="error-message" class="error-message hidden">Usuario o contraseña incorrectos</div>
+            </form>
+        </div>
+
+        <!-- Formulario de Registro -->
+        <div class="form-back">
+            <div class="form-content"></div>
             <h2>Registro</h2>
             <form id="registerForm">
                 <div class="input-group">
@@ -149,10 +84,15 @@
                     <input type="password" id="regConfirmPassword" name="regConfirmPassword" required placeholder=" ">
                 </div>
 
+                <!-- Botones de Registrarse y Volver -->
                 <button type="submit" class="login-submit">Registrarse</button>
+                <button type="button" class="login-submit back-button" id="backToLogin">Volver</button>
             </form>
         </div>
     </div>
+
+
+
 
     <script>
         const apiURL = 'http://127.0.0.1:8000'; // Reemplaza con la URL de tu API
@@ -186,7 +126,7 @@
                     console.log('Login exitoso:', data);
                     alert('Login exitoso!');
                     // Redirigir a la página del dashboard
-                    window.location.href = '/ingegases_frontend/dashboard/admin-dashboard.html'; // **AQUI ESTA LA CORRECCION**
+                    window.location.href = '/ingegases_frontend/dashboard/admin-dashboard.html';
                 })
                 .catch(error => {
                     console.error('Error al iniciar sesión:', error);
@@ -194,37 +134,12 @@
                 });
         });
 
-        // Obtener el modal
-        var modal = document.getElementById("registerModal");
 
-        // Obtener el botón que abre el modal
-        var btn = document.getElementById("registerBtn");
-
-        // Obtener el elemento <span> que cierra el modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // Cuando el usuario haga clic en el botón, abre el modal
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        // Cuando el usuario haga clic en <span> (x), cierra el modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // Cuando el usuario haga clic fuera del modal, cierra el modal
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
 
         // --- REGISTRO DE USUARIO ---
         document.getElementById('registerForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Evita que el formulario se envíe de la manera tradicional
+            event.preventDefault();
 
-            // Recolecta los datos del formulario
             const nombre = document.getElementById('regNombre').value;
             const correo = document.getElementById('regEmail').value;
             const usuario = document.getElementById('regUsername').value;
@@ -234,10 +149,9 @@
             // Validar que las contraseñas coincidan
             if (contrasena !== confirmarContrasena) {
                 alert("Las contraseñas no coinciden.");
-                return; // Detiene el proceso si las contraseñas no coinciden
+                return;
             }
 
-            // Crea el objeto de datos que se enviará al backend
             const userData = {
                 nombre: nombre,
                 correo: correo,
@@ -246,24 +160,23 @@
                 rol_id: 1 // Asumiendo que el rol_id por defecto es 1
             };
 
-            // Realiza la petición POST usando fetch
-            fetch(`${apiURL}/usuarios`, { // **AQUI ESTA LA CORRECCION**
+            fetch(`${apiURL}/usuarios`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(userData) // Convierte el objeto a formato JSON
+                    body: JSON.stringify(userData)
                 })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
-                    return response.json(); // Parsea la respuesta JSON
+                    return response.json();
                 })
                 .then(data => {
                     console.log('Usuario registrado exitosamente:', data);
                     alert('Usuario registrado exitosamente!');
-                    modal.style.display = "none"; // Cierra el modal después del registro
+                    flipToLogin(); // Volver al formulario de login después del registro
                 })
                 .catch(error => {
                     console.error('Error al registrar usuario:', error);
@@ -271,185 +184,37 @@
                 });
         });
 
-        // --- ANIMACIÓN DE LOS INPUTS (Mantener) ---
-        const inputGroups = document.querySelectorAll('.input-group');
+        // --- ANIMACIÓN DE GIRO ---
+        const loginContainer = document.getElementById('loginContainer');
+        const registerBtn = document.getElementById('registerBtn');
+        const backToLoginBtn = document.getElementById('backToLogin');
+        const formContent = document.querySelector('.form-back .form-content');
 
-        inputGroups.forEach(inputGroup => {
-            const input = inputGroup.querySelector('input');
-            const icon = inputGroup.querySelector('.icon');
+        registerBtn.addEventListener('click', flipToRegister);
+        backToLoginBtn.addEventListener('click', flipToLogin);
 
-            let isHovered = false;
-            let isFocused = false;
+        function flipToRegister() {
+            loginContainer.classList.add('turning'); // Añade la clase 'turning'
+            setTimeout(() => {
+                loginContainer.classList.add('flipped');
+                //loginContainer.style.transform = 'rotateY(360deg)';
+                loginContainer.classList.remove('turning'); // Remueve la clase 'turning'
+            }, 700); // Espera 0.7 segundos antes de completar el giro
+            formContent.style.transform = 'rotateY(0deg)';
+        }
 
-            inputGroup.addEventListener('mouseenter', () => {
-                isHovered = true;
-                setIconPosition();
-            });
+        function flipToLogin() {
+            loginContainer.classList.add('turning');
+            setTimeout(() => {
+                loginContainer.classList.remove('flipped');
+                loginContainer.style.transform = 'rotateY(0deg)';
+                loginContainer.classList.remove('turning');
+            }, 400);
+            formContent.style.transform = 'rotateY(0deg)';
+        }
 
-            inputGroup.addEventListener('mouseleave', () => {
-                isHovered = false;
-                setIconPosition();
-            });
-
-            input.addEventListener('focus', () => {
-                isFocused = true;
-                setIconPosition();
-            });
-
-            input.addEventListener('blur', () => {
-                isFocused = false;
-                setIconPosition();
-            });
-
-            input.addEventListener('input', () => {
-                setIconPosition();
-            });
-
-            function setIconPosition() {
-                if (isHovered || isFocused || input.value !== "") {
-                    icon.style.left = 'calc(100% - 30px)';
-                } else {
-                    icon.style.left = '15px';
-                }
-            }
-        });
-
-        // Aplica la lógica de los input-group al formulario de registro en la modal
-        const registerInputGroups = document.querySelectorAll('#registerModal .input-group');
-
-        registerInputGroups.forEach(inputGroup => {
-            const input = inputGroup.querySelector('input');
-            const icon = inputGroup.querySelector('.icon');
-
-            let isHovered = false;
-            let isFocused = false;
-
-            inputGroup.addEventListener('mouseenter', () => {
-                isHovered = true;
-                setIconPosition();
-            });
-
-            inputGroup.addEventListener('mouseleave', () => {
-                isHovered = false;
-                setIconPosition();
-            });
-
-            input.addEventListener('focus', () => {
-                isFocused = true;
-                setIconPosition();
-            });
-
-            input.addEventListener('blur', () => {
-                isFocused = false;
-                setIconPosition();
-            });
-
-            input.addEventListener('input', () => {
-                setIconPosition();
-            });
-
-            function setIconPosition() {
-                if (isHovered || isFocused || input.value !== "") {
-                    icon.style.left = 'calc(100% - 30px)';
-                } else {
-                    icon.style.left = '15px';
-                }
-            }
-        });
     </script>
 </body>
-
 </html>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

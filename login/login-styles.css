@@ -1,72 +1,230 @@
 /* Estilos generales para el cuerpo de la página */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-image: url('imagenes\ /bg.png');/* Ruta de la imagen de fondo */
-    background-size: 111;
-    background-repeat: no-repeat;/* Evita que la imagen se repita */
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-/* Estilos para el título del formulario */
-h2 {
-    font-size: 28px;
-    color: #ffffff;
-    margin-bottom: 30px;
+    margin: 0; /* Elimina el margen predeterminado del body */
+    padding: 0; /* Elimina el padding predeterminado del body */
+    font-family: 'Arial', sans-serif; /* Define la fuente predeterminada */
+    background: url(imagenes\ /bg.png) no-repeat center fixed; /* Imagen de fondo centrada y fija */
+    background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
+    background-color: #0a0922; /* Color de fondo de respaldo */
+    color: #ffffff; /* Color del texto predeterminado */
+    display: flex; /* Usa flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    min-height: 100vh; /* Altura mínima del body igual al 100% del viewport */
 }
 
- /* Contenedor principal del formulario de inicio de sesión */
+/* Capa oscura semitransparente sobre el fondo */
+body::before {
+    content: ''; /* Contenido vacío para el pseudo-elemento */
+    position: absolute; /* Posicionamiento absoluto respecto al body */
+    top: 0; /* Alinea en la parte superior */
+    left: 0; /* Alinea en la parte izquierda */
+    width: 100%; /* Ocupa el 100% del ancho */
+    height: 100%; /* Ocupa el 100% de la altura */
+    background-color: rgba(0, 0, 8, 0.2); /* Color negro con 20% de opacidad */
+    z-index: -1; /* Coloca la capa detrás del contenido */
+}
+
+/* Media Queries para ajustar en dispositivos móviles */
+@media (max-width: 768px) {
+    body {
+        background-size: contain; /* Ajusta la imagen para que se vea completa en pantallas pequeñas */
+        background-position: top; /* Alinea la imagen en la parte superior */
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        background-size: cover; /* Vuelve a cubrir todo el fondo en pantallas muy pequeñas */
+        background-position: center; /* Centra la imagen */
+    }
+}
+
+/* Estilos para el título del formulario */
+h2 {
+    font-size: 28px; /* Tamaño de la fuente */
+    color: #ffffff; /* Color del texto */
+    margin-bottom: 30px; /* Margen inferior para separar del contenido */
+}
+
+/* Contenedor principal del formulario de inicio de sesión */
 .login-container {
-    width: 350px;
-    padding: 60px 65px 55px; /* Espaciado interno */
-    backdrop-filter: blur(3px); /* Efecto de desenfoque */
-    border-radius: 55px; /* Bordes redondeados */
-    box-shadow: 0 4px 40px rgb(255, 255, 255); /* Sombra suave */
-    text-align: center; 
+    width: 500px;
+    padding: 60px 65px 55px;
+    backdrop-filter: blur(3px);
+    border-radius: 55px;
+    box-shadow: 0 4px 40px rgba(255, 255, 255, 0.5);
+    text-align: center;
+    box-sizing: border-box;
+    margin: 0 auto;
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 1.8s ease, opacity 0.9s ease; /* Añadimos la transición de opacidad */
+    overflow: hidden;
+    opacity: 1; /* Inicialmente, el contenedor es completamente visible */
+}
+
+/* Formulario frontal (login) */
+.form-front {
+    backface-visibility: hidden;
+    transform: rotateY(0deg);
+}
+
+/* Formulario de registro (form-back) */
+.form-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    border-radius: 55px;
+    padding: 60px 65px 55px;
+    box-sizing: border-box;
+}
+
+/* Contenido del formulario de registro */
+.form-back .form-content {
+    transform: rotateY(0deg);
+    transform-style: preserve-3d;
+}
+
+/* Aislar el texto de la rotación */
+.form-back .form-content * {
+    transform: rotateY(0deg);
+}
+
+/* Cuando el contenedor gira, ajustamos la visibilidad de los formularios */
+.login-container.flipped .form-front {
+    transform: rotateY(180deg);
+}
+
+.login-container.flipped .form-back {
+    transform: rotateY(0deg);
+}
+
+/* Estilos específicos para los grupos de entrada en el formulario de registro */
+.form-back .input-group {
+    margin-bottom: 10px;
+}
+
+.form-back .input-group .placeholder {
+    display: block;
+    text-align: center;
+    margin-bottom: 0.2px;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.form-back .input-group input {
+    width: 90%;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 70px;
+    font-size: 14px;
+    color: #000;
+    background-color: #f9f9f9;
+}
+
+.form-back .input-group input:focus {
+    border-color: #5575a5;
+    outline: none;
+}
+
+/* Efecto de encendido/apagado */
+.login-container.turning {
+    opacity: 0; /* Durante el giro, el contenedor se vuelve transparente */
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.8); /* Añade un resplandor */
+}
+
+/* Media Queries para ajustar en pantallas pequeñas */
+@media (max-width: 768px) {
+    .login-container {
+        width: 90%;
+        max-width: 500px;
+        padding: 40px 30px;
+        border-radius: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        width: 95%;
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+}
+
+/* Media Queries para ajustar en pantallas pequeñas */
+@media (max-width: 768px) {
+    .login-container {
+        width: 90%;
+        max-width: 500px;
+        padding: 40px 30px;
+        border-radius: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        width: 95%;
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
 }
 
 /* Estilos para los grupos de entrada (inputs) */
 .input-group {
-    position: relative; /* Para posicionar íconos y placeholders */
-    margin-bottom: 20px; /* Espacio entre los campos */
+    position: relative; /* Permite posicionar elementos hijos de manera absoluta */
+    margin-bottom: 30px; /* Espacio entre los campos */
 }
+
+
+/* Estilos para los placeholders */
+.input-group .placeholder {
+    display: block; /* Hace que el placeholder ocupe toda la línea */
+    text-align: center; /* Centra el texto del placeholder */
+    margin-bottom: 10px; /* Espacio entre el placeholder y el input */
+    color: #ffffff; /* Color del texto */
+    font-size: 16px; /* Tamaño de la fuente */
+}
+
 
 /* Estilos para los íconos dentro de los campos de entrada */
 .input-group .icon {
-    position: absolute;
-    left: 15px;  /* Posición inicial del icono */
-    top: 60%; /* Centrado vertical */
-    transform: translateY(-50%); /* Ajuste fino para centrar */
+    position: absolute; /* Posicionamiento absoluto dentro del grupo */
+    left: 15px; /* Distancia desde la izquierda */
+    top: 65%; /* Alinea verticalmente al 60% del grupo */
+    transform: translateY(-50%); /* Ajuste fino para centrar verticalmente */
     font-size: 18px; /* Tamaño del ícono */
     color: #000000ef; /* Color del ícono */
-    transition: left 0.5s ease; /* Transición suave */
+    transition: left 0.5s ease; /* Transición suave para el movimiento */
 }
 
-/* Efecto al hacer hover sobre los grupos de entrada */
-.input-group:hover .icon {
-    left: calc(100% - 30px); /* Desplaza el icono hacia la derecha */   
+/* Efecto al hacer hover sobre los grupos de entrada o al enfocar el input */
+.input-group:hover .icon,
+.input-group input:focus + .icon {
+    left: calc(100% - 30px); /* Mueve el ícono hacia la derecha */
 }
 
 /* Estilos para los campos de entrada (inputs) */
 .login-container input {
-    width: 100%;
+    width: 90%; /* Ancho del input */
     padding: 12px 20px; /* Espaciado interno */
     margin: 10px 0; /* Margen superior e inferior */
-    border: 1px solid #c4c4c4; /* Borde del input */
-    border-radius: 20px; /* Bordes redondeados */
-    background-color: #a7bbce; /* Color de fondo del input */
+    border: 1px solid #f4fb32c6; /* Borde del input */
+    border-radius: 70px; /* Bordes redondeados */
+    background-color: #d8d8f4; /* Color de fondo del input */
     color: #000000; /* Color del texto */
     font-size: 16px; /* Tamaño de la fuente */
-    transition: border-color 0.3s ease;  /* Transición suave */
+    transition: border-color 0.3s ease; /* Transición suave para el borde */
 }
 
 /* Estilos cuando el input está enfocado */
 .login-container input:focus {
-    border-color: #f4fb32c6; /* Cambia el color del borde */
+    border-color: #d7dead; /* Cambia el color del borde al enfocar */
     outline: none; /* Elimina el contorno predeterminado */
 }
 
@@ -78,65 +236,33 @@ h2 {
 
 /* Estilos para el botón de "Ingresar" */
 .login-submit {
+    display: block; /* Hace que el botón sea un bloque */
+    width: 90%; /* Ancho del botón */
     padding: 13px; /* Espaciado interno */
-    width: 100%; /* Ancho completo */
-    border: none; /* Sin borde */
-    margin-top: 25px; /* Separa el botón de "Volver" del de "Ingresar" */
-    background-color: #6c757d; /* Color de fondo diferente (opcional) */
-    border-radius: 50px; /* Bordes redondeados */
+    margin: 30px 0; /* Margen superior e inferior */
     background-color: #5575a5; /* Color de fondo */
     color: #ffffff; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 70px; /* Bordes redondeados */
     font-size: 16px; /* Tamaño de la fuente */
     font-weight: bold; /* Texto en negrita */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    transition: background-color 0.3s ease; /* Transición suave */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+    text-align: center; /* Centra el texto dentro del botón */
+    transform: translateX(20px); /* Mueve el botón 20px a la derecha */
 }
 
 /* Efecto al hacer hover sobre el botón de "Ingresar" */
 .login-submit:hover {
-    background-color: #f4fb32c6; /* Cambia el color de fondo */
+    background-color: #f4fb32c6; /* Cambia el color de fondo al pasar el mouse */
+    color: #000000; /* Texto negro */
 }
 
 /* Estilos para el mensaje de error */
 .error-message {
-    color: #ff4444;/* Color del texto */
+    color: #ff4444; /* Color del texto */
     font-size: 14px; /* Tamaño de la fuente */
     margin-top: 10px; /* Margen superior */
-}
-
-/* Contenedor para las opciones "Recuérdame" y "recuperar contraseña" */
-.options-container {
-    display: flex;
-    justify-content: space-between; /* Espacio entre elementos */
-    align-items: center; /* Alineación vertical */
-    margin: 15px 0; /* Margen superior e inferior */
-}
-
-/* Estilos para la opción "Recuérdame" */
-.remember-me {
-    display: flex;
-    align-items: center; /* Alineación vertical */
-    color:#f4fb32c6; /* Color del texto */
-}
-
-/* Estilos para el label de "Recuérdame" */
-.remember-me label {
-    margin-right: 10px; /* Margen derecho */
-    color: #ffffff; /* Color del texto */
-    font-size: 14px; /* Tamaño de la fuente */
-} 
-
-/* Estilos para el enlace "recuperar contraseña" */
-.forgot-password {
-    color: #ffffff; /* Color del texto */
-    font-size: 14px; /* Tamaño de la fuente */
-    text-decoration: none; /* Sin subrayado */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    transition: color 0.3s ease; /* Transición suave */
-}
-/* Efecto al hacer hover sobre el enlace "recuperar contraseña" */
-.forgot-password:hover {
-    color: #f4fb32c6; /* Cambia a un gris más claro al hacer hover */
 }
 
 /* Clase para ocultar elementos */
@@ -144,28 +270,60 @@ h2 {
     display: none;
 }
 
-.modal-content h2 {
-    font-size: 28px;
-    color: #ffffff;
-    margin-bottom: 30px;
+/* Contenedor para las opciones "Recuérdame" y "recuperar contraseña" */
+.options-container {
+    display: flex; /* Usa flexbox para alinear elementos */
+    justify-content: space-between; /* Espacio entre elementos */
+    align-items: center; /* Alineación vertical */
+    margin: 15px 0; /* Margen superior e inferior */
 }
 
-.close:hover,
-.close:focus {
-    color: #f4fb32c6;
-    text-decoration: none;
-    cursor: pointer;
+/* Estilos para la opción "Recuérdame" */
+.remember-me {
+    display: flex; /* Usa flexbox para alinear elementos */
+    align-items: center; /* Alineación vertical */
+    color: #f4fb32c6; /* Color del texto */
 }
 
-@media (max-width: 480px) {
-    .modal-content {
-        width: 90%; /* Ocupa más ancho en pantallas pequeñas */
-        padding: 30px; /* Reduce el padding para evitar desbordamiento */
-        margin: 20% auto; /* Ajusta el margen para pantallas pequeñas */
-    }
-    .login-container{
-        width: 90%; /* Ocupa más ancho en pantallas pequeñas */
-        padding: 30px; /* Reduce el padding para evitar desbordamiento */
-        margin: 20% auto; /* Ajusta el margen para pantallas pequeñas */
-    }
+/* Estilos para el label de "Recuérdame" */
+.remember-me label {
+    margin-right: 10px; /* Margen derecho */
+    color: #ffffff; /* Color del texto */
+    font-size: 14px; /* Tamaño de la fuente */
+}
+
+/* Estilos para el enlace "recuperar contraseña" */
+.forgot-password {
+    color: #ffffff; /* Color del texto */
+    font-size: 14px; /* Tamaño de la fuente */
+    text-decoration: none; /* Sin subrayado */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: color 0.3s ease; /* Transición suave para el color */
+}
+
+/* Efecto al hacer hover sobre el enlace "recuperar contraseña" */
+.forgot-password:hover {
+    color:  #f4fb32c6; /* Cambia el color del texto al pasar el mouse */
+}
+
+/* Estilos para el botón de volver */
+.back-button {
+    display: block; /* Hace que el botón sea un bloque */
+    width: 30%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    margin: 20px 0; /* Margen entre botones */
+    background-color: transparent; /* Fondo transparente */
+    border: 2px solid #7c7834; /* Borde blanco */
+    color: #d8d7d7; /* Color del texto */
+    font-size: 16px; /* Tamaño del texto */
+    border-radius: 50px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+    transform: translateX(130px); /* Mueve el botón 20px a la derecha */
+}
+
+/* Efecto al hacer hover sobre el botón de volver */
+.back-button:hover {
+    background-color:  #f4fb32c6; /* Fondo blanco */
+    color: #000000; /* Texto negro */
 }

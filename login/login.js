@@ -5,14 +5,6 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    // Credenciales válidas
-
-    const validUsers = [
-        { username: 'admin', password: '1234', redirect: '../dashboard/admin-dashboard.html' }, // Ruta relativa corregida
-        { username: 'user', password: '1234', redirect: '../user/user-dashboard.html' }  // Ruta relativa corregida
-    ];
-
-
 
     // Validar las credenciales
     const user = validUsers.find(user => user.username === username && user.password === password);
