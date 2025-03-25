@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="admin-dashboard.css"> 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Librería Chart.js para gráficas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><!-- Iconos de FontAwesome -->
 </head>
 
@@ -78,106 +82,225 @@
     </div>
 
     <style>
-        /* Estilos para los menús desplegables */
-
-        /* Estilos para los campos de solo lectura (cantidad y valor) */
-    input[readonly] {
-        border: 1px solid #f1f1f1; /* Borde sutil */
-        border-radius: 4px; /* Bordes redondeados */
-        padding: 8px; /* Espaciado interno */
-        font-size: 14px; /* Tamaño de fuente */
-        color: #000000; /* Color de texto */
-        width: 100%; /* Ancho completo */
-        box-sizing: border-box; /* Incluye padding y borde en el ancho */
-        cursor: not-allowed; /* Cambia el cursor para indicar que no es editable */
-    }
-
-    /* Estilos para los campos editables (tipo y diámetro) */
-    select {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background: transparent;
-        border: 1px solid #f1f1f1; /* Borde sutil */
-        border-radius: 4px; /* Bordes redondeados */
-        padding: 8px 30px 8px 10px; /* Espaciado interno */
-        font-size: 14px; /* Tamaño de fuente */
-        color: #000000; /* Color de texto */
-        cursor: pointer; /* Cambia el cursor para indicar que es editable */
-        width: 100%; /* Ancho completo */
-        box-sizing: border-box; /* Incluye padding y borde en el ancho */
-    }
-
-    /* Contenedor para la flecha personalizada */
-    .select-container {
-        position: relative;
-        display: inline-block;
-        width: 100%; /* Ancho completo */
-    }
-
-    /* Flecha personalizada */
-    .select-container::after {
-        content: "▼";
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        transform: translateY(-50%);
-        pointer-events: none;
-        color: #000;
-        font-size: 12px;
-    }
-
-    /* Estilos para la tabla */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px; /* Espacio superior */
-    }
-
-    th, td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #34495e;
-        color: white;
-        font-weight: bold; /* Texto en negrita */
-    }
-
-    tr:hover {
-        background-color:#f1f1f1; /* Cambia el color al hacer hover */
-    }
-
-    /* Estilos para el título de la sección */
-    .section-title {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: #34495e;
-    }
-
-    /* Estilos para el valor */
-    .valor {
-        background: #ffffff; /* Fondo blanco */
-        border: 1px solid #f1f1f1; /* Borde sutil */
-        border-radius: 4px; /* Bordes redondeados */
-        padding: 8px; /* Espaciado interno */
-        font-size: 14px; /* Tamaño de fuente */
-        color: #000000; /* Color de texto */
-        box-sizing: border-box; /* Incluye padding y borde en el ancho */
-        cursor: not-allowed; /* Cambia el cursor para indicar que no es editable */
-        display: block; /* Ocupa todo el ancho disponible */
-        width: 100%; /* Ancho completo */
-        text-align: left; /* Alineación del texto */
-}
         
-    
+        
+        /* CSS MODAL ALMACEN ......Estilos generales para los campos de solo lectura (input readonly) */
+        input[readonly] {
+            border: 1px solid #f1f1f1; /* Borde gris claro */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 8px; /* Espacio interno */
+            font-size: 14px; /* Tamaño de la fuente */
+            color: #000000; /* Color del texto */
+            width: 100%; /* Ancho completo */
+            box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
+            cursor: not-allowed; /* Cursor que indica que no se puede interactuar */
+        }
+
+        /* Estilos para los campos de selección (select) */
+        select {
+            appearance: none; /* Elimina el estilo por defecto del navegador */
+            -webkit-appearance: none; /* Para navegadores Safari y Chrome */
+            -moz-appearance: none; /* Para Firefox */
+            background: transparent; /* Fondo transparente */
+            border: 1px solid #f1f1f1; /* Borde gris claro */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 8px 30px 8px 10px; /* Espacio interno (más espacio a la derecha para la flecha) */
+            font-size: 14px; /* Tamaño de la fuente */
+            color: #000000; /* Color del texto */
+            cursor: pointer; /* Cursor de puntero */
+            width: 100%; /* Ancho completo */
+            box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
+        }
+
+        /* Contenedor para la flecha personalizada en los campos select */
+        .select-container {
+            position: relative; /* Posición relativa para poder posicionar la flecha */
+            display: inline-block; /* Mostrar como bloque en línea */
+            width: 100%; /* Ancho completo */
+        }
+
+        /* Flecha personalizada para los campos select */
+        .select-container::after {
+            content: "▼"; /* Carácter de flecha hacia abajo */
+            position: absolute; /* Posición absoluta dentro del contenedor */
+            top: 50%; /* Centrar verticalmente */
+            right: 10px; /* Espacio desde el borde derecho */
+            transform: translateY(-50%); /* Ajustar el centrado vertical */
+            pointer-events: none; /* Evitar que la flecha capture eventos del ratón */
+            color: #000; /* Color de la flecha */
+            font-size: 12px; /* Tamaño de la flecha */
+        }
+
+        /* Estilos generales para la tabla */
+        table {
+            width: 100%; /* Ancho completo */
+            border-collapse: collapse; /* Colapsar los bordes de las celdas */
+            margin-top: 20px; /* Margen superior */
+        }
+
+        /* Estilos para las celdas del encabezado (th) y las celdas de datos (td) */
+        th,
+        td {
+            padding: 12px; /* Espacio interno */
+            text-align: left; /* Alineación del texto a la izquierda */
+            border-bottom: 1px solid #ddd; /* Borde inferior gris claro */
+        }
+
+        /* Estilos para las celdas del encabezado (th) */
+        th {
+            background-color: #34495e; /* Color de fondo azul oscuro */
+            color: white; /* Color del texto blanco */
+            font-weight: bold; /* Texto en negrita */
+        }
+
+        /* Estilos para las filas (tr) al pasar el ratón por encima */
+        tr:hover {
+            background-color: #f1f1f1; /* Color de fondo gris claro */
+        }
+
+        /* Estilos para el título de la sección */
+        .section-title {
+            font-size: 18px; /* Tamaño de la fuente */
+            font-weight: bold; /* Texto en negrita */
+            margin-bottom: 10px; /* Margen inferior */
+            color: #34495e; /* Color del texto azul oscuro */
+        }
+
+        /* Estilos para el valor (generalmente para mostrar datos no editables) */
+        .valor {
+            background: #ffffff; /* Color de fondo blanco */
+            border: 1px solid #f1f1f1; /* Borde gris claro */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 8px; /* Espacio interno */
+            font-size: 14px; /* Tamaño de la fuente */
+            color: #000000; /* Color del texto */
+            box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
+            cursor: not-allowed; /* Cursor que indica que no se puede interactuar */
+            display: block; /* Mostrar como bloque */
+            width: 100%; /* Ancho completo */
+            text-align: left; /* Alineación del texto a la izquierda */
+        }
+
+        /* Estilos para el contenedor de los almacenes en la pantalla principal */
+        .almacen-container {
+            display: flex; /* Utilizar flexbox para el diseño */
+            justify-content: space-around; /* Distribuir los elementos con espacio entre ellos */
+            margin: 20px; /* Margen externo */
+        }
+
+        /* Estilos para las tarjetas de los almacenes (Bogotá y Cali) */
+        .almacen-card {
+            /* Borde: un borde sutil para definir la tarjeta */
+            border: 1px solid #e0e0e0; /* Un gris más suave que #ddd */
+
+            /* Padding: Espacio interno para que el contenido no esté pegado a los bordes */
+            padding: 25px; /* Aumentado un poco para más espacio */
+
+            /* Dimensiones: Ancho y alto fijos para mantener la consistencia */
+            width: 400px;
+            height: 250px;
+
+            /* Text Alignment: Centrar el texto dentro de la tarjeta */
+            text-align: center;
+
+            /* Cursor: Cambiar el cursor a un puntero para indicar que es clickable */
+            cursor: pointer;
+
+            /* Box Shadow: Una sombra sutil para dar profundidad */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra más pronunciada pero aún suave */
+
+            /* Transition: Una transición suave para el efecto hover */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transiciones para la transformación y la sombra */
+
+            /* Flexbox Layout: Utilizar flexbox para centrar el contenido verticalmente */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            /* Background Color: Un fondo suave para que la tarjeta destaque */
+            background-color: #f9f9f9; /* Un gris muy claro */
+
+            /* Border Radius: Redondear los bordes para una apariencia más moderna */
+            border-radius: 12px;
+        }
+
+        /* Estilos para las tarjetas de los almacenes al pasar el ratón por encima */
+        .almacen-card:hover {
+            /* Transform: Ligeramente escalar la tarjeta para el efecto hover */
+            transform: translateY(-8px) scale(1.03); /* Desplazamiento y escalado sutil */
+
+            /* Box Shadow: Aumentar la sombra para dar más énfasis al hover */
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12); /* Sombra más intensa en el hover */
+        }
+        /* Estilos específicos para la ventana modal de detalles del almacén */
+        #almacenModal .modal-dialog {
+            /* Ancho máximo: El modal ocupa el 98% de la pantalla (casi pantalla completa) */
+            max-width: 98%;
+        
+            /* Altura: La altura se ajusta automáticamente al contenido */
+            height: auto;
+        
+            /* Márgenes: Centrar el modal verticalmente y dejar espacio horizontal */
+            margin: 2rem auto;
+        
+            /* Posición: Estática para que no interfiera con el flujo del documento */
+            position: relative;
+        
+            /* Bordes redondeados: Bordes suaves para una apariencia moderna */
+            border-radius: 18px;
+        
+            /* Sombra: Sombra sutil para dar una ligera elevación */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos específicos para el contenido de la ventana modal */
+        #almacenModal .modal-content {
+            /* Altura: La altura se ajusta al contenido */
+            height: auto;
+        
+            /* Display: Utilizar Flexbox para el diseño interno */
+            display: flex;
+        
+            /* Flex-direction: Organizar los elementos en fila (horizontal, derecha a izquierda) */
+            flex-direction: row-reverse;
+        
+            /* Justificar contenido: Distribución del espacio horizontalmente */
+            justify-content: space-between;
+        
+            /* Alinear items: Centrar verticalmente */
+            align-items: center;
+        }
+
+        /* Estilos específicos para el cuerpo de la ventana modal */
+        #almacenModal .modal-body {
+            /* Padding: Reducir el padding vertical para que la tira sea más compacta */
+            padding: 1rem 2rem;
+        
+            /* Flex: Ocupar todo el espacio disponible */
+            flex: 1;
+        }
+
+        /* Estilos para la sección de detalles dentro de la ventana modal */
+        #almacenModal .details {
+            /* Ancho: La sección de detalles ocupa el 45% del modal */
+            width: 45%;
+        
+            /* Text-align: Centrar el texto dentro de la sección de detalles */
+            text-align: center;
+        }
+
+        /* Estilos para la sección de inventario dentro de la ventana modal */
+        #almacenModal .inventory {
+            /* Ancho: La sección de inventario ocupa el 45% del modal */
+            width: 45%;
+        
+            /* Text-align: Centrar el texto dentro de la sección de inventario */
+            text-align: center;
+        }
+
     </style>
 
     
-
     <!-- Contenido principal -->
     <div class="main-content">
         <h1>Ingegases Y Redes s.a.s</h1>
@@ -185,7 +308,7 @@
     </div>
 
     
-    <!-- Ventana modal -->
+    <!-- Ventana modal PROYECTOS -->
     <div id="projectModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -235,537 +358,613 @@
         </div>
     </div>
 
+    <!-- The Modal ALMACEN -->
+    <div class="modal fade" id="almacenModal" tabindex="-1" role="dialog" aria-labelledby="almacenModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="almacenModalLabel">Detalles del Almacén</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            </div>
+            <div class="modal-body" id="modalContent">
+            <!-- Aquí se cargará el contenido del modal -->
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <!-- Modal para Agregar Producto -->
+    <div class="modal fade" id="agregarProductoModal" tabindex="-1" role="dialog" aria-labelledby="agregarProductoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agregarProductoModalLabel">Agregar Nuevo Producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="agregarProductoForm">
+                        <div class="form-group">
+                            <label for="material">Material:</label>
+                            <select class="form-control" id="material" name="material" required onchange="actualizarOpciones()">
+                                <option value="">Seleccione...</option>
+                                <option value="Cobre">Cobre</option>
+                                <option value="Acero inoxidable">Acero inoxidable</option>
+                                <option value="Acero carbono">Acero carbono</option>
+                                <option value="PVC">PVC</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Tipo:</label>
+                            <select class="form-control" id="tipo" name="tipo" required onchange="actualizarOpciones()">
+                                <option value="">Seleccione...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="diametro">Diámetro:</label>
+                            <select class="form-control" id="diametro" name="diametro" required>
+                                <option value="">Seleccione...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nuevaCantidad">Cantidad:</label>
+                            <input type="number" class="form-control" id="nuevaCantidad" name="nuevaCantidad" required>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="guardarNuevoProducto()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script>
             
 
-    <script>
-    
-// ---------------------------------------------------------------------------
-// Creacion Tuberia y Accesorios
-// ---------------------------------------------------------------------------
-const materialOptions = {
-    "Cobre": { tipos: ["M", "K", "L"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10"] },
-    "Acero inoxidable": { tipos: ["10", "40", "80"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10"] },
-    "Acero carbono": { tipos: ["10", "40", "80"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10"] },
-    "PVC": { tipos: ["Presion", "Electrica", "Sanitaria", "Ventilacion"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10"] }
-};
+        // ---------------------------------------------------------------------------
+        // Creacion Tuberia y Accesorios (Diámetros hasta 4 pulgadas)
+        // ---------------------------------------------------------------------------
+        const materialOptions = {
+            "Cobre": { tipos: ["M", "K", "L"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4"] },
+            "Acero inoxidable": { tipos: ["10", "40", "80"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4"] },
+            "Acero carbono": { tipos: ["10", "40", "80"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4"] },
+            "PVC": { tipos: ["Presion", "Electrica", "Sanitaria", "Ventilacion"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4"] }
+        };
 
-const tuberiaData = [
-    { material: "Cobre", tipo: "M", diametro: "1/8 pulgadas", cantidad_mt_lineal: 10, valor: 15 },
-    { material: "Acero inoxidable", tipo: "10", diametro: "1/2 pulgadas", cantidad_mt_lineal: 5, valor: 25 },
-    { material: "Acero carbono", tipo: "80", diametro: "1 pulgada", cantidad_mt_lineal: 12, valor: 30 },
-    { material: "PVC", tipo: "Presion", diametro: "3 pulgadas", cantidad_mt_lineal: 8, valor: 10 }
-];
+        const tuberiaData = [
+            { material: "Cobre", tipo: "M", diametro: "1/8 pulgadas", cantidad_mt_lineal: 10, valor: 15 },
+            { material: "Acero inoxidable", tipo: "10", diametro: "1/2 pulgadas", cantidad_mt_lineal: 5, valor: 25 },
+            { material: "Acero carbono", tipo: "80", diametro: "1 pulgada", cantidad_mt_lineal: 12, valor: 30 },
+            { material: "PVC", tipo: "Presion", diametro: "3 pulgadas", cantidad_mt_lineal: 8, valor: 10 }
+        ];
 
-// Generar la tabla de códigos predefinidos automáticamente
-let codigoCounter = 1;
-const codigosPredefinidos = [];
+        // Generar la tabla de códigos predefinidos automáticamente, *respetando el orden específico*
+        let codigoCounter = 1;
+        const codigosPredefinidos = {}; // Usaremos un objeto para facilitar la búsqueda
 
-for (const material in materialOptions) {
-    const tipos = materialOptions[material].tipos;
-    const diametros = materialOptions[material].diametros;
+        for (const material in materialOptions) {
+            const tipos = materialOptions[material].tipos;
 
-    for (const tipo of tipos) {
-        for (const diametro of diametros) {
-            const codigo = "IYR" + codigoCounter.toString().padStart(4, '0');
-            codigosPredefinidos.push({ codigo: codigo, material: material, tipo: tipo, diametro: diametro });
-            codigoCounter++;
-        }
-    }
-}
+            for (const tipo of tipos) {
+                const diametros = materialOptions[material].diametros; // Diametros para el material y tipo actuales
+                    for (const diametro of diametros) {
 
-let chart; // Variable global para almacenar la instancia de la gráfica de tuberia
+                    const codigo = "IYR" + codigoCounter.toString().padStart(4, '0');
 
-function loadTuberia() {
-    const tableHeaders = `
-        <tr>
-            <th>Código</th>
-            <th>Material</th>
-            <th>Tipo</th>
-            <th>Diámetro</th>
-            <th>Cantidad (mt/lineal)</th>
-            <th>Valor</th>
-        </tr>
-    `;
-
-    const tableRows = tuberiaData.map((item, index) => {
-        const tipos = materialOptions[item.material].tipos;
-        const diametros = materialOptions[item.material].diametros;
-        const diametroSinUnidad = item.diametro.split(" ")[0];
-
-        // Busca el código predefinido
-        const codigoEncontrado = codigosPredefinidos.find(codigo =>
-            codigo.material === item.material &&
-            codigo.tipo === item.tipo &&
-            codigo.diametro === diametroSinUnidad
-        );
-
-        const codigo = codigoEncontrado ? codigoEncontrado.codigo : "Código no encontrado";
-
-        return `
-            <tr>
-                <td>${codigo}</td>
-                <td>${item.material}</td>
-                <td>
-                    <div class="select-container">
-                        <select class="tipo-select" data-index="${index}">
-                            ${tipos.map(tipo => `<option value="${tipo}" ${tipo === item.tipo ? "selected" : ""}>${tipo}</option>`).join('')}
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="select-container">
-                        <select class="diametro-select" data-index="${index}">
-                            ${diametros.map(diametro => `<option value="${diametro}" ${diametro === diametroSinUnidad ? "selected" : ""}>${diametro}</option>`).join('')}
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <input type="number" class="cantidad-input" data-index="${index}" value="${item.cantidad_mt_lineal}" readonly />
-                </td>
-                <td>
-                   <span class="valor">$${item.valor}</span>
-                </td>
-            </tr>
-        `;
-    }).join('');
-
-    const tableContent = `
-        <div class="section-title vertical-title">Tubería</div>
-        <div class="table-container">
-            <table>
-                <thead>${tableHeaders}</thead>
-                <tbody>${tableRows}</tbody>
-            </table>
-        </div>
-    `;
-
-    const chartContent = `
-        <h3>Gráfica de Cantidades (Tubería)</h3>
-        <canvas id="tuberiaChart"></canvas>
-    `;
-
-    const fullContent = tableContent + chartContent;
-
-    document.getElementById('dynamicContent').innerHTML = fullContent;
-
-    createChart(); // Crea la gráfica después de cargar la tubería
-    updateChart(); // Actualiza la gráfica con los datos iniciales
-    // --- Event Listeners Tubería ---
-    document.querySelectorAll('.tipo-select').forEach(select => {
-        select.addEventListener('change', (event) => {
-            const index = event.target.getAttribute('data-index');
-            tuberiaData[index].tipo = event.target.value;
-            actualizarCodigoEnTabla(index);
-            updateChart();
-        });
-    });
-
-    document.querySelectorAll('.diametro-select').forEach(select => {
-        select.addEventListener('change', (event) => {
-            const index = event.target.getAttribute('data-index');
-            tuberiaData[index].diametro = event.target.value + " pulgadas";
-            actualizarCodigoEnTabla(index);
-            updateChart();
-        });
-    });
-
-    document.querySelectorAll('.cantidad-input').forEach(input => {
-        input.addEventListener('change', (event) => {
-            const index = parseInt(event.target.getAttribute('data-index'));
-            tuberiaData[index].cantidad_mt_lineal = parseInt(event.target.value);
-            updateChart();
-        });
-    });
-}
-
-function createChart() {
-    const ctxTuberia = document.getElementById('tuberiaChart').getContext('2d');
-    chart = new Chart(ctxTuberia, {
-        type: 'bar',
-        data: {
-            labels: tuberiaData.map(item => `${item.material} - ${item.tipo}`),
-            datasets: [{
-                label: 'Cantidad (mt/lineal)',
-                data: tuberiaData.map(item => item.cantidad_mt_lineal),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            indexAxis: 'y', // Esta línea cambia la orientación a horizontal
-            scales: {
-                x: {  // Ahora 'x' es el eje horizontal
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Cantidad (mt/lineal)',
-                        align: 'end'
+                    if (!codigosPredefinidos[material]) {
+                        codigosPredefinidos[material] = {};
                     }
+
+                    if (!codigosPredefinidos[material][tipo]) {
+                        codigosPredefinidos[material][tipo] = {};
+                    }
+                        
+                    codigosPredefinidos[material][tipo][diametro] = codigo;  // Asigna el código en el orden correcto
+                    codigoCounter++;
+
+                    if (codigoCounter > 144) { // Limite de codigos
+                        break;
+                        }
+                }
+                    if (codigoCounter > 144) { // Limite de codigos
+                    break;
+                        }
+            }
+            if (codigoCounter > 144) { // Limite de codigos
+                    break;
+                        }
+        }
+
+        let chart; // Variable global para almacenar la instancia de la gráfica de tuberia
+
+        function loadTuberia() {
+            const tableHeaders = `
+                <tr>
+                    <th>Código</th>
+                    <th>Material</th>
+                    <th>Tipo</th>
+                    <th>Diámetro</th>
+                    <th>Cantidad (mt/lineal)</th>
+                    <th>Valor</th>
+                </tr>
+            `;
+
+            const tableRows = tuberiaData.map((item, index) => {
+                const tipos = materialOptions[item.material].tipos;
+                const diametros = materialOptions[item.material].diametros;
+                const diametroSinUnidad = item.diametro.split(" ")[0];
+
+                // Busca el código predefinido
+                let codigo = "Código no encontrado";
+                if (codigosPredefinidos[item.material] && codigosPredefinidos[item.material][item.tipo] && codigosPredefinidos[item.material][item.tipo][diametroSinUnidad]) {
+                    codigo = codigosPredefinidos[item.material][item.tipo][diametroSinUnidad];
+                }
+
+                return `
+                    <tr>
+                        <td>${codigo}</td>
+                        <td>${item.material}</td>
+                        <td>
+                            <div class="select-container">
+                                <select class="tipo-select" data-index="${index}">
+                                    ${tipos.map(tipo => `<option value="${tipo}" ${tipo === item.tipo ? "selected" : ""}>${tipo}</option>`).join('')}
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="select-container">
+                                <select class="diametro-select" data-index="${index}">
+                                    ${diametros.map(diametro => `<option value="${diametro}" ${diametro === diametroSinUnidad ? "selected" : ""}>${diametro}</option>`).join('')}
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="number" class="cantidad-input" data-index="${index}" value="${item.cantidad_mt_lineal}" readonly />
+                        </td>
+                        <td>
+                        <span class="valor">$${item.valor}</span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            const tableContent = `
+                <div class="section-title vertical-title">Tubería</div>
+                <div class="table-container">
+                    <table>
+                        <thead>${tableHeaders}</thead>
+                        <tbody>${tableRows}</tbody>
+                    </table>
+                </div>
+            `;
+
+            const chartContent = `
+                <h3>Gráfica de Cantidades (Tubería)</h3>
+                <canvas id="tuberiaChart"></canvas>
+            `;
+
+            const fullContent = tableContent + chartContent;
+
+            document.getElementById('dynamicContent').innerHTML = fullContent;
+
+            createChart(); // Crea la gráfica después de cargar la tubería
+            updateChart(); // Actualiza la gráfica con los datos iniciales
+
+            // --- Event Listeners Tubería ---
+            document.querySelectorAll('.tipo-select').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const index = event.target.getAttribute('data-index');
+                    tuberiaData[index].tipo = event.target.value;
+                    actualizarCodigoEnTabla(index);
+                    updateChart();
+                });
+            });
+
+            document.querySelectorAll('.diametro-select').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const index = event.target.getAttribute('data-index');
+                    tuberiaData[index].diametro = event.target.value + " pulgadas";
+                    actualizarCodigoEnTabla(index);
+                    updateChart();
+                });
+            });
+
+            document.querySelectorAll('.cantidad-input').forEach(input => {
+                input.addEventListener('change', (event) => {
+                    const index = parseInt(event.target.getAttribute('data-index'));
+                    tuberiaData[index].cantidad_mt_lineal = parseInt(event.target.value);
+                    updateChart();
+                });
+            });
+        }
+
+        function createChart() {
+            const ctxTuberia = document.getElementById('tuberiaChart').getContext('2d');
+            chart = new Chart(ctxTuberia, {
+                type: 'bar',
+                data: {
+                    labels: tuberiaData.map(item => `${item.material} - ${item.tipo}`),
+                    datasets: [{
+                        label: 'Cantidad (mt/lineal)',
+                        data: tuberiaData.map(item => item.cantidad_mt_lineal),
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
                 },
-                y: {  // Ahora 'y' es el eje vertical
-                    title: {
-                        display: true,
-                        text: 'Material - Tipo',
-                        align: 'end'
+                options: {
+                    indexAxis: 'y', // Esta línea cambia la orientación a horizontal
+                    scales: {
+                        x: {  // Ahora 'x' es el eje horizontal
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Cantidad (mt/lineal)',
+                                align: 'end'
+                            }
+                        },
+                        y: {  // Ahora 'y' es el eje vertical
+                            title: {
+                                display: true,
+                                text: 'Material - Tipo',
+                                align: 'end'
+                            },
+                            ticks: {
+                                autoSkip: false // Evita que las etiquetas se omitan automáticamente
+                            }
+                        }
                     },
-                    ticks: {
-                        autoSkip: false // Evita que las etiquetas se omitan automáticamente
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
                     }
                 }
+            });
+        }
+
+        function updateChart() {
+            chart.data.labels = tuberiaData.map(item => `${item.material} - ${item.tipo}`);
+            chart.data.datasets[0].data = tuberiaData.map(item => item.cantidad_mt_lineal);
+            chart.update();
+        }
+
+        function actualizarCodigoEnTabla(index) {
+        const material = tuberiaData[index].material;
+        const tipo = tuberiaData[index].tipo;
+        const diametroSinUnidad = tuberiaData[index].diametro.split(" ")[0];
+
+            let codigo = "Código no encontrado";
+            if (codigosPredefinidos[material] && codigosPredefinidos[material][tipo] && codigosPredefinidos[material][tipo][diametroSinUnidad]) {
+                    codigo = codigosPredefinidos[material][tipo][diametroSinUnidad];
+                }
+
+        const tdCodigo = document.querySelector(`#dynamicContent table tbody tr:nth-child(${parseInt(index) + 1}) td:first-child`);
+        tdCodigo.textContent = codigo;
+        }
+
+        // ---------------------------------------------------------------------------
+        // Creacion Accesorios
+        // ---------------------------------------------------------------------------
+
+        const materialOptionsAccesorios = {
+            "Cobre": {
+                tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador"],
+                clases: ["M", "K", "L"],
+                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "N/A"],
+                conexiones: ["Soldeo", "NPTH", "NPTM", "N/A"],
+                c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"],
+                c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"]
             },
-            plugins: {
-                legend: {
-                    display: false
+            "Acero Inoxidable": {
+                tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Bushing", "Brida"],
+                clases: ["10", "40", "80"], // Clases base. Se agregará 150psi, 300psi, 3000psi para brida.
+                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "N/A"],
+                conexiones: ["Soldeo", "NPTH", "NPTM", "N/A", "Socket"],
+                c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"],
+                c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"]
+            },
+            "Acero Carbon": {
+                tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Brida", "Bushing"],
+                clases: ["10", "40", "80"], // Clases base. Se agregará 150psi, 300psi, 3000psi para brida.
+                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "N/A"],
+                conexiones: ["Soldeo", "NPTH", "NPTM", "N/A", "Socket"],
+                c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"],
+                c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"]
+            },
+            "Bronce": {
+                tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Bushing", "Brida"],
+                clases: [], // No tiene clases, se agregarán para brida.
+                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "N/A"],
+                conexiones: ["Soldeo", "NPTH", "NPTM"],
+                c_entradas: ["H-M", "H-K", "H-L", "M-M", "M-K", "M-L", "H-10", "H-40", "H-80", "M-10", "M-40", "M-80", "NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"],
+                c_salidas: ["H-M", "H-K", "H-L", "M-M", "M-K", "M-L", "H-10", "H-40", "H-80", "M-10", "M-40", "M-80", "NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"]
+            },
+            "PVC": {
+                tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador"],
+                clases: ["Presion", "Electrica", "Sanitaria", "Ventilacion"],
+                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "N/A"],
+                conexiones: ["Lisa", "NPTH", "NPTM", "N/A"],
+                c_entradas: ["Lisa", "NPTH", "NPTM", "N/A"],
+                c_salidas: ["Lisa", "NPTH", "NPTM", "N/A"]
+            }
+        };
+
+        const accesoriosData = [
+            {
+                material: "Cobre", tipo: "Union", clase: "M", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 2, valor: 5
+            },
+            {
+                material: "Acero Inoxidable", tipo: "Union", clase: "10", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 3, valor: 8
+            },
+            {
+                material: "Acero Carbon", tipo: "Union", clase: "10", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 1, valor: 12
+            },
+            {
+                material: "Bronce", tipo: "Union", clase: "", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 4, valor: 3
+            },
+            {
+                material: "PVC", tipo: "Union", clase: "Presion", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Lisa", c_entrada: "Lisa", c_salida: "Lisa", cantidad: 2, valor: 2
+            }
+        ];
+        let chartAccesorios; // Variable global para almacenar la instancia de la gráfica de accesorios
+
+        function loadAccesorios() {
+            const tableHeaders = `
+                <tr>
+                    <th>Código</th>
+                    <th>Material</th>
+                    <th>Tipo</th>
+                    <th>Clase</th>
+                    <th>Diámetro</th>
+                    <th>D_Entrada</th>
+                    <th>D_Salida</th>
+                    <th>Conexión</th>
+                    <th>C_Entrada</th>
+                    <th>C_Salida</th>
+                    <th>Cantidad</th>
+                    <th>Valor</th>
+                </tr>
+            `;
+
+            const tableRows = accesoriosData.map((item, index) => {
+                const tipos = materialOptionsAccesorios[item.material].tipos;
+                let clases = materialOptionsAccesorios[item.material].clases;
+                const diametros = materialOptionsAccesorios[item.material].diametros;
+                const conexiones = materialOptionsAccesorios[item.material].conexiones;
+                const c_entradas = materialOptionsAccesorios[item.material].c_entradas;
+                const c_salidas = materialOptionsAccesorios[item.material].c_salidas;
+
+                // Lógica para las clases de Brida (Acero Inoxidable, Acero Carbon, Bronce)
+                if (item.tipo === "Brida" && (item.material === "Acero Inoxidable" || item.material === "Acero Carbon" || item.material === "Bronce")) {
+                    clases = ["150psi", "300psi", "3000psi"];
+                } else if (item.material === "Bronce") {
+                    clases = []; // Limpiar clases para Bronce si no es Brida
                 }
-            }
-        }
-    });
-}
 
-function updateChart() {
+                return `
+                    <tr>
+                        <td></td>
+                        <td>${item.material}</td>
+                        <td>
+                            <select class="tipo-select-acc" data-index="${index}">
+                                ${tipos.map(tipo => `<option value="${tipo}" ${tipo === item.tipo ? 'selected' : ''}>${tipo}</option>`).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="clase-select-acc" data-index="${index}" ${item.tipo === "Brida" || item.material === "Bronce" ? '' : ''}>
+                                ${clases.map(clase => `<option value="${clase}" ${clase === item.clase ? 'selected' : ''}>${clase}</option>`).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="diametro-select-acc" data-index="${index}">
+                                ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.diametro ? 'selected' : ''}>${diametro}</option>`).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="d-entrada-select-acc" data-index="${index}">
+                                ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.d_entrada ? 'selected' : ''}>${diametro}</option>`).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="d-salida-select-acc" data-index="${index}">
+                                ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.d_salida ? 'selected' : ''}>${diametro}</option>`).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="conexion-select-acc" data-index="${index}">
+                                ${conexiones.map(conexion => `<option value="${conexion}" ${conexion === item.conexion ? 'selected' : ''}>${conexion}</option>`).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="c-entrada-select-acc" data-index="${index}">
+                                ${c_entradas.map(c_entrada => `<option value="${c_entrada}" ${c_entrada === item.c_entrada ? 'selected' : ''}>${c_entrada}</option>`).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="c-salida-select-acc" data-index="${index}">
+                                ${c_salidas.map(c_salida => `<option value="${c_salida}" ${c_salida === item.c_salida ? 'selected' : ''}>${c_salida}</option>`).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" class="cantidad-input-acc" data-index="${index}" value="${item.cantidad}" />
+                        </td>
+                        <td>
+                        <span class="valor">$${item.valor}</span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
 
-    chart.data.labels = tuberiaData.map(item => `${item.material} - ${item.tipo}`);
-    chart.data.datasets[0].data = tuberiaData.map(item => item.cantidad_mt_lineal);
-    chart.update();
-}
+            const tableContent = `
+                <div class="section-title vertical-title">Accesorios</div>
+                <div class="table-container">
+                    <table>
+                        <thead>${tableHeaders}</thead>
+                        <tbody>${tableRows}</tbody>
+                    </table>
+                </div>
+            `;
+            const chartContent = `
+                <h3>Gráfica de Cantidades (Accesorios)</h3>
+                <canvas id="accesoriosChart"></canvas>
+            `;
 
-function actualizarCodigoEnTabla(index) {
-    const material = tuberiaData[index].material;
-    const tipo = tuberiaData[index].tipo;
-    const diametroSinUnidad = tuberiaData[index].diametro.split(" ")[0];
+            const fullContent = tableContent + chartContent; // Unir la tabla y la gráfica en un solo bloque
 
-    // Busca el código predefinido
-    const codigoEncontrado = codigosPredefinidos.find(codigo =>
-        codigo.material === material &&
-        codigo.tipo === tipo &&
-        codigo.diametro === diametroSinUnidad
-    );
+            document.getElementById('dynamicContent').innerHTML = fullContent; // Asignar el contenido completo
 
-    const codigo = codigoEncontrado ? codigoEncontrado.codigo : "Código no encontrado";
+            createChartAccesorios(); // Crea la gráfica después de cargar la tabla.
+            updateChartAccesorios(); // Actualiza la gráfica con los datos iniciales
 
-    const tdCodigo = document.querySelector(`#dynamicContent table tbody tr:nth-child(${parseInt(index) + 1}) td:first-child`);
-    tdCodigo.textContent = codigo;
-}
+            // --- Event Listeners Accesorios ---
+            document.querySelectorAll('.tipo-select-acc').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const index = parseInt(event.target.getAttribute('data-index'));
+                    accesoriosData[index].tipo = event.target.value;
 
-// ---------------------------------------------------------------------------
-// Creacion Accesorios
-// ---------------------------------------------------------------------------
-
-const materialOptionsAccesorios = {
-    "Cobre": {
-        tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador"],
-        clases: ["M", "K", "L"],
-        diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10", "N/A"],
-        conexiones: ["Soldeo", "NPTH", "NPTM", "N/A"],
-        c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"],
-        c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"]
-    },
-    "Acero Inoxidable": {
-        tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Bushing", "Brida"],
-        clases: ["10", "40", "80"], // Clases base. Se agregará 150psi, 300psi, 3000psi para brida.
-        diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10", "N/A"],
-        conexiones: ["Soldeo", "NPTH", "NPTM", "N/A", "Socket"],
-        c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"],
-        c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"]
-    },
-    "Acero Carbon": {
-        tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Brida", "Bushing"],
-        clases: ["10", "40", "80"], // Clases base. Se agregará 150psi, 300psi, 3000psi para brida.
-        diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10", "N/A"],
-        conexiones: ["Soldeo", "NPTH", "NPTM", "N/A", "Socket"],
-        c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"],
-        c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"]
-    },
-    "Bronce": {
-        tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Bushing", "Brida"],
-        clases: [], // No tiene clases, se agregarán para brida.
-        diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10", "N/A"],
-        conexiones: ["Soldeo", "NPTH", "NPTM"],
-        c_entradas: ["H-M", "H-K", "H-L", "M-M", "M-K", "M-L", "H-10", "H-40", "H-80", "M-10", "M-40", "M-80", "NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"],
-        c_salidas: ["H-M", "H-K", "H-L", "M-M", "M-K", "M-L", "H-10", "H-40", "H-80", "M-10", "M-40", "M-80", "NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"]
-    },
-    "PVC": {
-        tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador"],
-        clases: ["Presion", "Electrica", "Sanitaria", "Ventilacion"],
-        diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "5", "6", "8", "10", "N/A"],
-        conexiones: ["Lisa", "NPTH", "NPTM", "N/A"],
-        c_entradas: ["Lisa", "NPTH", "NPTM", "N/A"],
-        c_salidas: ["Lisa", "NPTH", "NPTM", "N/A"]
-    }
-};
-
-const accesoriosData = [
-    {
-        material: "Cobre", tipo: "Union", clase: "M", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 2, valor: 5
-    },
-    {
-        material: "Acero Inoxidable", tipo: "Union", clase: "10", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 3, valor: 8
-    },
-    {
-        material: "Acero Carbon", tipo: "Union", clase: "10", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 1, valor: 12
-    },
-    {
-        material: "Bronce", tipo: "Union", clase: "", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 4, valor: 3
-    },
-    {
-        material: "PVC", tipo: "Union", clase: "Presion", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Lisa", c_entrada: "Lisa", c_salida: "Lisa", cantidad: 2, valor: 2
-    }
-];
-let chartAccesorios; // Variable global para almacenar la instancia de la gráfica de accesorios
-
-function loadAccesorios() {
-    const tableHeaders = `
-        <tr>
-            <th>Código</th>
-            <th>Material</th>
-            <th>Tipo</th>
-            <th>Clase</th>
-            <th>Diámetro</th>
-            <th>D_Entrada</th>
-            <th>D_Salida</th>
-            <th>Conexión</th>
-            <th>C_Entrada</th>
-            <th>C_Salida</th>
-            <th>Cantidad</th>
-            <th>Valor</th>
-        </tr>
-    `;
-
-    const tableRows = accesoriosData.map((item, index) => {
-        const tipos = materialOptionsAccesorios[item.material].tipos;
-        let clases = materialOptionsAccesorios[item.material].clases;
-        const diametros = materialOptionsAccesorios[item.material].diametros;
-        const conexiones = materialOptionsAccesorios[item.material].conexiones;
-        const c_entradas = materialOptionsAccesorios[item.material].c_entradas;
-        const c_salidas = materialOptionsAccesorios[item.material].c_salidas;
-
-        // Lógica para las clases de Brida (Acero Inoxidable, Acero Carbon, Bronce)
-        if (item.tipo === "Brida" && (item.material === "Acero Inoxidable" || item.material === "Acero Carbon" || item.material === "Bronce")) {
-            clases = ["150psi", "300psi", "3000psi"];
-        } else if (item.material === "Bronce") {
-            clases = []; // Limpiar clases para Bronce si no es Brida
-        }
-
-        return `
-            <tr>
-                <td></td>
-                <td>${item.material}</td>
-                <td>
-                    <select class="tipo-select-acc" data-index="${index}">
-                        ${tipos.map(tipo => `<option value="${tipo}" ${tipo === item.tipo ? 'selected' : ''}>${tipo}</option>`).join('')}
-                    </select>
-                </td>
-                <td>
-                    <select class="clase-select-acc" data-index="${index}" ${item.tipo === "Brida" || item.material === "Bronce" ? '' : ''}>
-                        ${clases.map(clase => `<option value="${clase}" ${clase === item.clase ? 'selected' : ''}>${clase}</option>`).join('')}
-                    </select>
-                </td>
-                <td>
-                    <select class="diametro-select-acc" data-index="${index}">
-                        ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.diametro ? 'selected' : ''}>${diametro}</option>`).join('')}
-                    </select>
-                </td>
-                <td>
-                    <select class="d-entrada-select-acc" data-index="${index}">
-                        ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.d_entrada ? 'selected' : ''}>${diametro}</option>`).join('')}
-                    </select>
-                </td>
-                <td>
-                    <select class="d-salida-select-acc" data-index="${index}">
-                        ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.d_salida ? 'selected' : ''}>${diametro}</option>`).join('')}
-                    </select>
-                </td>
-                <td>
-                    <select class="conexion-select-acc" data-index="${index}">
-                        ${conexiones.map(conexion => `<option value="${conexion}" ${conexion === item.conexion ? 'selected' : ''}>${conexion}</option>`).join('')}
-                    </select>
-                </td>
-                <td>
-                    <select class="c-entrada-select-acc" data-index="${index}">
-                        ${c_entradas.map(c_entrada => `<option value="${c_entrada}" ${c_entrada === item.c_entrada ? 'selected' : ''}>${c_entrada}</option>`).join('')}
-                    </select>
-                </td>
-                <td>
-                    <select class="c-salida-select-acc" data-index="${index}">
-                        ${c_salidas.map(c_salida => `<option value="${c_salida}" ${c_salida === item.c_salida ? 'selected' : ''}>${c_salida}</option>`).join('')}
-                    </select>
-                </td>
-                <td>
-                    <input type="number" class="cantidad-input-acc" data-index="${index}" value="${item.cantidad}" />
-                </td>
-                <td>
-                <span class="valor">$${item.valor}</span>
-                </td>
-            </tr>
-        `;
-    }).join('');
-
-    const tableContent = `
-        <div class="section-title vertical-title">Accesorios</div>
-        <div class="table-container">
-            <table>
-                <thead>${tableHeaders}</thead>
-                <tbody>${tableRows}</tbody>
-            </table>
-        </div>
-    `;
-    const chartContent = `
-        <h3>Gráfica de Cantidades (Accesorios)</h3>
-        <canvas id="accesoriosChart"></canvas>
-    `;
-
-    const fullContent = tableContent + chartContent; // Unir la tabla y la gráfica en un solo bloque
-
-    document.getElementById('dynamicContent').innerHTML = fullContent; // Asignar el contenido completo
-
-    createChartAccesorios(); // Crea la gráfica después de cargar la tabla.
-    updateChartAccesorios(); // Actualiza la gráfica con los datos iniciales
-
-    // --- Event Listeners Accesorios ---
-    document.querySelectorAll('.tipo-select-acc').forEach(select => {
-        select.addEventListener('change', (event) => {
-            const index = parseInt(event.target.getAttribute('data-index'));
-            accesoriosData[index].tipo = event.target.value;
-
-            // Actualizar las clases si el tipo es Brida
-            if (accesoriosData[index].tipo === "Brida" && (accesoriosData[index].material === "Acero Inoxidable" || accesoriosData[index].material === "Acero Carbon" || accesoriosData[index].material === "Bronce")) {
-                accesoriosData[index].clase = "150psi"; // Reset clase
-                loadAccesorios(); // Recargar tabla para mostrar las clases correctas
-            }
-            //inhabilitar clase en bronce
-            else if (accesoriosData[index].material === "Bronce") {
-                accesoriosData[index].clase = "";
-                loadAccesorios(); // Recargar tabla para mostrar las clases correctas
-            }
-            updateChartAccesorios() //actulizar grafica
-        });
-    });
-
-    document.querySelectorAll('.clase-select-acc').forEach(select => {
-        select.addEventListener('change', (event) => {
-            const index = parseInt(event.target.getAttribute('data-index'));
-            accesoriosData[index].clase = event.target.value;
-            updateChartAccesorios() //actulizar grafica
-        });
-    });
-
-    document.querySelectorAll('.diametro-select-acc').forEach(select => {
-        select.addEventListener('change', (event) => {
-            const index = parseInt(event.target.getAttribute('data-index'));
-            accesoriosData[index].diametro = event.target.value;
-            updateChartAccesorios() //actulizar grafica
-        });
-    });
-
-    document.querySelectorAll('.d-entrada-select-acc').forEach(select => {
-        select.addEventListener('change', (event) => {
-            const index = parseInt(event.target.getAttribute('data-index'));
-            accesoriosData[index].d_entrada = event.target.value;
-            updateChartAccesorios() //actulizar grafica
-        });
-    });
-
-    document.querySelectorAll('.d-salida-select-acc').forEach(select => {
-        select.addEventListener('change', (event) => {
-            const index = parseInt(event.target.getAttribute('data-index'));
-            accesoriosData[index].d_salida = event.target.value;
-            updateChartAccesorios() //actulizar grafica
-        });
-    });
-
-    document.querySelectorAll('.conexion-select-acc').forEach(select => {
-        select.addEventListener('change', (event) => {
-            const index = parseInt(event.target.getAttribute('data-index'));
-            accesoriosData[index].conexion = event.target.value;
-            updateChartAccesorios() //actulizar grafica
-        });
-    });
-
-    document.querySelectorAll('.c-entrada-select-acc').forEach(select => {
-        select.addEventListener('change', (event) => {
-            const index = parseInt(event.target.getAttribute('data-index'));
-            accesoriosData[index].c_entrada = event.target.value;
-            updateChartAccesorios() //actulizar grafica
-        });
-    });
-
-    document.querySelectorAll('.c-salida-select-acc').forEach(select => {
-        select.addEventListener('change', (event) => {
-            const index = parseInt(event.target.getAttribute('data-index'));
-            accesoriosData[index].c_salida = event.target.value;
-            updateChartAccesorios() //actulizar grafica
-        });
-    });
-
-    document.querySelectorAll('.cantidad-input-acc').forEach(input => {
-        input.addEventListener('change', (event) => {
-            const index = parseInt(event.target.getAttribute('data-index'));
-            accesoriosData[index].cantidad = parseInt(event.target.value);
-            updateChartAccesorios();
-        });
-    });
-}
-
-function createChartAccesorios() {
-    const ctxAccesorios = document.getElementById('accesoriosChart').getContext('2d');
-    chartAccesorios = new Chart(ctxAccesorios, {
-        type: 'bar',
-        data: {
-            labels: accesoriosData.map(item => `${item.material} - ${item.tipo}`),
-            datasets: [{
-                label: 'Cantidad',
-                data: accesoriosData.map(item => item.cantidad),
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            indexAxis: 'y',  // Cambia a horizontal
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Cantidad',
-                        align: 'end'
+                    // Actualizar las clases si el tipo es Brida
+                    if (accesoriosData[index].tipo === "Brida" && (accesoriosData[index].material === "Acero Inoxidable" || accesoriosData[index].material === "Acero Carbon" || accesoriosData[index].material === "Bronce")) {
+                        accesoriosData[index].clase = "150psi"; // Reset clase
+                        loadAccesorios(); // Recargar tabla para mostrar las clases correctas
                     }
+                    //inhabilitar clase en bronce
+                    else if (accesoriosData[index].material === "Bronce") {
+                        accesoriosData[index].clase = "";
+                        loadAccesorios(); // Recargar tabla para mostrar las clases correctas
+                    }
+                    updateChartAccesorios() //actulizar grafica
+                });
+            });
+
+            document.querySelectorAll('.clase-select-acc').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const index = parseInt(event.target.getAttribute('data-index'));
+                    accesoriosData[index].clase = event.target.value;
+                    updateChartAccesorios() //actulizar grafica
+                });
+            });
+
+            document.querySelectorAll('.diametro-select-acc').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const index = parseInt(event.target.getAttribute('data-index'));
+                    accesoriosData[index].diametro = event.target.value;
+                    updateChartAccesorios() //actulizar grafica
+                });
+            });
+
+            document.querySelectorAll('.d-entrada-select-acc').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const index = parseInt(event.target.getAttribute('data-index'));
+                    accesoriosData[index].d_entrada = event.target.value;
+                    updateChartAccesorios() //actulizar grafica
+                });
+            });
+
+            document.querySelectorAll('.d-salida-select-acc').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const index = parseInt(event.target.getAttribute('data-index'));
+                    accesoriosData[index].d_salida = event.target.value;
+                    updateChartAccesorios() //actulizar grafica
+                });
+            });
+
+            document.querySelectorAll('.conexion-select-acc').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const index = parseInt(event.target.getAttribute('data-index'));
+                    accesoriosData[index].conexion = event.target.value;
+                    updateChartAccesorios() //actulizar grafica
+                });
+            });
+
+            document.querySelectorAll('.c-entrada-select-acc').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const index = parseInt(event.target.getAttribute('data-index'));
+                    accesoriosData[index].c_entrada = event.target.value;
+                    updateChartAccesorios() //actulizar grafica
+                });
+            });
+
+            document.querySelectorAll('.c-salida-select-acc').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const index = parseInt(event.target.getAttribute('data-index'));
+                    accesoriosData[index].c_salida = event.target.value;
+                    updateChartAccesorios() //actulizar grafica
+                });
+            });
+
+            document.querySelectorAll('.cantidad-input-acc').forEach(input => {
+                input.addEventListener('change', (event) => {
+                    const index = parseInt(event.target.getAttribute('data-index'));
+                    accesoriosData[index].cantidad = parseInt(event.target.value);
+                    updateChartAccesorios();
+                });
+            });
+        }
+
+        function createChartAccesorios() {
+            const ctxAccesorios = document.getElementById('accesoriosChart').getContext('2d');
+            chartAccesorios = new Chart(ctxAccesorios, {
+                type: 'bar',
+                data: {
+                    labels: accesoriosData.map(item => `${item.material} - ${item.tipo}`),
+                    datasets: [{
+                        label: 'Cantidad',
+                        data: accesoriosData.map(item => item.cantidad),
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
                 },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Material - Tipo',
-                        align: 'end'
+                options: {
+                    indexAxis: 'y',  // Cambia a horizontal
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Cantidad',
+                                align: 'end'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Material - Tipo',
+                                align: 'end'
+                            },
+                            ticks: {
+                                autoSkip: false  // Evita que las etiquetas se omitan automáticamente
+                            }
+                        }
                     },
-                    ticks: {
-                        autoSkip: false  // Evita que las etiquetas se omitan automáticamente
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
                     }
                 }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                }
-            }
+            });
         }
-    });
-}
 
-function updateChartAccesorios() {
-    chartAccesorios.data.labels = accesoriosData.map(item => `${item.material} - ${item.tipo}`);
-    chartAccesorios.data.datasets[0].data = accesoriosData.map(item => item.cantidad);
-    chartAccesorios.update();
-}
+        function updateChartAccesorios() {
+            chartAccesorios.data.labels = accesoriosData.map(item => `${item.material} - ${item.tipo}`);
+            chartAccesorios.data.datasets[0].data = accesoriosData.map(item => item.cantidad);
+            chartAccesorios.update();
+        }
 
-// Cargar inicialmente
-function loadContent() {
-    document.getElementById('dynamicContent').innerHTML = "";
-    loadTuberia();
-    loadAccesorios();
-}
+        // Cargar inicialmente
+        function loadContent() {
+            document.getElementById('dynamicContent').innerHTML = "";
+            loadTuberia();
+            loadAccesorios();
+        }
 
-window.onload = loadContent; // Asegura que el contenido se cargue después de que el DOM esté listo
+        window.onload = loadContent; // Asegura que el contenido se cargue después de que el DOM esté listo
     
 
         // ---------------------------------------------------------------------------
@@ -1591,102 +1790,175 @@ window.onload = loadContent; // Asegura que el contenido se cargue después de q
         });
 
 
-        // Datos de ejemplo para Almacén
-        const almacenData = [
-            {
-                id: "A001",
-                nombre: "Almacén Central",
-                ubicacion: "Calle Principal #123",
-                capacidad: "1000 m3",
-                encargado: "Juan Pérez",
-                contacto: "juan.perez@almacen.com",
+        
+        // Datos de ejemplo para Almacenes (temporal - luego vendrá de Django)
+        const almacenData = {
+            bogota: {
+                id: "BOG001",
+                nombre: "Almacén Bogotá",
+                ubicacion: "Calle Falsa 123, Bogotá",
+                encargado: "Sofía Rodriguez",
+                contacto: "sofia.rodriguez@almacenbogota.com",
                 productos: [
-                    { id: "001", nombre: "Cilindro de Oxígeno", cantidad: 150 },
-                    { id: "002", nombre: "Regulador de Presión", cantidad: 75 },
-                    // ... otros productos
+                    { codigo: "TUB001", descripcion: "Tubo PVC 4'", cantidad: 200 },
+                    { codigo: "TUB002", descripcion: "Tubo Acero 2'", cantidad: 100 }
                 ]
             },
-            {
-                id: "A002",
-                nombre: "Almacén Sucursal",
-                ubicacion: "Avenida Secundaria #456",
-                capacidad: "500 m3",
-                encargado: "María Gómez",
-                contacto: "maria.gomez@almacen.com",
+            cali: {
+                id: "CAL001",
+                nombre: "Almacén Cali",
+                ubicacion: "Avenida Siempre Viva 456, Cali",
+                encargado: "Carlos Lopez",
+                contacto: "carlos.lopez@almacencali.com",
                 productos: [
-                    { id: "003", nombre: "Nitrógeno Líquido", cantidad: 40 },
-                    { id: "004", nombre: "Mascarillas de Oxígeno", cantidad: 200 },
-                    // ... otros productos
+                    { codigo: "TUB003", descripcion: "Tubo Cobre 1'", cantidad: 150 },
+                    { codigo: "TUB004", descripcion: "Tubo Galvanizado 2'", cantidad: 80 }
                 ]
-            },
-            // ... otros almacenes
-        ];
+            }
+        };
 
-
-        // funcion de datos de ejemplo para Almacén
-        function loadAlmacen() {
-            let tableContent = "<h2>Almacenes</h2>";
-
-            almacenData.forEach(almacen => {
-                tableContent += `
-                    <h3>${almacen.nombre}</h3>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Ubicación</th>
-                                    <th>Capacidad</th>
-                                    <th>Encargado</th>
-                                    <th>Contacto</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>${almacen.id}</td>
-                                    <td>${almacen.nombre}</td>
-                                    <td>${almacen.ubicacion}</td>
-                                    <td>${almacen.capacidad}</td>
-                                    <td>${almacen.encargado}</td>
-                                    <td>${almacen.contacto}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+        // Función para mostrar la pantalla principal (Bogotá y Cali)
+        function loadPantallaPrincipal() {
+            let principalHTML = `
+                <h2>Almacenes</h2>
+                <div class="almacen-container">
+                    <div class="almacen-card" onclick="openAlmacenModal('BOG001')">
+                        <h3>${almacenData.bogota.nombre}</h3>
+                        <p>Ubicación: ${almacenData.bogota.ubicacion}</p>
                     </div>
-
-                    <h4>Productos en este almacén:</h4>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID del Producto</th>
-                                    <th>Nombre del Producto</th>
-                                    <th>Cantidad</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${almacen.productos.map(producto => `
-                                    <tr>
-                                        <td>${producto.id}</td>
-                                        <td>${producto.nombre}</td>
-                                        <td>${producto.cantidad}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
+                    <div class="almacen-card" onclick="openAlmacenModal('CAL001')">
+                        <h3>${almacenData.cali.nombre}</h3>
+                        <p>Ubicación: ${almacenData.cali.ubicacion}</p>
                     </div>
-                `;
-            });
+                </div>
+            `;
 
-            document.getElementById('dynamicContent').innerHTML = tableContent;
+            document.getElementById('dynamicContent').innerHTML = principalHTML;
         }
 
+        // Función para cargar los detalles de un almacén específico
+        function loadAlmacenDetails(almacenId) {
+            const almacen = almacenData[Object.keys(almacenData).find(key => almacenData[key].id === almacenId)];
+
+            if (!almacen) {
+                return "<p>Almacén no encontrado.</p>";
+            }
+
+            let almacenDetailsHTML = `
+                <div class="details">
+                    <h2>${almacen.nombre}</h2>
+                    <p><strong>Ubicación:</strong> ${almacen.ubicacion}</p>
+                    <p><strong>Encargado:</strong> ${almacen.encargado} (<a href="mailto:${almacen.contacto}">${almacen.contacto}</a>)</p>
+                </div>
+
+                <div class="inventory">
+                    <h3>Inventario</h3>
+                    ${generarTablaProductos(almacen.productos, almacen.id)}
+                </div>
+            `;
+
+            return almacenDetailsHTML;
+        }
+
+        // Función para generar la tabla de productos
+        function generarTablaProductos(productos, almacenId) {
+            if (!productos || productos.length === 0) {
+                return "<p>No hay productos en este almacén.</p>";
+            }
+
+            let tableContent = `
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${productos.map((producto, index) => `
+                                <tr>
+                                    <td><input type="text" value="${producto.codigo}" id="codigo-${almacenId}-${index}"></td>
+                                    <td>${producto.descripcion}</td>
+                                    <td>${producto.cantidad}</td>
+                                    <td>
+                                        <button onclick="agregarCantidad('${almacenId}', '${index}')">Agregar</button>
+                                        <button onclick="quitarCantidad('${almacenId}', '${index}')">Quitar</button>
+
+                                        <button onclick="eliminarProducto('${almacenId}', '${index}')">Eliminar</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+
+                </div>
+            `;
+
+            return tableContent;
+        }
+
+        //Funciones para abrir los modales
+
+        function abrirModalAgregarProducto(almacenId) {
+            // Implementar la lógica para abrir el modal de agregar producto
+            // Puedes usar un modal de Bootstrap, un div personalizado, etc.
+            alert(`Abrir modal para agregar producto al almacén con ID: ${almacenId}`);
+        }
+
+        function abrirModalEditarProducto(productoId) {
+            alert(`Abrir modal para abrir modal de editar producto con id: ${productoId}`);
+        }
+
+        // Funciones para las acciones de los productos (simuladas)
+        function agregarCantidad(almacenId, productoIndex) {
+            alert(`Función para agregar cantidad al producto ${productoIndex} en el almacén ${almacenId}`);
+            // Implementar la lógica para agregar cantidad
+        }
+
+        function quitarCantidad(almacenId, productoIndex) {
+            alert(`Función para quitar cantidad al producto ${productoIndex} en el almacén ${almacenId}`);
+            // Implementar la lógica para quitar cantidad
+        }
+         function guardarProducto(almacenId, productoIndex) {
+            alert(`Función para guardar cantidad al producto ${productoIndex} en el almacén ${almacenId}`);
+            // Implementar la lógica para guardar cantidad
+        }
+
+        function eliminarProducto(almacenId, productoIndex) {
+            alert(`Función para eliminar el producto ${productoIndex} en el almacén ${almacenId}`);
+            // Implementar la lógica para eliminar el producto
+        }
+
+
+        // Modal functionality
+
+        function openAlmacenModal(almacenId) {
+            const modalContent = document.getElementById("modalContent");
+            modalContent.innerHTML = loadAlmacenDetails(almacenId);
+            $('#almacenModal').modal('show');
+        }
+
+
+
+        // Asociar la función al enlace en el menú principal
         document.getElementById('almacenLink').addEventListener('click', function (event) {
             event.preventDefault();
             clearDynamicContent();
-            loadAlmacen(); // Nueva función para cargar contenido de Almacén
+            loadPantallaPrincipal();
         });
+
+        // Función para limpiar el contenido dinámico
+        function clearDynamicContent() {
+            document.getElementById('dynamicContent').innerHTML = '';
+        }
+
+        // Cargar la pantalla principal al inicio
+        loadPantallaPrincipal();
+
+
 
         // Función para cargar la sección de Soporte
         function loadSoporte() {

@@ -1,526 +1,515 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
+/* Variables globales */
 :root {
-    --primary-color: #152059;
-    --secondary-color: #f8f8f8;
-    --text-color: #333;
-    --light-text-color: #bebebe;
-    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* Definición de la variable */
-    --transition: 0.3s ease;
-    /* Definición de la variable */
+    --primary-color: #152059; /* Color primario */
+    --secondary-color: #f8f8f8; /* Color secundario */
+    --text-color: #333; /* Color de texto principal */
+    --light-text-color: #bebebe; /* Color de texto claro */
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra predeterminada */
+    --transition: 0.3s ease; /* Transición suave */
 }
 
+/* Reset básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    list-style: none;
+    margin: 0; /* Elimina márgenes predeterminados */
+    padding: 0; /* Elimina paddings predeterminados */
+    box-sizing: border-box; /* Incluye padding y border en el tamaño del elemento */
+    text-decoration: none; /* Elimina subrayado de enlaces */
+    list-style: none; /* Elimina estilos de lista */
 }
 
-
+/* Estilos generales del body */
 body {
-    font-family: "Poppins", sans-serif;
-    background-color: #070025;
-    /* Color de fondo general */
-    color: #000000;
-    /* Color de texto principal */
+    font-family: "Poppins", sans-serif; /* Fuente principal */
+    background-color: #070025; /* Color de fondo */
+    color: #000000; /* Color de texto */
 }
 
+/* Contenedor principal */
 .container {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 20px;
-    /* Espacio lateral para mejor responsividad */
+    max-width: 1300px; /* Ancho máximo */
+    margin: 0 auto; /* Centra el contenedor */
+    padding: 0 20px; /* Espacio lateral para responsividad */
 }
 
+/* Encabezado */
 .header {
     background-image: url('imagenes/bg.png');
-    background-position: center bottom;
-    background-repeat: none;
-    background-size: cover;
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Centra verticalmente el contenido */
+    background-position: center bottom; /* Posición de la imagen */
+    background-repeat: none; /* Evita repetición */
+    background-size: cover; /* Cubre todo el espacio */
+    min-height: 90vh; /* Altura mínima */
+    display: flex; /* Usa flexbox */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
 }
 
+/* Menú */
 .menu {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 90px;
+    position: absolute; /* Posicionamiento absoluto */
+    top: 0; /* Alinea en la parte superior */
+    left: 0; /* Alinea en la parte izquierda */
+    right: 0; /* Alinea en la parte derecha */
+    display: flex; /* Usa flexbox */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    z-index: 1000; /* Capa superior */
+    padding: 90px; /* Espaciado interno */
 }
 
+/* Barra de navegación */
 .navbar ul {
-    display: flex;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.1);
-    /* Fondo semi-transparente */
-    background-color: rgba(0, 0, 0, 0.1);
-    /* Más transparencia (0.7) */
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    /* Borde sutil y semi-transparente */
-    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.7);
-    /* Sombra suave */
-    border-radius: 50px;
-    /* Bordes redondeados */
-    padding: 15px 20px;
-    /* Espaciado interno (ajusta según necesites) */
-    width: 600px;
-    /* Ancho manual */
-    height: 50px;
-    /* Alto manual */
-    list-style: none;
-    /* Quita los puntos de la lista */
-    margin: 0 auto;
-    /* Centra el navbar horizontalmente */
-    align-items: center;
-    /* Centra los elementos verticalmente */
+    display: flex; /* Usa flexbox */
+    justify-content: center; /* Centra elementos */
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+    border: 1px solid rgba(0, 0, 0, 0.2); /* Borde sutil */
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.7); /* Sombra */
+    border-radius: 50px; /* Bordes redondeados */
+    padding: 15px 20px; /* Espaciado interno */
+    width: 600px; /* Ancho fijo */
+    height: 50px; /* Alto fijo */
+    list-style: none; /* Elimina estilos de lista */
+    margin: 0 auto; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
 }
 
+/* Elementos del menú */
 .navbar li {
-    margin: 0 20px;
-    /* Espacio entre elementos del menú */
+    margin: 0 20px; /* Espacio entre elementos */
 }
 
+/* Enlaces del menú */
 .navbar a {
-    color: #fff;
-    font-weight: 600;
-    transition: color 0.3s ease, opacity 0.3s ease;
-    /* Transición suave para color y opacidad */
-    text-decoration: none;
-    /* Quita el subrayado */
-    display: flex;
-    align-items: center;
-    /* Alinea el icono y el texto verticalmente */
-    gap: 8px;
-    /* Espacio entre el icono y el texto */
-    position: relative;
-    /* Para posicionar los iconos */
+    color: #fff; /* Color del texto */
+    font-weight: 600; /* Grosor de la fuente */
+    transition: color 0.3s ease, opacity 0.3s ease; /* Transición suave */
+    text-decoration: none; /* Elimina subrayado */
+    display: flex; /* Usa flexbox */
+    align-items: center; /* Centra verticalmente */
+    gap: 8px; /* Espacio entre icono y texto */
+    position: relative; /* Posicionamiento relativo */
 }
 
+/* Efecto hover en enlaces */
 .navbar a:hover {
-    color: #f4fb32c6;
-    /* Cambia el color del texto al hacer hover */
+    color: #f4fb32c6; /* Cambia color al hacer hover */
 }
 
-/* Estilos para los iconos */
+/* Iconos del menú */
 .navbar a i {
-    font-size: 18px;
-    /* Tamaño del icono */
-    transition: opacity 0.3s ease;
-    /* Transición suave para el cambio de iconos */
+    font-size: 18px; /* Tamaño del icono */
+    transition: opacity 0.3s ease; /* Transición suave */
 }
 
-/* Oculta los iconos de hover inicialmente */
+/* Iconos de hover */
 .navbar a .hover-icon {
-    position: absolute;
-    opacity: 0;
-    /* Inicialmente invisible */
+    position: absolute; /* Posicionamiento absoluto */
+    opacity: 0; /* Inicialmente invisible */
 }
 
-/* Muestra el icono de hover al pasar el cursor */
+/* Muestra icono de hover */
 .navbar a:hover .hover-icon {
-    opacity: 1;
-    /* Visible al hacer hover */
+    opacity: 1; /* Visible al hacer hover */
 }
 
-/* Oculta el icono inicial al hacer hover */
+/* Oculta icono inicial al hacer hover */
 .navbar a:hover i:not(.hover-icon) {
-    opacity: 0;
-    /* Oculta el icono inicial */
+    opacity: 0; /* Oculta icono inicial */
 }
 
+/* Contenido del encabezado */
 .header-content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+    text-align: center; /* Centra el texto */
+    display: flex; /* Usa flexbox */
+    flex-direction: column; /* Organiza en columna */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    height: 100%; /* Altura completa */
 }
 
-
+/* Texto del encabezado */
 .header-txt h1 {
-    font-size: 8rem;
-    /* Tamaño de encabezado más acorde */
-    color: #ffffff;
-    margin-bottom: 20px;
+    font-size: 8rem; /* Tamaño grande */
+    color: #ffffff; /* Color del texto */
+    margin-bottom: 20px; /* Margen inferior */
 }
 
-
+/* Efecto de imagen en texto */
 .header-txt h1 {
-    font-size: 85px;
+    font-size: 85px; /* Tamaño ajustado */
     background-image: url('imagenes/PHOTO-2025-01-22-08-45-11.jpg');
-    /* Ruta de la imagen */
-    background-size: 15%;
-    /* Ajusta la imagen para cubrir el texto */
-    background-position: center;
-    /* Centra la imagen */
-    background-clip: text;
-    /* Recorta la imagen al texto */
-    text-transform: uppercase;
-    -webkit-background-clip: text;
-    /* Compatibilidad con navegadores WebKit (Safari, Chrome) */
-    color: transparent;
-    /* Hace el texto transparente para que se vea la imagen */
-    margin-top: 170px;
-    /* Ajusta este valor según necesites */
-    
-
+    background-size: 15%; /* Tamaño de la imagen */
+    background-position: center; /* Centra la imagen */
+    background-clip: text; /* Recorta la imagen al texto */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    -webkit-background-clip: text; /* Compatibilidad con WebKit */
+    color: transparent; /* Texto transparente */
+    margin-top: 170px; /* Margen superior */
 }
 
+/* Párrafo del encabezado */
 .header-txt p {
-    color: #bebebe;
-    font-size: 16px;
-    padding: 0 100px;
-    margin-top: 60px;
-    /* Ajusta este valor según necesites */
+    color: #bebebe; /* Color del texto */
+    font-size: 16px; /* Tamaño de la fuente */
+    padding: 0 100px; /* Espaciado lateral */
+    margin-top: 60px; /* Margen superior */
 }
 
+/* Botón de información */
 .boton-informacion {
-    display: inline-block;
-    padding: 12px 45px;
-    border: 1px solid #576e8ac6;
-    color: #ffffff;
-    font-size: 16px;
-    text-transform: uppercase;
-    font-weight: 600;
-    background-color: transparent;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin-top: 110px;
-    cursor: pointer;
-    border-radius: 5px; /* Opcional */
+    display: inline-block; /* Display en línea */
+    padding: 12px 45px; /* Espaciado interno */
+    border: 1px solid #576e8ac6; /* Borde */
+    color: #ffffff; /* Color del texto */
+    font-size: 16px; /* Tamaño de la fuente */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    font-weight: 600; /* Grosor de la fuente */
+    background-color: transparent; /* Fondo transparente */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+    margin-top: 110px; /* Margen superior */
+    cursor: pointer; /* Cambia el cursor */
+    border-radius: 5px; /* Bordes redondeados */
 }
 
+/* Efecto hover en botón */
 .boton-informacion:hover {
-    color: #000000;
-    background-color: #f4fb32c6;
+    color: #000000; /* Cambia color del texto */
+    background-color: #f4fb32c6; /* Cambia color de fondo */
 }
+
+/* Media query para botón en pantallas pequeñas */
 @media (max-width: 768px) {
     .boton-informacion {
-        padding: 10px 30px;
-        font-size: 14px;
-        margin-top: 80px;
+        padding: 10px 30px; /* Espaciado reducido */
+        font-size: 14px; /* Tamaño de fuente reducido */
+        margin-top: 80px; /* Margen superior reducido */
     }
 }
+
+/* Efecto focus en botón */
 .boton-informacion:focus {
-    outline: none; /* Elimina el contorno predeterminado */
-    box-shadow: 0 0 0 3px rgba(244, 251, 50, 0.5); /* Agrega un resaltado */
+    outline: none; /* Elimina contorno predeterminado */
+    box-shadow: 0 0 0 3px rgba(244, 251, 50, 0.5); /* Resaltado */
 }
 
+/* Efecto active en botón */
 .boton-informacion:active {
-    transform: scale(0.98); /* Efecto de "presionado" */
+    transform: scale(0.98); /* Efecto de presionado */
 }
 
-
+/* Sección general */
 .general {
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    /* Ajusta este valor según necesites */
+    min-height: 90vh; /* Altura mínima */
+    display: flex; /* Usa flexbox */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    margin-top: 10px; /* Margen superior */
 }
 
+/* Fondo de la sección general */
 .general-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    z-index: 0;
-
+    position: absolute; /* Posicionamiento absoluto */
+    top: 0; /* Alinea en la parte superior */
+    left: 0; /* Alinea en la parte izquierda */
+    right: 0; /* Alinea en la parte derecha */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    background-size: cover; /* Cubre todo el espacio */
+    background-repeat: no-repeat; /* Evita repetición */
+    background-position: center; /* Centra la imagen */
+    background-attachment: fixed; /* Fondo fijo */
+    z-index: 0; /* Capa inferior */
 }
 
+/* Título de la sección general */
 .general h2 {
-    margin-bottom: 10px;
+    margin-bottom: 10px; /* Margen inferior */
 }
 
+/* Contenido de la sección general */
 .general-content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 50px;
-    perspective: 1000px;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-
-
+    position: relative; /* Posicionamiento relativo */
+    z-index: 1; /* Capa superior */
+    display: flex; /* Usa flexbox */
+    flex-wrap: wrap; /* Permite múltiples líneas */
+    justify-content: space-around; /* Espacio entre elementos */
+    gap: 50px; /* Espacio entre elementos */
+    perspective: 1000px; /* Perspectiva 3D */
+    max-width: 1200px; /* Ancho máximo */
+    width: 100%; /* Ancho completo */
+    margin: 0 auto; /* Centra horizontalmente */
+    padding: 20px; /* Espaciado interno */
 }
 
+/* Tarjetas de texto */
 .general-txt {
-    flex: 1 1 30%;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.85);
-    /* Más transparencia (0.7) */
-    border-radius: 35px;
-    box-shadow: 0 2px 4px rgb(209, 190, 15);
-    transition: transform 0.4s ease, box-shadow 0.5s ease;
-    transform-style: preserve-3d;
+    flex: 1 1 30%; /* Tamaño flexible */
+    padding: 20px; /* Espaciado interno */
+    background-color: rgba(255, 255, 255, 0.85); /* Fondo semi-transparente */
+    border-radius: 35px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgb(209, 190, 15); /* Sombra */
+    transition: transform 0.4s ease, box-shadow 0.5s ease; /* Transición suave */
+    transform-style: preserve-3d; /* Mantiene perspectiva 3D */
 }
 
+/* Efecto hover en tarjetas */
 .general-txt:hover {
-    transform: rotateY(15deg) rotateX(10deg) translateY(-5px);
-    /* Giro en 3D */
-    box-shadow: 0 10px 20px rgb(192, 210, 3);
-    /* Sombra más pronunciada */
+    transform: rotateY(15deg) rotateX(10deg) translateY(-5px); /* Giro 3D */
+    box-shadow: 0 10px 20px rgb(192, 210, 3); /* Sombra más pronunciada */
 }
 
-
-
+/* Sección de información 1 */
 .info-1 {
-    background-image: url('imagenes/bg2.png');
-    background-color: #070025;
-    background-size: 2000px 700px;
-    /* Ancho y alto en píxeles */
-    /* Ancho y alto en píxeles */
-    padding: 190px 0;
+    background-image: url('imagenes/bg2.png'); /* Imagen de fondo */
+    background-color: #070025; /* Color de fondo */
+    background-size: 2000px 700px; /* Tamaño de la imagen */
+    padding: 190px 0; /* Espaciado interno */
 }
 
+/* Título de la sección */
 .info-1 h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #ffffff;
+    text-align: center; /* Centra el texto */
+    margin-bottom: 30px; /* Margen inferior */
+    color: #ffffff; /* Color del texto */
 }
 
-
+/* Servicios */
 .info-services {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 30px;
-    color: #ffffff;
+    display: flex; /* Usa flexbox */
+    flex-wrap: wrap; /* Permite múltiples líneas */
+    justify-content: space-around; /* Espacio entre elementos */
+    gap: 30px; /* Espacio entre elementos */
+    color: #ffffff; /* Color del texto */
 }
 
+/* Tarjetas de servicio */
 .service {
-    flex: 1 1 45%;
-    background-color: rgba(92, 92, 92, 0.25);
-    /* Más transparencia (0.7) */
-    padding: 45px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgb(121, 123, 151);
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
-    overflow: hidden;
+    flex: 1 1 45%; /* Tamaño flexible */
+    background-color: rgba(92, 92, 92, 0.25); /* Fondo semi-transparente */
+    padding: 45px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgb(121, 123, 151); /* Sombra */
+    transition: transform 0.5s ease, box-shadow 0.5s ease; /* Transición suave */
+    overflow: hidden; /* Oculta contenido desbordado */
 }
 
+/* Efecto hover en servicios */
 .service:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgb(201, 198, 0);
+    transform: translateY(-5px); /* Desplazamiento vertical */
+    box-shadow: 0 6px 12px rgb(201, 198, 0); /* Sombra más pronunciada */
 }
 
+/* Título del servicio */
 .service-title {
-    cursor: pointer;
-    margin-bottom: 15px;
-    font-size: 1.4rem;
-    color: #ffffff;
-    transition: color 0.3s ease;
-    padding: 10px;
-    border-bottom: 2px solid transparent;
+    cursor: pointer; /* Cambia el cursor */
+    margin-bottom: 15px; /* Margen inferior */
+    font-size: 1.4rem; /* Tamaño de la fuente */
+    color: #ffffff; /* Color del texto */
+    transition: color 0.3s ease; /* Transición suave */
+    padding: 10px; /* Espaciado interno */
+    border-bottom: 2px solid transparent; /* Borde inferior transparente */
 }
 
+/* Efecto hover en título */
 .service-title:hover {
-    color: #fffffffe;
-    border-color: #c3d100;
+    color: #fffffffe; /* Cambia color del texto */
+    border-color: #c3d100; /* Cambia color del borde */
 }
 
+/* Información del servicio */
 .service-info {
-    display: none;
-    padding-left: 20px;
-    transition: max-height 0.3s ease;
-    max-height: 0;
-    overflow: hidden;
+    display: none; /* Oculta inicialmente */
+    padding-left: 20px; /* Espaciado interno */
+    transition: max-height 0.3s ease; /* Transición suave */
+    max-height: 0; /* Altura inicial */
+    overflow: hidden; /* Oculta contenido desbordado */
 }
 
+/* Muestra información al hacer hover */
 .service:hover .service-info {
-    display: block;
-    max-height: 500px;
+    display: block; /* Muestra el contenido */
+    max-height: 500px; /* Altura máxima */
 }
 
+/* Lista de información */
 .service-info ul {
-    list-style: disc;
-    padding: 0;
-    margin-left: 20px;
+    list-style: disc; /* Estilo de lista */
+    padding: 0; /* Elimina padding */
+    margin-left: 20px; /* Margen izquierdo */
 }
 
+/* Elementos de la lista */
 .service-info li {
-    margin-bottom: 10px;
+    margin-bottom: 10px; /* Margen inferior */
 }
 
+/* Ajuste de scroll */
 #tipos-servicios {
-    scroll-margin-top: -200px; /* Ajusta este valor según necesites */
+    scroll-margin-top: -200px; /* Ajusta el margen superior */
 }
 
+/* Sección de información 2 */
 .info-2 {
-    padding: 90px 0;
-    background-color:#070025;
-    background-image: url(imagenes/bg3.png);
-    background-size: 2000px 1000px;
-    /* Ancho y alto en píxeles */
-    /* Ancho y alto en píxeles */
+    padding: 90px 0; /* Espaciado interno */
+    background-color: #070025; /* Color de fondo */
+    background-image: url(imagenes/bg3.png); /* Imagen de fondo */
+    background-size: 2000px 1000px; /* Tamaño de la imagen */
 }
 
+/* Título de la sección */
 .info-2 h2 {
-    text-align: center;
-    margin-bottom: 40px;
-    color: rgb(255, 255, 255);
+    text-align: center; /* Centra el texto */
+    margin-bottom: 40px; /* Margen inferior */
+    color: rgb(255, 255, 255); /* Color del texto */
 }
 
+/* Productos */
 .products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 100px;
+    display: flex; /* Usa flexbox */
+    flex-wrap: wrap; /* Permite múltiples líneas */
+    justify-content: space-around; /* Espacio entre elementos */
+    gap: 100px; /* Espacio entre elementos */
 }
 
+/* Tarjetas de producto */
 .product {
-    flex: 1 1 45%;
-    background-color: rgba(125, 158, 246, 0.2);
-    /* Más transparencia (0.7) */
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: var(--box-shadow);
-    transition: transform var(--transition);
+    flex: 1 1 45%; /* Tamaño flexible */
+    background-color: rgba(125, 158, 246, 0.2); /* Fondo semi-transparente */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: var(--box-shadow); /* Sombra */
+    transition: transform var(--transition); /* Transición suave */
 }
 
+/* Efecto hover en productos */
 .product:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px); /* Desplazamiento vertical */
 }
 
+/* Título del producto */
 .product h3 {
-    margin-bottom: 15px;
-    color: #ffffff;
+    margin-bottom: 15px; /* Margen inferior */
+    color: #ffffff; /* Color del texto */
 }
 
-
+/* Lista de productos */
 .product ul {
-    list-style: disc;
-    padding: 0;
-    margin-left: 20px;
+    list-style: disc; /* Estilo de lista */
+    padding: 0; /* Elimina padding */
+    margin-left: 20px; /* Margen izquierdo */
 }
 
+/* Elementos de la lista */
 .product li {
-    margin-bottom: 10px;
-    color: #ffffff;
+    margin-bottom: 10px; /* Margen inferior */
+    color: #ffffff; /* Color del texto */
 }
 
+/* Pie de página */
 .footer {
-    background-color:#070025;
-    color:  #ffffffc6;
-    padding: 45px;
-    /* Padding más grande */
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
-    min-height: 100px;
-  
+    background-color: #070025; /* Color de fondo */
+    color: #ffffffc6; /* Color del texto */
+    padding: 45px; /* Espaciado interno */
+    font-family: sans-serif; /* Fuente */
+    display: flex; /* Usa flexbox */
+    flex-direction: column; /* Organiza en columna */
+    min-height: 100px; /* Altura mínima */
 }
 
-
+/* Contenido del footer */
 .footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    flex: 1;
+    display: flex; /* Usa flexbox */
+    flex-wrap: wrap; /* Permite múltiples líneas */
+    justify-content: space-around; /* Espacio entre elementos */
+    flex: 1; /* Ocupa espacio disponible */
 }
 
+/* Secciones del footer */
 .footer-section {
-    margin-bottom: 30px;
-    /* Espacio entre secciones */
-    width: 25%;
-    min-width: 250px;
-    /* Ancho mínimo */
+    margin-bottom: 30px; /* Margen inferior */
+    width: 25%; /* Ancho fijo */
+    min-width: 250px; /* Ancho mínimo */
 }
 
+/* Título de las secciones */
 .footer-section h4 {
-    color:   #f4fb32c6;
-    margin-bottom: 15px;
+    color: #f4fb32c6; /* Color del texto */
+    margin-bottom: 15px; /* Margen inferior */
 }
 
+/* Párrafos del footer */
 .footer-section p {
-    line-height: 2.8;
-    /* Espacio entre líneas */
+    line-height: 2.8; /* Espacio entre líneas */
 }
 
+/* Listas del footer */
 .footer-section ul {
-    list-style: none;
-    padding: 0;
+    list-style: none; /* Elimina estilos de lista */
+    padding: 0; /* Elimina padding */
 }
 
+/* Elementos de la lista */
 .footer-section li {
-    margin-bottom: 8px;
+    margin-bottom: 8px; /* Margen inferior */
 }
 
+/* Enlaces del footer */
 .footer-section a {
-    color:  #ffffff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    line-height: 1.8;
+    color: #ffffff; /* Color del texto */
+    text-decoration: none; /* Elimina subrayado */
+    transition: color 0.3s ease; /* Transición suave */
+    line-height: 1.8; /* Espacio entre líneas */
 }
 
+/* Efecto hover en enlaces */
 .footer-section a:hover {
-    color:  #f4fb32c6;
+    color: #f4fb32c6; /* Cambia color del texto */
 }
 
+/* Enlaces sociales */
 .social-links a {
-    display: inline-block;
-    margin-right: 15px;
-    font-size: 25px;
-    /* Tamaño de iconos */
-    color:  #00c3ff;
-    ;
-    transition: color 0.3s ease;
+    display: inline-block; /* Display en línea */
+    margin-right: 15px; /* Margen derecho */
+    font-size: 25px; /* Tamaño de iconos */
+    color: #00c3ff; /* Color del texto */
+    transition: color 0.3s ease; /* Transición suave */
 }
 
+/* Efecto hover en enlaces sociales */
 .social-links a:hover {
-    color:  #f4fb32c6;
+    color: #f4fb32c6; /* Cambia color del texto */
 }
 
+/* Parte inferior del footer */
 .footer-bottom {
-    text-align: center;
-    padding-top: 20px;
-    border-top: 1px solid #ffffff;
-    margin-top: 30px;
+    text-align: center; /* Centra el texto */
+    padding-top: 20px; /* Espaciado superior */
+    border-top: 1px solid #ffffff; /* Borde superior */
+    margin-top: 30px; /* Margen superior */
 }
 
+/* Párrafo del footer */
 .footer-bottom p {
-    font-size: 16px;
+    font-size: 16px; /* Tamaño de la fuente */
 }
 
+/* Imagen del footer */
 .footer-image {
-    width: 200px;
-    /* Ancho de la imagen */
-    margin: 0 auto;
-    margin-bottom: 15px;
+    width: 200px; /* Ancho fijo */
+    margin: 0 auto; /* Centra horizontalmente */
+    margin-bottom: 15px; /* Margen inferior */
 }
 
-/* Media queries para responsive */
+/* Media queries para responsividad */
 @media (max-width: 900px) {
     .footer-section {
-        width: 45%;
+        width: 45%; /* Ancho reducido */
     }
 }
 
 @media (max-width: 600px) {
     .footer-section {
-        width: 100%;
+        width: 100%; /* Ancho completo */
     }
 }
-
