@@ -1,147 +1,147 @@
-+----------+-----------------+-------------+-----------+
-| Código   | Material        | Tipo        | Diámetro  |
-+----------+-----------------+-------------+-----------+
-| IYR0001  | Cobre           | M           | 1/8       |
-| IYR0002  | Cobre           | M           | 1/4       |
-| IYR0003  | Cobre           | M           | 3/8       |
-| IYR0004  | Cobre           | M           | 1/2       |
-| IYR0005  | Cobre           | M           | 3/4       |
-| IYR0006  | Cobre           | M           | 1         |
-| IYR0007  | Cobre           | M           | 1-1/4     |
-| IYR0008  | Cobre           | M           | 1-1/2     |
-| IYR0009  | Cobre           | M           | 3         |
-| IYR0010  | Cobre           | M           | 3-1/2     |
-| IYR0011  | Cobre           | M           | 4         |
-| IYR0012  | Cobre           | K           | 1/8       |
-| IYR0013  | Cobre           | K           | 1/4       |
-| IYR0014  | Cobre           | K           | 3/8       |
-| IYR0015  | Cobre           | K           | 1/2       |
-| IYR0016  | Cobre           | K           | 3/4       |
-| IYR0017  | Cobre           | K           | 1         |
-| IYR0018  | Cobre           | K           | 1-1/4     |
-| IYR0019  | Cobre           | K           | 1-1/2     |
-| IYR0020  | Cobre           | K           | 3         |
-| IYR0021  | Cobre           | K           | 3-1/2     |
-| IYR0022  | Cobre           | K           | 4         |
-| IYR0023  | Cobre           | L           | 1/8       |
-| IYR0024  | Cobre           | L           | 1/4       |
-| IYR0025  | Cobre           | L           | 3/8       |
-| IYR0026  | Cobre           | L           | 1/2       |
-| IYR0027  | Cobre           | L           | 3/4       |
-| IYR0028  | Cobre           | L           | 1         |
-| IYR0029  | Cobre           | L           | 1-1/4     |
-| IYR0030  | Cobre           | L           | 1-1/2     |
-| IYR0031  | Cobre           | L           | 3         |
-| IYR0032  | Cobre           | L           | 3-1/2     |
-| IYR0033  | Cobre           | L           | 4         |
-| IYR0034  | Acero inoxidable| 10          | 1/8       |
-| IYR0035  | Acero inoxidable| 10          | 1/4       |
-| IYR0036  | Acero inoxidable| 10          | 3/8       |
-| IYR0037  | Acero inoxidable| 10          | 1/2       |
-| IYR0038  | Acero inoxidable| 10          | 3/4       |
-| IYR0039  | Acero inoxidable| 10          | 1         |
-| IYR0040  | Acero inoxidable| 10          | 1-1/4     |
-| IYR0041  | Acero inoxidable| 10          | 1-1/2     |
-| IYR0042  | Acero inoxidable| 10          | 3         |
-| IYR0043  | Acero inoxidable| 10          | 3-1/2     |
-| IYR0044  | Acero inoxidable| 10          | 4         |
-| IYR0045  | Acero inoxidable| 40          | 1/8       |
-| IYR0046  | Acero inoxidable| 40          | 1/4       |
-| IYR0047  | Acero inoxidable| 40          | 3/8       |
-| IYR0048  | Acero inoxidable| 40          | 1/2       |
-| IYR0049  | Acero inoxidable| 40          | 3/4       |
-| IYR0050  | Acero inoxidable| 40          | 1         |
-| IYR0051  | Acero inoxidable| 40          | 1-1/4     |
-| IYR0052  | Acero inoxidable| 40          | 1-1/2     |
-| IYR0053  | Acero inoxidable| 40          | 3         |
-| IYR0054  | Acero inoxidable| 40          | 3-1/2     |
-| IYR0055  | Acero inoxidable| 40          | 4         |
-| IYR0056  | Acero inoxidable| 80          | 1/8       |
-| IYR0057  | Acero inoxidable| 80          | 1/4       |
-| IYR0058  | Acero inoxidable| 80          | 3/8       |
-| IYR0059  | Acero inoxidable| 80          | 1/2       |
-| IYR0060  | Acero inoxidable| 80          | 3/4       |
-| IYR0061  | Acero inoxidable| 80          | 1         |
-| IYR0062  | Acero inoxidable| 80          | 1-1/4     |
-| IYR0063  | Acero inoxidable| 80          | 1-1/2     |
-| IYR0064  | Acero inoxidable| 80          | 3         |
-| IYR0065  | Acero inoxidable| 80          | 3-1/2     |
-| IYR0066  | Acero inoxidable| 80          | 4         |
-| IYR0067  | Acero carbono   | 10          | 1/8       |
-| IYR0068  | Acero carbono   | 10          | 1/4       |
-| IYR0069  | Acero carbono   | 10          | 3/8       |
-| IYR0070  | Acero carbono   | 10          | 1/2       |
-| IYR0071  | Acero carbono   | 10          | 3/4       |
-| IYR0072  | Acero carbono   | 10          | 1         |
-| IYR0073  | Acero carbono   | 10          | 1-1/4     |
-| IYR0074  | Acero carbono   | 10          | 1-1/2     |
-| IYR0075  | Acero carbono   | 10          | 3         |
-| IYR0076  | Acero carbono   | 10          | 3-1/2     |
-| IYR0077  | Acero carbono   | 10          | 4         |
-| IYR0078  | Acero carbono   | 40          | 1/8       |
-| IYR0079  | Acero carbono   | 40          | 1/4       |
-| IYR0080  | Acero carbono   | 40          | 3/8       |
-| IYR0081  | Acero carbono   | 40          | 1/2       |
-| IYR0082  | Acero carbono   | 40          | 3/4       |
-| IYR0083  | Acero carbono   | 40          | 1         |
-| IYR0084  | Acero carbono   | 40          | 1-1/4     |
-| IYR0085  | Acero carbono   | 40          | 1-1/2     |
-| IYR0086  | Acero carbono   | 40          | 3         |
-| IYR0087  | Acero carbono   | 40          | 3-1/2     |
-| IYR0088  | Acero carbono   | 40          | 4         |
-| IYR0089  | Acero carbono   | 80          | 1/8       |
-| IYR0090  | Acero carbono   | 80          | 1/4       |
-| IYR0091  | Acero carbono   | 80          | 3/8       |
-| IYR0092  | Acero carbono   | 80          | 1/2       |
-| IYR0093  | Acero carbono   | 80          | 3/4       |
-| IYR0094  | Acero carbono   | 80          | 1         |
-| IYR0095  | Acero carbono   | 80          | 1-1/4     |
-| IYR0096  | Acero carbono   | 80          | 1-1/2     |
-| IYR0097  | Acero carbono   | 80          | 3         |
-| IYR0098  | Acero carbono   | 80          | 3-1/2     |
-| IYR0099  | Acero carbono   | 80          | 4         |
-| IYR0100  | PVC             | Presion     | 1/8       |
-| IYR0101  | PVC             | Presion     | 1/4       |
-| IYR0102  | PVC             | Presion     | 3/8       |
-| IYR0103  | PVC             | Presion     | 1/2       |
-| IYR0104  | PVC             | Presion     | 3/4       |
-| IYR0105  | PVC             | Presion     | 1         |
-| IYR0106  | PVC             | Presion     | 1-1/4     |
-| IYR0107  | PVC             | Presion     | 1-1/2     |
-| IYR0108  | PVC             | Presion     | 3         |
-| IYR0109  | PVC             | Presion     | 3-1/2     |
-| IYR0110  | PVC             | Presion     | 4         |
-| IYR0111  | PVC             | Electrica   | 1/8       |
-| IYR0112  | PVC             | Electrica   | 1/4       |
-| IYR0113  | PVC             | Electrica   | 3/8       |
-| IYR0114  | PVC             | Electrica   | 1/2       |
-| IYR0115  | PVC             | Electrica   | 3/4       |
-| IYR0116  | PVC             | Electrica   | 1         |
-| IYR0117  | PVC             | Electrica   | 1-1/4     |
-| IYR0118  | PVC             | Electrica   | 1-1/2     |
-| IYR0119  | PVC             | Electrica   | 3         |
-| IYR0120  | PVC             | Electrica   | 3-1/2     |
-| IYR0121  | PVC             | Electrica   | 4         |
-| IYR0122  | PVC             | Sanitaria   | 1/8       |
-| IYR0123  | PVC             | Sanitaria   | 1/4       |
-| IYR0124  | PVC             | Sanitaria   | 3/8       |
-| IYR0125  | PVC             | Sanitaria   | 1/2       |
-| IYR0126  | PVC             | Sanitaria   | 3/4       |
-| IYR0127  | PVC             | Sanitaria   | 1         |
-| IYR0128  | PVC             | Sanitaria   | 1-1/4     |
-| IYR0129  | PVC             | Sanitaria   | 1-1/2     |
-| IYR0130  | PVC             | Sanitaria   | 3         |
-| IYR0131  | PVC             | Sanitaria   | 3-1/2     |
-| IYR0132  | PVC             | Sanitaria   | 4         |
-| IYR0133  | PVC             | Ventilacion | 1/8       |
-| IYR0134  | PVC             | Ventilacion | 1/4       |
-| IYR0135  | PVC             | Ventilacion | 3/8       |
-| IYR0136  | PVC             | Ventilacion | 1/2       |
-| IYR0137  | PVC             | Ventilacion | 3/4       |
-| IYR0138  | PVC             | Ventilacion | 1         |
-| IYR0139  | PVC             | Ventilacion | 1-1/4     |
-| IYR0140  | PVC             | Ventilacion | 1-1/2     |
-| IYR0141  | PVC             | Ventilacion | 3         |
-| IYR0142  | PVC             | Ventilacion | 3-1/2     |
-| IYR0143  | PVC             | Ventilacion | 4         |
-+----------+-----------------+-------------+-----------+
++----------+-----------------------------------------+
+| Código   | Descripción                             |
++----------+-----------------------------------------+
+| IYR0001  | TuberíaCobreM1/8                        |
+| IYR0002  | TuberíaCobreM1/4                        |
+| IYR0003  | TuberíaCobreM3/8                        |
+| IYR0004  | TuberíaCobreM1/2                        |
+| IYR0005  | TuberíaCobreM3/4                        |
+| IYR0006  | TuberíaCobreM1                          |
+| IYR0007  | TuberíaCobreM1-1/4                      |
+| IYR0008  | TuberíaCobreM1-1/2                      |
+| IYR0009  | TuberíaCobreM3                          |
+| IYR0010  | TuberíaCobreM3-1/2                      |
+| IYR0011  | TuberíaCobreM4                          |
+| IYR0012  | TuberíaCobreK1/8                        |
+| IYR0013  | TuberíaCobreK1/4                        |
+| IYR0014  | TuberíaCobreK3/8                        |
+| IYR0015  | TuberíaCobreK1/2                        |
+| IYR0016  | TuberíaCobreK3/4                        |
+| IYR0017  | TuberíaCobreK1                          |
+| IYR0018  | TuberíaCobreK1-1/4                      |
+| IYR0019  | TuberíaCobreK1-1/2                      |
+| IYR0020  | TuberíaCobreK3                          |
+| IYR0021  | TuberíaCobreK3-1/2                      |
+| IYR0022  | TuberíaCobreK4                          |
+| IYR0023  | TuberíaCobreL1/8                        |
+| IYR0024  | TuberíaCobreL1/4                        |
+| IYR0025  | TuberíaCobreL3/8                        |
+| IYR0026  | TuberíaCobreL1/2                        |
+| IYR0027  | TuberíaCobreL3/4                        |
+| IYR0028  | TuberíaCobreL1                          |
+| IYR0029  | TuberíaCobreL1-1/4                      |
+| IYR0030  | TuberíaCobreL1-1/2                      |
+| IYR0031  | TuberíaCobreL3                          |
+| IYR0032  | TuberíaCobreL3-1/2                      |
+| IYR0033  | TuberíaCobreL4                          |
+| IYR0034  | TuberíaAceroInoxidable101/8             |
+| IYR0035  | TuberíaAceroInoxidable101/4             |
+| IYR0036  | TuberíaAceroInoxidable103/8             |
+| IYR0037  | TuberíaAceroInoxidable101/2             |
+| IYR0038  | TuberíaAceroInoxidable103/4             |
+| IYR0039  | TuberíaAceroInoxidable101               |
+| IYR0040  | TuberíaAceroInoxidable101-1/4           |
+| IYR0041  | TuberíaAceroInoxidable101-1/2           |
+| IYR0042  | TuberíaAceroInoxidable103               |
+| IYR0043  | TuberíaAceroInoxidable103-1/2           |
+| IYR0044  | TuberíaAceroInoxidable104               |
+| IYR0045  | TuberíaAceroInoxidable401/8             |
+| IYR0046  | TuberíaAceroInoxidable401/4             |
+| IYR0047  | TuberíaAceroInoxidable403/8             |
+| IYR0048  | TuberíaAceroInoxidable401/2             |
+| IYR0049  | TuberíaAceroInoxidable403/4             |
+| IYR0050  | TuberíaAceroInoxidable401               |
+| IYR0051  | TuberíaAceroInoxidable401-1/4           |
+| IYR0052  | TuberíaAceroInoxidable401-1/2           |
+| IYR0053  | TuberíaAceroInoxidable403               |
+| IYR0054  | TuberíaAceroInoxidable403-1/2           |
+| IYR0055  | TuberíaAceroInoxidable404               |
+| IYR0056  | TuberíaAceroInoxidable801/8             |
+| IYR0057  | TuberíaAceroInoxidable801/4             |
+| IYR0058  | TuberíaAceroInoxidable803/8             |
+| IYR0059  | TuberíaAceroInoxidable801/2             |
+| IYR0060  | TuberíaAceroInoxidable803/4             |
+| IYR0061  | TuberíaAceroInoxidable801               |
+| IYR0062  | TuberíaAceroInoxidable801-1/4           |
+| IYR0063  | TuberíaAceroInoxidable801-1/2           |
+| IYR0064  | TuberíaAceroInoxidable803               |
+| IYR0065  | TuberíaAceroInoxidable803-1/2           |
+| IYR0066  | TuberíaAceroInoxidable804               |
+| IYR0067  | TuberíaAceroCarbono101/8                |
+| IYR0068  | TuberíaAceroCarbono101/4                |
+| IYR0069  | TuberíaAceroCarbono103/8                |
+| IYR0070  | TuberíaAceroCarbono101/2                |
+| IYR0071  | TuberíaAceroCarbono103/4                |
+| IYR0072  | TuberíaAceroCarbono101                  |
+| IYR0073  | TuberíaAceroCarbono101-1/4              |
+| IYR0074  | TuberíaAceroCarbono101-1/2              |
+| IYR0075  | TuberíaAceroCarbono103                  |
+| IYR0076  | TuberíaAceroCarbono103-1/2              |
+| IYR0077  | TuberíaAceroCarbono104                  |
+| IYR0078  | TuberíaAceroCarbono401/8                |
+| IYR0079  | TuberíaAceroCarbono401/4                |
+| IYR0080  | TuberíaAceroCarbono403/8                |
+| IYR0081  | TuberíaAceroCarbono401/2                |
+| IYR0082  | TuberíaAceroCarbono403/4                |
+| IYR0083  | TuberíaAceroCarbono401                  |
+| IYR0084  | TuberíaAceroCarbono401-1/4              |
+| IYR0085  | TuberíaAceroCarbono401-1/2              |
+| IYR0086  | TuberíaAceroCarbono403                  |
+| IYR0087  | TuberíaAceroCarbono403-1/2              |
+| IYR0088  | TuberíaAceroCarbono404                  |
+| IYR0089  | TuberíaAceroCarbono801/8                |
+| IYR0090  | TuberíaAceroCarbono801/4                |
+| IYR0091  | TuberíaAceroCarbono803/8                |
+| IYR0092  | TuberíaAceroCarbono801/2                |
+| IYR0093  | TuberíaAceroCarbono803/4                |
+| IYR0094  | TuberíaAceroCarbono801                  |
+| IYR0095  | TuberíaAceroCarbono801-1/4              |
+| IYR0096  | TuberíaAceroCarbono801-1/2              |
+| IYR0097  | TuberíaAceroCarbono803                  |
+| IYR0098  | TuberíaAceroCarbono803-1/2              |
+| IYR0099  | TuberíaAceroCarbono804                  |
+| IYR0100  | TuberíaPVCPresion1/8                    |
+| IYR0101  | TuberíaPVCPresion1/4                    |
+| IYR0102  | TuberíaPVCPresion3/8                    |
+| IYR0103  | TuberíaPVCPresion1/2                    |
+| IYR0104  | TuberíaPVCPresion3/4                    |
+| IYR0105  | TuberíaPVCPresion1                      |
+| IYR0106  | TuberíaPVCPresion1-1/4                  |
+| IYR0107  | TuberíaPVCPresion1-1/2                  |
+| IYR0108  | TuberíaPVCPresion3                      |
+| IYR0109  | TuberíaPVCPresion3-1/2                  |
+| IYR0110  | TuberíaPVCPresion4                      |
+| IYR0111  | TuberíaPVCElectrica1/8                  |
+| IYR0112  | TuberíaPVCElectrica1/4                  |
+| IYR0113  | TuberíaPVCElectrica3/8                  |
+| IYR0114  | TuberíaPVCElectrica1/2                  |
+| IYR0115  | TuberíaPVCElectrica3/4                  |
+| IYR0116  | TuberíaPVCElectrica1                    |
+| IYR0117  | TuberíaPVCElectrica1-1/4                |
+| IYR0118  | TuberíaPVCElectrica1-1/2                |
+| IYR0119  | TuberíaPVCElectrica3                    |
+| IYR0120  | TuberíaPVCElectrica3-1/2                |
+| IYR0121  | TuberíaPVCElectrica4                    |
+| IYR0122  | TuberíaPVCSanitaria1/8                  |
+| IYR0123  | TuberíaPVCSanitaria1/4                  |
+| IYR0124  | TuberíaPVCSanitaria3/8                  |
+| IYR0125  | TuberíaPVCSanitaria1/2                  |
+| IYR0126  | TuberíaPVCSanitaria3/4                  |
+| IYR0127  | TuberíaPVCSanitaria1                    |
+| IYR0128  | TuberíaPVCSanitaria1-1/4                |
+| IYR0129  | TuberíaPVCSanitaria1-1/2                |
+| IYR0130  | TuberíaPVCSanitaria3                    |
+| IYR0131  | TuberíaPVCSanitaria3-1/2                |
+| IYR0132  | TuberíaPVCSanitaria4                    |
+| IYR0133  | TuberíaPVCVentilacion1/8                |
+| IYR0134  | TuberíaPVCVentilacion1/4                |
+| IYR0135  | TuberíaPVCVentilacion3/8                |
+| IYR0136  | TuberíaPVCVentilacion1/2                |
+| IYR0137  | TuberíaPVCVentilacion3/4                |
+| IYR0138  | TuberíaPVCVentilacion1                  |
+| IYR0139  | TuberíaPVCVentilacion1-1/4              |
+| IYR0140  | TuberíaPVCVentilacion1-1/2              |
+| IYR0141  | TuberíaPVCVentilacion3                  |
+| IYR0142  | TuberíaPVCVentilacion3-1/2              |
+| IYR0143  | TuberíaPVCVentilacion4                  |
++----------+-----------------------------------------+

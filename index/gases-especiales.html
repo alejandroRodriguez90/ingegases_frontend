@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gases Especiales | Ingegases & Redes s.a.s</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+    /* Estilos generales */
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+        
+    body {
+    color: #333;
+    line-height: 1.6;
+    background-image: url('imagenes/Blanco.PNG');
+    background-repeat: no-repeat;       /* Evita la repetición */
+    background-size: cover;            /* Cubre todo el área */
+    background-position: center 90%; /* Ajustado para mover hacia abajo */
+    background-attachment: fixed;      /* Fija la imagen (opcional) */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;                /* Altura mínima completa */
+    position: relative;
+    overflow-x: hidden;
+    }
+    /* Efecto Loading Circular */
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('imagenes/Blanco.PNG');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center 10%;
+        background-attachment: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    .loading-overlay.fade-out {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .loading-circle {
+        position: relative;
+        width: 120px;
+        height: 120px;
+    }
+
+    .circle {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 3px solid transparent;
+        border-top-color: #e63946; /* Color rojo corporativo */
+        border-radius: 50%;
+        animation: spin 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+
+    .circle::before,
+    .circle::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        border: 3px solid transparent;
+    }
+
+    .circle::before {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        border-top-color: #296192; /* Color azul corporativo */
+        animation: spin 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite reverse;
+    }
+
+    .circle::after {
+        top: 25px;
+        left: 25px;
+        right: 25px;
+        bottom: 25px;
+        border-top-color: rgba(230, 57, 70, 0.5); /* Rojo semitransparente */
+        animation: spin 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+
+    .logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .logo img {
+        width: 100%;
+        height: auto;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.9; }
+        50% { transform: scale(1.05); opacity: 1; }
+    }
+
+        
+    .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    }
+
+        /* ===== ESTILOS GENERALES DEL NAVBAR ===== */
+.top-navbar {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    color: white;
+    background-color: #000000;
+    display: inline-block;
+    border-radius: 0 0 25px 25px;
+    padding: 6px 0;
+    margin: 0 auto;
+    border: none;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-family: 'Segoe UI', sans-serif;
+    width: auto;
+    max-width: 95%;
+    white-space: nowrap;
+}
+
+/* ===== ESTRUCTURA DEL CONTENEDOR ===== */
+.nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 25px;
+        min-width: 400px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 10px;
+        position: relative;
+    }
+
+/* ===== ENLACES PRINCIPALES - TEXTO COMPACTO ===== */
+.nav-links > a,
+.nav-links > .has-submenu > a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 8px 12px;
+    border-radius: 4px;
+    position: relative;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+}
+
+/* ===== EFECTOS HOVER ===== */
+.nav-links > a:hover,
+.nav-links > .has-submenu:hover > a {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.nav-links > a::before,
+.nav-links > .has-submenu > a::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 15%;
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ffffff, transparent);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.nav-links > a:hover::before,
+.nav-links > .has-submenu:hover > a::before {
+    opacity: 0.7;
+    bottom: -3px;
+}
+
+/* ===== ICONOS ===== */
+.nav-links i {
+    font-size: 1rem;
+    color: #b1b1b1;
+    transition: all 0.3s ease;
+    min-width: 16px;
+    text-align: center;
+}
+
+.nav-links a:hover i {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* ===== SUBMENÚ VERTICAL ===== */
+.has-submenu {
+    position: relative;
+    display: inline-block;
+}
+
+.has-submenu > a {
+    padding-right: 26px !important;
+}
+
+.has-submenu::after {
+    content: '\f078';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 0.65rem;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b1b1b1;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.has-submenu:hover::after {
+    color: #ffffff;
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.submenu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background-color: #000000;
+    min-width: 180px;
+    width: max-content;
+    max-width: 90vw;
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.has-submenu:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.submenu li {
+    position: relative;
+    overflow: hidden;
+}
+
+.submenu li a {
+    color: #e0e0e0;
+    padding: 8px 18px;
+    display: block;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    position: relative;
+    background: transparent;
+    letter-spacing: -0.2px;
+    line-height: 1.3;
+}
+
+.submenu li a::before {
+    content: '';
+    position: absolute;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: all 0.4s ease;
+}
+
+.submenu li a:hover {
+    color: #ffffff;
+    padding-left: 22px;
+}
+
+.submenu li a:hover::before {
+    left: 100%;
+}
+
+.submenu li:last-child a {
+    border-radius: 0 0 12px 12px;
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 992px) {
+    .top-navbar {
+        max-width: 98%;
+        padding: 5px 0;
+    }
+    
+    .nav-container {
+        padding: 0 15px;
+    }
+    
+    .nav-links > a,
+    .nav-links > .has-submenu > a {
+        padding: 7px 10px;
+        font-size: 0.85rem;
+    }
+    
+    .has-submenu > a {
+        padding-right: 24px !important;
+    }
+    
+    .has-submenu::after {
+        right: 10px;
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        gap: 4px;
+    }
+    
+    .nav-links > a,
+    .nav-links > .has-submenu > a {
+        padding: 6px 8px;
+        font-size: 0.82rem;
+    }
+    
+    .nav-links i {
+        font-size: 0.9rem;
+        min-width: 14px;
+    }
+    
+    .submenu {
+        min-width: 160px;
+    }
+    
+    .submenu li a {
+        padding: 7px 15px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-navbar {
+        border-radius: 0;
+        max-width: 100%;
+    }
+    
+    .nav-links > a,
+    .nav-links > .has-submenu > a {
+        padding: 5px 7px;
+        font-size: 0.78rem;
+        letter-spacing: -0.4px;
+    }
+    
+    .has-submenu > a {
+        padding-right: 22px !important;
+    }
+    
+    .has-submenu::after {
+        right: 8px;
+    }
+    
+    .submenu li a {
+        padding: 6px 12px;
+    }
+}
+    
+    
+        /* Header */
+        .special-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('imagenes/gases1.PNG');
+            background-size: 100% auto; 
+            background-position: center 70%; /* Más cerca del fondo */
+            background-repeat: no-repeat;
+            color: white;
+            padding: 40px 0px; 
+            text-align: center;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            
+        }
+        
+        
+        .special-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .special-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Sección de productos */
+        .products-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2a6496;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: #e63946;
+            margin: 15px auto;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        
+        .product-content {
+            padding: 25px;
+        }
+        
+        .product-content h3 {
+            color: #e63946;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .product-content p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .product-features {
+            margin: 20px 0;
+        }
+        
+        .product-features li {
+            margin-bottom: 8px;
+            list-style-type: none;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .product-features li:before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #4CAF50;
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Sección de aplicaciones */
+        .applications-section {
+            background: #e3f2fd;
+            padding: 60px 0;
+        }
+        
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .application-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .application-icon {
+            font-size: 2.5rem;
+            color: #2a6496;
+            margin-bottom: 15px;
+        }
+        
+        /* Normativas */
+        .standards-section {
+            padding: 60px 0;
+        }
+        
+        .standards-list {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .standards-list li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .standards-list li:before {
+            content: '\f05d';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #2a6496;
+            position: absolute;
+            left: 0;
+        }
+        
+        /* CTA */
+        .cta-section {
+            background: #e63946;
+            color: white;
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .cta-section h2 {
+            margin-bottom: 20px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #e63946;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ========== FOOTER BLANCO PROFESIONAL ========== */
+        .footer {
+            background: #ffffff;
+            color: #535353;
+            padding: 80px 0 0;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .footer::before {
+            content: '';
+            display: block;
+            height: 3px;
+            background: linear-gradient(90deg, #0066cc, #003366); /* Degradado azul */
+            margin-bottom: 50px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column {
+            padding: 0 20px;
+        }
+
+        .footer-column h3 {
+            color: #222222;
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: #0066cc; /* Azul corporativo */
+            border-radius: 3px;
+        }
+
+        /* Logo e información - Sin filtro de gris */
+        .logo-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            max-width: 220px;
+            height: auto;
+            transition: all 0.3s ease;
+        }
+
+        .footer-logo:hover {
+            transform: translateY(-3px);
+        }
+
+        .company-description {
+            margin-bottom: 30px;
+            line-height: 1.8;
+            color: #555555;
+            font-size: 1rem;
+        }
+
+        .contact-info p {
+            margin: 18px 0;
+            display: flex;
+            align-items: center;
+            color: #444444;
+            font-size: 1.05rem;
+        }
+
+        .contact-info i {
+            margin-right: 15px;
+            color: #0066cc; /* Azul */
+            font-size: 1.2rem;
+            min-width: 25px;
+            text-align: center;
+        }
+
+        /* Redes sociales */
+        .social-media-section {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .social-media-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn.facebook { 
+            background: #3b5998;
+            border: 1px solid #3b5998;
+        }
+        .social-btn.instagram { 
+            background: linear-gradient(45deg, #405de6, #833ab4, #c13584, #e1306c);
+            border: 1px solid #c13584;
+        }
+        .social-btn.whatsapp { 
+            background: #25D366;
+            border: 1px solid #25D366;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0.9;
+        }
+
+        /* Horario de atención */
+        .business-hours {
+            margin-top: 25px;
+            background: #f9f9f9; /* Gris muy claro */
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 3px solid #0066cc; /* Azul */
+        }
+
+        .business-hours h4 {
+            color: #222222;
+            margin-bottom: 15px;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .business-hours h4 i {
+            color: #0066cc; /* Azul */
+        }
+
+        .business-hours p {
+            margin: 14px 0;
+            color: #555555;
+            font-size: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .business-hours p i {
+            color: #948525; /* Gris medio */
+        }
+
+        /* Formulario de cotización */
+        .quote-form .input-group {
+            margin-bottom: 25px;
+        }
+
+        .quote-form input,
+        .quote-form textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background: #f9f9f9; /* Gris muy claro */
+            color: #333333;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .quote-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .quote-form input:focus,
+        .quote-form textarea:focus {
+            outline: none;
+            border-color: #0066cc; /* Azul */
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .btn-quote {
+            background: #0066cc; /* Azul */
+            color: #ffffff;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-quote:hover {
+            background: #004d99; /* Azul más oscuro */
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+        }
+
+        /* Ubicación */
+        .map-wrapper {
+            background: #f9f9f9; /* Gris muy claro */
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .google-map {
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .location-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .map-address {
+            color: #444444;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .map-address i {
+            color: #0066cc; /* Azul */
+        }
+
+        .btn-directions {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #0066cc; /* Azul */
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 6px;
+            background: rgba(0, 102, 204, 0.1);
+            border: 1px solid rgba(0, 102, 204, 0.2);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-directions:hover {
+            background: rgba(0, 102, 204, 0.2);
+            color: #004d99; /* Azul más oscuro */
+        }
+
+        /* Footer inferior - Estilo Negro con Texto Blanco */
+        .footer-bottom {
+            background: #000;
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            width: 100vw; /* Ocupa el 100% del viewport */
+            margin-left: calc(-50vw + 50%); /* Centrado forzado */
+            position: relative;
+            
+        }
+
+        .footer-legal {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .footer-legal a {
+            color: #ffffff; /* Texto blanco */
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-legal a:hover {
+            color: #cccccc; /* Efecto hover gris claro */
+            text-decoration: underline;
+        }
+
+        .divider {
+            color: #ffffff; /* Divisores blancos */
+            opacity: 0.6;
+        }
+
+        .copyright {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #ffffff; /* Texto blanco */
+            line-height: 1.6;
+        }
+
+        .nit {
+            color: #ffffff; /* Texto blanco */
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 5px;
+        }
+    </style>
+    </head>
+    <body>
+
+        <div class="loading-overlay">
+            <div class="loading-circle">
+                <div class="circle"></div>
+                <div class="logo">
+                    <img src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Logo">
+                </div>
+            </div>
+        </div>
+        
+        <nav class="top-navbar">
+            <div class="nav-container">
+                <a href="index.html">
+                </a>
+                <div class="nav-links">
+                    <li class="has-submenu">
+                        <a href="index.html" class="icon-link"><i class="fas fa-cog hover-icon"></i><span>Quiénes Somos</span></a>
+                        <ul class="submenu">
+                            <li><a href="index.html#quienes_somos">Acerca de Nosotros</a></li>
+                        </ul>
+                    </li>
+                    <div class="has-submenu"> <!-- Cambiamos a div contenedor -->
+                        <a href="#">
+                            <i class="fas fa-industry"></i> Servicios
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="medicinales.html">Medicinales</a></li>  
+                            <li><a href="industriales.html">Industriales</a></li>
+                            <li><a href="gases-especiales.html">Gases Especiales</a></li>
+                            <li><a href="plantas-estacion-llenado.html">Plantas y Estación de Llenado</a></li>
+                            <li><a href="tanques-tanqueros.html">Tanques y Tanqueros</a></li>
+                        </ul>
+                    </div>
+                    <a href="experiencia.html">
+                        <i class="fas fa-award"></i> Experiencia
+                    </a>
+                    <a href="#contacto">
+                        <i class="fas fa-headset"></i> Contacto
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header Hero -->
+        <header class="special-header">
+            <div class="container">
+                <h1>Gases Especiales</h1>
+                <p>Soluciones técnicas avanzadas en diseno fabricacion y montaje de redes de gases especiales.</p>
+            </div>
+        </header>
+
+        <!-- Productos principales -->
+        <section class="products-section">
+            <div class="container">
+               
+                <div class="products-grid">
+                    <!-- Helio de Grado 5.0 -->
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="imagenes/Special1.jpg" alt="Helio Grado 5.0">
+                        </div>
+                        <div class="product-content">
+                            
+                            <p>Servicios de fabricación, montaje, suministro e instalación de redes para gases especiales.</p>
+                            
+                            <ul class="product-features">
+                                <li>Mantenimiento en redes de gases especiales.</li>
+                                <li>Venta y suministro de equipos para redes de gases especiales.</li>
+                                <li>Asesoría técnica especializada</li>
+                                
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Argón de Alta Pureza -->
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="imagenes/Special2.jpg" alt="Argón Alta Pureza">
+                        </div>
+                        <div class="product-content">
+                            <h3>Argón Alta Pureza</h3>
+                            <p>Grado 6.0 (99.9999%) para fabricación de semiconductores y soldadura especializada.</p>
+                            
+                            <ul class="product-features">
+                                <li>Pureza: 99.9999%</li>
+                                <li>Bajo contenido de humedad (< 0.1 ppm)</li>
+                                <li>Para sputtering y CVD</li>
+                                <li>Suministro en cilindros electropulidos</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Mezclas para Calibración -->
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="imagenes/Special3.jpg" alt="Mezclas para Calibración">
+                        </div>
+                        <div class="product-content">
+                            <h3>Mezclas para Calibración</h3>
+                            <p>Gases de referencia certificados para calibración de instrumentos analíticos.</p>
+                            
+                            <ul class="product-features">
+                                <li>Certificación NIST-traceable</li>
+                                <li>Rangos desde ppm hasta porcentajes</li>
+                                <li>Estabilidad garantizada</li>
+                                <li>Personalización según requerimiento</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Aplicaciones -->
+        <section class="applications-section">
+            <div class="container">
+                <h2 class="section-title">Aplicaciones Especializadas</h2>
+                <div class="applications-grid">
+                    <div class="application-card">
+                        <div class="application-icon">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <h3>Laboratorios</h3>
+                        <p>Gases portadores y de purga para equipos analíticos como GC, HPLC y espectrómetros.</p>
+                    </div>
+                    
+                    
+                    <div class="application-card">
+                        <div class="application-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h3>Investigación</h3>
+                        <p>Gases especiales para proyectos de I+D en física, química y ciencias de materiales.</p>
+                    </div>
+                    
+                
+                    <div class="application-card">
+                        <div class="application-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <h3>Procesos Críticos</h3>
+                        <p>Atmósferas controladas para procesos industriales sensibles a contaminación.</p>
+                    </div>
+                    
+                    <div class="application-card">
+                        <div class="application-icon">
+                            <i class="fas fa-biohazard"></i>
+                        </div>
+                        <h3>Medio Ambiente</h3>
+                        <p>Gases de calibración para monitoreo de emisiones y calidad del aire.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Footer -->
+        <footer id="contacto" class="footer">
+            <div class="footer-content">
+                <div class="footer-grid">
+                    <!-- Columna 1: Logo e información -->
+                    <div class="footer-column logo-info">
+                        <div class="logo-container">
+                            <img class="footer-logo" src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Logo Ingegases">
+                        </div>
+                        <div class="footer-info">
+                            <h3>Ingegases y Redes s.a.s</h3>
+                            <p class="company-description">Especialistas en instalación y mantenimiento de sistemas de gases y redes industriales con más de 10 años de experiencia.</p>
+                            <div class="contact-info">
+                                <p><i class="fas fa-map-marker-alt"></i> Cra. 54 #17a-69, Bogotá</p>
+                                <p><i class="fas fa-phone"></i> 311 238 26 36</p>
+                                <p><i class="fas fa-envelope"></i> ingegasesyredes@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Columna 2: Redes sociales -->
+                    <div class="footer-column social-section">
+                        <h3>Conéctate con Nosotros</h3>
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/Ingegasesyredes/?locale=es_LA" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="social-btn facebook" 
+                            aria-label="Facebook de Ingegases">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://www.instagram.com/ingegasesyredes/?hl=es-la" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="social-btn instagram" 
+                            aria-label="Instagram de Ingegases">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://wa.me/573112382636" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="social-btn whatsapp" 
+                            aria-label="WhatsApp de Ingegases">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+        
+                        <div class="business-hours">
+                            <h4><i class="fas fa-building"></i> Sedes a Nivel Nacional</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52 A 77, Cali</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Cra 1 C2 No 47-67, Ciudadela 20 Julio Barranquilla</p>
+                            
+                        </div>
+                    </div>
+        
+                    <!-- Columna 3: Formulario de cotización -->
+                    <div class="footer-column quotation-form">
+                        <h3>¿Necesitas una Cotización?</h3>
+                        <form id="cotizacionForm" class="quote-form" 
+                            action="https://formspree.io/f/ingegasesyredes@gmail.com" 
+                            method="POST">
+                            
+                            <!-- Campos del formulario (agrega 'name' a cada campo) -->
+                            <div class="input-group">
+                                <input type="text" name="nombre" placeholder="Nombre completo" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" name="email" placeholder="Correo electrónico" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="tel" name="telefono" placeholder="Teléfono/Celular">
+                            </div>
+                            <div class="input-group">
+                                <textarea name="mensaje" placeholder="Describe tu proyecto o necesidad"></textarea>
+                            </div>
+                            
+                            <!-- Configuración adicional de Formspree -->
+                            <input type="hidden" name="_subject" value="Nueva cotización desde el sitio web">
+                            <input type="hidden" name="_replyto" value="%email%"> <!-- Auto-respuesta al remitente -->
+                            
+                            <button type="submit" class="btn-quote">
+                                <span>Enviar Solicitud</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+        
+                    <!-- Columna 4: Ubicación -->
+                    <div class="footer-column location">
+                        <h3>Nuestra Sede Principal</h3>
+                        <div class="map-wrapper">
+        
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.7852446060936!2d-74.0837229246869!3d4.632550942081605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNMKwMzccNTcuMiJOIDc0wrAwNCc1OC4xIlc!5e0!3m2!1ses!2sco!4v1620000000000!5m2!1ses!2sco" 
+                                width="100%" 
+                                height="250" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy"
+                                class="google-map"
+                                aria-label="Mapa de ubicación de Ingegases"
+                            ></iframe>
+                            <div class="location-info">
+                                <p class="map-address">
+                                    <i class="fas fa-map-marker-alt"></i> Calle 12 No 68-109, Bogotá
+                                </p>
+                                <a href="https://maps.google.com" class="btn-directions" target="_blank">
+                                    <i class="fas fa-directions"></i> Cómo llegar
+                                </a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        
+            <!-- Footer inferior -->
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <a href="#">Términos y condiciones</a>
+                    <span class="divider">•</span>
+                    <a href="#">Política de privacidad</a>
+                    <span class="divider">•</span>
+                    <a href="#">Aviso legal</a>
+                </div>
+                <p class="copyright">&copy; 2025 Ingegases y Redes s.a.s. Todos los derechos reservados. <span class="nit">NIT: 900901915</span></p>
+            </div>
+        </footer>
+
+        <script>
+        
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    const loader = document.querySelector('.loading-overlay');
+                    if (loader) {
+                        loader.classList.add('fade-out');
+                        
+                        // Elimina el loader después de la animación
+                        setTimeout(() => {
+                            loader.remove();
+                        }, 800);
+                    }
+                }, 500); // Ajusta este tiempo según tu carga real
+            });
+        
+            </script>
+    </body>
+    </html>

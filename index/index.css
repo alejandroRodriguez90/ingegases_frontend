@@ -1,515 +1,1482 @@
+/* ========== ESTILOS BASE ========== */
+/* Fuentes y variables globales */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
-/* Variables globales */
 :root {
-    --primary-color: #152059; /* Color primario */
-    --secondary-color: #f8f8f8; /* Color secundario */
-    --text-color: #333; /* Color de texto principal */
-    --light-text-color: #bebebe; /* Color de texto claro */
-    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra predeterminada */
-    --transition: 0.3s ease; /* Transición suave */
+    --primary-color: #152059;
+    --secondary-color: #f8f8f8;
+    --text-color: #ffffff;
+    --accent-color: #f4fb32c6;
+    --dark-bg: #1a1a1a;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --transition: 0.3s ease;
 }
 
 /* Reset básico */
 * {
-    margin: 0; /* Elimina márgenes predeterminados */
-    padding: 0; /* Elimina paddings predeterminados */
-    box-sizing: border-box; /* Incluye padding y border en el tamaño del elemento */
-    text-decoration: none; /* Elimina subrayado de enlaces */
-    list-style: none; /* Elimina estilos de lista */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
 }
-
-/* Estilos generales del body */
+/* 
+===========================================
+ESTILOS GENERALES DEL CUERPO DEL DOCUMENTO
+===========================================
+- Fondo de pantalla con imagen
+- Configuración de tipografía base
+- Ajustes de visualización completa
+*/
+/* ========== ESTILOS DEL BODY ========== */
 body {
-    font-family: "Poppins", sans-serif; /* Fuente principal */
-    background-color: #070025; /* Color de fondo */
-    color: #000000; /* Color de texto */
+    background-image: url('imagenes/IYRindustria1.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+    color: var(--text-color);
+    overflow-x: hidden;
 }
 
-/* Contenedor principal */
+/* Filtro oscuro sobre la imagen de fondo */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* Negro con 50% de opacidad */
+    z-index: -1; /* Coloca detrás del contenido */
+}
+/*
+============================
+CONTENEDOR PRINCIPAL DE PÁGINA
+============================
+- Define el ancho máximo del contenido
+- Centrado horizontal automático
+- Padding lateral para espacio en los bordes
+*/
 .container {
-    max-width: 1300px; /* Ancho máximo */
-    margin: 0 auto; /* Centra el contenedor */
-    padding: 0 20px; /* Espacio lateral para responsividad */
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-/* Encabezado */
+/* 
+==================
+ESTILOS DE CABECERA
+==================
+- Configuración de altura completa
+- Posicionamiento de fondo
+- Centrado de elementos hijos
+*/
 .header {
-    background-image: url('imagenes/bg.png');
-    background-position: center bottom; /* Posición de la imagen */
-    background-repeat: none; /* Evita repetición */
-    background-size: cover; /* Cubre todo el espacio */
-    min-height: 90vh; /* Altura mínima */
-    display: flex; /* Usa flexbox */
-    align-items: center; /* Centra verticalmente */
-    justify-content: center; /* Centra horizontalmente */
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
-
-/* Menú */
+/* 
+=====================
+ESTILOS DEL MENÚ SUPERIOR
+=====================
+- Posicionamiento fijo en parte superior
+- Flexbox para alineación
+- Z-index para superposición
+*/
 .menu {
     position: absolute; /* Posicionamiento absoluto */
-    top: 0; /* Alinea en la parte superior */
-    left: 0; /* Alinea en la parte izquierda */
-    right: 0; /* Alinea en la parte derecha */
-    display: flex; /* Usa flexbox */
-    align-items: center; /* Centra verticalmente */
-    justify-content: center; /* Centra horizontalmente */
-    z-index: 1000; /* Capa superior */
-    padding: 90px; /* Espaciado interno */
+    top: 0; /* Alineado arriba */
+    left: 0; /* Alineado a la izquierda */
+    right: 0; /* Alineado a la derecha */
+    display: flex; /* Activa flexbox */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    z-index: 100; /* Asegura que esté encima */
 }
 
-/* Barra de navegación */
-.navbar ul {
-    display: flex; /* Usa flexbox */
-    justify-content: center; /* Centra elementos */
-    background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
-    border: 1px solid rgba(0, 0, 0, 0.2); /* Borde sutil */
-    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.7); /* Sombra */
-    border-radius: 50px; /* Bordes redondeados */
-    padding: 15px 20px; /* Espaciado interno */
-    width: 600px; /* Ancho fijo */
-    height: 50px; /* Alto fijo */
-    list-style: none; /* Elimina estilos de lista */
-    margin: 0 auto; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-}
-
-/* Elementos del menú */
-.navbar li {
-    margin: 0 20px; /* Espacio entre elementos */
-}
-
-/* Enlaces del menú */
-.navbar a {
-    color: #fff; /* Color del texto */
-    font-weight: 600; /* Grosor de la fuente */
-    transition: color 0.3s ease, opacity 0.3s ease; /* Transición suave */
-    text-decoration: none; /* Elimina subrayado */
-    display: flex; /* Usa flexbox */
-    align-items: center; /* Centra verticalmente */
-    gap: 8px; /* Espacio entre icono y texto */
-    position: relative; /* Posicionamiento relativo */
-}
-
-/* Efecto hover en enlaces */
-.navbar a:hover {
-    color: #f4fb32c6; /* Cambia color al hacer hover */
-}
-
-/* Iconos del menú */
-.navbar a i {
-    font-size: 18px; /* Tamaño del icono */
-    transition: opacity 0.3s ease; /* Transición suave */
-}
-
-/* Iconos de hover */
-.navbar a .hover-icon {
-    position: absolute; /* Posicionamiento absoluto */
-    opacity: 0; /* Inicialmente invisible */
-}
-
-/* Muestra icono de hover */
-.navbar a:hover .hover-icon {
-    opacity: 1; /* Visible al hacer hover */
-}
-
-/* Oculta icono inicial al hacer hover */
-.navbar a:hover i:not(.hover-icon) {
-    opacity: 0; /* Oculta icono inicial */
-}
-
-/* Contenido del encabezado */
-.header-content {
-    text-align: center; /* Centra el texto */
-    display: flex; /* Usa flexbox */
-    flex-direction: column; /* Organiza en columna */
-    align-items: center; /* Centra verticalmente */
-    justify-content: center; /* Centra horizontalmente */
-    height: 100%; /* Altura completa */
-}
-
-/* Texto del encabezado */
-.header-txt h1 {
-    font-size: 8rem; /* Tamaño grande */
-    color: #ffffff; /* Color del texto */
-    margin-bottom: 20px; /* Margen inferior */
-}
-
-/* Efecto de imagen en texto */
-.header-txt h1 {
-    font-size: 85px; /* Tamaño ajustado */
-    background-image: url('imagenes/PHOTO-2025-01-22-08-45-11.jpg');
-    background-size: 15%; /* Tamaño de la imagen */
-    background-position: center; /* Centra la imagen */
-    background-clip: text; /* Recorta la imagen al texto */
-    text-transform: uppercase; /* Texto en mayúsculas */
-    -webkit-background-clip: text; /* Compatibilidad con WebKit */
-    color: transparent; /* Texto transparente */
-    margin-top: 170px; /* Margen superior */
-}
-
-/* Párrafo del encabezado */
-.header-txt p {
-    color: #bebebe; /* Color del texto */
-    font-size: 16px; /* Tamaño de la fuente */
-    padding: 0 100px; /* Espaciado lateral */
-    margin-top: 60px; /* Margen superior */
-}
-
-/* Botón de información */
-.boton-informacion {
-    display: inline-block; /* Display en línea */
-    padding: 12px 45px; /* Espaciado interno */
-    border: 1px solid #576e8ac6; /* Borde */
-    color: #ffffff; /* Color del texto */
-    font-size: 16px; /* Tamaño de la fuente */
-    text-transform: uppercase; /* Texto en mayúsculas */
-    font-weight: 600; /* Grosor de la fuente */
-    background-color: transparent; /* Fondo transparente */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
-    margin-top: 110px; /* Margen superior */
-    cursor: pointer; /* Cambia el cursor */
-    border-radius: 5px; /* Bordes redondeados */
-}
-
-/* Efecto hover en botón */
-.boton-informacion:hover {
-    color: #000000; /* Cambia color del texto */
-    background-color: #f4fb32c6; /* Cambia color de fondo */
-}
-
-/* Media query para botón en pantallas pequeñas */
+/* Ajustes para pantallas más pequeñas */
 @media (max-width: 768px) {
-    .boton-informacion {
-        padding: 10px 30px; /* Espaciado reducido */
-        font-size: 14px; /* Tamaño de fuente reducido */
-        margin-top: 80px; /* Margen superior reducido */
+    .container {
+        padding: 0 10px;
+    }
+
+    .menu {
+        flex-direction: column;
+        align-items: center;
+        padding: 0px;
+    }
+
+    .header {
+        padding-top: 60px;
     }
 }
 
-/* Efecto focus en botón */
-.boton-informacion:focus {
-    outline: none; /* Elimina contorno predeterminado */
-    box-shadow: 0 0 0 3px rgba(244, 251, 50, 0.5); /* Resaltado */
+/* 
+==================================
+ESTILOS DE LA BARRA DE NAVEGACIÓN
+==================================
+- Diseño de lista horizontal
+- Efectos visuales con sombras y bordes
+- Espaciado y dimensiones específicas
+
+
+/* 
+================================================================================================
+BARRA DE NAVEGACIÓN MEJORADA
+============================================================================================
+*/
+
+html {
+    scroll-behavior: smooth;
 }
 
-/* Efecto active en botón */
-.boton-informacion:active {
-    transform: scale(0.98); /* Efecto de presionado */
+/* ESTILOS PRINCIPALES DEL NAVBAR */
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    background: 
+        linear-gradient(145deg, #0a0a0a, #202020) padding-box,
+        linear-gradient(145deg, #0f0f0f, #171717) border-box;
+    border-radius: 0 0 50px 50px;
+    padding: clamp(20px, 4vw, 35px) clamp(30px, 8vw, 75px) clamp(15px, 3vw, 20px);
+    width: min(95%, 900px);
+    height: auto;
+    list-style: none;
+    margin: 0 auto;
+    align-items: center;
+    backdrop-filter: blur(90px);
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.3);
+    position: relative;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: visible;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    border-top: none;
+    box-shadow: 
+        0 3px 0 #000000,
+        0 20px 40px rgba(39, 39, 39, 1),
+        inset 0 -8px 20px rgba(0, 0, 0, 0.8),
+        inset 0 6px 8px rgba(255, 255, 255, 0.1);
+    z-index: 1000;
 }
 
-/* Sección general */
-.general {
-    min-height: 90vh; /* Altura mínima */
-    display: flex; /* Usa flexbox */
-    align-items: center; /* Centra verticalmente */
-    justify-content: center; /* Centra horizontalmente */
-    margin-top: 10px; /* Margen superior */
+/* Efectos hover y active */
+.navbar ul:hover {
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 
+        0 5px 0 #000000,
+        0 25px 50px rgba(39, 39, 39, 1),
+        inset 0 -10px 25px rgba(0, 0, 0, 0.8),
+        inset 0 8px 10px rgba(255, 255, 255, 0.1);
 }
 
-/* Fondo de la sección general */
-.general-bg {
-    position: absolute; /* Posicionamiento absoluto */
-    top: 0; /* Alinea en la parte superior */
-    left: 0; /* Alinea en la parte izquierda */
-    right: 0; /* Alinea en la parte derecha */
-    width: 100%; /* Ancho completo */
-    height: 100%; /* Altura completa */
-    background-size: cover; /* Cubre todo el espacio */
-    background-repeat: no-repeat; /* Evita repetición */
-    background-position: center; /* Centra la imagen */
-    background-attachment: fixed; /* Fondo fijo */
-    z-index: 0; /* Capa inferior */
+.navbar ul:active {
+    transform: translateX(-50%) translateY(2px);
+    box-shadow: 
+        0 2px 0 #000,
+        0 5px 15px rgba(0,0,0,0.4),
+        inset 0 -5px 20px rgba(0,0,0,0.9),
+        inset 0 3px 10px rgba(255,255,255,0.05);
 }
 
-/* Título de la sección general */
-.general h2 {
-    margin-bottom: 10px; /* Margen inferior */
+/* Elementos de la lista */
+.navbar li {
+    margin: 0 clamp(10px, 2vw, 20px);
+    position: relative;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
 }
 
-/* Contenido de la sección general */
-.general-content {
-    position: relative; /* Posicionamiento relativo */
-    z-index: 1; /* Capa superior */
-    display: flex; /* Usa flexbox */
-    flex-wrap: wrap; /* Permite múltiples líneas */
-    justify-content: space-around; /* Espacio entre elementos */
-    gap: 50px; /* Espacio entre elementos */
+/* Enlaces principales */
+.navbar a {
+    color: #ffffff;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: clamp(5px, 1vw, 7px);
+    position: relative;
+    white-space: nowrap;
+    text-shadow: 0 -1px 2px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+    font-size: clamp(0.85rem, 2vw, 1rem);
+}
+
+.navbar a:hover {
+    color: #f4fb32c6;
+}
+
+.navbar a i {
+    font-size: clamp(16px, 2.5vw, 18px);
+    transition: all 0.3s ease;
+}
+
+.navbar a:hover i {
+    color: #f4fb32c6;
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #f4fb32c6;
+    transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+    width: 100%;
+}
+
+/* Efectos de iconos */
+.navbar a i:first-child {
+    opacity: 1;
+}
+
+.navbar a i.hover-icon {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+}
+
+.navbar a:hover i:first-child {
+    opacity: 0;
+}
+
+.navbar a:hover i.hover-icon {
+    opacity: 1;
+}
+
+/* Efecto click */
+.navbar li:active {
+    transform: translateY(2px) scale(0.98);
+}
+
+/* Borde 3D */
+.navbar ul::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0 0 50px 50px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-top: none;
+    box-shadow: 
+        inset 0 1px 1px rgba(255,255,255,0.2),
+        inset 0 -1px 1px rgba(0,0,0,0.1);
+    pointer-events: none;
+}
+
+/* SUBMENÚ - VERSIÓN RESPONSIVA */
+.navbar .submenu {
+    position: absolute;
+    top: calc(100% + clamp(8px, 1.5vw, 12px));
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: 
+        linear-gradient(145deg, #0a0a0a, #202020) padding-box,
+        linear-gradient(145deg, #0f0f0f, #171717) border-box;
+    min-width: clamp(180px, 25vw, 200px);
+    width: auto;
+    box-shadow: 
+        0 3px 0 #000000,
+        0 20px 40px rgba(39, 39, 39, 1),
+        inset 0 -8px 20px rgba(0, 0, 0, 0.8),
+        inset 0 6px 8px rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.3);
+    z-index: 100;
+    padding: clamp(8px, 1.5vw, 10px) 0;
+    display: block;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 0 0 50px 50px;
+    white-space: nowrap;
+}
+
+.navbar > ul > li.has-submenu:hover .submenu,
+.navbar > ul > li.has-submenu.active .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.submenu li {
+    display: block;
+    padding: 0 clamp(12px, 2vw, 15px);
+    margin: clamp(3px, 1vw, 5px) 0;
+    transition: all 0.3s ease;
+}
+
+.submenu li a {
+    color: white;
+    padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2vw, 15px);
+    display: block;
+    transition: all 0.2s ease;
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+    text-decoration: none;
+    position: relative;
+}
+
+.submenu li a:hover {
+    color: #f4fb32c6;
+}
+
+.submenu li a::after {
+    content: '';
+    position: absolute;
+    bottom: 7px;
+    left: clamp(15px, 3vw, 25px);
+    width: 0;
+    height: 2px;
+    background: #f4fb32c6;
+    transition: width 0.3s ease;
+}
+
+.submenu li a:hover::after {
+    width: calc(100% - clamp(30px, 6vw, 50px));
+}
+
+.submenu li:active {
+    transform: translateY(1px);
+}
+
+/* SCROLL HORIZONTAL PARA PANTALLAS MUY PEQUEÑAS */
+@media (max-width: 480px) {
+    .navbar ul {
+        justify-content: flex-start;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    .navbar ul::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* 
+===========================================================================================================
+BOTON LOGIN
+===========================================================================================================
+*/
+.boton-login {
+    display: block;
+    margin: 200px auto 0; /* Reducir margen */
+    padding: 15px 30px;
+
+    /* Base 3D con gradiente negro mejorado */
+    background: 
+        linear-gradient(145deg, #050505, #151515) padding-box,
+        linear-gradient(145deg, #494949, #2d2d2d) border-box;
+
+    color: #f5f5f5;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;  /* Asegura que el cursor cambie al pasar el ratón */
+
+    /* Sistema de sombras 3D mejorado */
+    box-shadow:
+        0 5px 0 #000000,  /* Sombra base de profundidad */
+        0 15px 30px rgba(39, 39, 39, 0.9),  /* Sombra ambiental */
+        inset 0 -8px 15px rgba(0, 0, 0, 0.7),  /* Sombras internas */
+        inset 0 4px 6px rgba(236, 235, 235, 0.08);  /* Brillos superiores */
+
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.3);
+    position: relative;
+    z-index: 10;
+    text-shadow: 0 -1px 2px rgba(0,0,0,0.9);
+    overflow: hidden;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    -webkit-tap-highlight-color: transparent; /* Elimina el resaltado azul en dispositivos táctiles */
+}
+
+/* Efecto de hundimiento ultra realista */
+.boton-login:active {
+    transform: 
+        translateY(12px)  /* Movimiento vertical */
+        scale(0.98)      /* Ligera compresión */
+        rotateX(8deg);   /* Inclinación 3D */
+
+    box-shadow:
+        0 2px 0 #000,                   /* Sombra comprimida */
+        0 5px 15px rgba(0,0,0,0.4),     /* Sombra ambiental reducida */
+        inset 0 -5px 20px rgba(0,0,0,0.9),  /* Sombras internas intensificadas */
+        inset 0 3px 6px rgba(255,255,255,0.05);  /* Brillos ajustados */
+
+    background:
+        linear-gradient(145deg, #030303, #0d0d0d) padding-box,
+        linear-gradient(145deg, #1a1a1a, #050505) border-box;
+
+    border-color: rgba(0,0,0,0.3);
+    transition: all 0.15s cubic-bezier(0.3, 0.1, 0.7, 0.2);
+}
+
+
+/* Efecto de reflexión dinámica mejorado */
+.boton-login::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(255,255,255,0.1) 0%,
+            rgba(255,255,255,0) 50%
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.03) 0%,
+            rgba(255,255,255,0) 20%
+        );
+    transition: all 0.5s ease;
+    pointer-events: none;
+}
+
+/* Efecto de borde 3D */
+.boton-login::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 
+        inset 0 1px 1px rgba(255,255,255,0.1),
+        inset 0 -1px 1px rgba(0,0,0,0.5);
+    pointer-events: none;
+}
+
+/* 
+================================
+ESTILOS DEL CONTENIDO PRINCIPAL
+================================
+- Configuración de flexbox
+- Efectos 3D y perspectiva
+- Animación de entrada
+*/
+.header-content {
+    text-align: center; /* Alineación de texto */
+    display: flex; /* Flexbox para layout */
+    padding: 80px 10px; /* Reducir padding */
+    width: auto; /* Ancho automático */
     perspective: 1000px; /* Perspectiva 3D */
-    max-width: 1200px; /* Ancho máximo */
+    overflow: hidden; /* Oculta overflow */
+}
+.header-txt {
+    transform-style: preserve-3d; /* Conserva transformaciones 3D */
+    animation: textIntro 1.5s ease-out forwards; /* Animación de entrada */
+    opacity: 0; /* Inicialmente transparente */
+    transform: translateY(10px) rotateX(60deg); /* Posición inicial */
     width: 100%; /* Ancho completo */
-    margin: 0 auto; /* Centra horizontalmente */
-    padding: 20px; /* Espaciado interno */
+}
+/* 
+================================
+EFECTO DE IMAGEN EN TEXTO (h1)
+================================
+- Texto con imagen de fondo
+- Efectos visuales avanzados
+*/
+.header-txt h1 {
+    font-size: 100px; /* Tamaño grande */
+    background-image: url('imagenes/PHOTO-2025-01-22-08-45-11.jpg'); /* Imagen de fondo */
+    background-size: 20%; /* Tamaño de imagen */
+    background-position: center; /* Centrado */
+    background-clip: text; /* Recorta imagen al texto */
+    text-transform: uppercase; /* Mayúsculas */
+    -webkit-background-clip: text; /* Compatibilidad */
+    color: transparent; /* Texto transparente */
+    margin-top: 180px; /* Margen superior */
+    display: inline-block; /* Necesario para efectos */
+    filter: 
+        drop-shadow(5px 5px 10px rgb(0, 0, 9))
+        brightness(0.9); /* Oscurece la imagen (0.6 = 60% de brillo) */
 }
 
-/* Tarjetas de texto */
-.general-txt {
-    flex: 1 1 30%; /* Tamaño flexible */
-    padding: 20px; /* Espaciado interno */
-    background-color: rgba(255, 255, 255, 0.85); /* Fondo semi-transparente */
-    border-radius: 35px; /* Bordes redondeados */
-    box-shadow: 0 2px 4px rgb(209, 190, 15); /* Sombra */
-    transition: transform 0.4s ease, box-shadow 0.5s ease; /* Transición suave */
-    transform-style: preserve-3d; /* Mantiene perspectiva 3D */
-}
 
-/* Efecto hover en tarjetas */
-.general-txt:hover {
-    transform: rotateY(15deg) rotateX(10deg) translateY(-5px); /* Giro 3D */
-    box-shadow: 0 10px 20px rgb(192, 210, 3); /* Sombra más pronunciada */
-}
 
-/* Sección de información 1 */
-.info-1 {
-    background-image: url('imagenes/bg2.png'); /* Imagen de fondo */
-    background-color: #070025; /* Color de fondo */
-    background-size: 2000px 700px; /* Tamaño de la imagen */
-    padding: 190px 0; /* Espaciado interno */
-}
-
-/* Título de la sección */
-.info-1 h2 {
-    text-align: center; /* Centra el texto */
-    margin-bottom: 30px; /* Margen inferior */
-    color: #ffffff; /* Color del texto */
-}
-
-/* Servicios */
-.info-services {
-    display: flex; /* Usa flexbox */
-    flex-wrap: wrap; /* Permite múltiples líneas */
-    justify-content: space-around; /* Espacio entre elementos */
-    gap: 30px; /* Espacio entre elementos */
-    color: #ffffff; /* Color del texto */
-}
-
-/* Tarjetas de servicio */
-.service {
-    flex: 1 1 45%; /* Tamaño flexible */
-    background-color: rgba(92, 92, 92, 0.25); /* Fondo semi-transparente */
-    padding: 45px; /* Espaciado interno */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgb(121, 123, 151); /* Sombra */
-    transition: transform 0.5s ease, box-shadow 0.5s ease; /* Transición suave */
-    overflow: hidden; /* Oculta contenido desbordado */
-}
-
-/* Efecto hover en servicios */
-.service:hover {
-    transform: translateY(-5px); /* Desplazamiento vertical */
-    box-shadow: 0 6px 12px rgb(201, 198, 0); /* Sombra más pronunciada */
-}
-
-/* Título del servicio */
-.service-title {
-    cursor: pointer; /* Cambia el cursor */
-    margin-bottom: 15px; /* Margen inferior */
-    font-size: 1.4rem; /* Tamaño de la fuente */
-    color: #ffffff; /* Color del texto */
-    transition: color 0.3s ease; /* Transición suave */
-    padding: 10px; /* Espaciado interno */
-    border-bottom: 2px solid transparent; /* Borde inferior transparente */
-}
-
-/* Efecto hover en título */
-.service-title:hover {
-    color: #fffffffe; /* Cambia color del texto */
-    border-color: #c3d100; /* Cambia color del borde */
-}
-
-/* Información del servicio */
-.service-info {
-    display: none; /* Oculta inicialmente */
-    padding-left: 20px; /* Espaciado interno */
-    transition: max-height 0.3s ease; /* Transición suave */
-    max-height: 0; /* Altura inicial */
-    overflow: hidden; /* Oculta contenido desbordado */
-}
-
-/* Muestra información al hacer hover */
-.service:hover .service-info {
-    display: block; /* Muestra el contenido */
-    max-height: 500px; /* Altura máxima */
-}
-
-/* Lista de información */
-.service-info ul {
-    list-style: disc; /* Estilo de lista */
-    padding: 0; /* Elimina padding */
-    margin-left: 20px; /* Margen izquierdo */
-}
-
-/* Elementos de la lista */
-.service-info li {
-    margin-bottom: 10px; /* Margen inferior */
-}
-
-/* Ajuste de scroll */
-#tipos-servicios {
-    scroll-margin-top: -200px; /* Ajusta el margen superior */
-}
-
-/* Sección de información 2 */
-.info-2 {
-    padding: 90px 0; /* Espaciado interno */
-    background-color: #070025; /* Color de fondo */
-    background-image: url(imagenes/bg3.png); /* Imagen de fondo */
-    background-size: 2000px 1000px; /* Tamaño de la imagen */
-}
-
-/* Título de la sección */
-.info-2 h2 {
-    text-align: center; /* Centra el texto */
-    margin-bottom: 40px; /* Margen inferior */
-    color: rgb(255, 255, 255); /* Color del texto */
-}
-
-/* Productos */
-.products {
-    display: flex; /* Usa flexbox */
-    flex-wrap: wrap; /* Permite múltiples líneas */
-    justify-content: space-around; /* Espacio entre elementos */
-    gap: 100px; /* Espacio entre elementos */
-}
-
-/* Tarjetas de producto */
-.product {
-    flex: 1 1 45%; /* Tamaño flexible */
-    background-color: rgba(125, 158, 246, 0.2); /* Fondo semi-transparente */
-    padding: 10px; /* Espaciado interno */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: var(--box-shadow); /* Sombra */
-    transition: transform var(--transition); /* Transición suave */
-}
-
-/* Efecto hover en productos */
-.product:hover {
-    transform: translateY(-5px); /* Desplazamiento vertical */
-}
-
-/* Título del producto */
-.product h3 {
-    margin-bottom: 15px; /* Margen inferior */
-    color: #ffffff; /* Color del texto */
-}
-
-/* Lista de productos */
-.product ul {
-    list-style: disc; /* Estilo de lista */
-    padding: 0; /* Elimina padding */
-    margin-left: 20px; /* Margen izquierdo */
-}
-
-/* Elementos de la lista */
-.product li {
-    margin-bottom: 10px; /* Margen inferior */
-    color: #ffffff; /* Color del texto */
-}
-
-/* Pie de página */
-.footer {
-    background-color: #070025; /* Color de fondo */
-    color: #ffffffc6; /* Color del texto */
-    padding: 45px; /* Espaciado interno */
-    font-family: sans-serif; /* Fuente */
-    display: flex; /* Usa flexbox */
-    flex-direction: column; /* Organiza en columna */
-    min-height: 100px; /* Altura mínima */
-}
-
-/* Contenido del footer */
-.footer-content {
-    display: flex; /* Usa flexbox */
-    flex-wrap: wrap; /* Permite múltiples líneas */
-    justify-content: space-around; /* Espacio entre elementos */
-    flex: 1; /* Ocupa espacio disponible */
-}
-
-/* Secciones del footer */
-.footer-section {
-    margin-bottom: 30px; /* Margen inferior */
-    width: 25%; /* Ancho fijo */
-    min-width: 250px; /* Ancho mínimo */
-}
-
-/* Título de las secciones */
-.footer-section h4 {
-    color: #f4fb32c6; /* Color del texto */
-    margin-bottom: 15px; /* Margen inferior */
-}
-
-/* Párrafos del footer */
-.footer-section p {
-    line-height: 2.8; /* Espacio entre líneas */
-}
-
-/* Listas del footer */
-.footer-section ul {
-    list-style: none; /* Elimina estilos de lista */
-    padding: 0; /* Elimina padding */
-}
-
-/* Elementos de la lista */
-.footer-section li {
-    margin-bottom: 8px; /* Margen inferior */
-}
-
-/* Enlaces del footer */
-.footer-section a {
-    color: #ffffff; /* Color del texto */
-    text-decoration: none; /* Elimina subrayado */
-    transition: color 0.3s ease; /* Transición suave */
-    line-height: 1.8; /* Espacio entre líneas */
-}
-
-/* Efecto hover en enlaces */
-.footer-section a:hover {
-    color: #f4fb32c6; /* Cambia color del texto */
-}
-
-/* Enlaces sociales */
-.social-links a {
-    display: inline-block; /* Display en línea */
-    margin-right: 15px; /* Margen derecho */
-    font-size: 25px; /* Tamaño de iconos */
-    color: #00c3ff; /* Color del texto */
-    transition: color 0.3s ease; /* Transición suave */
-}
-
-/* Efecto hover en enlaces sociales */
-.social-links a:hover {
-    color: #f4fb32c6; /* Cambia color del texto */
-}
-
-/* Parte inferior del footer */
-.footer-bottom {
-    text-align: center; /* Centra el texto */
-    padding-top: 20px; /* Espaciado superior */
-    border-top: 1px solid #ffffff; /* Borde superior */
-    margin-top: 30px; /* Margen superior */
-}
-
-/* Párrafo del footer */
-.footer-bottom p {
-    font-size: 16px; /* Tamaño de la fuente */
-}
-
-/* Imagen del footer */
-.footer-image {
-    width: 200px; /* Ancho fijo */
-    margin: 0 auto; /* Centra horizontalmente */
-    margin-bottom: 15px; /* Margen inferior */
-}
-
-/* Media queries para responsividad */
-@media (max-width: 900px) {
-    .footer-section {
-        width: 45%; /* Ancho reducido */
+/* Media queries para ajustes específicos en diferentes tamaños de pantalla */
+@media (max-width: 1200px) {
+    .header-txt h1 {
+        font-size: 7vw;
+        margin-top: 15vh;
     }
 }
 
-@media (max-width: 600px) {
-    .footer-section {
-        width: 100%; /* Ancho completo */
+@media (max-width: 768px) {
+    .header-txt h1 {
+        font-size: 10vw;
+        background-size: 60%;
+        margin-top: 10vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-txt h1 {
+        font-size: 12vw;
+        background-size: 80%;
+        margin-top: 8vh;
+    }
+}
+/* 
+================================
+EFECTO DE PROFUNDIDAD 3D
+================================
+- Pseudoelemento para efecto de capa
+*/
+.header-txt::before {
+    content: ''; /* Requerido para pseudoelemento */
+    position: absolute; /* Posicionamiento absoluto */
+    top: 0; left: 0; right: 0; bottom: 0; /* Cubre todo el espacio */
+    border-radius: 15px; /* Bordes redondeados */
+    z-index: 1; /* Nivel de apilamiento */
+    transform: translateZ(-20px); /* Efecto 3D */
+}
+
+/* Efecto hover para párrafos */
+.header-txt:hover p {
+    transform: translateZ(4px); /* Efecto 3D al hover */
+}
+/* 
+================================
+ANIMACIÓN DE ENTRADA DE TEXTO
+================================
+*/
+@keyframes textIntro {
+    to {
+        opacity: 1; /* Opacidad final */
+        transform: translateY(0) rotateX(0); /* Posición final */
+    }
+}
+
+/* 
+================================
+SECCION QUIENES SOMOS 
+================================
+*/
+
+/* Contenedor principal de la sección */
+.about-section {
+    padding: 100px 0; /* Espaciado vertical grande */
+    background-image: url('imagenes/Blanco.PNG'); /* Imagen de fondo */
+    position: relative; /* Para posicionamiento de elementos hijos */
+    overflow: hidden; /* Oculta cualquier desbordamiento */
+}
+
+/* Contenedor del contenido (texto + imágenes) */
+.about-container {
+    max-width: 1200px; /* Ancho máximo del contenido */
+    margin: 0 auto; /* Centrado horizontal */
+    display: grid; /* Usa CSS Grid para layout */
+    grid-template-columns: 1.2fr 1fr; /* Más espacio para el texto (60%/40%) */
+    gap: 60px; /* Espacio entre columnas */
+    align-items: center; /* Centrado vertical */
+    padding: 0 40px; /* Espaciado lateral */
+}
+
+/* Estilos para el área de texto */
+.about-text {
+    padding-right: 40px; /* Espaciado derecho */
+}
+
+/* Estilo del título principal */
+.about-text h2 {
+    font-size: 2.8rem; /* Tamaño grande */
+    color: #222; /* Color oscuro */
+    margin-bottom: 30px; /* Espacio inferior */
+    position: relative; /* Para el pseudo-elemento */
+    padding-bottom: 15px; /* Espacio para el subrayado */
+    font-weight: 700; /* Negrita */
+    line-height: 1.2; /* Interlineado */
+}
+
+/* Efecto de subrayado animado */
+.about-text h2::after {
+    content: ''; /* Pseudo-elemento */
+    position: absolute; /* Posicionamiento absoluto */
+    left: 0; /* Alineado a la izquierda */
+    bottom: 0; /* En la parte inferior */
+    width: 80px; /* Ancho inicial */
+    height: 4px; /* Grosor */
+    background: #0066cc; /* Color azul corporativo */
+    border-radius: 2px; /* Bordes redondeados */
+    transition: width 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover para el subrayado */
+.about-text:hover h2::after {
+    width: 120px; /* Ancho expandido */
+}
+
+/* Estilos para párrafos */
+.about-text p {
+    font-size: 1.15rem; /* Tamaño legible */
+    line-height: 1.8; /* Buen interlineado */
+    color: #444; /* Color gris oscuro */
+    margin-bottom: 25px; /* Espacio entre párrafos */
+}
+
+/* Lista de servicios */
+.services-list {
+    list-style: none; /* Quita viñetas */
+    padding-left: 0; /* Quita padding izquierdo */
+    margin: 30px 0; /* Espacio vertical */
+}
+
+/* Items de la lista */
+.services-list li {
+    padding: 10px 0; /* Espacio vertical */
+    padding-left: 35px; /* Espacio para el icono */
+    position: relative; /* Para posicionar el icono */
+    color: #555; /* Color gris */
+    font-size: 1.1rem; /* Tamaño de fuente */
+    transition: transform 0.3s ease; /* Animación suave */
+}
+
+/* Efecto hover para items */
+.services-list li:hover {
+    transform: translateX(5px); /* Movimiento a la derecha */
+}
+
+/* Icono personalizado para items */
+.services-list li::before {
+    content: '▹'; /* Triángulo como icono */
+    position: absolute; /* Posicionamiento */
+    left: 0; /* Alineado a la izquierda */
+    color: #0066cc; /* Color azul */
+    font-size: 1.4rem; /* Tamaño */
+    transition: color 0.3s ease; /* Transición de color */
+}
+
+/* Efecto hover para iconos */
+.services-list li:hover::before {
+    color: #004080; /* Color azul más oscuro */
+}
+
+/* Estilos para el botón "Leer más" */
+.read-more-btn {
+    display: inline-block; /* Display inline con propiedades de bloque */
+    margin-top: 30px; /* Espacio superior */
+    padding: 14px 35px; /* Espaciado interno */
+    background: linear-gradient(135deg, #0066cc, #004d99); /* Degradado azul */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 8px; /* Bordes redondeados */
+    text-decoration: none; /* Sin subrayado */
+    font-weight: 600; /* Negrita */
+    font-size: 1.1rem; /* Tamaño */
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transición personalizada */
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3); /* Sombra */
+    position: relative; /* Para el pseudo-elemento */
+    overflow: hidden; /* Oculta desbordamiento */
+}
+
+/* Efecto de brillo al pasar el mouse */
+.read-more-btn::after {
+    content: ''; /* Pseudo-elemento */
+    position: absolute; /* Posicionamiento absoluto */
+    top: 0; /* Arriba */
+    left: -100%; /* Inicia fuera del botón */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Alto completo */
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); /* Brillo */
+    transition: 0.5s; /* Duración de la transición */
+}
+
+/* Efectos hover para el botón */
+.read-more-btn:hover {
+    transform: translateY(-3px); /* Elevación */
+    box-shadow: 0 8px 25px rgba(0, 102, 204, 0.4); /* Sombra más pronunciada */
+}
+
+/* Animación del brillo al hacer hover */
+.read-more-btn:hover::after {
+    left: 100%; /* Mueve el brillo a la derecha */
+}
+
+/* 
+================================
+GALERÍA DE IMÁGENES - ESTILOS FINALES
+Efecto naipe horizontal (derecha a izquierda)
+================================
+*/
+
+/* Contenedor de la galería */
+.gallery-stack {
+    position: relative; /* Posicionamiento relativo */
+    height: 600px; /* Altura fija */
+    width: 100%; /* Ancho completo */
+    margin-left: 150px; /* Compensación de desplazamiento */
+}
+
+/* Estilos base para las tarjetas de imagen */
+.photo-card {
+    position: absolute; /* Posicionamiento absoluto */
+    width: 110%; /* Ancho grande (80% del contenedor) */
+    height: auto; /* Altura automática */
+    border-radius: 20px; /* Bordes redondeados */
+    overflow: hidden; /* Oculta desbordamiento */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12); /* Sombra suave */
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Transición suave */
+    aspect-ratio: 4/5; /* Relación de aspecto 4:5 */
+    background: #fff; /* Fondo blanco */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* Borde sutil */
+}
+
+/* Imagen dentro de la tarjeta */
+.photo-card img {
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Alto completo */
+    object-fit: cover; /* Cubre el espacio sin distorsión */
+    transition: transform 0.5s ease, filter 0.3s ease; /* Transiciones */
+}
+
+/* 
+Posicionamiento de las tarjetas en efecto naipe horizontal
+(de derecha a izquierda)
+*/
+
+/* Primera tarjeta (frente) */
+.card-1 {
+    top: 50%; /* Centrado vertical */
+    right: 0; /* Alineada a la derecha */
+    transform: translateY(-50%) rotate(5deg); /* Centrado y rotación */
+    z-index: 2; /* En la parte superior */
+}
+
+/* Segunda tarjeta (medio) */
+.card-2 {
+    top: 50%; /* Centrado vertical */
+    right: 80px; /* Separación horizontal */
+    transform: translateY(-50%) rotate(-3deg); /* Centrado y rotación */
+    z-index: 3; /* Nivel intermedio */
+}
+
+/* Tercera tarjeta (fondo) */
+.card-3 {
+    top: 50%; /* Centrado vertical */
+    right: 160px; /* Separación horizontal */
+    transform: translateY(-50%) rotate(2deg); /* Centrado y rotación */
+    z-index: 1; /* En la parte inferior */
+}
+
+/* Efectos hover para las tarjetas */
+.photo-card:hover {
+    z-index: 10; /* Asegura que esté sobre todo */
+    transform: translateY(-50%) scale(1.05) rotate(0deg); /* Escala y endereza */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada */
+}
+
+/* Efecto de superposición al hacer hover */
+.photo-card::after {
+    content: ''; /* Pseudo-elemento */
+    position: absolute; /* Posicionamiento absoluto */
+    top: 0; left: 0; right: 0; bottom: 0; /* Cubre toda la tarjeta */
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1), rgba(0, 102, 204, 0.2)); /* Degradado azul */
+    opacity: 0; /* Inicialmente transparente */
+    transition: opacity 0.4s ease; /* Transición suave */
+}
+
+/* Mostrar superposición al hacer hover */
+.photo-card:hover::after {
+    opacity: 1; /* Visible */
+}
+
+/* 
+================================
+DISEÑO RESPONSIVE - AJUSTES PARA DIFERENTES PANTALLAS
+================================
+*/
+
+/* Pantallas grandes (hasta 1200px) */
+@media (max-width: 1200px) {
+    .about-container {
+        gap: 40px; /* Reduce el espacio entre columnas */
+    }
+}
+
+/* Tabletas (hasta 992px) */
+@media (max-width: 992px) {
+    .about-container {
+        grid-template-columns: 1fr; /* Cambia a una columna */
+        gap: 30px; /* Reduce el espacio */
+        padding: 0 30px; /* Ajusta el padding */
+    }
+    
+    .about-text {
+        padding-right: 0; /* Elimina padding derecho */
+        text-align: center; /* Centra el texto */
+    }
+    
+    /* Centra el subrayado del título */
+    .about-text h2::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    /* Ajustes para la galería */
+    .gallery-stack {
+        height: 400px; /* Altura fija */
+        margin-top: 40px; /* Espacio superior */
+        margin-left: 0; /* Elimina margen izquierdo */
+    }
+    
+    .photo-card {
+        width: 65%; /* Reduce el ancho */
+    }
+    
+    /* Reposicionamiento vertical para móviles */
+    .card-1 {
+        top: 0;
+        right: 50%;
+        transform: translateX(50%) rotate(5deg);
+    }
+    
+    .card-2 {
+        top: 100px;
+        right: 50%;
+        transform: translateX(50%) rotate(-3deg);
+    }
+    
+    .card-3 {
+        top: 200px;
+        right: 50%;
+        transform: translateX(50%) rotate(2deg);
+    }
+}
+
+/* Tabletas pequeñas (hasta 768px) */
+@media (max-width: 768px) {
+    .about-section {
+        padding: 80px 0; /* Reduce el padding vertical */
+    }
+    
+    .about-text h2 {
+        font-size: 2.4rem; /* Reduce el tamaño del título */
+    }
+    
+    .gallery-stack {
+        height: 380px; /* Altura reducida */
+    }
+    
+    .photo-card {
+        width: 75%; /* Ancho aumentado */
+    }
+}
+
+/* Móviles (hasta 576px) */
+@media (max-width: 576px) {
+    .about-container {
+        padding: 0 20px; /* Reduce el padding */
+    }
+    
+    .about-text h2 {
+        font-size: 2.2rem; /* Título más pequeño */
+    }
+    
+    .gallery-stack {
+        height: 350px; /* Altura reducida */
+    }
+    
+    .photo-card {
+        width: 85%; /* Ancho casi completo */
+        border-radius: 12px; /* Bordes menos redondeados */
+    }
+    
+    /* Ajuste de posiciones */
+    .card-1 {
+        top: 0;
+    }
+    
+    .card-2 {
+        top: 90px;
+    }
+    
+    .card-3 {
+        top: 180px;
+    }
+}
+
+
+/* 
+================================
+SECCIÓN ESTADÍSTICAS INGEGASES
+Diseño compatible con el tema principal
+================================
+*/
+
+/* Contenedor principal */
+.ingegases-stats-section {
+    padding: 100px 0;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo oscuro semitransparente */
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(244, 251, 50, 0.2); /* Borde superior amarillo */
+    border-bottom: 1px solid rgba(244, 251, 50, 0.2); /* Borde inferior amarillo */
+}
+
+/* Contenedor interno */
+.ingegases-stats-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Eslogan - Versión compatible */
+.ingegases-slogan-box {
+    text-align: center;
+    margin-bottom: 80px;
+    padding: 0 20px;
+}
+
+.ingegases-slogan-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #000000; /* Amarillo corporativo */
+    line-height: 1.3;
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+}
+
+.ingegases-slogan-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: #0066cc; /* Azul corporativo */
+    border-radius: 2px;
+}
+
+.ingegases-slogan-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #000000;
+    max-width: 800px;
+    margin: 0 auto;
+    font-weight: 300;
+}
+
+/* Contenedor de estadísticas */
+.ingegases-stats-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* Items de estadísticas */
+.ingegases-stat-card {
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+    padding: 40px 20px;
+    background: rgba(21, 32, 89, 0.8); /* Azul oscuro corporativo con transparencia */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(244, 251, 50, 0.1); /* Borde amarillo sutil */
+}
+
+.ingegases-stat-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 102, 204, 0.4);
+    background: rgba(21, 32, 89, 0.95); /* Fondo más sólido al hover */
+}
+
+/* Números */
+.ingegases-stat-number {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #f4fb32; /* Amarillo corporativo */
+    margin-bottom: 15px;
+    line-height: 1;
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Etiquetas */
+.ingegases-stat-label {
+    font-size: 1.2rem;
+    color: #ffffff;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Animación para los números */
+@keyframes ingegasesCountUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ingegases-stat-number.animated {
+    animation: ingegasesCountUp 1s ease-out forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .ingegases-slogan-title {
+        font-size: 2.2rem;
+    }
+    
+    .ingegases-stats-grid {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ingegases-stats-section {
+        padding: 80px 0;
+    }
+    
+    .ingegases-slogan-title {
+        font-size: 2rem;
+    }
+    
+    .ingegases-slogan-text {
+        font-size: 1.1rem;
+    }
+    
+    .ingegases-stat-card {
+        min-width: 150px;
+        padding: 30px 15px;
+    }
+    
+    .ingegases-stat-number {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .ingegases-stats-section {
+        padding: 70px 0;
+    }
+    
+    .ingegases-slogan-box {
+        margin-bottom: 50px;
+    }
+    
+    .ingegases-slogan-title {
+        font-size: 1.8rem;
+    }
+    
+    .ingegases-stats-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .ingegases-stat-card {
+        width: 80%;
+    }
+}
+
+/* ========== FOOTER BLANCO PROFESIONAL ========== */
+.footer {
+    background: #ffffff;
+    color: #535353;
+    padding: 80px 0 0;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    border-top: 1px solid #f0f0f0;
+}
+
+.footer::before {
+    content: '';
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, #0066cc, #003366); /* Degradado azul */
+    margin-bottom: 50px;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.footer-column {
+    padding: 0 20px;
+}
+
+.footer-column h3 {
+    color: #222222;
+    margin-bottom: 25px;
+    font-size: 1.4rem;
+    position: relative;
+    padding-bottom: 15px;
+    font-weight: 700;
+}
+
+.footer-column h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 3px;
+    background: #0066cc; /* Azul corporativo */
+    border-radius: 3px;
+}
+
+/* Logo e información - Sin filtro de gris */
+.logo-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-container {
+    margin-bottom: 30px;
+}
+
+.footer-logo {
+    max-width: 220px;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+.footer-logo:hover {
+    transform: translateY(-3px);
+}
+
+.company-description {
+    margin-bottom: 30px;
+    line-height: 1.8;
+    color: #555555;
+    font-size: 1rem;
+}
+
+.contact-info p {
+    margin: 18px 0;
+    display: flex;
+    align-items: center;
+    color: #444444;
+    font-size: 1.05rem;
+}
+
+.contact-info i {
+    margin-right: 15px;
+    color: #0066cc; /* Azul */
+    font-size: 1.2rem;
+    min-width: 25px;
+    text-align: center;
+}
+
+/* Redes sociales */
+.social-media-section {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.social-media-section h3 {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.social-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.social-btn.facebook { 
+    background: #3b5998;
+    border: 1px solid #3b5998;
+}
+.social-btn.instagram { 
+    background: linear-gradient(45deg, #405de6, #833ab4, #c13584, #e1306c);
+    border: 1px solid #c13584;
+}
+.social-btn.whatsapp { 
+    background: #25D366;
+    border: 1px solid #25D366;
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0.9;
+}
+
+/* Horario de atención */
+.business-hours {
+    margin-top: 25px;
+    background: #f9f9f9; /* Gris muy claro */
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 3px solid #0066cc; /* Azul */
+}
+
+.business-hours h4 {
+    color: #222222;
+    margin-bottom: 15px;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.business-hours h4 i {
+    color: #0066cc; /* Azul */
+}
+
+.business-hours p {
+    margin: 14px 0;
+    color: #555555;
+    font-size: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.business-hours p i {
+    color: #948525; /* Gris medio */
+}
+
+/* Formulario de cotización */
+.quote-form .input-group {
+    margin-bottom: 25px;
+}
+
+.quote-form input,
+.quote-form textarea {
+    width: 100%;
+    padding: 16px 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background: #f9f9f9; /* Gris muy claro */
+    color: #333333;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.quote-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.quote-form input:focus,
+.quote-form textarea:focus {
+    outline: none;
+    border-color: #0066cc; /* Azul */
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.btn-quote {
+    background: #0066cc; /* Azul */
+    color: #ffffff;
+    border: none;
+    padding: 16px 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+}
+
+.btn-quote:hover {
+    background: #004d99; /* Azul más oscuro */
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+}
+
+/* Ubicación */
+.map-wrapper {
+    background: #f9f9f9; /* Gris muy claro */
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+}
+
+.google-map {
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.location-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.map-address {
+    color: #444444;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.map-address i {
+    color: #0066cc; /* Azul */
+}
+
+.btn-directions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #0066cc; /* Azul */
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background: rgba(0, 102, 204, 0.1);
+    border: 1px solid rgba(0, 102, 204, 0.2);
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-directions:hover {
+    background: rgba(0, 102, 204, 0.2);
+    color: #004d99; /* Azul más oscuro */
+}
+
+/* Footer inferior - Estilo Negro con Texto Blanco */
+.footer-bottom {
+    background: #000;
+    padding: 30px 0;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    width: 100vw; /* Ocupa el 100% del viewport width */
+    left: 50%; /* Centrado inicial */
+    right: 50%; /* Centrado inicial */
+    margin-left: -50vw; /* Compensación para centrado perfecto */
+    margin-right: -50vw; /* Compensación para centrado perfecto */
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
+}
+
+.footer-legal {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+}
+
+.footer-legal a {
+    color: #ffffff; /* Texto blanco */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.footer-legal a:hover {
+    color: #cccccc; /* Efecto hover gris claro */
+    text-decoration: underline;
+}
+
+.divider {
+    color: #ffffff; /* Divisores blancos */
+    opacity: 0.6;
+}
+
+.copyright {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #ffffff; /* Texto blanco */
+    line-height: 1.6;
+}
+
+.nit {
+    color: #ffffff; /* Texto blanco */
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .footer {
+        padding-top: 70px;
+    }
+}
+
+@media (max-width: 992px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding-top: 60px;
+    }
+    
+    .footer-content {
+        padding: 0 30px;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding-top: 50px;
+    }
+    
+    .footer-legal {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .divider {
+        display: none;
     }
 }

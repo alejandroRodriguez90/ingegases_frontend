@@ -1,9 +1,9 @@
 // index.js
 document.addEventListener('DOMContentLoaded', () => {
-    const inicioLink = document.querySelector('nav ul li:first-child a');
+    const loginButton = document.querySelector('.boton-login');
 
-    inicioLink.addEventListener('click', (event) => {
-        event.preventDefault(); // Evita la navegación predeterminada del enlace
+    loginButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Evita cualquier comportamiento por defecto
 
         // Redirige al usuario a la página de login.html
         window.location.href = '../login/login.html';
@@ -11,50 +11,150 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Función para el scroll suave
-    const smoothScroll = (targetId, offset = 0) => {
-        const targetSection = document.querySelector(targetId); // Selecciona la sección destino
+    // Función mejorada de scroll suave con offsets específicos
+    const smoothScroll = (targetId, customOffset = -150) => {
+        const targetElement = document.querySelector(targetId);
+        
+        if (!targetElement) {
+            console.error(`Elemento no encontrado: ${targetId}`);
+            return;
+        }
 
-        if (targetSection) {
-            targetSection.scrollIntoView({
-                behavior: 'smooth', // Desplazamiento suave
-                block: 'center'      // Centra la sección en la pantalla
+        const targetPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = targetPosition + window.pageYOffset - customOffset;
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+        });
+    };
+
+    // Configuración de eventos para navegación
+    const setupNavigation = () => {
+        // Enlace "Quiénes Somos" con offset de -100
+        const quienesSomosLink = document.querySelector('a[href="#quienes_somos"]');
+        if (quienesSomosLink) {
+            quienesSomosLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                smoothScroll('#quienes_somos', -150);
+                setActiveLink(quienesSomosLink);
+            });
+        }
+
+        // Enlace "Servicios" con offset de -150
+        const serviciosLink = document.querySelector('a[href="#servicios"]');
+        if (serviciosLink) {
+            serviciosLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                smoothScroll('#servicios', -80);
+                setActiveLink(serviciosLink);
+            });
+        }
+
+        // Enlace "Contacto" (offset por defecto de 100)
+        const contactoLink = document.querySelector('a[href="#contacto"]');
+        if (contactoLink) {
+            contactoLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                smoothScroll('#contacto', 100);
+                setActiveLink(contactoLink);
+            });
+        }
+
+        // Botón de Login (va a servicios con offset de -150)
+        const botonLogin = document.querySelector('.boton-login');
+        if (botonLogin) {
+            botonLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                smoothScroll('#servicios', -80);
             });
         }
     };
 
-    // Aplica el scroll suave a los enlaces del navbar
-    const serviciosLink = document.querySelector('a[href="#servicios"]');
-    const productosLink = document.querySelector('a[href="#productos"]');
-    const contactoLink = document.querySelector('a[href="#contacto"]');
-    const botonInformacion = document.querySelector('.boton-informacion'); // Selecciona el botón por clase
-
-    if (serviciosLink) {
-        serviciosLink.addEventListener('click', (event) => {
-            event.preventDefault(); // Evita el comportamiento predeterminado del enlace
-            smoothScroll('#servicios'); // Desplazamiento suave a Servicios
+    // Función para establecer el enlace activo
+    const setActiveLink = (activeLink) => {
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.classList.remove('active');
         });
-    }
+        activeLink.classList.add('active');
+    };
 
-    if (productosLink) {
-        productosLink.addEventListener('click', (event) => {
-            event.preventDefault(); // Evita el comportamiento predeterminado del enlace
-            smoothScroll('#productos'); // Desplazamiento suave a Productos
+    // Observador de intersección para secciones con offsets personalizados
+    const setupIntersectionObserver = () => {
+        const sectionConfigs = [
+            { id: 'quienes_somos', offset: -150 },
+            { id: 'servicios', offset: -80 },
+            { id: 'contacto', offset: 100 }
+        ];
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    const correspondingLink = document.querySelector(`.navbar a[href="#${id}"]`);
+                    
+                    if (correspondingLink) {
+                        setActiveLink(correspondingLink);
+                    }
+                }
+            });
+        }, { 
+            threshold: 0.3,
+            rootMargin: '-100px 0px -160px 0px' // Ajuste para diferentes offsets
         });
-    }
 
-    if (contactoLink) {
-        contactoLink.addEventListener('click', (event) => {
-            event.preventDefault(); // Evita el comportamiento predeterminado del enlace
-            smoothScroll('#contacto'); // Desplazamiento suave a Contacto
+        sectionConfigs.forEach(config => {
+            const section = document.querySelector(`#${config.id}`);
+            if (section) observer.observe(section);
+        });
+    };
+
+    // Inicialización
+    setupNavigation();
+    setupIntersectionObserver();
+
+    // Debug: Verificar configuración
+    console.log('Configuración de scroll:', {
+        quienes_somos: { offset: -130 },
+        servicios: { offset: -80 },
+        contacto: { offset: 100 },
+        boton_login: { target: '#servicios', offset: -80 }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const statsNumbers = document.querySelectorAll('.ingegases-stat-number');
+    
+    function animateStats() {
+        statsNumbers.forEach(number => {
+            const target = parseInt(number.getAttribute('data-count'));
+            const suffix = number.textContent.includes('+') ? '+' : '';
+            const duration = 2000;
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    let start = 0;
+                    const end = target;
+                    const increment = end / (duration / 16);
+                    
+                    const timer = setInterval(() => {
+                        start += increment;
+                        if (start >= end) {
+                            clearInterval(timer);
+                            number.textContent = end + suffix;
+                            number.classList.add('animated');
+                        } else {
+                            number.textContent = Math.floor(start) + suffix;
+                        }
+                    }, 16);
+                    
+                    observer.unobserve(number);
+                }
+            }, { threshold: 0.5 });
+            
+            observer.observe(number);
         });
     }
     
-    // Agrega el evento al botón "Información" con un offset específico
-    
-    if (botonInformacion) {
-        botonInformacion.addEventListener('click', () => {
-            smoothScroll('#tipos-servicios', 5000); // Desplazamiento suave a Tipos de Servicios con un offset de 100px
-        });
-    }
+    animateStats();
 });

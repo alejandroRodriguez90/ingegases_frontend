@@ -21,3 +21,42 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
     }
 });
 
+/* recuerdame */
+
+document.addEventListener('DOMContentLoaded', function() {
+    const rememberCheckbox = document.getElementById('rememberMe');
+    const loginForm = document.querySelector('form'); // Asegúrate de que esto seleccione tu formulario de login
+  
+    // Cargar estado guardado al iniciar la página
+    if (localStorage.getItem('rememberMe') === 'true') {
+      rememberCheckbox.checked = true;
+      // Cargar datos guardados si existen
+      const savedData = JSON.parse(localStorage.getItem('loginData'));
+      if (savedData) {
+        Object.keys(savedData).forEach(key => {
+          const input = loginForm.querySelector(`[name="${key}"]`);
+          if (input) input.value = savedData[key];
+        });
+      }
+    }
+  
+    // Manejar el envío del formulario
+    loginForm.addEventListener('submit', function(e) {
+      if (rememberCheckbox.checked) {
+        // Guardar datos del formulario
+        const formData = {};
+        Array.from(loginForm.elements).forEach(element => {
+          if (element.name && element.value) {
+            formData[element.name] = element.value;
+          }
+        });
+        localStorage.setItem('loginData', JSON.stringify(formData));
+        localStorage.setItem('rememberMe', 'true');
+      } else {
+        // Eliminar datos guardados
+        localStorage.removeItem('loginData');
+        localStorage.removeItem('rememberMe');
+      }
+    });
+  });
+

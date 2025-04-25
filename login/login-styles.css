@@ -3,9 +3,10 @@ body {
     margin: 0; /* Elimina el margen predeterminado del body */
     padding: 0; /* Elimina el padding predeterminado del body */
     font-family: 'Arial', sans-serif; /* Define la fuente predeterminada */
-    background: url(imagenes\ /bg.png) no-repeat center fixed; /* Imagen de fondo centrada y fija */
-    background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
-    background-color: #0a0922; /* Color de fondo de respaldo */
+    background-image: url('imagenes/IYRindustria4.jpg');
+    background-size: 96% 110%; /* Ajusta ancho y alto */
+    background-position: center;
+    background-attachment: fixed; /* ¡Clave para el efecto fijo! */
     color: #ffffff; /* Color del texto predeterminado */
     display: flex; /* Usa flexbox para centrar el contenido */
     justify-content: center; /* Centra horizontalmente */
@@ -21,9 +22,10 @@ body::before {
     left: 0; /* Alinea en la parte izquierda */
     width: 100%; /* Ocupa el 100% del ancho */
     height: 100%; /* Ocupa el 100% de la altura */
-    background-color: rgba(0, 0, 8, 0.2); /* Color negro con 20% de opacidad */
+    background-color: rgba(0, 0, 0, 0.4); /* Negro con 50% de opacidad */
     z-index: -1; /* Coloca la capa detrás del contenido */
 }
+
 
 /* Media Queries para ajustar en dispositivos móviles */
 @media (max-width: 768px) {
@@ -51,9 +53,9 @@ h2 {
 .login-container {
     width: 500px; /* Ancho del contenedor */
     padding: 60px 65px 55px; /* Espaciado interno */
-    backdrop-filter: blur(3px); /* Efecto de desenfoque */
+    backdrop-filter: blur(16px); /* Efecto de desenfoque */
     border-radius: 55px; /* Bordes redondeados */
-    box-shadow: 0 4px 40px rgba(255, 255, 255, 0.5); /* Sombra */
+    box-shadow: 0 4px 40px rgba(255, 255, 255, 0.6); /* Sombra */
     text-align: center; /* Centra el texto */
     box-sizing: border-box; /* Incluye el padding en el ancho */
     margin: 0 auto; /* Centra el contenedor */
@@ -63,98 +65,6 @@ h2 {
     transition: transform 1.8s ease, opacity 0.9s ease; /* Transición suave */
     overflow: hidden; /* Oculta el contenido que se desborda */
     opacity: 1; /* Inicialmente, el contenedor es completamente visible */
-}
-
-/* Formulario frontal (login) */
-.form-front {
-    backface-visibility: hidden; /* Oculta la parte trasera del elemento */
-    transform: rotateY(0deg); /* Rotación inicial */
-}
-
-/* Formulario de registro (form-back) */
-.form-back {
-    position: absolute; /* Posicionamiento absoluto */
-    top: 0; /* Alinea en la parte superior */
-    left: 0; /* Alinea en la parte izquierda */
-    width: 100%; /* Ocupa el 100% del ancho */
-    height: 100%; /* Ocupa el 100% de la altura */
-    backface-visibility: hidden; /* Oculta la parte trasera del elemento */
-    transform: rotateY(180deg); /* Rotación inicial */
-    border-radius: 55px; /* Bordes redondeados */
-    padding: 60px 65px 55px; /* Espaciado interno */
-    box-sizing: border-box; /* Incluye el padding en el ancho */
-}
-
-/* Contenido del formulario de registro */
-.form-back .form-content {
-    transform: rotateY(0deg); /* Rotación inicial */
-    transform-style: preserve-3d; /* Mantiene la perspectiva 3D */
-}
-
-/* Aislar el texto de la rotación */
-.form-back .form-content * {
-    transform: rotateY(0deg); /* Rotación inicial */
-}
-
-/* Cuando el contenedor gira, ajustamos la visibilidad de los formularios */
-.login-container.flipped .form-front {
-    transform: rotateY(180deg); /* Rotación al girar */
-}
-
-.login-container.flipped .form-back {
-    transform: rotateY(0deg); /* Rotación al girar */
-}
-
-/* Estilos específicos para los grupos de entrada en el formulario de registro */
-.form-back .input-group {
-    margin-bottom: 20px; /* Espacio entre los campos */
-}
-
-.form-back .input-group .placeholder {
-    display: block; /* Hace que el placeholder ocupe toda la línea */
-    text-align: center; /* Centra el texto del placeholder */
-    margin-bottom: 0.2px; /* Espacio entre el placeholder y el input */
-    color: #ffffff; /* Color del texto */
-    font-size: 14px; /* Tamaño de la fuente */
-}
-
-.form-back .input-group input {
-    width: 90%; /* Ancho del input */
-    padding: 10px 15px; /* Espaciado interno */
-    border: 1px solid #ccc; /* Borde del input */
-    border-radius: 70px; /* Bordes redondeados */
-    font-size: 14px; /* Tamaño de la fuente */
-    color: #000; /* Color del texto */
-    background-color: #f9f9f9; /* Color de fondo del input */
-}
-
-.form-back .input-group input:focus {
-    border-color: #5575a5; /* Cambia el color del borde al enfocar */
-    outline: none; /* Elimina el contorno predeterminado */
-}
-
-/* Efecto de encendido/apagado */
-.login-container.turning {
-    opacity: 0; /* Durante el giro, el contenedor se vuelve transparente */
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.7); /* Añade un resplandor */
-}
-
-/* Media Queries para ajustar en pantallas pequeñas */
-@media (max-width: 768px) {
-    .login-container {
-        width: 90%; /* Ancho del contenedor en pantallas pequeñas */
-        max-width: 500px; /* Ancho máximo */
-        padding: 40px 30px; /* Espaciado interno */
-        border-radius: 30px; /* Bordes redondeados */
-    }
-}
-
-@media (max-width: 480px) {
-    .login-container {
-        width: 95%; /* Ancho del contenedor en pantallas muy pequeñas */
-        padding: 30px 20px; /* Espaciado interno */
-        border-radius: 20px; /* Bordes redondeados */
-    }
 }
 
 /* Estilos para los grupos de entrada (inputs) */
@@ -196,7 +106,7 @@ h2 {
     margin: 10px 0; /* Margen superior e inferior */
     border: 1px solid #f4fb32c6; /* Borde del input */
     border-radius: 70px; /* Bordes redondeados */
-    background-color: #d8d8f4; /* Color de fondo del input */
+    background-color: #f0f0f5; /* Color de fondo del input */
     color: #000000; /* Color del texto */
     font-size: 16px; /* Tamaño de la fuente */
     transition: border-color 0.3s ease; /* Transición suave para el borde */
@@ -219,7 +129,7 @@ h2 {
     width: 90%; /* Ancho del botón */
     padding: 13px; /* Espaciado interno */
     margin: 30px 0; /* Margen superior e inferior */
-    background-color: #5575a5; /* Color de fondo */
+    background-color: #184c7d; /* Color de fondo */
     color: #ffffff; /* Color del texto */
     border: none; /* Sin borde */
     border-radius: 70px; /* Bordes redondeados */
@@ -255,34 +165,51 @@ h2 {
     justify-content: space-between; /* Espacio entre elementos */
     align-items: center; /* Alineación vertical */
     margin: 15px 0; /* Margen superior e inferior */
+    width: 100%;
+    margin-top: 15px;
 }
-
 /* Estilos para la opción "Recuérdame" */
 .remember-me {
     display: flex; /* Usa flexbox para alinear elementos */
     align-items: center; /* Alineación vertical */
-    color: #f4fb32c6; /* Color del texto */
+    gap: 8px; /* Espacio entre checkbox y label (reemplaza margin-right) */
 }
+
+/* Estilos para el checkbox */
+.remember-me input[type="checkbox"] {
+    cursor: pointer;
+    order: 2; /* Coloca el checkbox después */
+    width: 16px;
+  height: 16px;
+  accent-color: #f4fb32; /* Color personalizado */
+  transition: transform 0.2s ease;
+}
+
+.remember-me input[type="checkbox"]:hover {
+  transform: scale(1.05);
+}
+
 
 /* Estilos para el label de "Recuérdame" */
 .remember-me label {
-    margin-right: 10px; /* Margen derecho */
     color: #ffffff; /* Color del texto */
     font-size: 14px; /* Tamaño de la fuente */
+    cursor: pointer;
+    
 }
 
-/* Estilos para el enlace "recuperar contraseña" */
+/* Estilos para "recuperar contraseña" */
 .forgot-password {
-    color: #ffffff; /* Color del texto */
-    font-size: 14px; /* Tamaño de la fuente */
-    text-decoration: none; /* Sin subrayado */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    transition: color 0.3s ease; /* Transición suave para el color */
+    color: #ffffffc6;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-/* Efecto al hacer hover sobre el enlace "recuperar contraseña" */
 .forgot-password:hover {
-    color:  #f4fb32c6; /* Cambia el color del texto al pasar el mouse */
+    text-decoration: underline;
+    color: #f4fb32c6;
 }
 
 /* Estilos para el botón de volver */
@@ -305,4 +232,100 @@ h2 {
 .back-button:hover {
     background-color:  #f4fb32c6; /* Fondo blanco */
     color: #000000; /* Texto negro */
+}
+
+/* Formulario frontal (login) */
+.form-front {
+    backface-visibility: hidden; /* Oculta la parte trasera del elemento */
+    transform: rotateY(0deg); /* Rotación inicial */
+}
+
+/* Formulario de registro (form-back) */
+.form-back {
+    position: absolute; /* Posicionamiento absoluto */
+    top: 0; /* Alinea en la parte superior */
+    left: 0; /* Alinea en la parte izquierda */
+    width: 100%; /* Ocupa el 100% del ancho */
+    height: 100%; /* Ocupa el 100% de la altura */
+    backface-visibility: hidden; /* Oculta la parte trasera del elemento */
+    transform: rotateY(180deg); /* Rotación inicial */
+    border-radius: 55px; /* Bordes redondeados */
+    padding: 20px 65px 55px; /* Espaciado interno */
+    box-sizing: border-box; /* Incluye el padding en el ancho */
+    
+}
+
+/* Contenido del formulario de registro */
+.form-back .form-content {
+    transform: rotateY(0deg); /* Rotación inicial */
+    transform-style: preserve-3d; /* Mantiene la perspectiva 3D */
+}
+
+/* Aislar el texto de la rotación */
+.form-back .form-content * {
+    transform: rotateY(0deg); /* Rotación inicial */
+}
+
+/* Cuando el contenedor gira, ajustamos la visibilidad de los formularios */
+.login-container.flipped .form-front {
+    transform: rotateY(180deg); /* Rotación al girar */
+}
+
+.login-container.flipped .form-back {
+    transform: rotateY(0deg); /* Rotación al girar */
+}
+
+/* Estilos específicos para los grupos de entrada en el formulario de registro */
+.form-back .input-group {
+    margin-bottom: 20px; /* Espacio entre los campos */
+}
+
+.form-back .input-group .placeholder {
+    display: block; /* Hace que el placeholder ocupe toda la línea */
+    text-align: center; /* Centra el texto del placeholder */
+    margin-bottom: 10px; /* Espacio entre el placeholder y el input */
+    color: #ffffff; /* Color del texto */
+    font-size: 16px; /* Tamaño de la fuente */
+    
+}
+
+.form-back .input-group input {
+    width: 90%; /* Ancho del input */
+    padding: 12px 20px; /* Espaciado interno */
+    margin: 10px 0; /* Margen superior e inferior */
+    border: 1px solid #ccc; /* Borde del input */
+    border-radius: 70px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de la fuente */
+    color: #000; /* Color del texto */
+    background-color: #f9f9f9; /* Color de fondo del input */
+    border: 1px solid #f4fb32c6; /* Borde del input */
+}
+
+.form-back .input-group input:focus {
+    border-color: #5575a5; /* Cambia el color del borde al enfocar */
+    outline: none; /* Elimina el contorno predeterminado */
+}
+
+/* Efecto de encendido/apagado */
+.login-container.turning {
+    opacity: 0; /* Durante el giro, el contenedor se vuelve transparente */
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.7); /* Añade un resplandor */
+}
+
+/* Media Queries para ajustar en pantallas pequeñas */
+@media (max-width: 768px) {
+    .login-container {
+        width: 90%; /* Ancho del contenedor en pantallas pequeñas */
+        max-width: 500px; /* Ancho máximo */
+        padding: 40px 30px; /* Espaciado interno */
+        border-radius: 30px; /* Bordes redondeados */
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        width: 95%; /* Ancho del contenedor en pantallas muy pequeñas */
+        padding: 30px 20px; /* Espaciado interno */
+        border-radius: 20px; /* Bordes redondeados */
+    }
 }

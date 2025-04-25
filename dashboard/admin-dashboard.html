@@ -11,8 +11,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><!-- Iconos de FontAwesome -->
+    
 </head>
 
 <body>
@@ -81,225 +81,6 @@
         </ul>
     </div>
 
-    <style>
-        
-        
-        /* CSS MODAL ALMACEN ......Estilos generales para los campos de solo lectura (input readonly) */
-        input[readonly] {
-            border: 1px solid #f1f1f1; /* Borde gris claro */
-            border-radius: 4px; /* Bordes redondeados */
-            padding: 8px; /* Espacio interno */
-            font-size: 14px; /* Tamaño de la fuente */
-            color: #000000; /* Color del texto */
-            width: 100%; /* Ancho completo */
-            box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
-            cursor: not-allowed; /* Cursor que indica que no se puede interactuar */
-        }
-
-        /* Estilos para los campos de selección (select) */
-        select {
-            appearance: none; /* Elimina el estilo por defecto del navegador */
-            -webkit-appearance: none; /* Para navegadores Safari y Chrome */
-            -moz-appearance: none; /* Para Firefox */
-            background: transparent; /* Fondo transparente */
-            border: 1px solid #f1f1f1; /* Borde gris claro */
-            border-radius: 4px; /* Bordes redondeados */
-            padding: 8px 30px 8px 10px; /* Espacio interno (más espacio a la derecha para la flecha) */
-            font-size: 14px; /* Tamaño de la fuente */
-            color: #000000; /* Color del texto */
-            cursor: pointer; /* Cursor de puntero */
-            width: 100%; /* Ancho completo */
-            box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
-        }
-
-        /* Contenedor para la flecha personalizada en los campos select */
-        .select-container {
-            position: relative; /* Posición relativa para poder posicionar la flecha */
-            display: inline-block; /* Mostrar como bloque en línea */
-            width: 100%; /* Ancho completo */
-        }
-
-        /* Flecha personalizada para los campos select */
-        .select-container::after {
-            content: "▼"; /* Carácter de flecha hacia abajo */
-            position: absolute; /* Posición absoluta dentro del contenedor */
-            top: 50%; /* Centrar verticalmente */
-            right: 10px; /* Espacio desde el borde derecho */
-            transform: translateY(-50%); /* Ajustar el centrado vertical */
-            pointer-events: none; /* Evitar que la flecha capture eventos del ratón */
-            color: #000; /* Color de la flecha */
-            font-size: 12px; /* Tamaño de la flecha */
-        }
-
-        /* Estilos generales para la tabla */
-        table {
-            width: 100%; /* Ancho completo */
-            border-collapse: collapse; /* Colapsar los bordes de las celdas */
-            margin-top: 20px; /* Margen superior */
-        }
-
-        /* Estilos para las celdas del encabezado (th) y las celdas de datos (td) */
-        th,
-        td {
-            padding: 12px; /* Espacio interno */
-            text-align: left; /* Alineación del texto a la izquierda */
-            border-bottom: 1px solid #ddd; /* Borde inferior gris claro */
-        }
-
-        /* Estilos para las celdas del encabezado (th) */
-        th {
-            background-color: #34495e; /* Color de fondo azul oscuro */
-            color: white; /* Color del texto blanco */
-            font-weight: bold; /* Texto en negrita */
-        }
-
-        /* Estilos para las filas (tr) al pasar el ratón por encima */
-        tr:hover {
-            background-color: #f1f1f1; /* Color de fondo gris claro */
-        }
-
-        /* Estilos para el título de la sección */
-        .section-title {
-            font-size: 18px; /* Tamaño de la fuente */
-            font-weight: bold; /* Texto en negrita */
-            margin-bottom: 10px; /* Margen inferior */
-            color: #34495e; /* Color del texto azul oscuro */
-        }
-
-        /* Estilos para el valor (generalmente para mostrar datos no editables) */
-        .valor {
-            background: #ffffff; /* Color de fondo blanco */
-            border: 1px solid #f1f1f1; /* Borde gris claro */
-            border-radius: 4px; /* Bordes redondeados */
-            padding: 8px; /* Espacio interno */
-            font-size: 14px; /* Tamaño de la fuente */
-            color: #000000; /* Color del texto */
-            box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
-            cursor: not-allowed; /* Cursor que indica que no se puede interactuar */
-            display: block; /* Mostrar como bloque */
-            width: 100%; /* Ancho completo */
-            text-align: left; /* Alineación del texto a la izquierda */
-        }
-
-        /* Estilos para el contenedor de los almacenes en la pantalla principal */
-        .almacen-container {
-            display: flex; /* Utilizar flexbox para el diseño */
-            justify-content: space-around; /* Distribuir los elementos con espacio entre ellos */
-            margin: 20px; /* Margen externo */
-        }
-
-        /* Estilos para las tarjetas de los almacenes (Bogotá y Cali) */
-        .almacen-card {
-            /* Borde: un borde sutil para definir la tarjeta */
-            border: 1px solid #e0e0e0; /* Un gris más suave que #ddd */
-
-            /* Padding: Espacio interno para que el contenido no esté pegado a los bordes */
-            padding: 25px; /* Aumentado un poco para más espacio */
-
-            /* Dimensiones: Ancho y alto fijos para mantener la consistencia */
-            width: 400px;
-            height: 250px;
-
-            /* Text Alignment: Centrar el texto dentro de la tarjeta */
-            text-align: center;
-
-            /* Cursor: Cambiar el cursor a un puntero para indicar que es clickable */
-            cursor: pointer;
-
-            /* Box Shadow: Una sombra sutil para dar profundidad */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra más pronunciada pero aún suave */
-
-            /* Transition: Una transición suave para el efecto hover */
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transiciones para la transformación y la sombra */
-
-            /* Flexbox Layout: Utilizar flexbox para centrar el contenido verticalmente */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-
-            /* Background Color: Un fondo suave para que la tarjeta destaque */
-            background-color: #f9f9f9; /* Un gris muy claro */
-
-            /* Border Radius: Redondear los bordes para una apariencia más moderna */
-            border-radius: 12px;
-        }
-
-        /* Estilos para las tarjetas de los almacenes al pasar el ratón por encima */
-        .almacen-card:hover {
-            /* Transform: Ligeramente escalar la tarjeta para el efecto hover */
-            transform: translateY(-8px) scale(1.03); /* Desplazamiento y escalado sutil */
-
-            /* Box Shadow: Aumentar la sombra para dar más énfasis al hover */
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12); /* Sombra más intensa en el hover */
-        }
-        /* Estilos específicos para la ventana modal de detalles del almacén */
-        #almacenModal .modal-dialog {
-            /* Ancho máximo: El modal ocupa el 98% de la pantalla (casi pantalla completa) */
-            max-width: 98%;
-        
-            /* Altura: La altura se ajusta automáticamente al contenido */
-            height: auto;
-        
-            /* Márgenes: Centrar el modal verticalmente y dejar espacio horizontal */
-            margin: 2rem auto;
-        
-            /* Posición: Estática para que no interfiera con el flujo del documento */
-            position: relative;
-        
-            /* Bordes redondeados: Bordes suaves para una apariencia moderna */
-            border-radius: 18px;
-        
-            /* Sombra: Sombra sutil para dar una ligera elevación */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Estilos específicos para el contenido de la ventana modal */
-        #almacenModal .modal-content {
-            /* Altura: La altura se ajusta al contenido */
-            height: auto;
-        
-            /* Display: Utilizar Flexbox para el diseño interno */
-            display: flex;
-        
-            /* Flex-direction: Organizar los elementos en fila (horizontal, derecha a izquierda) */
-            flex-direction: row-reverse;
-        
-            /* Justificar contenido: Distribución del espacio horizontalmente */
-            justify-content: space-between;
-        
-            /* Alinear items: Centrar verticalmente */
-            align-items: center;
-        }
-
-        /* Estilos específicos para el cuerpo de la ventana modal */
-        #almacenModal .modal-body {
-            /* Padding: Reducir el padding vertical para que la tira sea más compacta */
-            padding: 1rem 2rem;
-        
-            /* Flex: Ocupar todo el espacio disponible */
-            flex: 1;
-        }
-
-        /* Estilos para la sección de detalles dentro de la ventana modal */
-        #almacenModal .details {
-            /* Ancho: La sección de detalles ocupa el 45% del modal */
-            width: 45%;
-        
-            /* Text-align: Centrar el texto dentro de la sección de detalles */
-            text-align: center;
-        }
-
-        /* Estilos para la sección de inventario dentro de la ventana modal */
-        #almacenModal .inventory {
-            /* Ancho: La sección de inventario ocupa el 45% del modal */
-            width: 45%;
-        
-            /* Text-align: Centrar el texto dentro de la sección de inventario */
-            text-align: center;
-        }
-
-    </style>
-
     
     <!-- Contenido principal -->
     <div class="main-content">
@@ -311,18 +92,21 @@
     <!-- Ventana modal PROYECTOS -->
     <div id="projectModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modalTitle">Título de la Modal</h2> <!-- Título dinámico -->
+            <span class="close">×</span>
+            <h2 id="modalTitle">Título del Proyecto</h2> <!-- Título dinámico -->
             <form id="projectForm">
                 <!-- Campos del formulario -->
                 <label for="projectId">ID:</label>
                 <input type="text" id="projectId" name="projectId" required>
 
-                <label for="projectName">Nombre:</label>
+                <label for="projectName">Proyecto:</label>
                 <input type="text" id="projectName" name="projectName" required>
 
                 <label for="projectDescription">Descripción:</label>
                 <textarea id="projectDescription" name="projectDescription" required></textarea>
+
+                <label for="projectLocation">Ubicación:</label>
+                <input type="text" id="projectLocation" name="projectLocation" required>
 
                 <label for="projectStartDate">Fecha de Inicio:</label>
                 <input type="date" id="projectStartDate" name="projectStartDate" required>
@@ -331,13 +115,23 @@
                 <input type="date" id="projectEndDate" name="projectEndDate" required>
 
                 <label for="projectManager">Encargado:</label>
-                <input type="text" id="projectManager" name="projectManager" required>
+                <select id="projectManager" name="projectManager" required>
+                    <option value="Ing Alexander Herrera">Ing Alexander Herrera</option>
+                    <option value="Ing Javier Sierra">Ing Javier Sierra</option>
+                    <option value="Ing Daniel Buitrago">Ing Daniel Buitrago</option>
+                    <option value="Ing Javier Penagos">Ing Javier Penagos</option>
+                    <option value="Ing Nicolás Saavedra">Ing Nicolás Saavedra</option>
+                    <option value="Ing Jenny Chaparro">Ing Jenny Chaparro</option>
+                    <option value="Ing Melissa Gonzalez">Ing Melissa Gonzalez</option>
+                </select>
 
                 <label for="projectStatus">Estado:</label>
                 <select id="projectStatus" name="projectStatus" required>
-                    <option value="Planificado">Planificado</option>
-                    <option value="En curso">En curso</option>
-                    <option value="Completado">Completado</option>
+                    <option value="Asignado">Asignado</option>
+                    <option value="En Ejecución">En Ejecución</option>
+                    <option value="Realizado">Realizado</option>
+                    <option value="Facturado">Facturado</option>
+                    <option value="Anulado">Anulado</option>
                 </select>
 
                 <label for="projectBudget">Presupuesto:</label>
@@ -358,76 +152,69 @@
         </div>
     </div>
 
-    <!-- The Modal ALMACEN -->
-    <div class="modal fade" id="almacenModal" tabindex="-1" role="dialog" aria-labelledby="almacenModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="almacenModalLabel">Detalles del Almacén</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
+
+    <!-- Contenido dinámico ALMACEN-->
+    <div id="dynamicContent" class="alm-content-container"></div>
+
+    <!-- Modal de Almacén -->
+    <div class="alm-modal-container" id="almacenModal">
+    <div class="alm-modal-overlay" onclick="closeAlmModal('almacenModal')"></div>
+    <div class="alm-modal-dialog alm-modal-lg">
+        <div class="alm-modal-content">
+        <div class="alm-modal-header">
+            <h2 class="alm-modal-title">Detalles del Almacén</h2>
+            <button class="alm-modal-close" onclick="closeAlmModal('almacenModal')">
+            <i class="fas fa-times"></i>
             </button>
-            </div>
-            <div class="modal-body" id="modalContent">
-            <!-- Aquí se cargará el contenido del modal -->
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
+        </div>
+        <div class="alm-modal-body" id="almacenModalBody"></div>
+        <div class="alm-modal-footer">
+            <button class="alm-btn alm-btn-secondary" onclick="closeAlmModal('almacenModal')">
+            <i class="fas fa-times"></i> Cerrar
+            </button>
+            <button class="alm-btn alm-btn-primary" onclick="exportarInventario()">
+            <i class="fas fa-file-export"></i> Exportar
+            </button>
         </div>
         </div>
     </div>
-    
+    </div>
+
     <!-- Modal para Agregar Producto -->
-    <div class="modal fade" id="agregarProductoModal" tabindex="-1" role="dialog" aria-labelledby="agregarProductoModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="agregarProductoModalLabel">Agregar Nuevo Producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="agregarProductoForm">
-                        <div class="form-group">
-                            <label for="material">Material:</label>
-                            <select class="form-control" id="material" name="material" required onchange="actualizarOpciones()">
-                                <option value="">Seleccione...</option>
-                                <option value="Cobre">Cobre</option>
-                                <option value="Acero inoxidable">Acero inoxidable</option>
-                                <option value="Acero carbono">Acero carbono</option>
-                                <option value="PVC">PVC</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="tipo">Tipo:</label>
-                            <select class="form-control" id="tipo" name="tipo" required onchange="actualizarOpciones()">
-                                <option value="">Seleccione...</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="diametro">Diámetro:</label>
-                            <select class="form-control" id="diametro" name="diametro" required>
-                                <option value="">Seleccione...</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="nuevaCantidad">Cantidad:</label>
-                            <input type="number" class="form-control" id="nuevaCantidad" name="nuevaCantidad" required>
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="guardarNuevoProducto()">Guardar</button>
-                    </form>
-                </div>
-            </div>
+    <div class="alm-modal-container" id="agregarProductoModal">
+    <div class="alm-modal-overlay" onclick="closeAlmModal('agregarProductoModal')"></div>
+    <div class="alm-modal-dialog">
+        <div class="alm-modal-content">
+        <div class="alm-modal-header">
+            <h2 class="alm-modal-title">Agregar Producto</h2>
+            <button class="alm-modal-close" onclick="closeAlmModal('agregarProductoModal')">
+            <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="alm-modal-body">
+            <form id="alm-productoForm" class="alm-form-grid">
+            <!-- Campos del formulario se generarán dinámicamente -->
+            </form>
+        </div>
+        <div class="alm-modal-footer">
+            <button class="alm-btn alm-btn-secondary" onclick="closeAlmModal('agregarProductoModal')">
+            <i class="fas fa-times"></i> Cancelar
+            </button>
+            <button class="alm-btn alm-btn-primary" onclick="guardarNuevoProducto()">
+            <i class="fas fa-save"></i> Guardar
+            </button>
+        </div>
         </div>
     </div>
-        <script>
+    </div>
+
+    <script>
             
 
-        // ---------------------------------------------------------------------------
-        // Creacion Tuberia y Accesorios (Diámetros hasta 4 pulgadas)
-        // ---------------------------------------------------------------------------
+        // ==========================================================================
+        // INVENTARIO TUBERIA 
+        // ==========================================================================
+
         const materialOptions = {
             "Cobre": { tipos: ["M", "K", "L"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4"] },
             "Acero inoxidable": { tipos: ["10", "40", "80"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4"] },
@@ -435,541 +222,674 @@
             "PVC": { tipos: ["Presion", "Electrica", "Sanitaria", "Ventilacion"], diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4"] }
         };
 
-        const tuberiaData = [
-            { material: "Cobre", tipo: "M", diametro: "1/8 pulgadas", cantidad_mt_lineal: 10, valor: 15 },
-            { material: "Acero inoxidable", tipo: "10", diametro: "1/2 pulgadas", cantidad_mt_lineal: 5, valor: 25 },
-            { material: "Acero carbono", tipo: "80", diametro: "1 pulgada", cantidad_mt_lineal: 12, valor: 30 },
-            { material: "PVC", tipo: "Presion", diametro: "3 pulgadas", cantidad_mt_lineal: 8, valor: 10 }
-        ];
-
-        // Generar la tabla de códigos predefinidos automáticamente, *respetando el orden específico*
+        // Generar mapeo de descripciones a códigos
         let codigoCounter = 1;
-        const codigosPredefinidos = {}; // Usaremos un objeto para facilitar la búsqueda
-
+        const descripcionToCodigo = {};
+        const descripcionesDisponibles = [];
         for (const material in materialOptions) {
             const tipos = materialOptions[material].tipos;
-
+            const materialSinEspacios = material.replace(/\s+/g, '');
+        
             for (const tipo of tipos) {
-                const diametros = materialOptions[material].diametros; // Diametros para el material y tipo actuales
-                    for (const diametro of diametros) {
-
-                    const codigo = "IYR" + codigoCounter.toString().padStart(4, '0');
-
-                    if (!codigosPredefinidos[material]) {
-                        codigosPredefinidos[material] = {};
-                    }
-
-                    if (!codigosPredefinidos[material][tipo]) {
-                        codigosPredefinidos[material][tipo] = {};
-                    }
-                        
-                    codigosPredefinidos[material][tipo][diametro] = codigo;  // Asigna el código en el orden correcto
-                    codigoCounter++;
-
-                    if (codigoCounter > 144) { // Limite de codigos
-                        break;
-                        }
+                // Formatear el tipo según las reglas:
+                let tipoFormateado = tipo;
+                if (["M", "K", "L"].includes(tipo)) {
+                    tipoFormateado = `Tipo${tipo}`;  // Ej: TipoM, TipoK, TipoL
+                } else if (["10", "40", "80"].includes(tipo)) {
+                    tipoFormateado = `Sch${tipo}`;   // Ej: Sch10, Sch40, Sch80
                 }
-                    if (codigoCounter > 144) { // Limite de codigos
-                    break;
-                        }
+                // Los demás tipos (ej: "Presión") se quedan igual
+        
+                for (const diametro of materialOptions[material].diametros) {
+                    const descripcion = `Tubería${materialSinEspacios}${tipoFormateado}${diametro}`;
+                    const codigo = "IYR" + codigoCounter.toString().padStart(4, '0');
+        
+                    descripcionToCodigo[descripcion] = codigo;
+                    descripcionesDisponibles.push(descripcion);
+                    codigoCounter++;
+                }
             }
-            if (codigoCounter > 144) { // Limite de codigos
-                    break;
-                        }
         }
 
-        let chart; // Variable global para almacenar la instancia de la gráfica de tuberia
 
+        // Variable para almacenar el item actual
+        let itemActual = null;
+        let chart;
+
+        // ---------------------------------------------------------------------------
+        // Funciones principales
+        // ---------------------------------------------------------------------------
         function loadTuberia() {
-            const tableHeaders = `
-                <tr>
-                    <th>Código</th>
-                    <th>Material</th>
-                    <th>Tipo</th>
-                    <th>Diámetro</th>
-                    <th>Cantidad (mt/lineal)</th>
-                    <th>Valor</th>
-                </tr>
-            `;
-
-            const tableRows = tuberiaData.map((item, index) => {
-                const tipos = materialOptions[item.material].tipos;
-                const diametros = materialOptions[item.material].diametros;
-                const diametroSinUnidad = item.diametro.split(" ")[0];
-
-                // Busca el código predefinido
-                let codigo = "Código no encontrado";
-                if (codigosPredefinidos[item.material] && codigosPredefinidos[item.material][item.tipo] && codigosPredefinidos[item.material][item.tipo][diametroSinUnidad]) {
-                    codigo = codigosPredefinidos[item.material][item.tipo][diametroSinUnidad];
-                }
-
-                return `
-                    <tr>
-                        <td>${codigo}</td>
-                        <td>${item.material}</td>
-                        <td>
-                            <div class="select-container">
-                                <select class="tipo-select" data-index="${index}">
-                                    ${tipos.map(tipo => `<option value="${tipo}" ${tipo === item.tipo ? "selected" : ""}>${tipo}</option>`).join('')}
-                                </select>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="select-container">
-                                <select class="diametro-select" data-index="${index}">
-                                    ${diametros.map(diametro => `<option value="${diametro}" ${diametro === diametroSinUnidad ? "selected" : ""}>${diametro}</option>`).join('')}
-                                </select>
-                            </div>
-                        </td>
-                        <td>
-                            <input type="number" class="cantidad-input" data-index="${index}" value="${item.cantidad_mt_lineal}" readonly />
-                        </td>
-                        <td>
-                        <span class="valor">$${item.valor}</span>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-
             const tableContent = `
                 <div class="section-title vertical-title">Tubería</div>
                 <div class="table-container">
                     <table>
-                        <thead>${tableHeaders}</thead>
-                        <tbody>${tableRows}</tbody>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Ubicación</th>
+                                <th>Cantidad</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${generarFilaConsulta()}
+                        </tbody>
                     </table>
+                    <div class="export-button-container">
+                        <button id="btnExportar">Exportar a Excel</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>Gráfica de Consulta</h3>
+                    <canvas id="tuberiaChart"></canvas>
                 </div>
             `;
 
-            const chartContent = `
-                <h3>Gráfica de Cantidades (Tubería)</h3>
-                <canvas id="tuberiaChart"></canvas>
-            `;
+            document.getElementById('dynamicContent').innerHTML = tableContent;
 
-            const fullContent = tableContent + chartContent;
-
-            document.getElementById('dynamicContent').innerHTML = fullContent;
-
-            createChart(); // Crea la gráfica después de cargar la tubería
-            updateChart(); // Actualiza la gráfica con los datos iniciales
-
-            // --- Event Listeners Tubería ---
-            document.querySelectorAll('.tipo-select').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const index = event.target.getAttribute('data-index');
-                    tuberiaData[index].tipo = event.target.value;
-                    actualizarCodigoEnTabla(index);
-                    updateChart();
-                });
-            });
-
-            document.querySelectorAll('.diametro-select').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const index = event.target.getAttribute('data-index');
-                    tuberiaData[index].diametro = event.target.value + " pulgadas";
-                    actualizarCodigoEnTabla(index);
-                    updateChart();
-                });
-            });
-
-            document.querySelectorAll('.cantidad-input').forEach(input => {
-                input.addEventListener('change', (event) => {
-                    const index = parseInt(event.target.getAttribute('data-index'));
-                    tuberiaData[index].cantidad_mt_lineal = parseInt(event.target.value);
-                    updateChart();
-                });
-            });
+            // Configurar eventos
+            configurarEventos();
+            
+            // Inicializar gráfica (oculta al inicio)
+            document.getElementById('tuberiaChart').style.display = 'none';
         }
 
-        function createChart() {
-            const ctxTuberia = document.getElementById('tuberiaChart').getContext('2d');
-            chart = new Chart(ctxTuberia, {
+        function generarFilaConsulta() {
+            return `
+                <tr class="fila-consulta">
+                    <td id="codigoGenerado"></td>
+                    <td>
+                        <input type="text" id="inputDescripcion" 
+                            placeholder="Buscar tubería..." 
+                            list="listaTuberias" autocomplete="off">
+                        <datalist id="listaTuberias">
+                            ${descripcionesDisponibles.map(desc => 
+                                `<option value="${desc}">${desc}</option>`).join('')}
+                        </datalist>
+                    </td>
+                    <td><input type="text" id="inputUbicacion" placeholder="Ubicación" value="Bogotá"></td>
+                    <td id="cantidadCell"><input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()"></td>
+                    <td><input type="number" id="inputValor" placeholder="Valor" min="0" step="0.01"></td>
+                </tr>
+            `;
+        }
+
+        function actualizarEstadoStock() {
+            const cantidadInput = document.getElementById('inputCantidad');
+            const cantidadCell = document.getElementById('cantidadCell');
+            const valor = parseFloat(cantidadInput.value) || 0;
+            
+            if (valor === 0) {
+                cantidadCell.innerHTML = `
+                    <span class="no-stock" onclick="restaurarInputCantidad()">No Stock</span>
+                    <input type="number" id="inputCantidad" value="0" min="0" style="display:none;">
+                `;
+            } else {
+                cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="${valor}" onchange="actualizarEstadoStock()">`;
+            }
+            
+            // Actualizar el objeto itemActual si existe
+            if (itemActual) {
+                itemActual.cantidad = valor;
+                actualizarGrafica();
+            }
+        }
+
+        function restaurarInputCantidad() {
+            const cantidadCell = document.getElementById('cantidadCell');
+            cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()">`;
+            document.getElementById('inputCantidad').focus();
+        }
+
+
+        function configurarEventos() {
+            const inputDesc = document.getElementById('inputDescripcion');
+            
+            inputDesc.addEventListener('input', function() {
+                // Restaurar el input de cantidad al cambiar descripción
+                const cantidadCell = document.getElementById('cantidadCell');
+                cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()">`;
+                
+                const descripcion = this.value;
+                const codigo = descripcionToCodigo[descripcion];
+                document.getElementById('codigoGenerado').textContent = codigo || '';
+                
+                if (codigo) {
+                    itemActual = {
+                        codigo: codigo,
+                        descripcion: descripcion,
+                        ubicacion: document.getElementById('inputUbicacion').value || 'Bogotá',
+                        cantidad: 0, // Iniciar en 0
+                        valor: parseFloat(document.getElementById('inputValor').value) || 0
+                    };
+                    actualizarGrafica();
+                }
+            });
+    
+            // Actualizar datos cuando cambian otros campos
+            ['inputUbicacion', 'inputValor'].forEach(id => {
+                document.getElementById(id).addEventListener('change', function() {
+                    if (itemActual) {
+                        itemActual.ubicacion = document.getElementById('inputUbicacion').value;
+                        itemActual.valor = parseFloat(document.getElementById('inputValor').value) || 0;
+                        actualizarGrafica();
+                    }
+                });
+            });
+            
+            // Configurar botón de exportar
+            document.getElementById('btnExportar').addEventListener('click', exportarAExcel);
+            
+            // Verificar estado inicial del stock
+            actualizarEstadoStock();
+        }
+
+        function actualizarGrafica() {
+            if (!itemActual) {
+                document.getElementById('tuberiaChart').style.display = 'none';
+                return;
+            }
+            
+            const ctx = document.getElementById('tuberiaChart').getContext('2d');
+            ctx.canvas.style.display = 'block';
+            
+            // Asegurar que el canvas tenga el tamaño correcto
+            ctx.canvas.width = ctx.canvas.offsetWidth;
+            ctx.canvas.height = 300; // Altura fija
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: tuberiaData.map(item => `${item.material} - ${item.tipo}`),
+                    labels: [itemActual.descripcion],
                     datasets: [{
-                        label: 'Cantidad (mt/lineal)',
-                        data: tuberiaData.map(item => item.cantidad_mt_lineal),
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        label: 'Cantidad',
+                        data: [itemActual.cantidad],
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     }]
                 },
                 options: {
-                    indexAxis: 'y', // Esta línea cambia la orientación a horizontal
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false, // Desactivar relación de aspecto fija
                     scales: {
-                        x: {  // Ahora 'x' es el eje horizontal
+                        x: { 
                             beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Cantidad (mt/lineal)',
-                                align: 'end'
+                            ticks: {
+                                precision: 0 // Mostrar números enteros
                             }
                         },
-                        y: {  // Ahora 'y' es el eje vertical
-                            title: {
-                                display: true,
-                                text: 'Material - Tipo',
-                                align: 'end'
-                            },
-                            ticks: {
-                                autoSkip: false // Evita que las etiquetas se omitan automáticamente
-                            }
+                        y: { 
+                            ticks: { 
+                                autoSkip: false,
+                                font: {
+                                    size: 12 // Tamaño de fuente más pequeño
+                                }
+                            } 
                         }
                     },
                     plugins: {
-                        legend: {
-                            display: false
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: () => {
+                                    return `Código: ${itemActual.codigo}\nValor: $${itemActual.valor.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            top: 10,
+                            right: 10,
+                            bottom: 10,
+                            left: 10
                         }
                     }
                 }
             });
         }
 
-        function updateChart() {
-            chart.data.labels = tuberiaData.map(item => `${item.material} - ${item.tipo}`);
-            chart.data.datasets[0].data = tuberiaData.map(item => item.cantidad_mt_lineal);
-            chart.update();
-        }
-
-        function actualizarCodigoEnTabla(index) {
-        const material = tuberiaData[index].material;
-        const tipo = tuberiaData[index].tipo;
-        const diametroSinUnidad = tuberiaData[index].diametro.split(" ")[0];
-
-            let codigo = "Código no encontrado";
-            if (codigosPredefinidos[material] && codigosPredefinidos[material][tipo] && codigosPredefinidos[material][tipo][diametroSinUnidad]) {
-                    codigo = codigosPredefinidos[material][tipo][diametroSinUnidad];
+        function exportarAExcel() {
+            if (!itemActual) {
+                alert("No hay datos para exportar");
+                return;
+            }
+            
+            // Obtener el valor de cantidad (puede estar oculto como "No Stock")
+            const cantidadInput = document.getElementById('inputCantidad');
+            const cantidad = parseFloat(cantidadInput.value) || 0;
+            
+            // Crear un objeto con los datos a exportar
+            const datos = [{
+                'Código': itemActual.codigo,
+                'Descripción': itemActual.descripcion,
+                'Ubicación': itemActual.ubicacion || 'Bogotá', // Bogotá por defecto
+                'Cantidad': cantidad === 0 ? 'No Stock' : cantidad, // Mostrar "No Stock" si es 0
+                'Valor': itemActual.valor
+                            
                 }
-
-        const tdCodigo = document.querySelector(`#dynamicContent table tbody tr:nth-child(${parseInt(index) + 1}) td:first-child`);
-        tdCodigo.textContent = codigo;
+            ];
+            
+            // Convertir a CSV
+            const csvRows = [];
+            const headers = Object.keys(datos[0]);
+            csvRows.push(headers.join(','));
+            
+            for (const row of datos) {
+                const values = headers.map(header => {
+                    const escaped = ('' + row[header]).replace(/"/g, '\\"');
+                    return `"${escaped}"`;
+                });
+                csvRows.push(values.join(','));
+            }
+            
+            const csvString = csvRows.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            // Crear enlace de descarga
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `tuberia_${itemActual.codigo}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
-        // ---------------------------------------------------------------------------
-        // Creacion Accesorios
-        // ---------------------------------------------------------------------------
+        // Inicializar al cargar
+        document.addEventListener('DOMContentLoaded', loadTuberia);
+
+        // ================================================================================
+        // INVENTARIO ACCESORIOS
+        // ================================================================================
+
 
         const materialOptionsAccesorios = {
             "Cobre": {
                 tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador"],
                 clases: ["M", "K", "L"],
-                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "N/A"],
-                conexiones: ["Soldeo", "NPTH", "NPTM", "N/A"],
-                c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"],
-                c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"]
+                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "2", "2-1/2", "3", "3-1/2", "4"],
+                conexiones: ["Soldeo", "NPTH", "NPTM"],
+                c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo"],
+                c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo"]
             },
             "Acero Inoxidable": {
                 tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Bushing", "Brida"],
-                clases: ["10", "40", "80"], // Clases base. Se agregará 150psi, 300psi, 3000psi para brida.
-                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "N/A"],
-                conexiones: ["Soldeo", "NPTH", "NPTM", "N/A", "Socket"],
-                c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"],
-                c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"]
+                clases: ["10", "40", "80"],
+                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "2", "2-1/2", "3", "3-1/2", "4"],
+                conexiones: ["Soldeo", "NPTH", "NPTM", "Socket"],
+                c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "Socket"],
+                c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "Socket"]
             },
             "Acero Carbon": {
                 tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Brida", "Bushing"],
-                clases: ["10", "40", "80"], // Clases base. Se agregará 150psi, 300psi, 3000psi para brida.
-                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "N/A"],
-                conexiones: ["Soldeo", "NPTH", "NPTM", "N/A", "Socket"],
-                c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"],
-                c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A", "Socket"]
+                clases: ["10", "40", "80"],
+                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "2", "2-1/2", "3", "3-1/2", "4"],
+                conexiones: ["Soldeo", "NPTH", "NPTM", "Socket"],
+                c_entradas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "Socket"],
+                c_salidas: ["NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "Socket"]
             },
             "Bronce": {
                 tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador", "Bushing", "Brida"],
                 clases: [], // No tiene clases, se agregarán para brida.
-                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "N/A"],
+                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "2", "2-1/2", "3", "3-1/2", "4"],
                 conexiones: ["Soldeo", "NPTH", "NPTM"],
-                c_entradas: ["H-M", "H-K", "H-L", "M-M", "M-K", "M-L", "H-10", "H-40", "H-80", "M-10", "M-40", "M-80", "NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"],
-                c_salidas: ["H-M", "H-K", "H-L", "M-M", "M-K", "M-L", "H-10", "H-40", "H-80", "M-10", "M-40", "M-80", "NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo", "N/A"]
+                c_entradas: ["H-M", "H-K", "H-L", "M-M", "M-K", "M-L", "H-10", "H-40", "H-80", "M-10", "M-40", "M-80", "NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo"],
+                c_salidas: ["H-M", "H-K", "H-L", "M-M", "M-K", "M-L", "H-10", "H-40", "H-80", "M-10", "M-40", "M-80", "NPTH", "NPTM", "BSPM", "BSPH", "DISS", "DIM", "CGA", "OD", "Soldeo"]
             },
             "PVC": {
                 tipos: ["Union", "Tee", "Tee Red Central", "Tee Red Lateral", "Codo", "Semicodo", "Copa Reduccion", "Universales", "Tapon", "Adaptador"],
                 clases: ["Presion", "Electrica", "Sanitaria", "Ventilacion"],
-                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "3", "3-1/2", "4", "N/A"],
-                conexiones: ["Lisa", "NPTH", "NPTM", "N/A"],
-                c_entradas: ["Lisa", "NPTH", "NPTM", "N/A"],
-                c_salidas: ["Lisa", "NPTH", "NPTM", "N/A"]
+                diametros: ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1-1/4", "1-1/2", "2", "2-1/2", "3", "3-1/2", "4"],
+                conexiones: ["Lisa", "NPTH", "NPTM"],
+                c_entradas: ["Lisa", "NPTH", "NPTM"],
+                c_salidas: ["Lisa", "NPTH", "NPTM"]
             }
         };
 
-        const accesoriosData = [
-            {
-                material: "Cobre", tipo: "Union", clase: "M", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 2, valor: 5
-            },
-            {
-                material: "Acero Inoxidable", tipo: "Union", clase: "10", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 3, valor: 8
-            },
-            {
-                material: "Acero Carbon", tipo: "Union", clase: "10", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 1, valor: 12
-            },
-            {
-                material: "Bronce", tipo: "Union", clase: "", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Soldeo", c_entrada: "Soldeo", c_salida: "Soldeo", cantidad: 4, valor: 3
-            },
-            {
-                material: "PVC", tipo: "Union", clase: "Presion", diametro: "1/2", d_entrada: "1/2", d_salida: "1/2", conexion: "Lisa", c_entrada: "Lisa", c_salida: "Lisa", cantidad: 2, valor: 2
-            }
-        ];
-        let chartAccesorios; // Variable global para almacenar la instancia de la gráfica de accesorios
+        // Generar mapeo de descripciones a códigos para accesorios
+        let codigoCounterAccesorios = 144; // Comenzando desde IYR0144 como en tu ejemplo
+        const descripcionToCodigoAccesorios = {};
+        const descripcionesDisponiblesAccesorios = [];
 
-        function loadAccesorios() {
-            const tableHeaders = `
-                <tr>
-                    <th>Código</th>
-                    <th>Material</th>
-                    <th>Tipo</th>
-                    <th>Clase</th>
-                    <th>Diámetro</th>
-                    <th>D_Entrada</th>
-                    <th>D_Salida</th>
-                    <th>Conexión</th>
-                    <th>C_Entrada</th>
-                    <th>C_Salida</th>
-                    <th>Cantidad</th>
-                    <th>Valor</th>
-                </tr>
-            `;
-
-            const tableRows = accesoriosData.map((item, index) => {
-                const tipos = materialOptionsAccesorios[item.material].tipos;
-                let clases = materialOptionsAccesorios[item.material].clases;
-                const diametros = materialOptionsAccesorios[item.material].diametros;
-                const conexiones = materialOptionsAccesorios[item.material].conexiones;
-                const c_entradas = materialOptionsAccesorios[item.material].c_entradas;
-                const c_salidas = materialOptionsAccesorios[item.material].c_salidas;
-
-                // Lógica para las clases de Brida (Acero Inoxidable, Acero Carbon, Bronce)
-                if (item.tipo === "Brida" && (item.material === "Acero Inoxidable" || item.material === "Acero Carbon" || item.material === "Bronce")) {
-                    clases = ["150psi", "300psi", "3000psi"];
-                } else if (item.material === "Bronce") {
-                    clases = []; // Limpiar clases para Bronce si no es Brida
+        for (const material in materialOptionsAccesorios) {
+            const tipos = materialOptionsAccesorios[material].tipos;
+            const clases = materialOptionsAccesorios[material].clases;
+            const diametros = materialOptionsAccesorios[material].diametros;
+            const conexiones = materialOptionsAccesorios[material].conexiones;
+            
+            const materialSinEspacios = material.replace(/\s+/g, '');
+            
+            for (const tipo of tipos) {
+                // Manejo especial para Brida
+                if (tipo === "Brida" && (material === "Acero Inoxidable" || material === "Acero Carbon" || material === "Bronce")) {
+                    const clasesBrida = ["150psi", "300psi", "3000psi"];
+                    for (const clase of clasesBrida) {
+                        for (const diametro of diametros) {
+                            for (const conexion of conexiones) {
+                                const descripcion = `${tipo}${materialSinEspacios}${clase}${diametro}${conexion}`;
+                                const codigo = "IYR" + codigoCounterAccesorios.toString().padStart(4, '0');
+                                
+                                descripcionToCodigoAccesorios[descripcion] = codigo;
+                                descripcionesDisponiblesAccesorios.push(descripcion);
+                                codigoCounterAccesorios++;
+                            }
+                        }
+                    }
+                } 
+                // Manejo para Bronce (sin clases excepto para Brida)
+                else if (material === "Bronce") {
+                    for (const diametro of diametros) {
+                        for (const conexion of conexiones) {
+                            const descripcion = `${tipo}${materialSinEspacios}${diametro}${conexion}`;
+                            const codigo = "IYR" + codigoCounterAccesorios.toString().padStart(4, '0');
+                            
+                            descripcionToCodigoAccesorios[descripcion] = codigo;
+                            descripcionesDisponiblesAccesorios.push(descripcion);
+                            codigoCounterAccesorios++;
+                        }
+                    }
                 }
+                // Manejo normal para otros materiales
+                else {
+                    for (const clase of clases) {
+                        // Formatear la clase según las reglas
+                        let claseFormateada = clase;
+                        if (["M", "K", "L"].includes(clase)) {
+                            claseFormateada = `Tipo${clase}`;
+                        } else if (["10", "40", "80"].includes(clase)) {
+                            claseFormateada = `Sch${clase}`;
+                        }
+                        // Los demás tipos (ej: "Presión") se quedan igual
+                        
+                        for (const diametro of diametros) {
+                            for (const conexion of conexiones) {
+                                const descripcion = `${tipo}${materialSinEspacios}${claseFormateada}${diametro}${conexion}`;
+                                const codigo = "IYR" + codigoCounterAccesorios.toString().padStart(4, '0');
+                                
+                                descripcionToCodigoAccesorios[descripcion] = codigo;
+                                descripcionesDisponiblesAccesorios.push(descripcion);
+                                codigoCounterAccesorios++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-                return `
-                    <tr>
-                        <td></td>
-                        <td>${item.material}</td>
-                        <td>
-                            <select class="tipo-select-acc" data-index="${index}">
-                                ${tipos.map(tipo => `<option value="${tipo}" ${tipo === item.tipo ? 'selected' : ''}>${tipo}</option>`).join('')}
-                            </select>
-                        </td>
-                        <td>
-                            <select class="clase-select-acc" data-index="${index}" ${item.tipo === "Brida" || item.material === "Bronce" ? '' : ''}>
-                                ${clases.map(clase => `<option value="${clase}" ${clase === item.clase ? 'selected' : ''}>${clase}</option>`).join('')}
-                            </select>
-                        </td>
-                        <td>
-                            <select class="diametro-select-acc" data-index="${index}">
-                                ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.diametro ? 'selected' : ''}>${diametro}</option>`).join('')}
-                            </select>
-                        </td>
-                        <td>
-                            <select class="d-entrada-select-acc" data-index="${index}">
-                                ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.d_entrada ? 'selected' : ''}>${diametro}</option>`).join('')}
-                            </select>
-                        </td>
-                        <td>
-                            <select class="d-salida-select-acc" data-index="${index}">
-                                ${diametros.map(diametro => `<option value="${diametro}" ${diametro === item.d_salida ? 'selected' : ''}>${diametro}</option>`).join('')}
-                            </select>
-                        </td>
-                        <td>
-                            <select class="conexion-select-acc" data-index="${index}">
-                                ${conexiones.map(conexion => `<option value="${conexion}" ${conexion === item.conexion ? 'selected' : ''}>${conexion}</option>`).join('')}
-                            </select>
-                        </td>
-                        <td>
-                            <select class="c-entrada-select-acc" data-index="${index}">
-                                ${c_entradas.map(c_entrada => `<option value="${c_entrada}" ${c_entrada === item.c_entrada ? 'selected' : ''}>${c_entrada}</option>`).join('')}
-                            </select>
-                        </td>
-                        <td>
-                            <select class="c-salida-select-acc" data-index="${index}">
-                                ${c_salidas.map(c_salida => `<option value="${c_salida}" ${c_salida === item.c_salida ? 'selected' : ''}>${c_salida}</option>`).join('')}
-                            </select>
-                        </td>
-                        <td>
-                            <input type="number" class="cantidad-input-acc" data-index="${index}" value="${item.cantidad}" />
-                        </td>
-                        <td>
-                        <span class="valor">$${item.valor}</span>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+        // Variable para almacenar el item actual de accesorios
+        let itemActualAccesorio = null;
+        let chartAccesorios;
 
+        // ---------------------------------------------------------------------------
+        // Funciones principales para accesorios
+        // ---------------------------------------------------------------------------
+        function loadAccesorios() {
             const tableContent = `
                 <div class="section-title vertical-title">Accesorios</div>
                 <div class="table-container">
                     <table>
-                        <thead>${tableHeaders}</thead>
-                        <tbody>${tableRows}</tbody>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Ubicación</th>
+                                <th>Cantidad</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${generarFilaConsultaAccesorios()}
+                        </tbody>
                     </table>
+                    <div class="export-button-container">
+                        <button id="btnExportarAccesorios">Exportar a Excel</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>Gráfica de Consulta</h3>
+                    <canvas id="accesoriosChart"></canvas>
                 </div>
             `;
-            const chartContent = `
-                <h3>Gráfica de Cantidades (Accesorios)</h3>
-                <canvas id="accesoriosChart"></canvas>
-            `;
 
-            const fullContent = tableContent + chartContent; // Unir la tabla y la gráfica en un solo bloque
+            document.getElementById('dynamicContent').innerHTML = tableContent;
 
-            document.getElementById('dynamicContent').innerHTML = fullContent; // Asignar el contenido completo
-
-            createChartAccesorios(); // Crea la gráfica después de cargar la tabla.
-            updateChartAccesorios(); // Actualiza la gráfica con los datos iniciales
-
-            // --- Event Listeners Accesorios ---
-            document.querySelectorAll('.tipo-select-acc').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const index = parseInt(event.target.getAttribute('data-index'));
-                    accesoriosData[index].tipo = event.target.value;
-
-                    // Actualizar las clases si el tipo es Brida
-                    if (accesoriosData[index].tipo === "Brida" && (accesoriosData[index].material === "Acero Inoxidable" || accesoriosData[index].material === "Acero Carbon" || accesoriosData[index].material === "Bronce")) {
-                        accesoriosData[index].clase = "150psi"; // Reset clase
-                        loadAccesorios(); // Recargar tabla para mostrar las clases correctas
-                    }
-                    //inhabilitar clase en bronce
-                    else if (accesoriosData[index].material === "Bronce") {
-                        accesoriosData[index].clase = "";
-                        loadAccesorios(); // Recargar tabla para mostrar las clases correctas
-                    }
-                    updateChartAccesorios() //actulizar grafica
-                });
-            });
-
-            document.querySelectorAll('.clase-select-acc').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const index = parseInt(event.target.getAttribute('data-index'));
-                    accesoriosData[index].clase = event.target.value;
-                    updateChartAccesorios() //actulizar grafica
-                });
-            });
-
-            document.querySelectorAll('.diametro-select-acc').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const index = parseInt(event.target.getAttribute('data-index'));
-                    accesoriosData[index].diametro = event.target.value;
-                    updateChartAccesorios() //actulizar grafica
-                });
-            });
-
-            document.querySelectorAll('.d-entrada-select-acc').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const index = parseInt(event.target.getAttribute('data-index'));
-                    accesoriosData[index].d_entrada = event.target.value;
-                    updateChartAccesorios() //actulizar grafica
-                });
-            });
-
-            document.querySelectorAll('.d-salida-select-acc').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const index = parseInt(event.target.getAttribute('data-index'));
-                    accesoriosData[index].d_salida = event.target.value;
-                    updateChartAccesorios() //actulizar grafica
-                });
-            });
-
-            document.querySelectorAll('.conexion-select-acc').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const index = parseInt(event.target.getAttribute('data-index'));
-                    accesoriosData[index].conexion = event.target.value;
-                    updateChartAccesorios() //actulizar grafica
-                });
-            });
-
-            document.querySelectorAll('.c-entrada-select-acc').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const index = parseInt(event.target.getAttribute('data-index'));
-                    accesoriosData[index].c_entrada = event.target.value;
-                    updateChartAccesorios() //actulizar grafica
-                });
-            });
-
-            document.querySelectorAll('.c-salida-select-acc').forEach(select => {
-                select.addEventListener('change', (event) => {
-                    const index = parseInt(event.target.getAttribute('data-index'));
-                    accesoriosData[index].c_salida = event.target.value;
-                    updateChartAccesorios() //actulizar grafica
-                });
-            });
-
-            document.querySelectorAll('.cantidad-input-acc').forEach(input => {
-                input.addEventListener('change', (event) => {
-                    const index = parseInt(event.target.getAttribute('data-index'));
-                    accesoriosData[index].cantidad = parseInt(event.target.value);
-                    updateChartAccesorios();
-                });
-            });
+            // Configurar eventos
+            configurarEventosAccesorios();
+            
+            // Inicializar gráfica (oculta al inicio)
+            document.getElementById('accesoriosChart').style.display = 'none';
         }
 
-        function createChartAccesorios() {
-            const ctxAccesorios = document.getElementById('accesoriosChart').getContext('2d');
-            chartAccesorios = new Chart(ctxAccesorios, {
+        function generarFilaConsultaAccesorios() {
+            return `
+                <tr class="fila-consulta">
+                    <td id="codigoGeneradoAccesorio"></td>
+                    <td>
+                        <input type="text" id="inputDescripcionAccesorio" 
+                            placeholder="Buscar accesorio..." 
+                            list="listaAccesorios" autocomplete="off">
+                        <datalist id="listaAccesorios">
+                            ${descripcionesDisponiblesAccesorios.map(desc => 
+                                `<option value="${desc}">${desc}</option>`).join('')}
+                        </datalist>
+                    </td>
+                    <td><input type="text" id="inputUbicacionAccesorio" placeholder="Ubicación" value="Bogotá"></td>
+                    <td id="cantidadCellAccesorio"><input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()"></td>
+                    <td><input type="number" id="inputValorAccesorio" placeholder="Valor" min="0" step="0.01"></td>
+                </tr>
+            `;
+        }
+
+        function actualizarEstadoStockAccesorios() {
+            const cantidadInput = document.getElementById('inputCantidadAccesorio');
+            const cantidadCell = document.getElementById('cantidadCellAccesorio');
+            const valor = parseFloat(cantidadInput.value) || 0;
+            
+            if (valor === 0) {
+                cantidadCell.innerHTML = `
+                    <span class="no-stock" onclick="restaurarInputCantidadAccesorios()">No Stock</span>
+                    <input type="number" id="inputCantidadAccesorio" value="0" min="0" style="display:none;">
+                `;
+            } else {
+                cantidadCell.innerHTML = `<input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="${valor}" onchange="actualizarEstadoStockAccesorios()">`;
+            }
+            
+            // Actualizar el objeto itemActualAccesorio si existe
+            if (itemActualAccesorio) {
+                itemActualAccesorio.cantidad = valor;
+                actualizarGraficaAccesorios();
+            }
+        }
+
+        function restaurarInputCantidadAccesorios() {
+            const cantidadCell = document.getElementById('cantidadCellAccesorio');
+            cantidadCell.innerHTML = `<input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()">`;
+            document.getElementById('inputCantidadAccesorio').focus();
+        }
+
+        function configurarEventosAccesorios() {
+            const inputDesc = document.getElementById('inputDescripcionAccesorio');
+            
+            inputDesc.addEventListener('input', function() {
+                // Restaurar el input de cantidad al cambiar descripción
+                const cantidadCell = document.getElementById('cantidadCellAccesorio');
+                cantidadCell.innerHTML = `<input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()">`;
+                
+                const descripcion = this.value;
+                const codigo = descripcionToCodigoAccesorios[descripcion];
+                document.getElementById('codigoGeneradoAccesorio').textContent = codigo || '';
+                
+                if (codigo) {
+                    itemActualAccesorio = {
+                        codigo: codigo,
+                        descripcion: descripcion,
+                        ubicacion: document.getElementById('inputUbicacionAccesorio').value || 'Bogotá',
+                        cantidad: 0, // Iniciar en 0
+                        valor: parseFloat(document.getElementById('inputValorAccesorio').value) || 0
+                    };
+                    actualizarGraficaAccesorios();
+                }
+            });
+
+            // Actualizar datos cuando cambian otros campos
+            ['inputUbicacionAccesorio', 'inputValorAccesorio'].forEach(id => {
+                document.getElementById(id).addEventListener('change', function() {
+                    if (itemActualAccesorio) {
+                        itemActualAccesorio.ubicacion = document.getElementById('inputUbicacionAccesorio').value;
+                        itemActualAccesorio.valor = parseFloat(document.getElementById('inputValorAccesorio').value) || 0;
+                        actualizarGraficaAccesorios();
+                    }
+                });
+            });
+            
+            // Configurar botón de exportar
+            document.getElementById('btnExportarAccesorios').addEventListener('click', exportarAExcelAccesorios);
+            
+            // Verificar estado inicial del stock
+            actualizarEstadoStockAccesorios();
+        }
+
+        function actualizarGraficaAccesorios() {
+            if (!itemActualAccesorio) {
+                document.getElementById('accesoriosChart').style.display = 'none';
+                return;
+            }
+            
+            const ctx = document.getElementById('accesoriosChart').getContext('2d');
+            ctx.canvas.style.display = 'block';
+            
+            // Asegurar que el canvas tenga el tamaño correcto
+            ctx.canvas.width = ctx.canvas.offsetWidth;
+            ctx.canvas.height = 300; // Altura fija
+            
+            if (chartAccesorios) {
+                chartAccesorios.destroy();
+            }
+            
+            chartAccesorios = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: accesoriosData.map(item => `${item.material} - ${item.tipo}`),
+                    labels: [itemActualAccesorio.descripcion],
                     datasets: [{
                         label: 'Cantidad',
-                        data: accesoriosData.map(item => item.cantidad),
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        data: [itemActualAccesorio.cantidad],
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
                     }]
                 },
                 options: {
-                    indexAxis: 'y',  // Cambia a horizontal
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
-                        x: {
+                        x: { 
                             beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Cantidad',
-                                align: 'end'
+                            ticks: {
+                                precision: 0
                             }
                         },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Material - Tipo',
-                                align: 'end'
-                            },
-                            ticks: {
-                                autoSkip: false  // Evita que las etiquetas se omitan automáticamente
-                            }
+                        y: { 
+                            ticks: { 
+                                autoSkip: false,
+                                font: {
+                                    size: 12
+                                }
+                            } 
                         }
                     },
                     plugins: {
-                        legend: {
-                            display: false
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: () => {
+                                    return `Código: ${itemActualAccesorio.codigo}\nValor: $${itemActualAccesorio.valor.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            top: 10,
+                            right: 10,
+                            bottom: 10,
+                            left: 10
                         }
                     }
                 }
             });
         }
 
-        function updateChartAccesorios() {
-            chartAccesorios.data.labels = accesoriosData.map(item => `${item.material} - ${item.tipo}`);
-            chartAccesorios.data.datasets[0].data = accesoriosData.map(item => item.cantidad);
-            chartAccesorios.update();
+        function exportarAExcelAccesorios() {
+            if (!itemActualAccesorio) {
+                alert("No hay datos para exportar");
+                return;
+            }
+            
+            // Obtener el valor de cantidad (puede estar oculto como "No Stock")
+            const cantidadInput = document.getElementById('inputCantidadAccesorio');
+            const cantidad = parseFloat(cantidadInput.value) || 0;
+            
+            // Crear un objeto con los datos a exportar
+            const datos = [{
+                'Código': itemActualAccesorio.codigo,
+                'Descripción': itemActualAccesorio.descripcion,
+                'Ubicación': itemActualAccesorio.ubicacion || 'Bogotá',
+                'Cantidad': cantidad === 0 ? 'No Stock' : cantidad,
+                'Valor': itemActualAccesorio.valor
+            }];
+            
+            // Convertir a CSV
+            const csvRows = [];
+            const headers = Object.keys(datos[0]);
+            csvRows.push(headers.join(','));
+            
+            for (const row of datos) {
+                const values = headers.map(header => {
+                    const escaped = ('' + row[header]).replace(/"/g, '\\"');
+                    return `"${escaped}"`;
+                });
+                csvRows.push(values.join(','));
+            }
+            
+            const csvString = csvRows.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            // Crear enlace de descarga
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `accesorio_${itemActualAccesorio.codigo}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
-        // Cargar inicialmente
-        function loadContent() {
-            document.getElementById('dynamicContent').innerHTML = "";
-            loadTuberia();
+        // Inicializar al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Puedes cargar tuberías o accesorios según necesites
+            // loadTuberia();
             loadAccesorios();
-        }
+        });
 
-        window.onload = loadContent; // Asegura que el contenido se cargue después de que el DOM esté listo
-    
 
-        // ---------------------------------------------------------------------------
-        // Creacion Tabla de Proyectos add/edit/print/dowload/delete
-        // ---------------------------------------------------------------------------
+
+        // ================================================================================
+        // CREACION TABLA DE PROYECTOS ADD/EDIT/UPDATE/DOWLOAD/DELETE
+        // ================================================================================
 
         // Constantes.
         const PROJECT_ID_PREFIX = 'OT-';
@@ -981,7 +901,7 @@
         const MAIN_PROJECT_EDITABLE_FIELDS = ['descripcion', 'encargado', 'estado'];
 
         // Campos editables para adiciones
-        const ADDITION_EDITABLE_FIELDS = ['nombre', 'descripcion', 'fechaInicio', 'fechaFin', 'encargado', 'estado', 'presupuesto'];
+        const ADDITION_EDITABLE_FIELDS = ['Proyecto', 'descripcion', 'ubicacion', 'fechaInicio', 'fechaFin', 'encargado', 'estado', 'presupuesto'];
 
         // ---------------------------------------------------------------------------
         // Funciones de Utilidad
@@ -1001,8 +921,9 @@
                 <tr>
                     <th></th> <!-- Columna para el icono del ojo -->
                     <th>ID</th>
-                    <th>Nombre</th>
+                    <th>Proyecto</th>
                     <th>Descripción</th>
+                    <th>Ubicación</th>
                     <th>Fecha de Inicio</th>
                     <th>Fecha de Fin</th>
                     <th>Encargado</th>
@@ -1024,7 +945,7 @@
                     actionIcons = `
                         <i class="fas fa-edit edit-project" data-id="${proyecto.id}" title="Editar"></i>
                         <i class="fas fa-plus-square add-addition" data-id="${proyecto.id}" title="Adición"></i>
-                        <i class="fas fa-print print-project" data-id="${proyecto.id}" title="Imprimir"></i>
+                        <i class="fas fa-file-pdf load-pdf" data-id="${proyecto.id}" title="Cargar PDF"></i>
                         <i class="fas fa-download download-project" data-id="${proyecto.id}" title="Descargar"></i>
                         <i class="fas fa-trash delete-project" data-id="${proyecto.id}" title="Eliminar"></i>
                     `;
@@ -1045,6 +966,7 @@
                         <td>${proyecto.id}</td>
                         <td>${proyecto.nombre}</td>
                         <td>${proyecto.descripcion}</td>
+                        <td>${proyecto.ubicacion}</td>
                         <td>${proyecto.fechaInicio}</td>
                         <td>${proyecto.fechaFin}</td>
                         <td>${proyecto.encargado}</td>
@@ -1093,8 +1015,8 @@
                         editProject(projectId);
                     } else if (target.classList.contains('add-addition')) {
                         addAddition(projectId);
-                    } else if (target.classList.contains('print-project')) {
-                        printProject(projectId);
+                    } else if (target.classList.contains('load-pdf')) {
+                        loadPDF(projectId);
                     } else if (target.classList.contains('download-project')) {
                         downloadProject(projectId);
                     } else if (target.classList.contains('delete-project')) {
@@ -1175,8 +1097,10 @@
             projectIdField.disabled = true; // Habilitar la edición del ID
 
             //Habilitar el resto de los campos
+            document.getElementById('projectId').disabled = false;
             document.getElementById('projectName').disabled = false;
             document.getElementById('projectDescription').disabled = false;
+            document.getElementById('projectLocation').disabled = false;
             document.getElementById('projectStartDate').disabled = false;
             document.getElementById('projectEndDate').disabled = false;
             document.getElementById('projectManager').disabled = false;
@@ -1201,6 +1125,7 @@
             document.getElementById('projectId').value = proyecto.id;
             document.getElementById('projectName').value = proyecto.nombre;
             document.getElementById('projectDescription').value = proyecto.descripcion;
+            document.getElementById('projectLocation').value = proyecto.ubicacion;
             document.getElementById('projectStartDate').value = proyecto.fechaInicio;
             document.getElementById('projectEndDate').value = proyecto.fechaFin;
             document.getElementById('projectManager').value = proyecto.encargado;
@@ -1210,6 +1135,7 @@
             // Deshabilitar campos no editables
             document.getElementById('projectId').disabled = true;
             document.getElementById('projectName').disabled = true;
+            document.getElementById('projectLocation').disabled = true;
             document.getElementById('projectStartDate').disabled = true;
             document.getElementById('projectEndDate').disabled = true;
             document.getElementById('projectBudget').disabled = true;
@@ -1239,6 +1165,7 @@
             // Habilitar todos los campos
             document.getElementById('projectName').disabled = false;
             document.getElementById('projectDescription').disabled = false;
+            document.getElementById('projectLocation').disabled = false;
             document.getElementById('projectStartDate').disabled = false;
             document.getElementById('projectEndDate').disabled = false;
             document.getElementById('projectManager').disabled = false;
@@ -1258,6 +1185,7 @@
                 id: document.getElementById('projectId').value,
                 nombre: document.getElementById('projectName').value,
                 descripcion: document.getElementById('projectDescription').value,
+                ubicacion: document.getElementById('projectLocation').value,
                 fechaInicio: document.getElementById('projectStartDate').value,
                 fechaFin: document.getElementById('projectEndDate').value,
                 encargado: document.getElementById('projectManager').value,
@@ -1305,25 +1233,45 @@
         }
 
         // ---------------------------------------------------------------------------
-        // Funciones de Imprimir y Descargar
+        // Funciones de  Descargar
         // ---------------------------------------------------------------------------
-
-        function printProject(projectId) {
+        
+        function loadPDF(projectId) {
             const proyecto = proyectosData.find(p => p.id === projectId);
             if (proyecto) {
-                const contenido = `
-                    ID: ${proyecto.id}
-                    Nombre: ${proyecto.nombre}
-                    Descripción: ${proyecto.descripcion}
-                    Fecha de Inicio: ${proyecto.fechaInicio}
-                    Encargado: ${proyecto.encargado}
-                    Estado: ${proyecto.estado}
-                    Presupuesto: ${proyecto.presupuesto}
-                `;
-                const ventanaImpresion = window.open('', '', 'height=500,width=500');
-                ventanaImpresion.document.write(`<pre>${contenido}</pre>`);
-                ventanaImpresion.document.close();
-                ventanaImpresion.print();
+                // Crear un input de tipo file dinámicamente
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'application/pdf'; // Aceptar solo archivos PDF
+        
+                // Simular un clic en el input para abrir el diálogo de selección de archivos
+                input.click();
+        
+                // Listener para el evento 'change' del input
+                input.addEventListener('change', function(event) {
+                    const file = event.target.files[0]; // Obtener el archivo seleccionado
+        
+                    if (file) {
+                        // Aquí puedes realizar acciones con el archivo PDF, como subirlo a un servidor,
+                        // previsualizarlo, etc.
+                        console.log('Archivo PDF seleccionado:', file.name);
+                        console.log('Tamaño del archivo:', file.size, 'bytes');
+                        console.log('Tipo de archivo:', file.type);
+        
+                        // Ejemplo de cómo podrías leer el contenido del archivo (opcional):
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            // e.target.result contiene el contenido del archivo como un Data URL
+                            // console.log('Contenido del archivo:', e.target.result);
+                            // Puedes usar este Data URL para previsualizar el PDF en un iframe o canvas
+                        }
+                        reader.readAsDataURL(file); // Lee el archivo como Data URL
+        
+                        // TODO: Implementar la lógica para guardar la referencia al archivo PDF
+                        //       (por ejemplo, guardar la URL en la propiedad del proyecto)
+                        // proyecto.pdfUrl = 'URL_DEL_ARCHIVO_SUBIDO';
+                    }
+                });
             }
         }
 
@@ -1356,394 +1304,911 @@
         // Carga inicial de proyectos
         loadProyectos();
 
-        
-                    
-       
 
-        // Datos de ejemplo para Requisición
-        const requisicionData = [
-            {
-                item: 1,
-                descripcion: "Codo de cobre de 1/2\"",
-                unidad: "UND",
-                cantidadSolicitada: 20,
-                cantidadEntregada: 15,
-                cantidadPendiente: 5
-            },
-            {
-                item: 2,
-                descripcion: "Tee de cobre de 3/4\"",
-                unidad: "UND",
-                cantidadSolicitada: 10,
-                cantidadEntregada: 10,
-                cantidadPendiente: 0
-            },
-            {
-                item: 3,
-                descripcion: "Reductor de cobre de 1\" a 1/2\"",
-                unidad: "UND",
-                cantidadSolicitada: 5,
-                cantidadEntregada: 3,
-                cantidadPendiente: 2
-            },
-            {
-                item: 4,
-                descripcion: "Tubo de cobre de 1/2\" (3 metros)",
-                unidad: "MTS",
-                cantidadSolicitada: 2,
-                cantidadEntregada: 2,
-                cantidadPendiente: 0
-            },
-            {
-                item: 5,
-                descripcion: "Soldadura de plata",
-                unidad: "GR",
-                cantidadSolicitada: 50,
-                cantidadEntregada: 50,
-                cantidadPendiente: 0
-            },
-            {
-                item: 6,
-                descripcion: "Lija para cobre",
-                unidad: "UND",
-                cantidadSolicitada: 10,
-                cantidadEntregada: 8,
-                cantidadPendiente: 2
-            },
-            {
-                item: 7,
-                descripcion: "Cinta de teflón",
-                unidad: "UND",
-                cantidadSolicitada: 5,
-                cantidadEntregada: 5,
-                cantidadPendiente: 0
-            },
-            {
-                item: 8,
-                descripcion: "Brocha de 1\"",
-                unidad: "UND",
-                cantidadSolicitada: 2,
-                cantidadEntregada: 2,
-                cantidadPendiente: 0
-            },
-            {
-                item: 9,
-                descripcion: "Pintura anticorrosiva",
-                unidad: "GLN",
-                cantidadSolicitada: 1,
-                cantidadEntregada: 1,
-                cantidadPendiente: 0
-            },
-            {
-                item: 10,
-                descripcion: "Thinner",
-                unidad: "LT",
-                cantidadSolicitada: 1,
-                cantidadEntregada: 1,
-                cantidadPendiente: 0
-            }
-        ];
+        // ================================================================================
+        // REQUISICION 
+        // ================================================================================
 
-        // Función para cargar la requisición y poblar la tabla
-        function loadRequisicion() {
-            const requisicionForm = `
+        // Datos de ejemplo para Requisición (Se usarán solo para inicializar la interfaz)
+        //  IMPORTANTE: Cambiar a array vacío para que no aparezcan datos de ejemplo
+        let requisicionData = [];
 
-        <style>
-            body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+        // Datos de ejemplo para el historial
+        let historyData = [];
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 20px; /* Tamaño de fuente reducido */
-            color: #2c3e50;
-        }
-
-        p {
-            text-align: center;
-            margin: 5px 0;
-            font-size: 14px; /* Tamaño de fuente reducido */
-            color: #7f8c8d;
-        }
-
-        form {
-            width: 95%;
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 15px; /* Padding reducido */
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px; /* Tamaño de fuente reducido */
-            font-weight: bold;
-            color: #34495e;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="date"],
-        textarea {
-            width: calc(100% - 18px);
-            padding: 6px; /* Padding reducido */
-            margin-bottom: 8px; /* Margen reducido */
-            border: 1px solid #bdc3c7;
-            border-radius: 4px;
-            font-size: 12px; /* Tamaño de fuente reducido */
-            box-sizing: border-box;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        input[type="date"]:focus,
-        textarea:focus {
-            border-color: #2c3e50;
-            outline: none;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px; /* Margen reducido */
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            table-layout: fixed;
-        }
-
-        th, td {
-            border: 1px solid #bdc3c7;
-            padding: 8px; /* Padding reducido */
-            text-align: center;
-            font-size: 12px; /* Tamaño de fuente reducido */
-            word-break: break-word;
-        }
-
-        th {
-            background-color: #2c3e50;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        input[readonly] {
-            background-color: #ecf0f1;
-            cursor: not-allowed;
-        }
-
-        button {
-            display: inline-block;
-            padding: 8px 16px; /* Padding reducido */
-            background-color: #2c3e50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px; /* Tamaño de fuente reducido */
-            transition: background-color 0.3s ease;
-            white-space: nowrap;
-        }
-
-        button:hover {
-            background-color: #233140;
-        }
-
-        /* Estilos específicos para la tabla */
-        table input {
-            width: calc(100% - 10px);
-            margin: 0 auto;
-            text-align: center;
-            border: 1px solid #bdc3c7;
-            border-radius: 4px;
-            padding: 4px; /* Padding reducido */
-            font-size: 12px; /* Tamaño de fuente reducido */
-            box-sizing: border-box;
-        }
-
-        table input[type="number"] {
-            width: calc(90% - 10px);
-        }
-
-        table input[readonly] {
-            background-color: #ecf0f1;
-        }
-
-        /* Estilos para las observaciones y firmas */
-        textarea {
-            width: calc(100% - 18px);
-            height: 80px; /* Altura reducida */
-            margin-bottom: 15px; /* Margen reducido */
-            border: 1px solid #bdc3c7;
-            border-radius: 4px;
-            padding: 6px; /* Padding reducido */
-            font-size: 12px; /* Tamaño de fuente reducido */
-            box-sizing: border-box;
-        }
-
-        /* Estilos para las firmas y cargos */
-        .firma {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 15px; /* Margen reducido */
-        }
-
-        .firma div {
-            width: 48%;
-            box-sizing: border-box;
-            padding: 0 8px; /* Padding reducido */
-        }
-
-        .firma label {
-            display: block;
-            margin-bottom: 4px; /* Margen reducido */
-            font-size: 14px; /* Tamaño de fuente reducido */
-            color: #34495e;
-        }
-
-        .firma input {
-            width: calc(100% - 18px);
-            padding: 6px; /* Padding reducido */
-            margin-bottom: 8px; /* Margen reducido */
-            border: 1px solid #bdc3c7;
-            border-radius: 4px;
-            font-size: 12px; /* Tamaño de fuente reducido */
-            box-sizing: border-box;
-        }
-
-        /* Media Queries para Responsive Design */
-        @media (max-width: 768px) {
-            form {
-                width: 90%;
-                padding: 10px; /* Padding reducido */
-            }
-
-            .firma div {
-                width: 100%;
-                margin-bottom: 8px; /* Margen reducido */
-                padding: 0;
-            }
-
-            table {
-                table-layout: auto;
-                border-collapse: collapse;
-                margin-bottom: 10px; /* Margen reducido */
-            }
-
-            th, td {
-                padding: 6px; /* Padding reducido */
-                font-size: 12px; /* Tamaño de fuente reducido */
-            }
-
-            table input {
-                font-size: 12px; /* Tamaño de fuente reducido */
-                padding: 4px; /* Padding reducido */
-            }
-
-            button {
-                display: inline-block;
-                padding: 6px 12px; /* Padding reducido */
-                background-color: #2c3e50;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 12px; /* Tamaño de fuente reducido */
-                transition: background-color 0.3s ease;
-                white-space: nowrap;
+        // Función para limpiar el contenido dinámico
+        function clearDynamicContent() {
+            const dynamicContent = document.getElementById('dynamicContent');
+            if (dynamicContent) {
+                dynamicContent.innerHTML = '';
             }
         }
-        </style>
 
-                <h2>SISTEMA INTEGRADO DE GESTION</h2>
-                <p>CÓDIGO: CP-RQ-01</p>
-                <p>FECHA: 2024-03-20</p>
-                <p>VERSIÓN: 1</p>
-                <p>PÁGINA: 1 DE 1</p>
+        // ================================================================================
+        // CARGA INICIAL DEL MÓDULO
+        // ================================================================================
 
-                <form>
-                    <label for="solicitante">SOLICITA:</label>
-                    <input type="text" id="solicitante" name="solicitante" value="NICOLAS SAAVEDRA"><br><br>
-                    </form>
-                    
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ITEM</th>
-                                <th>DESCRIPCION</th>
-                                <th>UNIDAD</th>
-                                <th>FECHA DE NECESIDAD</th>
-                                <th>CANTIDAD SOLICITADA</th>
-                                <th>VALOR UNITARIO</th>
-                                <th>CANTIDAD ENTREGADA POR ALMACEN</th>
-                                <th>VALOR ENTREGADA POR ALMACEN</th>
-                                <th>CANTIDAD PENDIENTE</th>
-                                <th>CANTIDAD ENTREGADA POR COMPRAS</th>
-                                <th>VALOR ENTREGADA POR COMPRAS</th>
-                                <th>DEVOLUCIÓN DEL PROYECTO</th>
-                                <th>VALOR DEVOLUCIÓN DEL PROYECTO</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody> </table>
-                        <form>
-                    <h3>OBSERVACIONES / RELACIÓN DE ANEXOS:</h3>
-                    <textarea rows="4" cols="50"></textarea><br><br>
+        // Función para cargar el módulo de requisición con pantalla inicial
+        function loadRequisicionModule() {
+            clearDynamicContent();
 
-                    <label for="solicito">Solicitó:</label>
-                    <input type="text" id="solicito" name="solicito" value="JAVIER SIERRA"><br><br>
+            const dynamicContent = document.getElementById('dynamicContent');
+            if (!dynamicContent) {
+                console.error('No se encontró el elemento con id "dynamicContent"');
+                return;
+            }
 
-                    <label for="aprobo">Aprobó:</label>
-                    <input type="text" id="aprobo" name="aprobo" value="MELISSA GONZALES"><br><br>
+            // Pantalla de inicio con dos opciones principales
+            dynamicContent.innerHTML = `
+                <div class="requisicion-module">
+                    <div class="welcome-screen">
+                        <div class="welcome-header">
+                            <h1><i class="fas fa-file-alt"></i> Módulo de Requisiciones</h1>
+                            <p>Gestiona tus solicitudes de materiales y suministros</p>
+                        </div>
 
-                    <button type="submit">Enviar</button>
-                    <button type="submit">Exportar Excel</button>
-                </form>
+                        <div class="options-container">
+                            <div class="option-card" id="createOption">
+                                <div class="card-icon">
+                                    <i class="fas fa-plus-circle"></i>
+                                </div>
+                                <h3>Crear Nueva Requisición</h3>
+                                <p>Inicia un nuevo formulario en blanco para solicitar materiales</p>
+                                <button class="btn btn-primary">Seleccionar</button>
+                            </div>
+
+                            <div class="option-card" id="historyOption">
+                                <div class="card-icon">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <h3>Historial de Requisiciones</h3>
+                                <p>Consulta y gestiona tus requisiciones anteriores</p>
+                                <button class="btn btn-primary">Seleccionar</button>
+                            </div>
+                        </div>
+
+                        <div class="recent-requisitions">
+                            <h3><i class="fas fa-clock"></i> Requisiciones Recientes</h3>
+                            <div class="recent-list" id="recentRequisitions">
+                                <!-- Se cargarán las 3 últimas requisiciones -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección para crear requisición (inicialmente oculta) -->
+                    <div id="createRequisicionSection" style="display: none;">
+                        <!-- Contenido del formulario se cargará aquí -->
+                    </div>
+
+                    <!-- Sección para el historial (inicialmente oculta) -->
+                    <div id="historySection" style="display: none;">
+                        <!-- Contenido del historial se cargará aquí -->
+                    </div>
+                </div>
             `;
 
-            document.getElementById('dynamicContent').innerHTML = requisicionForm;
+            // Cargar requisiciones recientes
+            loadRecentRequisitions();
 
-            const tbody = document.querySelector('tbody');
+            // Asignar eventos a las opciones
+            document.getElementById('createOption')?.addEventListener('click', showCreateForm);
+            document.getElementById('historyOption')?.addEventListener('click', showHistorySection);
+        }
+        // ================================================================================
+        // PANTALLA PRINCIPAL - REQUISICIONES RECIENTES
+        // ================================================================================
 
-            requisicionData.forEach(item => {
-                const row = tbody.insertRow();
-                row.insertCell().textContent = item.item;
-                row.insertCell().innerHTML = `<input type="text" value="${item.descripcion}">`;
-                row.insertCell().innerHTML = `<input type="text" value="${item.unidad}">`;
-                row.insertCell().innerHTML = `<input type="date">`;
-                row.insertCell().innerHTML = `<input type="number" value="${item.cantidadSolicitada}" onchange="calcularPendiente(this)">`;
-                row.insertCell().innerHTML = `<input type="number">`;
-                row.insertCell().innerHTML = `<input type="number" value="${item.cantidadEntregada}" onchange="calcularPendiente(this)">`;
-                row.insertCell().innerHTML = `<input type="number">`;
-                row.insertCell().innerHTML = `<input type="number" value="${item.cantidadPendiente}" readonly>`;
-                row.insertCell().innerHTML = `<input type="number" value="0" onchange="calcularPendiente(this)">`;
-                row.insertCell().innerHTML = `<input type="number">`;
-                row.insertCell().innerHTML = `<input type="number">`;
-                row.insertCell().innerHTML = `<input type="number" value="0" readonly>`;
+        // Función para cargar requisiciones recientes
+        function loadRecentRequisitions() {
+            const container = document.getElementById('recentRequisitions');
+            if (!container) return;
+
+            // Mostrar solo las 3 más recientes
+            const recent = historyData.slice(0, 3);
+            // Invertir el orden para mostrar las más recientes primero
+            recent.reverse();
+
+            container.innerHTML = recent.map(item => `
+                <div class="recent-item">
+                    <div class="recent-id">${item.id}</div>
+                    <div class="recent-project">${item.proyecto}</div>
+                    <div class="recent-date">${item.fecha}</div>
+                    <div class="recent-status ${item.estado}">
+                        ${item.estado === 'approved' ? 'Aprobado' :
+                            item.estado === 'pending' ? 'Pendiente' : 'Rechazado'}
+                    </div>
+                    <button class="btn btn-sm btn-view" data-id="${item.id}">Ver</button>
+                </div>
+            `).join('');
+
+            // Asignar eventos a los botones de ver
+            document.querySelectorAll('.btn-view').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    viewRequisicion(this.getAttribute('data-id'));
+                });
             });
         }
 
+        // ================================================================================
+        // PANTALLA CREAR REQUISICION
+        // ================================================================================
 
-        function calcularPendiente(input) {
-            const row = input.parentNode.parentNode;
-            const cantidadSolicitada = parseFloat(row.cells[4].querySelector('input').value) || 0;
-            const cantidadEntregadaAlmacen = parseFloat(row.cells[6].querySelector('input').value) || 0;
-            const cantidadEntregadaCompras = parseFloat(row.cells[9].querySelector('input').value) || 0;
-            const cantidadPendiente = cantidadSolicitada - (cantidadEntregadaAlmacen + cantidadEntregadaCompras);
-            row.cells[8].querySelector('input').value = cantidadPendiente;
+        // Función para mostrar el formulario de creación
+        function showCreateForm() {
+            const welcomeScreen = document.querySelector('.welcome-screen');
+            const createSection = document.getElementById('createRequisicionSection');
+
+            if (welcomeScreen && createSection) {
+                welcomeScreen.style.display = 'none';
+                createSection.style.display = 'block';
+                createSection.innerHTML = `
+                    <div class="create-header">
+                        <button class="btn btn-back" id="backToMenu">
+                            <i class="fas fa-arrow-left"></i> Volver al menú
+                        </button>
+                    </div>
+
+                    <div class="requisicion-form">
+                        <div class="form-header">
+                            <h3>SISTEMA INTEGRADO DE GESTIÓN</h3>
+                            <h4>REQUISICIÓN DE BIENES Y/O SERVICIOS</h4>
+                            <div class="form-header-details">
+                                <span>CÓDIGO: CP-RQ-01</span>
+                                <span>FECHA: <span id="currentDate"></span></span>
+                                <span>VERSIÓN: 1</span>
+                                <span>PÁGINA: 1 DE 1</span>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="solicitante">SOLICITA:</label>
+                                <input type="text" id="solicitante" name="solicitante" placeholder="Ingrese el solicitante">
+                            </div>
+                            <div class="form-group">
+                                <label for="proyecto">NOMBRE PROYECTO:</label>
+                                <input type="text" id="proyecto" name="proyecto" placeholder="Ingrese el nombre del proyecto">
+                            </div>
+                            <div class="form-group">
+                                <label for="numeroOrden">NÚMERO DE ORDEN:</label>
+                                <input type="text" id="numeroOrden" name="numeroOrden" placeholder="Ingrese el número de orden">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="numeroRequisicion">No. DE REQUISICIÓN:</label>
+                                <input type="text" id="numeroRequisicion" name="numeroRequisicion" placeholder="Ingrese el número de requisición">
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaRequisicion">FECHA DE REQUISICIÓN:</label>
+                                <input type="date" id="fechaRequisicion" name="fechaRequisicion">
+                            </div>
+                        </div>
+
+                        <div class="table-container">
+                            <table class="items-table">
+                                <thead>
+                                    <tr>
+                                        <th>ITEM</th>
+                                        <th>DESCRIPCIÓN</th>
+                                        <th>UNIDAD</th>
+                                        <th>FECHA NECESIDAD</th>
+                                        <th>CANT. SOLICITADA</th>
+                                        <th>VALOR UNITARIO</th>
+                                        <th>CANT. ENTREGADA (ALMACÉN)</th>
+                                        <th>VALOR ENTREGADO (ALMACÉN)</th>
+                                        <th>CANT. PENDIENTE</th>
+                                        <th>CANT. ENTREGADA (COMPRAS)</th>
+                                        <th>VALOR ENTREGADO (COMPRAS)</th>
+                                        <th>DEVOLUCIÓN</th>
+                                        <th>VALOR DEVOLUCIÓN</th>
+                                        <th>ACCIÓN</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="requisicionItems">
+                                    <!-- Los items se cargarán dinámicamente aquí -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6">TOTALES</td>
+                                        <td id="totalEntregadoAlmacen">0</td>
+                                        <td id="totalValorAlmacen">0</td>
+                                        <td></td>
+                                        <td id="totalEntregadoCompras">0</td>
+                                        <td id="totalValorCompras">0</td>
+                                        <td></td>
+                                        <td id="totalValorDevolucion">0</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="table-actions">
+                                <button class="btn btn-sm btn-success" id="addItemBtn">
+                                    <i class="fas fa-plus"></i> Agregar Item
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="observaciones">OBSERVACIONES / RELACIÓN DE ANEXOS:</label>
+                            <textarea id="observaciones" name="observaciones" placeholder="Ingrese las observaciones"></textarea>
+                        </div>
+
+                        <div class="signature-section">
+                            <div class="signature-box">
+                                <label>Solicitó:</label>
+                                <input type="text" class="signature-field" id="solicitoNombre" placeholder="Ingrese el nombre">
+                                <div class="signature-line"></div>
+                                <div class="signature-position">INGENIERO DE PROYECTOS</div>
+                            </div>
+
+                            <div class="signature-box">
+                                <label>Aprobó:</label>
+                                <input type="text" class="signature-field" id="aproboNombre" placeholder="Ingrese el nombre">
+                                <div class="signature-line"></div>
+                                <div class="signature-position">SUBGERENTE DE PROYECTOS</div>
+                            </div>
+
+                            <div class="signature-box">
+                                <label>Recibe:</label>
+                                <input type="text" class="signature-field" id="recibeNombre" placeholder="Ingrese el nombre">
+                                <div class="signature-line"></div>
+                                <div class="signature-position">ANALISTA DE COMPRAS</div>
+                            </div>
+
+                            <div class="signature-box">
+                                <label>Aprobó:</label>
+                                <input type="text" class="signature-field" id="aproboGerenteNombre" placeholder="Ingrese el nombre">
+                                <div class="signature-line"></div>
+                                <div class="signature-position">GERENTE</div>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary" id="cancelRequisicionBtn">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                            <button class="btn btn-success" id="saveRequisicionBtn">
+                                <i class="fas fa-check"></i> Guardar
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // Inicializar el formulario
+                initializeRequisicionForm();
+            }
         }
+
+        // ================================================================================
+        // PANTALLA HISTORIAL DE REQUISICIONES
+        // ================================================================================
+
+        // Función para mostrar la sección de historial
+        function showHistorySection() {
+            const welcomeScreen = document.querySelector('.welcome-screen');
+            const historySection = document.getElementById('historySection');
+
+            if (welcomeScreen && historySection) {
+                welcomeScreen.style.display = 'none';
+                historySection.style.display = 'block';
+                historySection.innerHTML = `
+                    <div class="history-header">
+                        <button class="btn btn-back" id="backToMenuFromHistory">
+                            <i class="fas fa-arrow-left"></i> Volver al menú
+                        </button>
+                        <h2><i class="fas fa-history"></i> Historial de Requisiciones</h2>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" id="exportHistoryBtn">
+                                <i class="fas fa-file-export"></i> Exportar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="history-container">
+                        <div class="history-filters">
+                            <div class="filter-group">
+                                <label for="filterDateFrom">Desde:</label>
+                                <input type="date" id="filterDateFrom" name="filterDateFrom">
+                            </div>
+                            <div class="filter-group">
+                                <label for="filterDateTo">Hasta:</label>
+                                <input type="date" id="filterDateTo" name="filterDateTo">
+                            </div>
+                            <div class="filter-group">
+                                <label for="filterStatus">Estado:</label>
+                                <select id="filterStatus" name="filterStatus">
+                                    <option value="all">Todos</option>
+                                    <option value="pending">Pendiente</option>
+                                    <option value="approved">Aprobado</option>
+                                    <option value="rejected">Rechazado</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="filterProject">Proyecto:</label>
+                                <input type="text" id="filterProject" name="filterProject" placeholder="Buscar proyecto...">
+                            </div>
+                            <button class="btn btn-primary" id="filterHistoryBtn">
+                                <i class="fas fa-filter"></i> Filtrar
+                            </button>
+                            <button class="btn btn-secondary" id="resetFiltersBtn">
+                                <i class="fas fa-undo"></i> Limpiar
+                            </button>
+                        </div>
+
+                        <div class="history-stats">
+                            <div class="stat-card total">
+                                <h4>Total</h4>
+                                <p>${historyData.length}</p>
+                            </div>
+                            <div class="stat-card approved">
+                                <h4>Aprobadas</h4>
+                                <p>${historyData.filter(item => item.estado === 'approved').length}</p>
+                            </div>
+                            <div class="stat-card pending">
+                                <h4>Pendientes</h4>
+                                <p>${historyData.filter(item => item.estado === 'pending').length}</p>
+                            </div>
+                            <div class="stat-card rejected">
+                                <h4>Rechazadas</h4>
+                                <p>${historyData.filter(item => item.estado === 'rejected').length}</p>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="history-table">
+                                <thead>
+                                    <tr>
+                                        <th>N° REQUISICIÓN</th>
+                                        <th>FECHA</th>
+                                        <th>SOLICITANTE</th>
+                                        <th>PROYECTO</th>
+                                        <th>ITEMS</th>
+                                        <th>ESTADO</th>
+                                        <th>ACCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historyTableBody">
+                                    <!-- El historial se cargará dinámicamente aquí -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="pagination-controls">
+                            <button class="btn btn-secondary" disabled>
+                                <i class="fas fa-chevron-left"></i> Anterior
+                            </button>
+                            <span>Página 1 de 1</span>
+                            <button class="btn btn-secondary" disabled>
+                                Siguiente <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // Cargar datos del historial
+                loadHistoryData();
+
+                // Asignar eventos
+                document.getElementById('backToMenuFromHistory')?.addEventListener('click', backToMenu);
+                document.getElementById('exportHistoryBtn')?.addEventListener('click', exportHistory);
+                document.getElementById('filterHistoryBtn')?.addEventListener('click', filterHistory);
+                document.getElementById('resetFiltersBtn')?.addEventListener('click', resetFilters);
+            }
+        }
+
+
+        // ================================================================================
+        // FUNCIONES GENERICAS
+        // ================================================================================
+
+        // Función para volver al menú principal
+        function backToMenu() {
+            const welcomeScreen = document.querySelector('.welcome-screen');
+            const createSection = document.getElementById('createRequisicionSection');
+            const historySection = document.getElementById('historySection');
+
+            if (welcomeScreen && createSection && historySection) {
+                welcomeScreen.style.display = 'block';
+                createSection.style.display = 'none';
+                historySection.style.display = 'none';
+                //Recargar las requisiciones recientes
+                loadRecentRequisitions();
+            }
+        }
+
+        // Función para inicializar el formulario de requisición
+        function initializeRequisicionForm() {
+            // Configurar fecha actual
+            const currentDateElement = document.getElementById('currentDate');
+            if (currentDateElement) {
+                currentDateElement.textContent = new Date().toISOString().split('T')[0];
+            }
+
+            // Cargar items iniciales (basados en el Excel)
+            loadInitialItems();
+
+            // Asignar eventos
+            document.getElementById('backToMenu')?.addEventListener('click', backToMenu);
+            document.getElementById('addItemBtn')?.addEventListener('click', addNewItem);
+            document.getElementById('saveRequisicionBtn')?.addEventListener('click', saveRequisition);
+            document.getElementById('cancelRequisicionBtn')?.addEventListener('click', cancelRequisition);
+
+            // Calcular totales iniciales
+            calculateTotals();
+        }
+
+        // ================================================================================
+        // FUNCIONES DEL FORMULARIO DE REQUISICIÓN
+        // ================================================================================
+
+        // Función para cargar items iniciales (basados en el Excel)
+        function loadInitialItems() {
+            const tbody = document.getElementById('requisicionItems');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+        }
+
+        // Función para agregar nuevo item con datos específicos
+        function addNewItemWithData(itemNumber, descripcion, unidad, cantidadSolicitada, cantidadEntregadaCompras) {
+            const tbody = document.getElementById('requisicionItems');
+            if (!tbody) return;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${itemNumber}</td>
+                <td><input type="text" value="${descripcion}" class="form-control-sm"></td>
+                <td><input type="text" value="${unidad}" class="form-control-sm"></td>
+                <td><input type="date" class="form-control-sm"></td>
+                <td><input type="text" value="${cantidadSolicitada}" class="form-control-sm" onchange="calculateRow(this)"></td>
+                <td><input type="number" class="form-control-sm" onchange="calculateRow(this)"></td>
+                <td><input type="number" class="form-control-sm" onchange="calculateRow(this)"></td>
+                <td><input type="number" class="form-control-sm" onchange="calculateRow(this)"></td>
+                <td><input type="text" class="form-control-sm" readonly></td>
+                <td><input type="text" value="${cantidadEntregadaCompras}" class="form-control-sm" onchange="calculateRow(this)"></td>
+                <td><input type="number" class="form-control-sm" onchange="calculateRow(this)"></td>
+                <td><input type="number" class="form-control-sm" onchange="calculateRow(this)"></td>
+                <td><input type="number" class="form-control-sm" readonly></td>
+                <td>
+                    <button class="btn btn-icon btn-danger btn-sm remove-item">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+
+            // Asignar evento al botón de eliminar
+            row.querySelector('.remove-item').addEventListener('click', function () {
+                removeItem(row);
+            });
+
+            // Calcular valores iniciales de la fila
+            calculateRow(row.querySelector('input'));
+        }
+
+        // Función para calcular valores de una fila
+        function calculateRow(input) {
+            const row = input.closest('tr');
+            if (!row) return;
+
+            const cells = row.cells;
+
+            // Obtener valores
+            const cantidadSolicitada = parseFloat(cells[4].querySelector('input').value) || 0;
+            const cantidadEntregadaAlmacen = parseFloat(cells[6].querySelector('input').value) || 0;
+            const cantidadEntregadaCompras = parseFloat(cells[9].querySelector('input').value) || 0;
+            const valorUnitario = parseFloat(cells[5].querySelector('input').value) || 0;
+            const valorEntregadoAlmacen = parseFloat(cells[7].querySelector('input').value) || 0;
+            const valorEntregadoCompras = parseFloat(cells[10].querySelector('input').value) || 0;
+            const devolucion = parseFloat(cells[11].querySelector('input').value) || 0;
+
+            // Calcular pendiente
+            const cantidadPendiente = cantidadSolicitada - (cantidadEntregadaAlmacen + cantidadEntregadaCompras);
+            cells[8].querySelector('input').value = cantidadPendiente >= 0 ? cantidadPendiente : 0;
+
+            // Calcular valor de devolución (valor unitario * devolución)
+            const valorDevolucion = valorUnitario * devolucion;
+            cells[12].querySelector('input').value = valorDevolucion.toFixed(2);
+
+            // Recalcular totales
+            calculateTotals();
+        }
+
+
+        // Función para calcular totales
+        function calculateTotals() {
+            const rows = document.querySelectorAll('#requisicionItems tr');
+            let totalEntregadoAlmacen = 0;
+            let totalValorAlmacen = 0;
+            let totalEntregadoCompras = 0;
+            let totalValorCompras = 0;
+            let totalValorDevolucion = 0;
+
+            rows.forEach(row => {
+                const cells = row.cells;
+
+                totalEntregadoAlmacen += parseFloat(cells[6].querySelector('input').value) || 0;
+                totalValorAlmacen += parseFloat(cells[7].querySelector('input').value) || 0;
+                totalEntregadoCompras += parseFloat(cells[9].querySelector('input').value) || 0;
+                totalValorCompras += parseFloat(cells[10].querySelector('input').value) || 0;
+                totalValorDevolucion += parseFloat(cells[12].querySelector('input').value) || 0;
+            });
+
+            // Actualizar totales en el footer
+            document.getElementById('totalEntregadoAlmacen').textContent = totalEntregadoAlmacen;
+            document.getElementById('totalValorAlmacen').textContent = totalValorAlmacen.toFixed(2);
+            document.getElementById('totalEntregadoCompras').textContent = totalEntregadoCompras;
+            document.getElementById('totalValorCompras').textContent = totalValorCompras.toFixed(2);
+            document.getElementById('totalValorDevolucion').textContent = totalValorDevolucion.toFixed(2);
+        }
+
+        // Función para agregar nuevo item vacío
+        function addNewItem() {
+            const tbody = document.getElementById('requisicionItems');
+            if (!tbody) return;
+
+            const newItemNumber = tbody.children.length + 1;
+            addNewItemWithData(newItemNumber, "", "", "", ""); // Todos los campos en blanco
+        }
+
+        // Función para eliminar un item
+        function removeItem(row) {
+            row.remove();
+            renumberItems();
+            calculateTotals();
+        }
+
+        // Función para re-enumerar los items después de eliminar uno
+        function renumberItems() {
+            const rows = document.querySelectorAll('#requisicionItems tr');
+            rows.forEach((row, index) => {
+                row.cells[0].textContent = index + 1;
+            });
+        }
+
+        // Función para guardar la requisición
+        function saveRequisition() {
+            // Obtener los valores del formulario
+            const solicitante = document.getElementById('solicitante').value;
+            const proyecto = document.getElementById('proyecto').value;
+            const numeroOrden = document.getElementById('numeroOrden').value;
+            const numeroRequisicion = document.getElementById('numeroRequisicion').value;
+            const fechaRequisicion = document.getElementById('fechaRequisicion').value;
+            const observaciones = document.getElementById('observaciones').value;
+            const solicitoNombre = document.getElementById('solicitoNombre').value;
+            const aproboNombre = document.getElementById('aproboNombre').value;
+            const recibeNombre = document.getElementById('recibeNombre').value;
+            const aproboGerenteNombre = document.getElementById('aproboGerenteNombre').value;
+
+            // Obtener los items de la tabla
+            const items = [];
+            const rows = document.querySelectorAll('#requisicionItems tr');
+            rows.forEach(row => {
+                const cells = row.cells;
+                items.push({
+                    descripcion: cells[1].querySelector('input').value,
+                    unidad: cells[2].querySelector('input').value,
+                    fechaNecesidad: cells[3].querySelector('input').value,
+                    cantidadSolicitada: cells[4].querySelector('input').value,
+                    valorUnitario: cells[5].querySelector('input').value,
+                    cantidadEntregadaAlmacen: cells[6].querySelector('input').value,
+                    valorEntregadoAlmacen: cells[7].querySelector('input').value,
+                    cantidadPendiente: cells[8].querySelector('input').value,
+                    cantidadEntregadaCompras: cells[9].querySelector('input').value,
+                    valorEntregadoCompras: cells[10].querySelector('input').value,
+                    devolucion: cells[11].querySelector('input').value,
+                    valorDevolucion: cells[12].querySelector('input').value
+                });
+            });
+
+            // Crear el objeto de la requisición
+            const nuevaRequisicion = {
+                id: numeroRequisicion,
+                fecha: fechaRequisicion,
+                solicitante: solicitante,
+                proyecto: proyecto,
+                items: items.length,
+                estado: 'pending', // Por defecto, al crearla estará pendiente
+                numeroOrden: numeroOrden,
+                observaciones: observaciones,
+                solicitoNombre: solicitoNombre,
+                aproboNombre: aproboNombre,
+                recibeNombre: recibeNombre,
+                aproboGerenteNombre: aproboGerenteNombre,
+                detalleItems: items // Guardar el array de items
+            };
+
+            // Agregar la nueva requisición al historial
+            historyData.unshift(nuevaRequisicion); // Agrega al inicio para que sea la más reciente
+
+            // Actualizar la pantalla de Requisiciones Recientes
+            loadRecentRequisitions();
+
+            // Mostrar mensaje de éxito
+            alert('Requisición guardada correctamente con ID: ' + numeroRequisicion);
+
+            // Volver al menú principal
+            backToMenu();
+        }
+
+
+        // Función para cancelar la requisición
+        function cancelRequisition() {
+            alert('Requisición cancelada');
+            // Lógica para cancelar
+            backToMenu();
+        }
+
+        // ================================================================================
+        // FUNCIONES DEL HISTORIAL
+        // ================================================================================
+
+        // Función para cargar los datos del historial en la tabla
+        function loadHistoryData() {
+            const tbody = document.getElementById('historyTableBody');
+            if (!tbody) return;
+
+            tbody.innerHTML = ''; // Limpiar la tabla
+
+            historyData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.id}</td>
+                    <td>${item.fecha}</td>
+                    <td>${item.solicitante}</td>
+                    <td>${item.proyecto}</td>
+                    <td>${item.items}</td>
+                    <td class="${item.estado}">${item.estado}</td>
+                    <td>
+                        <button class="btn btn-sm btn-edit-history" data-index="${index}" title="Editar Estado"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-export-history" data-id="${item.id}" title="Descargar Excel"><i class="fas fa-file-excel"></i></button>
+                        <div id="statusContainer_${index}" style="display: inline-block;">
+                           <span id="statusText_${index}">${getEstadoTexto(item.estado)}</span>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+
+                // Asignar evento al botón de editar
+                row.querySelector('.btn-edit-history').addEventListener('click', function () {
+                    const index = this.getAttribute('data-index');
+                    toggleStatusEdit(index);
+                });
+
+                // Asignar evento al botón de exportar
+                row.querySelector('.btn-export-history').addEventListener('click', function () {
+                    exportRequisicionToExcel(this.getAttribute('data-id'));
+                });
+
+            });
+        }
+
+        // Function to get the text representation of the status
+        function getEstadoTexto(estado) {
+            switch (estado) {
+                case 'pending':
+                    return 'Pendiente';
+                case 'approved':
+                    return 'Aprobado';
+                case 'rejected':
+                    return 'Rechazado';
+                default:
+                    return 'Desconocido';
+            }
+        }
+
+        // Función para alternar la edición del estado
+        function toggleStatusEdit(index) {
+            const statusContainer = document.getElementById(`statusContainer_${index}`);
+            const item = historyData[index];
+
+            if (statusContainer.innerHTML.includes('<select')) {
+                // Si ya está en modo edición, volver a mostrar solo el texto
+                statusContainer.innerHTML = `<span id="statusText_${index}">${getEstadoTexto(item.estado)}</span>`;
+            } else {
+                // Si no está en modo edición, mostrar el select
+                statusContainer.innerHTML = `
+                    <select class="form-control-sm change-status" data-index="${index}" onchange="changeRequisitionStatus(this)">
+                        <option value="pending" ${item.estado === 'pending' ? 'selected' : ''}>Pendiente</option>
+                        <option value="approved" ${item.estado === 'approved' ? 'selected' : ''}>Aprobado</option>
+                        <option value="rejected" ${item.estado === 'rejected' ? 'selected' : ''}>Rechazado</option>
+                    </select>
+                `;
+            }
+        }
+
+        // Function para cambiar el estado de la requisición
+        function changeRequisitionStatus(selectElement) {
+            const index = selectElement.getAttribute('data-index');
+            const newStatus = selectElement.value;
+            historyData[index].estado = newStatus;
+
+            // Actualizar el texto del estado
+            const statusContainer = document.getElementById(`statusContainer_${index}`);
+            statusContainer.innerHTML = `<span id="statusText_${index}">${getEstadoTexto(newStatus)}</span>`;
+
+            // Desactivar el modo edición
+            //toggleStatusEdit(index); //Quitar para que no se oculte
+
+            loadHistoryData(); // Recargar la tabla para reflejar el cambio
+            loadRecentRequisitions(); //Actualizar las requisiciones recientes
+        }
+
+        // Función para exportar a Excel
+        function exportRequisicionToExcel(requisicionId) {
+            const requisicion = historyData.find(item => item.id === requisicionId);
+
+            if (!requisicion) {
+                alert('Requisición no encontrada');
+                return;
+            }
+
+            // Crear un libro de Excel
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet([requisicion]);  // Convertir el objeto de requisición a una hoja
+
+            // Agregar la hoja al libro
+            XLSX.utils.book_append_sheet(wb, ws, "Requisicion");
+
+            // Generar el archivo Excel y descargarlo
+            XLSX.writeFile(wb, `Requisicion_${requisicionId}.xlsx`);
+        }
+
+         // Función para ver detalles de una requisición en el historial
+        function viewRequisicion(requisicionId) {
+            // Buscar la requisición en el historial por su ID
+            const requisicion = historyData.find(item => item.id === requisicionId);
+
+            if (requisicion) {
+                // Construir el contenido detallado de la requisición
+                let detallesHTML = `
+                    <h3>Detalles de la Requisición ${requisicion.id}</h3>
+                    <p><strong>Fecha:</strong> ${requisicion.fecha}</p>
+                    <p><strong>Solicitante:</strong> ${requisicion.solicitante}</p>
+                    <p><strong>Proyecto:</strong> ${requisicion.proyecto}</p>
+                    <p><strong>Número de Orden:</strong> ${requisicion.numeroOrden || 'No especificado'}</p>
+                    <p><strong>Observaciones:</strong> ${requisicion.observaciones || 'Ninguna'}</p>
+                    <p><strong>Solicitó:</strong> ${requisicion.solicitoNombre || 'No especificado'}</p>
+                    <p><strong>Aprobó:</strong> ${requisicion.aproboNombre || 'No especificado'}</p>
+                    <p><strong>Recibe:</strong> ${requisicion.recibeNombre || 'No especificado'}</p>
+                    <p><strong>Aprobó (Gerente):</strong> ${requisicion.aproboGerenteNombre || 'No especificado'}</p>
+                    <h4>Items:</h4>
+                    <ul>
+                `;
+
+                // Iterar sobre los items de la requisición y agregarlos al HTML
+                requisicion.detalleItems.forEach(item => {
+                    detallesHTML += `
+                        <li>
+                            <strong>Descripción:</strong> ${item.descripcion},
+                            <strong>Unidad:</strong> ${item.unidad},
+                            <strong>Fecha Necesidad:</strong> ${item.fechaNecesidad},
+                            <strong>Cantidad Solicitada:</strong> ${item.cantidadSolicitada},
+                            <strong>Valor Unitario:</strong> ${item.valorUnitario},
+                            <strong>Cantidad Entregada (Almacén):</strong> ${item.cantidadEntregadaAlmacen},
+                            <strong>Valor Entregado (Almacén):</strong> ${item.valorEntregadoAlmacen},
+                            <strong>Cantidad Pendiente:</strong> ${item.cantidadPendiente},
+                            <strong>Cantidad Entregada (Compras):</strong> ${item.cantidadEntregadaCompras},
+                            <strong>Valor Entregado (Compras):</strong> ${item.valorEntregadoCompras},
+                            <strong>Devolución:</strong> ${item.devolucion},
+                            <strong>Valor Devolución:</strong> ${item.valorDevolucion}
+                        </li>
+                    `;
+                });
+
+                detallesHTML += `</ul>`;
+
+                // Mostrar los detalles en una ventana emergente o un modal
+                mostrarModal(detallesHTML);
+            } else {
+                alert(`No se encontraron detalles para la requisición con ID: ${requisicionId}`);
+            }
+        }
+
+        // Función para mostrar un modal con los detalles de la requisición
+        function mostrarModal(contenido) {
+            // Crear el modal dinámicamente
+            const modal = document.createElement('div');
+            modal.classList.add('modal');
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-button">×</span>
+                    ${contenido}
+                </div>
+            `;
+
+            // Agregar el modal al DOM
+            document.body.appendChild(modal);
+
+            // Mostrar el modal
+            modal.style.display = 'block';
+
+            // Asignar evento al botón de cierre
+            modal.querySelector('.close-button').addEventListener('click', () => {
+                modal.style.display = 'none';
+                document.body.removeChild(modal); // Eliminar el modal del DOM
+            });
+
+             // Cerrar el modal al hacer clic fuera del contenido
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.removeChild(modal); // Eliminar el modal del DOM
+                }
+            });
+        }
+
+        // Función para filtrar el historial
+        function filterHistory() {
+            alert('Filtrando historial...');
+            // Lógica para filtrar
+        }
+
+        // Función para guardar borrador
+        function saveDraft() {
+            alert('Borrador guardado correctamente');
+            // Lógica para guardar borrador
+        }
+
+        // Función para exportar historial
+        function exportHistory() {
+            alert('Exportando historial...');
+            // Lógica para exportar
+        }
+
+        // Función para resetear filtros
+        function resetFilters() {
+            document.getElementById('filterDateFrom').value = '';
+            document.getElementById('filterDateTo').value = '';
+            document.getElementById('filterStatus').value = 'all';
+            document.getElementById('filterProject').value = '';
+            // Volver a cargar datos sin filtros
+            loadHistoryData();
+        }
+
+        // ================================================================================
+        // EVENTOS
+        // ================================================================================
+
+        // Asignar evento al elemento de la sidebar
+        document.addEventListener('DOMContentLoaded', function () {
+            const requisicionLink = document.getElementById('requisicionLink');
+
+            if (requisicionLink) {
+                requisicionLink.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    loadRequisicionModule();
+                });
+            }
+
+            // Asignar evento para mostrar/ocultar submenú
+            const controlInventarioLink = document.getElementById('controlInventarioLink');
+            if (controlInventarioLink) {
+                controlInventarioLink.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const submenu = this.nextElementSibling;
+                    if (submenu) {
+                        submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+                    }
+                });
+            }
+        });
+
 
         // Asignar evento al enlace de Requisición
         document.getElementById('requisicionLink').addEventListener('click', function (event) {
             event.preventDefault();
             clearDynamicContent();
-            loadRequisicion();
+            loadRequisicionModule();
         });
+        
+
+        // ================================================================================
+        // PROVEDORES
+        // ================================================================================
 
         // Datos de ejemplo para Proveedores
         const proveedoresData = [
@@ -1790,173 +2255,370 @@
         });
 
 
-        
-        // Datos de ejemplo para Almacenes (temporal - luego vendrá de Django)
+        // ================================================================================
+        // ALMACEN
+        // ================================================================================
+
+        // Datos de almacenes (simulados)
         const almacenData = {
-            bogota: {
-                id: "BOG001",
-                nombre: "Almacén Bogotá",
-                ubicacion: "Calle Falsa 123, Bogotá",
-                encargado: "Sofía Rodriguez",
-                contacto: "sofia.rodriguez@almacenbogota.com",
-                productos: [
-                    { codigo: "TUB001", descripcion: "Tubo PVC 4'", cantidad: 200 },
-                    { codigo: "TUB002", descripcion: "Tubo Acero 2'", cantidad: 100 }
-                ]
-            },
-            cali: {
-                id: "CAL001",
-                nombre: "Almacén Cali",
-                ubicacion: "Avenida Siempre Viva 456, Cali",
-                encargado: "Carlos Lopez",
-                contacto: "carlos.lopez@almacencali.com",
-                productos: [
-                    { codigo: "TUB003", descripcion: "Tubo Cobre 1'", cantidad: 150 },
-                    { codigo: "TUB004", descripcion: "Tubo Galvanizado 2'", cantidad: 80 }
-                ]
-            }
+        bogota: {
+            id: "BOG001",
+            nombre: "Almacén Bogotá",
+            ubicacion: "Calle 12b Sur 52 A 77, Bogotá",
+            encargado: "Carolina Pérez",
+            contacto: "ingegasesyredes@gmail.com",
+            productos: []
+        },
+        cali: {
+            id: "CAL001",
+            nombre: "Almacén Cali",
+            ubicacion: "Avenida Siempre Viva 456, Cali",
+            encargado: "Carlos Lopez",
+            contacto: "carlos.lopez@almacencali.com",
+            productos: []
+        }
         };
 
-        // Función para mostrar la pantalla principal (Bogotá y Cali)
+        // Cargar pantalla principal
         function loadPantallaPrincipal() {
-            let principalHTML = `
-                <h2>Almacenes</h2>
-                <div class="almacen-container">
-                    <div class="almacen-card" onclick="openAlmacenModal('BOG001')">
-                        <h3>${almacenData.bogota.nombre}</h3>
-                        <p>Ubicación: ${almacenData.bogota.ubicacion}</p>
-                    </div>
-                    <div class="almacen-card" onclick="openAlmacenModal('CAL001')">
-                        <h3>${almacenData.cali.nombre}</h3>
-                        <p>Ubicación: ${almacenData.cali.ubicacion}</p>
-                    </div>
+        const principalHTML = `
+            <div class="alm-cards-view">
+            <div class="alm-header-section">
+                <h1 class="alm-main-title">
+                <i class="fas fa-warehouse"></i> Gestión de Almacenes
+                </h1>
+                <p class="alm-subtitle">Seleccione un almacén para ver su inventario</p>
+            </div>
+            
+            <div class="alm-card-container">
+                <div class="alm-card alm-card-bogota" onclick="openAlmacenModal('BOG001')">
+                <div class="alm-card-icon">
+                    <i class="fas fa-building"></i>
                 </div>
-            `;
-
-            document.getElementById('dynamicContent').innerHTML = principalHTML;
-        }
-
-        // Función para cargar los detalles de un almacén específico
-        function loadAlmacenDetails(almacenId) {
-            const almacen = almacenData[Object.keys(almacenData).find(key => almacenData[key].id === almacenId)];
-
-            if (!almacen) {
-                return "<p>Almacén no encontrado.</p>";
-            }
-
-            let almacenDetailsHTML = `
-                <div class="details">
-                    <h2>${almacen.nombre}</h2>
-                    <p><strong>Ubicación:</strong> ${almacen.ubicacion}</p>
-                    <p><strong>Encargado:</strong> ${almacen.encargado} (<a href="mailto:${almacen.contacto}">${almacen.contacto}</a>)</p>
+                <h3 class="alm-card-title">Almacén Bogotá</h3>
+                <div class="alm-card-details">
+                    <p><i class="fas fa-map-marker-alt"></i> ${almacenData.bogota.ubicacion}</p>
+                    <p><i class="fas fa-user-tie"></i> ${almacenData.bogota.encargado}</p>
                 </div>
-
-                <div class="inventory">
-                    <h3>Inventario</h3>
-                    ${generarTablaProductos(almacen.productos, almacen.id)}
+                <div class="alm-card-footer">
+                    <span class="alm-badge">${almacenData.bogota.productos.length} productos</span>
                 </div>
-            `;
-
-            return almacenDetailsHTML;
-        }
-
-        // Función para generar la tabla de productos
-        function generarTablaProductos(productos, almacenId) {
-            if (!productos || productos.length === 0) {
-                return "<p>No hay productos en este almacén.</p>";
-            }
-
-            let tableContent = `
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Descripción</th>
-                                <th>Cantidad</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${productos.map((producto, index) => `
-                                <tr>
-                                    <td><input type="text" value="${producto.codigo}" id="codigo-${almacenId}-${index}"></td>
-                                    <td>${producto.descripcion}</td>
-                                    <td>${producto.cantidad}</td>
-                                    <td>
-                                        <button onclick="agregarCantidad('${almacenId}', '${index}')">Agregar</button>
-                                        <button onclick="quitarCantidad('${almacenId}', '${index}')">Quitar</button>
-
-                                        <button onclick="eliminarProducto('${almacenId}', '${index}')">Eliminar</button>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-
                 </div>
-            `;
-
-            return tableContent;
+                
+                <div class="alm-card alm-card-cali" onclick="openAlmacenModal('CAL001')">
+                <div class="alm-card-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h3 class="alm-card-title">Almacén Cali</h3>
+                <div class="alm-card-details">
+                    <p><i class="fas fa-map-marker-alt"></i> ${almacenData.cali.ubicacion}</p>
+                    <p><i class="fas fa-user-tie"></i> ${almacenData.cali.encargado}</p>
+                </div>
+                <div class="alm-card-footer">
+                    <span class="alm-badge">${almacenData.cali.productos.length} productos</span>
+                </div>
+                </div>
+            </div>
+            </div>
+        `;
+        
+        document.getElementById('dynamicContent').innerHTML = principalHTML;
         }
 
-        //Funciones para abrir los modales
-
-        function abrirModalAgregarProducto(almacenId) {
-            // Implementar la lógica para abrir el modal de agregar producto
-            // Puedes usar un modal de Bootstrap, un div personalizado, etc.
-            alert(`Abrir modal para agregar producto al almacén con ID: ${almacenId}`);
-        }
-
-        function abrirModalEditarProducto(productoId) {
-            alert(`Abrir modal para abrir modal de editar producto con id: ${productoId}`);
-        }
-
-        // Funciones para las acciones de los productos (simuladas)
-        function agregarCantidad(almacenId, productoIndex) {
-            alert(`Función para agregar cantidad al producto ${productoIndex} en el almacén ${almacenId}`);
-            // Implementar la lógica para agregar cantidad
-        }
-
-        function quitarCantidad(almacenId, productoIndex) {
-            alert(`Función para quitar cantidad al producto ${productoIndex} en el almacén ${almacenId}`);
-            // Implementar la lógica para quitar cantidad
-        }
-         function guardarProducto(almacenId, productoIndex) {
-            alert(`Función para guardar cantidad al producto ${productoIndex} en el almacén ${almacenId}`);
-            // Implementar la lógica para guardar cantidad
-        }
-
-        function eliminarProducto(almacenId, productoIndex) {
-            alert(`Función para eliminar el producto ${productoIndex} en el almacén ${almacenId}`);
-            // Implementar la lógica para eliminar el producto
-        }
-
-
-        // Modal functionality
-
+        // Abrir modal de almacén
         function openAlmacenModal(almacenId) {
-            const modalContent = document.getElementById("modalContent");
-            modalContent.innerHTML = loadAlmacenDetails(almacenId);
-            $('#almacenModal').modal('show');
+        const modal = document.getElementById('almacenModal');
+        const modalBody = document.getElementById('almacenModalBody');
+        
+        const almacen = Object.values(almacenData).find(a => a.id === almacenId);
+        if (!almacen) return;
+        
+        modalBody.innerHTML = generarContenidoModal(almacen);
+        modal.classList.add('show');
+        document.body.classList.add('alm-modal-open');
         }
 
+        // Generar contenido del modal
+        function generarContenidoModal(almacen) {
+        return `
+            <div class="alm-modal-section">
+            <div class="alm-info-header">
+                <div class="alm-info-icon">
+                <i class="fas fa-warehouse"></i>
+                </div>
+                <div>
+                <h3 class="alm-section-title">${almacen.nombre}</h3>
+                <p class="alm-info-subtitle">${almacen.ubicacion}</p>
+                </div>
+            </div>
+            
+            <div class="alm-info-grid">
+                <div class="alm-info-card">
+                <i class="fas fa-user-tie alm-info-card-icon"></i>
+                <h4>Encargado</h4>
+                <p>${almacen.encargado}</p>
+                </div>
+                <div class="alm-info-card">
+                <i class="fas fa-envelope alm-info-card-icon"></i>
+                <h4>Contacto</h4>
+                <p><a href="mailto:${almacen.contacto}">${almacen.contacto}</a></p>
+                </div>
+            </div>
+            </div>
+            
+            <div class="alm-modal-section">
+            <div class="alm-section-header">
+                <h3 class="alm-section-title">
+                <i class="fas fa-boxes"></i> Inventario
+                </h3>
+                <button class="alm-btn alm-btn-primary" onclick="abrirModalAgregarProducto('${almacen.id}')">
+                <i class="fas fa-plus"></i> Agregar Producto
+                </button>
+            </div>
+            
+            ${generarTablaInventario(almacen.productos, almacen.id)}
+            </div>
+        `;
+        }
 
+        // Generar tabla de inventario
+        function generarTablaInventario(productos, almacenId) {
+        if (productos.length === 0) {
+            return `
+            <div class="alm-empty-state">
+                <div class="alm-empty-icon">
+                <i class="fas fa-box-open"></i>
+                </div>
+                <h4>No hay productos registrados</h4>
+                <p>Agregue productos para comenzar a gestionar el inventario</p>
+                <button class="alm-btn alm-btn-primary" onclick="abrirModalAgregarProducto('${almacenId}')">
+                <i class="fas fa-plus"></i> Agregar primer producto
+                </button>
+            </div>
+            `;
+        }
+        
+        return `
+            <div class="alm-table-responsive">
+            <table class="alm-table">
+                <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                ${productos.map((producto, index) => `
+                    <tr>
+                    <td>${producto.codigo}</td>
+                    <td>${producto.descripcion}</td>
+                    <td>
+                        <div class="alm-quantity-control">
+                        <span class="alm-quantity-value">${producto.cantidad}</span>
+                        <div class="alm-quantity-buttons">
+                            <button class="alm-btn alm-btn-sm alm-btn-success" 
+                                    onclick="modificarCantidad('${almacenId}', ${index}, 1)">
+                            <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="alm-btn alm-btn-sm alm-btn-warning" 
+                                    onclick="modificarCantidad('${almacenId}', ${index}, -1)">
+                            <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                        </div>
+                    </td>
+                    <td class="alm-actions">
+                        <button class="alm-btn alm-btn-danger alm-btn-sm" 
+                                onclick="eliminarProducto('${almacenId}', ${index})">
+                        <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                    </tr>
+                `).join('')}
+                </tbody>
+            </table>
+            </div>
+            
+            <div class="alm-inventory-summary">
+            <div class="alm-summary-item">
+                <span>Total productos:</span>
+                <strong>${productos.length}</strong>
+            </div>
+            <div class="alm-summary-item">
+                <span>Total unidades:</span>
+                <strong>${productos.reduce((sum, p) => sum + p.cantidad, 0)}</strong>
+            </div>
+            </div>
+        `;
+        }
 
-        // Asociar la función al enlace en el menú principal
-        document.getElementById('almacenLink').addEventListener('click', function (event) {
-            event.preventDefault();
-            clearDynamicContent();
+        // Abrir modal para agregar producto
+        function abrirModalAgregarProducto(almacenId) {
+        const modal = document.getElementById('agregarProductoModal');
+        const form = document.getElementById('alm-productoForm');
+        
+        form.innerHTML = `
+            <div class="alm-form-group">
+            <label class="alm-form-label">Material *</label>
+            <select class="alm-form-input" id="productoMaterial" required>
+                <option value="">Seleccione material...</option>
+                <option value="PVC">PVC</option>
+                <option value="Acero">Acero</option>
+                <option value="Cobre">Cobre</option>
+                <option value="Galvanizado">Galvanizado</option>
+                <option value="Hierro">Hierro</option>
+            </select>
+            </div>
+            
+            <div class="alm-form-group">
+            <label class="alm-form-label">Tipo *</label>
+            <select class="alm-form-input" id="productoTipo" required>
+                <option value="">Seleccione tipo...</option>
+                <option value="Tubo">Tubo</option>
+                <option value="Válvula">Válvula</option>
+                <option value="Codo">Codo</option>
+                <option value="Reducción">Reducción</option>
+                <option value="Accesorio">Accesorio</option>
+            </select>
+            </div>
+            
+            <div class="alm-form-group">
+            <label class="alm-form-label">Diámetro/Medida *</label>
+            <input type="text" class="alm-form-input" id="productoDiametro" required>
+            </div>
+            
+            <div class="alm-form-group">
+            <label class="alm-form-label">Cantidad *</label>
+            <input type="number" class="alm-form-input" id="productoCantidad" min="1" value="1" required>
+            </div>
+            
+            <input type="hidden" id="almacenId" value="${almacenId}">
+        `;
+        
+        modal.classList.add('show');
+        document.body.classList.add('alm-modal-open');
+        }
+
+        // Guardar nuevo producto
+        function guardarNuevoProducto() {
+        const form = document.getElementById('alm-productoForm');
+        if (!form.reportValidity()) return;
+        
+        const material = document.getElementById('productoMaterial').value;
+        const tipo = document.getElementById('productoTipo').value;
+        const diametro = document.getElementById('productoDiametro').value;
+        const cantidad = parseInt(document.getElementById('productoCantidad').value);
+        const almacenId = document.getElementById('almacenId').value;
+        
+        // Generar código automático
+        const codigo = `${material.substring(0, 3).toUpperCase()}-${tipo.substring(0, 3).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
+        const descripcion = `${tipo} ${material} ${diametro}`;
+        
+        const almacenKey = Object.keys(almacenData).find(key => almacenData[key].id === almacenId);
+        almacenData[almacenKey].productos.push({
+            codigo, material, tipo, diametro, descripcion, cantidad
+        });
+        
+        // Mostrar notificación
+        mostrarNotificacion('success', 'Producto agregado', `El producto ${codigo} se ha agregado correctamente.`);
+        
+        // Cerrar modal y actualizar vista
+        closeAlmModal('agregarProductoModal');
+        const modalBody = document.getElementById('almacenModalBody');
+        modalBody.innerHTML = generarContenidoModal(almacenData[almacenKey]);
+        }
+
+        // Modificar cantidad de producto
+        function modificarCantidad(almacenId, productoIndex, cambio) {
+        const almacenKey = Object.keys(almacenData).find(key => almacenData[key].id === almacenId);
+        const producto = almacenData[almacenKey].productos[productoIndex];
+        
+        const nuevaCantidad = producto.cantidad + cambio;
+        if (nuevaCantidad < 0) {
+            mostrarNotificacion('error', 'Error', 'La cantidad no puede ser menor a cero');
+            return;
+        }
+        
+        producto.cantidad = nuevaCantidad;
+        
+        // Actualizar vista
+        const quantityElements = document.querySelectorAll('.alm-quantity-value');
+        if (quantityElements[productoIndex]) {
+            quantityElements[productoIndex].textContent = nuevaCantidad;
+        }
+        
+        mostrarNotificacion('success', 'Cantidad actualizada', `Cantidad de ${producto.codigo} actualizada a ${nuevaCantidad}`);
+        }
+
+        // Eliminar producto
+        function eliminarProducto(almacenId, productoIndex) {
+        if (!confirm('¿Está seguro que desea eliminar este producto?')) return;
+        
+        const almacenKey = Object.keys(almacenData).find(key => almacenData[key].id === almacenId);
+        const producto = almacenData[almacenKey].productos[productoIndex];
+        
+        almacenData[almacenKey].productos.splice(productoIndex, 1);
+        
+        // Actualizar vista
+        const modalBody = document.getElementById('almacenModalBody');
+        modalBody.innerHTML = generarContenidoModal(almacenData[almacenKey]);
+        
+        mostrarNotificacion('success', 'Producto eliminado', `El producto ${producto.codigo} ha sido eliminado`);
+        }
+
+        // Exportar inventario
+        function exportarInventario() {
+        // Simulación de exportación
+        mostrarNotificacion('info', 'Exportar inventario', 'Preparando archivo para descarga...');
+        setTimeout(() => {
+            mostrarNotificacion('success', 'Exportación completa', 'El inventario se ha exportado correctamente');
+        }, 1500);
+        }
+
+        // Mostrar notificación
+        function mostrarNotificacion(tipo, titulo, mensaje) {
+        const notificacion = document.createElement('div');
+        notificacion.className = `alm-notification alm-notification-${tipo}`;
+        notificacion.innerHTML = `
+            <div class="alm-notification-icon">
+            <i class="fas fa-${tipo === 'success' ? 'check-circle' : tipo === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+            </div>
+            <div class="alm-notification-content">
+            <h4>${titulo}</h4>
+            <p>${mensaje}</p>
+            </div>
+            <button class="alm-notification-close" onclick="this.parentElement.remove()">
+            <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        document.body.appendChild(notificacion);
+        setTimeout(() => notificacion.remove(), 5000);
+        }
+
+        // Cerrar modal
+        function closeAlmModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.remove('show');
+        document.body.classList.remove('alm-modal-open');
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+        const almacenLink = document.getElementById('almacenLink');
+        if (almacenLink) {
+            almacenLink.addEventListener('click', (e) => {
+            e.preventDefault();
             loadPantallaPrincipal();
+            });
+        }
+        
+        loadPantallaPrincipal();
         });
 
-        // Función para limpiar el contenido dinámico
-        function clearDynamicContent() {
-            document.getElementById('dynamicContent').innerHTML = '';
-        }
 
-        // Cargar la pantalla principal al inicio
-        loadPantallaPrincipal();
 
 
 

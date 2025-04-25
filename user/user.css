@@ -1,0 +1,1576 @@
+/* ============================================= */
+/* ============= ESTILOS GENERALES ============= */
+/* ============================================= */
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif; /* Fuente principal */
+    margin: 0; /* Elimina márgenes predeterminados */
+    padding: 0; /* Elimina rellenos predeterminados */
+    display: flex; /* Usa Flexbox para el diseño */
+    min-height: 100vh; /* Altura mínima de la ventana */
+    background-color: #f4f4f4; /* Color de fondo */
+    flex-direction: column; /* Apila la barra superior y el contenido en móviles */
+  }
+  
+  /* ============================================= */
+  /* =============== BARRA SUPERIOR ============== */
+  /* ============================================= */
+  
+  /* Barra superior */
+  .top-bar {
+    position: fixed; /* Fija la barra en la parte superior */
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px; /* Altura de la barra */
+    background-color: #2c3e50; /* Color de fondo */
+    display: flex;
+    justify-content: space-between; /* Espacio entre elementos */
+    align-items: center; /* Centra verticalmente */
+    padding: 0 20px; /* Relleno horizontal */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  }
+  
+  /* Logo en la barra superior */
+  .top-bar .logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%; /* Forma circular */
+    overflow: hidden; /* Oculta el exceso de la imagen */
+    background-color: #fff; /* Fondo blanco */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .top-bar .logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;/* Imagen circular */
+    object-fit: cover; /* Asegura que la imagen se ajuste al círculo */
+    transform: scale(.9); /* Aplica zoom a la imagen */
+    transition: transform 0.3s ease; /* Animación suave */
+  }
+  
+  .top-bar .logo:hover img {
+    transform: scale(1.4); /* Aumenta el tamaño al hacer hover */
+  }
+  
+  /* Botón de cerrar sesión */
+  .top-bar .logout button {
+    background-color: #385879;  /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin bordes */
+    padding: 8px 16px; /* Relleno interno */
+    border-radius: 15px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar */
+    font-size: 14px; /* Tamaño de la fuente */
+    transition: background-color 0.3s ease;  /* Animación suave */
+  }
+  
+  .top-bar .logout button:hover {
+    background-color: #f4fb32c6;
+    color: #000; /* Cambia el color del texto al hacer hover */
+  }
+  
+  /* ============================================= */
+  /* ============== BARRA LATERAL ================ */
+  /* ============================================= */
+  
+  /* Barra lateral */
+  .sidebar {
+    width: 70px; /* Ancho inicial (solo íconos) */
+    height: 100vh; /* Altura completa de la ventana */
+    background-color: #34495e; /* Color de fondo */
+    transition: width 0.3s ease; /* Animación suave al expandirse */
+    overflow: hidden; /* Oculta el contenido que excede */
+    position: fixed; /* Fija la barra lateral */
+    top: 60px; /* Ajuste para la barra superior */
+    left: 0;
+    z-index: 999; /* Asegura que esté por encima del contenido */
+  }
+  
+  .sidebar:hover {
+    width: 240px;/* Ancho al hacer hover */
+  }
+  
+  /* Lista de elementos en la barra lateral */
+  .sidebar ul {
+    list-style: none;/* Elimina viñetas */
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar li {
+    padding: 20px;  /* Relleno interno */
+    border-bottom: 1px solid #2c3e50; /* Borde inferior */
+    transition: background-color 0.3s ease; /* Animación suave */
+  }
+  
+  .sidebar li:hover {
+    background-color: #2c3e50;/* Color de fondo al hacer hover */
+  }
+  
+  /* Enlaces en la barra lateral */
+  .sidebar a {
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    text-decoration: none; /* Sin subrayado */
+    color: #ecf0f1; /* Color del texto */
+  }
+  
+  /* Iconos en la barra lateral */
+  .sidebar .icon {
+    font-size: 25px; /* Tamaño de los íconos */
+    margin-right: 15px; /* Espacio entre ícono y texto */
+  }
+  
+  /* Texto en la barra lateral */
+  .sidebar .text {
+    white-space: nowrap; /* Evita el salto de línea */
+    opacity: 0; /* Oculta el texto inicialmente */
+    transition: opacity 0.3s ease; /* Animación suave */
+  }
+  
+  .sidebar:hover .text {
+    opacity: 1; /* Muestra el texto al hacer hover */
+  }
+  
+  /* ============================================= */
+  /* =============== SUBMENÚ ===================== */
+  /* ============================================= */
+  
+  /* Submenú desplegable */
+  .submenu {
+    display: block; /* Cambia a block para permitir animaciones */
+    max-height: 0; /* Altura inicial (oculto) */
+    overflow: hidden; /* Oculta el contenido que excede */
+    margin-left: 20px; /* Espacio a la izquierda */
+    transition: max-height 0.5s ease, opacity 0.3s ease; /* Animación suave */
+    opacity: 0; /* Inicialmente transparente */
+  }
+  .sidebar ul li:hover .submenu {
+    max-height: 200px; /* Altura máxima (ajusta según el contenido) */
+    opacity: 1; /* Hace visible el submenú */
+  }
+  
+  /* Efecto escalonado (tipo piano) para los elementos del submenú */
+  .submenu li {
+    margin-top: 15px; /* Espacio superior para separar del texto principal */
+    padding: 5px 20px; /* Espaciado vertical y horizontal */
+    list-style: none; /* Elimina viñetas */
+    transform: translateX(-80px); /* Desplaza inicialmente hacia la izquierda */
+    opacity: 0; /* Inicialmente transparente */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Animación suave */
+    border-radius: 50px; /* Bordes redondeados */
+    margin-bottom: 1px; /* Espacio entre elementos */
+  }
+  .sidebar ul li:hover .submenu li {
+    transform: translateX(0); /* Vuelve a la posición original */
+    opacity: 1; /* Hace visible el elemento */
+  }
+  
+  /* Retraso en la animación para cada elemento del submenú */
+  .submenu li:nth-child(1) {
+    transition-delay: 0.1s; /* Primer elemento */
+  }
+  .submenu li:nth-child(2) {
+    transition-delay: 0.2s; /* Segundo elemento */
+  }
+  .submenu li:nth-child(3) {
+    transition-delay: 0.3s; /* Tercer elemento */
+  }
+  
+  .submenu li:hover {
+    background-color:#1e3043; /* Color de fondo al hacer hover */
+  }
+  
+  .submenu a {
+    display: flex; /* Usa flexbox para alinear ícono y texto */
+    align-items: center; /* Centra verticalmente */
+    text-decoration: none; /* Sin subrayado */
+    color: #ecf0f1; /* Color del texto */
+    transition: color 0.3s ease; /* Animación suave */
+    padding: 10px 10px; /* Ajusta el espaciado vertical del texto */
+  }
+  
+  /* Iconos del submenú */
+  .submenu .icon {
+    font-size: 20px; /* Tamaño de los íconos */
+    margin-right: 10px; /* Espacio entre ícono y texto */
+  }
+  
+  /* ============================================= */
+  /* ========== CONTENIDO PRINCIPAL ============== */
+  /* ============================================= */
+  
+  .main-content {
+    margin-left: 60px;/* Margen izquierdo para dejar espacio al sidebar */
+    margin-top: 60px;/* Margen superior para la barra de navegación */
+    padding: 30px;/* Espaciado interno para el contenido */
+    background-color: #ffffff; /* Fondo blanco para el área de contenido */
+    transition: margin-left 0.3s ease; /* Transición suave al expandir/contraer sidebar */
+    overflow-y: auto;/* Muestra scroll vertical SOLO cuando el contenido exceda el área visible */
+    height: calc(100vh - 60px); /* Altura fija: viewport completo menos altura de la barra superior */
+    max-height: calc(100vh - 60px); /* Previene que el contenido crezca más allá del viewport */
+    display: flex;/* Activa flexbox para organización interna */
+    flex-direction: column;/* Organiza los elementos hijos en columna */
+  }
+  
+  /* Ajuste cuando el sidebar está expandido */
+  .sidebar:hover~.main-content {
+    margin-left: 230px;/* Aumenta margen izquierdo para el sidebar expandido */
+  }
+  
+  /* ==================================================== */
+  /* ============ CONTENEDOR DINÁMICO SCROLL ============ */
+  /* ==================================================== */
+  
+  #dynamicContent {
+    flex: 1;/* Ocupa todo el espacio disponible en el contenedor padre */
+    min-height: 0;/* Solución crítica para que funcione overflow en flexbox */
+  }
+  
+  /* ==================================================== */
+  /* ========== ESTILOS PARA LA TABLA TUBERIA =========== */
+  /* ==================================================== */
+  
+  /* Contenedor de la tabla */
+  .table-container {
+    display: inline-block;/* Permite que el contenedor se alinee horizontalmente con otros elementos */
+    vertical-align: top;/* Alinea la parte superior del contenedor con la parte superior de otros elementos */
+    width: calc(100% - 100px);/* Ancho ajustado: 100% del espacio disponible menos 100px */
+  }
+  
+  /* Estilos generales para la tabla */
+  table {
+    width: 100%;/* La tabla ocupa todo el ancho del contenedor */
+    border-collapse: collapse;/* Elimina los espacios entre las celdas de la tabla */
+    margin-top: 20px;/* Margen superior de 20px para separar la tabla de otros elementos */
+  }
+  
+  /* Estilos para las celdas de encabezado (<th>) y las celdas de datos (<td>) */
+  th,
+  td {
+    padding: 12px;/* Relleno interno de 12px para dar espacio alrededor del contenido */
+    text-align: left;/* Alinea el texto a la izquierda */
+    border-bottom: 1px solid #bdbdbd;/* Borde inferior de 1px de grosor, color gris */
+  }
+  
+  /* Estilos específicos para las celdas de encabezado (<th>) */
+  th {
+    background-color: #34495e;/* Color de fondo azul oscuro */
+    color: white;/* Color del texto blanco */
+  }
+  
+  /* Estilos para las filas de la tabla (<tr>) al pasar el ratón por encima */
+  tr:hover {
+    background-color: #f5f5f5; /* Cambia el color de fondo a gris claro al hacer hover */
+  }
+  
+  /* Estilos para la indicación de "Sin Stock" */
+  .no-stock {
+    color: #e74c3c;/* Color del texto rojo */
+    font-weight: bold;/* Texto en negrita */
+    padding: 8px 12px;/* Relleno interno */
+    display: inline-block;/* Permite que el elemento se alinee como texto pero con propiedades de bloque */
+    background-color: #fde8e8;/* Color de fondo rojo muy claro */
+    border-radius: 4px;/* Bordes redondeados */
+    cursor: pointer;/* Cambia el cursor a una mano al pasar por encima */
+    transition: all 0.3s ease;/* Transición suave para las propiedades al hacer hover */
+  }
+  
+  /* Estilos para la indicación de "Sin Stock" al pasar el ratón por encima */
+  .no-stock:hover {
+    background-color: #fad2d2; /* Color de fondo rojo claro */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño al hacer hover */
+  }
+  
+  /* ================================================================= */
+  /* ============= TÍTULOS VERTICALES TUBERIA / ACCESORIOS============ */
+  /* ================================================================= */
+  
+  /* Estilos para el título vertical */
+  .section-title.vertical-title {
+    margin-top: 30px; /* Ajusta este valor según sea necesario */
+    writing-mode: vertical-rl; /* Rotación vertical del texto */
+    transform: rotate(180deg); /* Gira el texto 180 grados para que se lea de abajo hacia arriba */
+    text-align: center; /* Centra el texto */
+    padding: 80px 10px; /* Espaciado interno */
+    background-color:  #f4fb32c6; /* Color de fondo */
+    color: rgb(68, 61, 61); /* Color del texto */
+    font-weight: bold; /* Texto en negrita */
+    display: inline-block; /* Asegura que el título esté en línea con la tabla */
+    vertical-align: top; /* Alinea el título con la parte superior de la tabla */
+    margin-right: 5px; /* Espacio entre el título y la tabla */
+  }
+  
+  /* Título vertical */
+  .vertical-title {
+    margin-top: 100px; /* Ajusta este valor según sea necesario */
+    writing-mode: vertical-rl;  /* Rotación vertical del texto */
+    transform: rotate(180deg); /* Gira el texto 180 grados para que se lea de abajo hacia arriba */
+    text-align: center; /* Centra el texto */
+    padding: 50px 2px; /* Espaciado interno */
+    background-color: #f4fb32c6; /* Color de fondo */
+    color: rgb(0, 0, 0); /* Color del texto */
+    font-weight: bold; /* Texto en negrita */
+    display: inline-block; /* Asegura que el título esté en línea con la tabla */
+    vertical-align: top; /* Alinea el título con la parte superior de la tabla */
+    margin-right: 5px;  /* Espacio entre el título y la tabla */
+    transition: transform 0.3s ease, padding 0.3s ease; /* Animación suave: Añade una transición suave para los cambios de transformación y relleno. */
+  }
+  
+  /* ============================================= */
+  /* ============ ICONOS DE ACCIÓN =============== */
+  /* ============================================= */
+  
+  /* Estilos para los iconos de acción */
+  .action-icons {
+    justify-content: center; /* Centra los iconos horizontalmente */
+    flex-wrap: wrap; /* Permite que los iconos se envuelvan en pantallas pequeñas */
+  }
+  
+  .action-icons i {
+    margin: 8px 10px; /* Espacio entre los iconos: Añade un margen horizontal entre cada icono. */
+    cursor: pointer; /* Cambia el cursor al pasar*/
+  }
+  
+  td.action-icons {
+    white-space: nowrap; /* Evita que los iconos se envuelvan */
+  }
+  
+  /* ============================================= */
+  /* =========== ESTILOS PARA LOS TOOLTIPS ======== */
+  /* ============================================= */
+  
+  .action-icons i[title]:hover::after {
+    content: attr(title);/* Muestra el valor del atributo 'title' como contenido del tooltip */
+    position: absolute;/* Posiciona el tooltip de forma absoluta, relativa al elemento padre (<i>) */
+    background-color: rgba(32, 32, 32, 0.7); /* Color de fondo gris oscuro semitransparente */
+    color: white;/* Color del texto blanco */
+    padding: 6px;/* Relleno interno de 6px para dar espacio alrededor del texto */
+    border-radius: 3px;/* Bordes redondeados */
+    font-size: 11px;/* Tamaño de fuente de 11px */
+    white-space: nowrap;/* Evita que el texto se envuelva a la siguiente línea */
+    z-index: 1001;/* Asegura que el tooltip se muestre por encima de otros elementos con un valor alto */
+    font-family: Arial, sans-serif; /* Fuente del texto */
+    text-transform: capitalize; /* Convierte la primera letra de cada palabra en mayúscula */
+  }
+  
+  /* ============================================= */
+  /* ================ MODALES ==================== */
+  /* ============================================= */
+  
+  /* ===================== */
+  /* Estilos generales para la ventana modal */
+  /* ===================== */
+  .modal {
+    display: none;/* Oculta la ventana modal por defecto */
+    position: fixed;/* Posicionamiento fijo para cubrir toda la ventana */
+    z-index: 1000;/* Asegura que la modal esté por encima de otros elementos */
+    left: 0;/* Se extiende desde el borde izquierdo */
+    top: 0;/* Se extiende desde el borde superior */
+    width: 100%;/* Ocupa todo el ancho de la ventana */
+    height: 100%;/* Ocupa toda la altura de la ventana */
+    overflow: auto;/* Permite el desplazamiento si el contenido excede la altura */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para oscurecer el fondo */
+  }
+  
+  /* ===================== */
+  /* Estilos para el contenido de la ventana modal */
+  /* ===================== */
+  .modal-content {
+    background-color: #fff;/* Fondo blanco */
+    position: absolute;/* Posicionamiento absoluto para un control preciso */
+    top: 50%;/* Centra verticalmente... */
+    left: 50%;/* ...y horizontalmente */
+    transform: translate(-50%, -50%); /* Ajuste fino para centrar */
+    padding: 20px;/* Espaciado interno */
+    border: 1px solid #ddd;/* Borde gris claro */
+    border-radius: 8px;/* Bordes redondeados */
+    width: 80%;/* Ocupa el 80% del ancho de la pantalla */
+    max-width: 600px;/* Ancho máximo para evitar que se vea demasiado grande */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    animation: fadeIn 0.3s;/* Animación suave al aparecer */
+  }
+  
+  /* ===================== */
+  /* Animación para la entrada suave de la ventana modal */
+  /* ===================== */
+  @keyframes fadeIn {
+    from { opacity: 0; }/* Estado inicial: completamente transparente */
+    to { opacity: 1; }/* Estado final: completamente opaco */
+  }
+  
+  /* ===================== */
+  /* Estilos para el botón de cerrar la ventana modal */
+  /* ===================== */
+  .close {
+    color: #aaa;/* Color gris claro */
+    float: right;/* Alinea el botón a la derecha */
+    font-size: 24px;/* Tamaño de la fuente */
+    font-weight: bold;/* Texto en negrita */
+    cursor: pointer;/* Cambia el cursor a una mano al pasar por encima */
+  }
+  
+  /* ===================== */
+  /* Estilos para el botón de cerrar al pasar el ratón por encima */
+  /* ===================== */
+  .close:hover {
+    color: #000;/* Color negro */
+  }
+  
+  /* ===================== */
+  /* Estilos para el título de la ventana modal */
+  /* ===================== */
+  #modalTitle {
+    text-align: center;/* Centra el texto */
+    font-size: 24px;/* Tamaño de la fuente */
+    font-weight: bold;/* Texto en negrita */
+    color: #2c3e50;/* Color del texto (azul oscuro) */
+    margin-bottom: 20px;/* Espacio inferior */
+    padding: 10px;/* Espacio interno */
+    background-color: #f8f9fa;   /* Fondo claro */
+    border-bottom: 2px solid #929708; /* Línea inferior azul */
+    border-radius: 15px;/* Bordes redondeados */
+  }
+  
+  /* ====================================================== */
+  /* Estilos para la ventana modal de confirmación específica */
+  /* ====================================================== */
+  
+  /* ===================== */
+  /* Estilos generales para el contenido de la ventana modal de confirmación */
+  /* ===================== */
+  #confirmModal .modal-content {
+    text-align: center;/* Centra el texto */
+    max-width: 400px;/* Ancho máximo */
+    padding: 20px;/* Espaciado interno */
+    border-radius: 8px;/* Bordes redondeados */
+    background-color: #fff;/* Fondo blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  }
+  
+  /* ===================== */
+  /* Estilos para el título de la ventana modal de confirmación */
+  /* ===================== */
+  #confirmModal h2 {
+    margin-bottom: 10px;/* Espacio inferior */
+    font-size: 24px;/* Tamaño de la fuente */
+    color: #34495e;/* Color del texto (azul oscuro) */
+  }
+  
+  /* ===================== */
+  /* Estilos para el párrafo de la ventana modal de confirmación */
+  /* ===================== */
+  #confirmModal p {
+    margin-bottom: 20px;/* Espacio inferior */
+    font-size: 16px;/* Tamaño de la fuente */
+    color: #666;/* Color del texto (gris oscuro) */
+  }
+  
+  /* ===================== */
+  /* Estilos para el contenedor de los botones */
+  /* ===================== */
+  .modal-buttons {
+    display: flex;/* Utiliza flexbox para alinear los botones */
+    justify-content: center;/* Centra los botones horizontalmente */
+    gap: 10px;/* Espacio entre los botones */
+  }
+  
+  /* ===================== */
+  /* Estilos generales para los botones */
+  /* ===================== */
+  #confirmModal button {
+    padding: 10px 20px;/* Espaciado interno */
+    border: none;/* Sin borde */
+    border-radius: 4px;/* Bordes redondeados */
+    cursor: pointer;/* Cambia el cursor a una mano al pasar por encima */
+    font-size: 16px;/* Tamaño de la fuente */
+    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+  }
+  
+  /* ===================== */
+  /* Estilos para el botón de confirmar la eliminación */
+  /* ===================== */
+  
+  #confirmDelete {
+    background-color: #e74c3c; /* Fondo rojo */
+    color: white;/* Texto blanco */
+  }
+  
+  #confirmDelete:hover {
+    background-color: #c0392b; /* Fondo rojo más oscuro */
+  }
+  
+  #cancelDelete {
+    background-color: #34495e; /* Fondo azul oscuro */
+    color: white;             /* Texto blanco */
+  }
+  
+  #cancelDelete:hover {
+    background-color: #2c3e50; /* Fondo azul oscuro más oscuro */
+  }
+  
+  
+  /* ============================================= */
+  /* ================ FORMULARIOS ================ */
+  /* ============================================= */
+  
+  /* Estilos para el formulario */
+  #projectForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas */
+    gap: 15px; /* Espacio entre campos */
+  }
+  
+  #projectForm label {
+    font-weight: bold;
+    color: #34495e; /* Color del texto */
+    margin-bottom: 5px;
+  }
+  
+  #projectForm input,
+  #projectForm textarea,
+  #projectForm select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #f9f9f9; /* Fondo claro */
+    color: #333; /* Color del texto */
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  #projectForm textarea {
+    resize: vertical; /* Permite redimensionar verticalmente */
+    min-height: 100px; /* Altura mínima */
+  }
+  
+  #projectForm select {
+    appearance: none;
+    background-color: #f9f9f9;
+  }
+  
+  #projectForm button {
+    grid-column: span 2; /* Ocupa dos columnas */
+    background-color: #34495e;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  #projectForm button:hover {
+    background-color: #2c3e50; /* Color más oscuro al hacer hover */
+  }
+  
+  /* Estilos para los campos de fecha */
+  #projectForm input[type="date"] {
+    padding: 9px; /* Ajuste para el campo de fecha */
+  }
+  
+  /* ============================================= */
+  /* ============= BOTONES GENERALES ============= */
+  /* ============================================= */
+  
+  #createProjectButton {
+    margin-top: 30px;
+    padding: 8px 16px; /* Relleno interno */
+    background-color: #385879;
+    color: white;
+    border: none;
+    border-radius: 15px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar */
+    float: right; /* Alinea el botón a la derecha */
+    font-size: 14px; /* Tamaño de la fuente */
+    transition: transform 0.3s ease; /* Animación suave */
+  }
+  
+  #createProjectButton:hover {
+    background-color:#f4fb32c6;/* Cambia el color al hacer hover */
+    color: rgb(0, 0, 0);
+  }
+  
+  /* ============================================= */
+  /* ============= BOTÓN EXPORTAR EXCEL TUBERIA ========== */
+  /* ============================================= */
+  
+  .export-button-container {
+    text-align: right;
+    margin-top: 15px;
+    padding-right: 10px;
+  }
+  
+  #btnExportar {
+    background-color: #2e7d32; /* Verde oscuro similar a Excel */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  #btnExportar:hover {
+    background-color: #1b5e20; /* Verde más oscuro al hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+  
+  #btnExportar:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+  }
+  
+  #btnExportar::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="white" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm60.1 106.5L224 336h60.1v-93.5zm-223.1 93.5h60.1v-93.5l-60.1 93.5zm0-134.5V176h60.1v93.5zm60.1 134.5v93.5H61l60.1-93.5zm120.2 0h60.1v-93.5l-60.1 93.5zM224 176v93.5h60.1V176H224zM384 121.9v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  
+  
+  /* ============================================= */
+  /* ================= GRÁFICAS TUBERIA ================= */
+  /* ============================================= */
+  
+  /* Contenedor principal de la gráfica */
+  .chart-container {
+    margin-top: 20px;       /* Espacio superior para separar de elementos anteriores */
+    padding: 20px;          /* Relleno interno para que el contenido no toque los bordes */
+    background-color: #ffffff; /* Fondo blanco para mejor contraste */
+    border-radius: 15px;     /* Bordes redondeados para un look moderno */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Sombra sutil para dar profundidad */
+    width: 500%;           /* Ocupa todo el ancho disponible del contenedor padre */
+    max-width: 900px;      /* Ancho máximo para evitar que se expanda demasiado */
+    margin-left: auto;     /* Centrado horizontal: margen izquierdo automático */
+    margin-right: auto;    /* Centrado horizontal: margen derecho automático */
+  }
+  
+  /* Estilos para el título de la gráfica */
+  .chart-container h3 {
+    margin-top: 0;          /* Elimina el margen superior por defecto de h3 */
+    margin-bottom: 15px;    /* Espacio inferior para separar del gráfico */
+    color: #2c3e50;        /* Color de texto oscuro para buen contraste */
+    text-align: center;    /* Centra el texto horizontalmente */
+  }
+  
+  /* Estilos para el elemento canvas de Chart.js */
+  #tuberiaChart {
+    width: 100% !important;       /* Fuerza al gráfico a ocupar todo el ancho */
+    height: 300px !important;     /* Altura fija para consistencia visual */
+    max-height: 60vh;            /* Altura máxima relativa al viewport (60% del alto de pantalla) */
+  }
+  
+  /* ============================================= */
+  /* ============== VISIBILIDAD ================== */
+  /* ============================================= */
+  
+  /* Estilos para el icono del ojo */
+  .toggle-additions {
+    cursor: pointer;
+    margin-right: 5px; /* Espacio entre el icono y el contenido */
+  }
+  
+  /* Estilos para ocultar las filas de adiciones */
+  .addition-row {
+    display: none;
+  }
+  
+  /* Estilos para mostrar las filas de adiciones */
+  .show-additions {
+    display: table-row; /* o el valor adecuado para tu tabla */
+  }
+  
+  /* Estilos para la celda con el icono */
+  .eye-icon-cell {
+    width: 20px; /* Ancho fijo para la celda */
+    text-align: center; /* Centrar el contenido */
+  }
+  
+  /* ============================================= */
+  /* ============ MÓDULO ALMACÉN ================ */
+  /* ============================================= */
+  
+  /* Contenedor principal del contenido dinámico */
+  .alm-content-container {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    min-height: 100vh; /* Altura mínima de toda la ventana */
+    padding: 20px; /* Espaciado interno */
+    box-sizing: border-box; /* El padding no afecta el ancho total */
+  }
+  
+  /* ============================================= */
+  /* ============ PANTALLA PRINCIPAL ============= */
+  /* ============================================= */
+  
+  /* Contenedor de las tarjetas de almacén */
+  .alm-cards-view {
+    max-width: 1200px; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Centrado horizontal */
+    padding: 40px 20px; /* Espaciado interno */
+  }
+  
+  /* Encabezado de la sección principal */
+  .alm-header-section {
+    text-align: center; /* Texto centrado */
+    margin-bottom: 40px; /* Margen inferior */
+  }
+  
+  /* Título principal */
+  .alm-main-title {
+    font-size: 2.2rem; /* Tamaño de fuente grande */
+    color: #2c3e50; /* Color de texto oscuro */
+    margin-bottom: 10px; /* Margen inferior */
+    display: flex; /* Flexbox para alinear icono y texto */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    gap: 15px; /* Espacio entre elementos */
+  }
+  
+  /* Subtítulo */
+  .alm-subtitle {
+    color: #7f8c8d; /* Color gris */
+    font-size: 1.1rem; /* Tamaño de fuente */
+    margin: 0; /* Sin márgenes */
+  }
+  
+  /* Contenedor de tarjetas */
+  .alm-card-container {
+    display: grid; /* Usa CSS Grid */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Columnas responsivas */
+    gap: 30px; /* Espacio entre tarjetas */
+    margin-top: 30px; /* Margen superior */
+  }
+  
+  /* ============================================= */
+  /* ============ TARJETAS DE ALMACÉN ============ */
+  /* ============================================= */
+  
+  /* Estilo base de la tarjeta */
+  .alm-card {
+    background: white; /* Fondo blanco */
+    border-radius: 15px; /* Bordes redondeados */
+    overflow: hidden; /* Oculta contenido que sobresale */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+    transition: all 0.3s ease; /* Transición suave */
+    cursor: pointer; /* Cursor tipo puntero */
+    border: 1px solid #eaeaea; /* Borde sutil */
+  }
+  
+  /* Efecto hover de la tarjeta */
+  .alm-card:hover {
+    transform: translateY(-5px); /* Levanta ligeramente */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); /* Sombra más pronunciada */
+  }
+  
+  /* Icono de la tarjeta */
+  .alm-card-icon {
+    background: #3498db; /* Color azul de fondo */
+    color: white; /* Icono blanco */
+    font-size: 1.8rem; /* Tamaño grande */
+    padding: 25px; /* Espaciado interno */
+    display: flex; /* Flexbox para centrar */
+    justify-content: center; /* Centrado horizontal */
+  }
+  
+  /* Variante para almacén Bogotá */
+  .alm-card-bogota .alm-card-icon {
+    background: #3498db; /* Azul */
+  }
+  
+  /* Variante para almacén Cali */
+  .alm-card-cali .alm-card-icon {
+    background: #2ecc71; /* Verde */
+  }
+  
+  /* Título de la tarjeta */
+  .alm-card-title {
+    font-size: 1.4rem; /* Tamaño de fuente */
+    color: #2c3e50; /* Color oscuro */
+    margin: 20px 20px 10px; /* Márgenes */
+  }
+  
+  /* Detalles de la tarjeta */
+  .alm-card-details {
+    padding: 0 20px; /* Espaciado horizontal */
+    color: #7f8c8d; /* Color gris */
+  }
+  
+  /* Párrafos dentro de los detalles */
+  .alm-card-details p {
+    margin: 8px 0; /* Márgenes verticales */
+    display: flex; /* Flexbox para alinear icono y texto */
+    align-items: center; /* Centrado vertical */
+    gap: 10px; /* Espacio entre icono y texto */
+  }
+  
+  /* Pie de la tarjeta */
+  .alm-card-footer {
+    border-top: 1px solid #f1f1f1; /* Borde superior */
+    padding: 15px 20px; /* Espaciado interno */
+    margin-top: 20px; /* Margen superior */
+    display: flex; /* Flexbox para alinear */
+    justify-content: flex-end; /* Alineado a la derecha */
+  }
+  
+  /* Badge de cantidad de productos */
+  .alm-badge {
+    background: #f8f9fa; /* Fondo gris claro */
+    color: #34495e; /* Color de texto */
+    padding: 5px 15px; /* Espaciado interno */
+    border-radius: 20px; /* Bordes redondeados */
+    font-size: 0.9rem; /* Tamaño de fuente */
+    font-weight: 500; /* Grosor de fuente */
+  }
+  
+  /* ============================================= */
+  /* ================= MODALES =================== */
+  /* ============================================= */
+  
+  /* Contenedor del modal */
+  .alm-modal-container {
+    position: fixed;       /* Posición fija para cubrir toda la ventana */
+    top: 0;                /* Desde la parte superior */
+    left: 0;               /* Desde la izquierda */
+    right: 0;              /* Desde la derecha */
+    bottom: 0;             /* Desde la parte inferior */
+    display: flex;         /* Usa flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;   /* Centra verticalmente */
+    z-index: 1050;         /* Asegura que esté por encima de otros elementos */
+    opacity: 0;            /* Inicialmente invisible */
+    visibility: hidden;    /* Inicialmente oculto */
+    transition: all 0.3s ease; /* Transición suave para mostrar/ocultar */
+    overflow: auto;      /* Habilita el scroll en el contenedor si el contenido del modal es muy grande */
+    padding: 10px;         /* Añade un pequeño padding alrededor del modal para que no toque los bordes de la ventana */
+  }
+  
+  /* Estado visible del modal */
+  .alm-modal-container.show {
+    opacity: 1;            /* Hace el modal visible */
+    visibility: visible;   /* Muestra el modal */
+  }
+  
+  /* Fondo oscuro detrás del modal */
+  .alm-modal-overlay {
+    position: absolute;     /* Posición absoluta para cubrir todo el contenedor */
+    top: 0;                /* Desde la parte superior */
+    left: 0;               /* Desde la izquierda */
+    right: 0;              /* Desde la derecha */
+    bottom: 0;             /* Desde la parte inferior */
+    background: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+  }
+  
+  /* Ventana modal principal */
+  .alm-modal-dialog {
+    background: white;      /* Fondo blanco */
+    border-radius: 12px;     /* Bordes redondeados */
+    box-shadow: 0 3px 15px rgba(0,0,0,0.15); /* Sombra suave */
+    width: 80%;            /* Ancho del 80% del contenedor */
+    max-width: 700px;       /* Ancho máximo de 700px */
+    max-height: 95vh;      /* Altura máxima del 95% del viewport height */
+    display: flex;         /* Usa flexbox para el diseño interno */
+    flex-direction: column; /* Disposición vertical de los elementos */
+    overflow: hidden;      /* Oculta el contenido que se desborda */
+  }
+  
+  /* Efecto al mostrar el modal */
+  .alm-modal-container.show .alm-modal-dialog {
+    transform: translateY(0); /* Elimina el desplazamiento vertical inicial */
+  }
+  
+  /* Variante para modales más grandes */
+  .alm-modal-lg {
+    max-width: 95%;        /* Ancho máximo del 95% */
+    width: 60%;            /* Ancho del 60% */
+  }
+  
+  /* Contenedor del contenido del modal */
+  .alm-modal-content {
+    display: flex;         /* Flexbox para el diseño */
+    flex-direction: column; /* Disposición vertical */
+    height: 100%;          /* Altura completa del contenedor */
+  }
+  
+  /* Cabecera del modal */
+  .alm-modal-header {
+    padding: 15px 20px;    /* Espaciado interno */
+    border-bottom: 1px solid #f1f1f1; /* Borde inferior */
+    display: flex;         /* Flexbox para alinear los elementos */
+    justify-content: space-between; /* Espacio entre título y botón de cerrar */
+    align-items: center;   /* Centrado vertical */
+    flex-shrink: 0;       /* Evita que la cabecera se comprima */
+  }
+  
+  /* Título del modal */
+  .alm-modal-title {
+    font-size: 1.2rem;     /* Tamaño de fuente */
+    flex-wrap: wrap;       /* Permite que el texto se ajuste a varias líneas */
+  }
+  
+  /* Botón de cerrar el modal */
+  .alm-modal-close {
+    background: none;      /* Sin fondo */
+    border: none;         /* Sin borde */
+    font-size: 1.2rem;     /* Tamaño de fuente */
+    cursor: pointer;      /* Cursor de puntero */
+    color: #7f8c8d;       /* Color gris */
+    transition: color 0.2s; /* Transición suave de color */
+    width: 40px;           /* Ancho fijo */
+    height: 40px;          /* Alto fijo */
+    display: flex;         /* Flexbox para centrar el icono */
+    align-items: center;   /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    border-radius: 50%;    /* Forma circular */
+  }
+  
+  /* Estilo al pasar el ratón por encima del botón de cerrar */
+  .alm-modal-close:hover {
+    background: #f8f9fa;   /* Fondo gris claro */
+    color: #34495e;       /* Color azul oscuro */
+  }
+  
+  /* Cuerpo del modal (donde va el contenido principal) */
+  .alm-modal-body {
+    padding: 12px;        /* Espaciado interno */
+    flex: 1;             /* El cuerpo se expande para ocupar el espacio restante */
+    overflow-y: auto;      /* Barra de desplazamiento vertical si el contenido excede la altura */
+    -webkit-overflow-scrolling: touch; /* Desplazamiento suave en iOS */
+    word-break: break-word; /* Permite romper palabras largas para evitar el desbordamiento */
+  }
+  
+  /* Pie del modal (botones) */
+  .alm-modal-footer {
+    padding: 1px 15px;    /* Espaciado interno */
+    border-top: 1px solid #f1f1f1; /* Borde superior */
+    display: flex;         /* Flexbox para alinear los botones */
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+    gap: 5px;             /* Espacio entre los botones */
+    background: white;      /* Fondo blanco */
+    flex-shrink: 0;       /* Evita que el pie se comprima */
+    position: sticky;      /* Posición pegajosa para que el pie quede en la parte inferior */
+    bottom: 0;            /* Se pega al borde inferior */
+    margin-top: auto;     /* Empuja el footer al final */
+  }
+  
+  /* Estilos generales para los botones del modal */
+  .alm-modal-btn {
+    padding: 8px 16px;    /* Espaciado interno */
+    min-width: 100px;     /* Ancho mínimo */
+    border: none;         /* Sin borde */
+    border-radius: 5px;    /* Bordes redondeados */
+    font-size: 0.9rem;     /* Tamaño de fuente */
+    cursor: pointer;      /* Cursor de puntero */
+    transition: all 0.2s; /* Transición suave */
+    margin: 0;            /* Sin márgenes */
+  }
+  
+  /* Estilo para el botón primario */
+  .alm-modal-btn-primary {
+    background-color: #3498db; /* Fondo azul */
+    color: white;         /* Texto blanco */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra suave */
+  }
+  
+  /* Estilo para el botón secundario */
+  .alm-modal-btn-secondary {
+    background-color: white; /* Fondo blanco */
+    color: #34495e;       /* Color azul oscuro */
+    border: 1px solid #ddd; /* Borde gris claro */
+  }
+  
+  /* Estilos al pasar el ratón por encima de los botones */
+  .alm-modal-btn-primary:hover {
+    background-color: #2980b9; /* Fondo azul más oscuro */
+    transform: translateY(-1px); /* Ligero desplazamiento hacia arriba */
+  }
+  
+  .alm-modal-btn-secondary:hover {
+    background-color: #f8f9fa; /* Fondo gris claro */
+    border-color: #ccc;       /* Borde gris */
+  }
+  
+  /* Responsive para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .alm-modal-dialog {
+      width: 95%;          /* Ancho del 95% */
+      max-height: 95vh;    /* Altura máxima del 95% del viewport height */
+      margin: 10px;         /* Margen */
+    }
+  
+    .alm-modal-footer {
+      flex-wrap: wrap;     /* Permite que los botones se envuelvan */
+      justify-content: center; /* Centra los botones */
+    }
+  
+    .alm-modal-btn {
+      flex: 1;           /* Los botones se expanden */
+      min-width: 45%;     /* Ancho mínimo */
+    }
+  
+    .alm-modal-header {
+      flex-direction: column; /* Apila los elementos de la cabecera */
+      align-items: flex-start; /* Alinea al inicio */
+    }
+  }
+  
+  /* ============================================= */
+  /* ============ SECCIONES DEL MODAL ============ */
+  /* ============================================= */
+  
+  /* Sección genérica del modal */
+  .alm-modal-section {
+    margin-bottom: 30px; /* Margen inferior */
+  }
+  
+  /* Encabezado de información */
+  .alm-info-header {
+    display: flex; /* Flexbox para alinear */
+    align-items: center; /* Centrado vertical */
+    gap: 20px; /* Espacio entre elementos */
+    margin-bottom: 20px; /* Margen inferior */
+  }
+  
+  /* Icono de información */
+  .alm-info-icon {
+    background: #3498db; /* Fondo azul */
+    color: white; /* Icono blanco */
+    width: 60px; height: 60px; /* Tamaño fijo */
+    border-radius: 50%; /* Forma circular */
+    display: flex; /* Flexbox para centrar */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    font-size: 1.5rem; /* Tamaño de icono */
+  }
+  
+  /* Subtítulo de información */
+  .alm-info-subtitle {
+    color: #7f8c8d; /* Color gris */
+    margin: 5px 0 0; /* Márgenes */
+  }
+  
+  /* Encabezado de sección */
+  .alm-section-header {
+    display: flex; /* Flexbox para alinear */
+    justify-content: space-between; /* Espacio entre elementos */
+    align-items: center; /* Centrado vertical */
+    margin-bottom: 20px; /* Margen inferior */
+  }
+  
+  /* Título de sección */
+  .alm-section-title {
+    font-size: 1.3rem; /* Tamaño de fuente */
+    color: #2c3e50; /* Color oscuro */
+    margin: 0; /* Sin márgenes */
+    display: flex; /* Flexbox para icono y texto */
+    align-items: center; /* Centrado vertical */
+    gap: 10px; /* Espacio entre elementos */
+  }
+  
+  /* ============================================= */
+  /* ============= GRID DE INFORMACIÓN =========== */
+  /* ============================================= */
+  
+  /* Contenedor grid */
+  .alm-info-grid {
+    display: grid; /* CSS Grid */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Columnas responsivas */
+    gap: 10px; /* Espacio entre elementos */
+    margin-top: 10px; /* Margen superior */
+  }
+  
+  /* Tarjeta de información */
+  .alm-info-card {
+    background: #f8f9fa; /* Fondo gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    text-align: center; /* Texto centrado */
+  }
+  
+  /* Icono de tarjeta de información */
+  .alm-info-card-icon {
+    font-size: 1.5rem; /* Tamaño de icono */
+    color: #3498db; /* Color azul */
+    margin-bottom: 10px; /* Margen inferior */
+  }
+  
+  /* Título de tarjeta de información */
+  .alm-info-card h4 {
+    margin: 10px 0 5px; /* Márgenes */
+    color: #2c3e50; /* Color oscuro */
+  }
+  
+  /* Texto de tarjeta de información */
+  .alm-info-card p {
+    margin: 0; /* Sin márgenes */
+    color: #7f8c8d; /* Color gris */
+  }
+  
+  /* ============================================= */
+  /* ================= TABLAS ==================== */
+  /* ============================================= */
+  
+  /* Contenedor responsive de tabla */
+  .alm-table-responsive {
+    overflow-x: auto; /* Scroll horizontal si es necesario */
+    margin-bottom: 20px; /* Margen inferior */
+    border-radius: 8px; /* Bordes redondeados */
+    border: 1px solid #f1f1f1; /* Borde sutil */
+  }
+  
+  /* Estilo base de tabla */
+  .alm-table {
+    width: 100%; /* Ancho completo */
+    border-collapse: collapse; /* Bordes unidos */
+    min-width: 600px; /* Ancho mínimo */
+  }
+  
+  /* Cabeceras de tabla */
+  .alm-table th {
+    background: #34495e; /* Fondo oscuro */
+    color: white; /* Texto blanco */
+    padding: 12px 15px; /* Espaciado interno */
+    text-align: left; /* Alineación izquierda */
+    font-weight: 500; /* Grosor de fuente */
+  }
+  
+  /* Celdas de tabla */
+  .alm-table td {
+    padding: 12px 15px; /* Espaciado interno */
+    border-bottom: 1px solid #f1f1f1; /* Borde inferior */
+    color: #34495e; /* Color de texto */
+  }
+  
+  /* Efecto hover en filas */
+  .alm-table tr:hover {
+    background: #f8f9fa; /* Fondo gris claro */
+  }
+  
+  /* ============================================= */
+  /* ========== CONTROLES DE CANTIDAD ============ */
+  /* ============================================= */
+  
+  /* Contenedor de control de cantidad */
+  .alm-quantity-control {
+    display: flex; /* Flexbox para alinear */
+    align-items: center; /* Centrado vertical */
+    gap: 10px; /* Espacio entre elementos */
+  }
+  
+  /* Valor de cantidad */
+  .alm-quantity-value {
+    min-width: 30px; /* Ancho mínimo */
+    text-align: center; /* Texto centrado */
+  }
+  
+  /* Contenedor de botones de cantidad */
+  .alm-quantity-buttons {
+    display: flex; /* Flexbox para botones */
+    gap: 5px; /* Espacio entre botones */
+  }
+  
+  /* ============================================= */
+  /* ============ BOTONES DE ACCIÓN ============== */
+  /* ============================================= */
+  
+  /* Contenedor de botones */
+  .alm-actions {
+    display: flex; /* Flexbox para botones */
+    gap: 5px; /* Espacio entre botones */
+  }
+  
+  /* ============================================= */
+  /* =============== FORMULARIOS ================= */
+  /* ============================================= */
+  
+  /* Grid de formulario */
+  .alm-form-grid {
+    display: grid; /* CSS Grid */
+    grid-template-columns: 1fr 1fr; /* Dos columnas */
+    gap: 20px; /* Espacio entre elementos */
+  }
+  
+  /* Grupo de campos */
+  .alm-form-group {
+    margin-bottom: 15px; /* Margen inferior */
+  }
+  
+  /* Etiqueta de campo */
+  .alm-form-label {
+    display: block; /* Ocupa toda la línea */
+    margin-bottom: 8px; /* Margen inferior */
+    color: #34495e; /* Color oscuro */
+    font-weight: 500; /* Grosor de fuente */
+  }
+  
+  /* Campo de entrada */
+  .alm-form-input {
+    width: 100%; /* Ancho completo */
+    padding: 10px 12px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 6px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño de fuente */
+    transition: border-color 0.3s; /* Transición suave */
+  }
+  
+  /* Efecto focus en campo */
+  .alm-form-input:focus {
+    border-color: #3498db; /* Borde azul */
+    outline: none; /* Sin outline */
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1); /* Sombra sutil */
+  }
+  
+  /* ============================================= */
+  /* ================= BOTONES =================== */
+  /* ============================================= */
+  
+  /* Estilo base de botón */
+  .alm-btn {
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin bordes */
+    border-radius: 6px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño de fuente */
+    font-weight: 500; /* Grosor de fuente */
+    cursor: pointer; /* Cursor tipo puntero */
+    transition: all 0.2s; /* Transición suave */
+    display: inline-flex; /* Flexbox para icono y texto */
+    align-items: center; /* Centrado vertical */
+    gap: 8px; /* Espacio entre elementos */
+  }
+  
+  /* Variante de botón pequeño */
+  .alm-btn-sm {
+    padding: 6px 12px; /* Espaciado reducido */
+    font-size: 13px; /* Tamaño de fuente pequeño */
+  }
+  
+  /* Botón primario (azul) */
+  .alm-btn-primary {
+    background: #3498db; /* Fondo azul */
+    color: white; /* Texto blanco */
+  }
+  
+  /* Efecto hover botón primario */
+  .alm-btn-primary:hover {
+    background: #2980b9; /* Azul más oscuro */
+  }
+  
+  /* Botón secundario (gris) */
+  .alm-btn-secondary {
+    background: #95a5a6; /* Fondo gris */
+    color: white; /* Texto blanco */
+  }
+  
+  /* Efecto hover botón secundario */
+  .alm-btn-secondary:hover {
+    background: #7f8c8d; /* Gris más oscuro */
+  }
+  
+  /* Botón éxito (verde) */
+  .alm-btn-success {
+    background: #2ecc71; /* Fondo verde */
+    color: white; /* Texto blanco */
+  }
+  
+  /* Efecto hover botón éxito */
+  .alm-btn-success:hover {
+    background: #27ae60; /* Verde más oscuro */
+  }
+  
+  /* Botón advertencia (naranja) */
+  .alm-btn-warning {
+    background: #f39c12; /* Fondo naranja */
+    color: white; /* Texto blanco */
+  }
+  
+  /* Efecto hover botón advertencia */
+  .alm-btn-warning:hover {
+    background: #d35400; /* Naranja más oscuro */
+  }
+  
+  /* Botón peligro (rojo) */
+  .alm-btn-danger {
+    background: #e74c3c; /* Fondo rojo */
+    color: white; /* Texto blanco */
+  }
+  
+  /* Efecto hover botón peligro */
+  .alm-btn-danger:hover {
+    background: #c0392b; /* Rojo más oscuro */
+  }
+  
+  /* ============================================= */
+  /* ============== ESTADO VACÍO ================= */
+  /* ============================================= */
+  
+  /* Contenedor de estado vacío */
+  .alm-empty-state {
+    text-align: center; /* Texto centrado */
+    padding: 40px 20px; /* Espaciado interno */
+    background: #f8f9fa; /* Fondo gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    margin: 20px 0; /* Márgenes verticales */
+  }
+  
+  /* Icono de estado vacío */
+  .alm-empty-icon {
+    font-size: 3rem; /* Tamaño grande */
+    color: #bdc3c7; /* Color gris */
+    margin-bottom: 20px; /* Margen inferior */
+  }
+  
+  /* Título de estado vacío */
+  .alm-empty-state h4 {
+    color: #2c3e50; /* Color oscuro */
+    margin: 0 0 10px; /* Márgenes */
+  }
+  
+  /* Texto de estado vacío */
+  .alm-empty-state p {
+    color: #7f8c8d; /* Color gris */
+    margin: 0 0 20px; /* Márgenes */
+  }
+  
+  /* ============================================= */
+  /* ========== RESUMEN DE INVENTARIO ============ */
+  /* ============================================= */
+  
+  /* Contenedor de resumen */
+  .alm-inventory-summary {
+    display: flex; /* Flexbox para elementos */
+    gap: 30px; /* Espacio entre elementos */
+    margin-top: 20px; /* Margen superior */
+    padding: 15px; /* Espaciado interno */
+    background: #f8f9fa; /* Fondo gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+  }
+  
+  /* Ítem de resumen */
+  .alm-summary-item {
+    display: flex; /* Flexbox para disposición */
+    flex-direction: column; /* Disposición vertical */
+  }
+  
+  /* Texto descriptivo */
+  .alm-summary-item span {
+    font-size: 0.9rem; /* Tamaño pequeño */
+    color: #7f8c8d; /* Color gris */
+  }
+  
+  /* Valor numérico */
+  .alm-summary-item strong {
+    font-size: 1.2rem; /* Tamaño grande */
+    color: #2c3e50; /* Color oscuro */
+  }
+  
+  /* ============================================= */
+  /* ============== NOTIFICACIONES =============== */
+  /* ============================================= */
+  
+  /* Estilo base de notificación */
+  .alm-notification {
+    position: fixed; /* Posición fija */
+    bottom: 20px; right: 20px; /* Posición en esquina inferior derecha */
+    background: white; /* Fondo blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    padding: 15px 20px; /* Espaciado interno */
+    display: flex; /* Flexbox para alinear */
+    align-items: center; /* Centrado vertical */
+    gap: 15px; /* Espacio entre elementos */
+    max-width: 350px; /* Ancho máximo */
+    transform: translateY(20px); /* Desplazamiento inicial */
+    opacity: 0; /* Transparente inicialmente */
+    animation: almNotificationIn 0.3s forwards; /* Animación de entrada */
+    z-index: 1100; /* Por encima de otros elementos */
+  }
+  
+  /* Animación de entrada */
+  @keyframes almNotificationIn {
+    to {
+      transform: translateY(0); /* Posición final */
+      opacity: 1; /* Totalmente visible */
+    }
+  }
+  
+  /* Variante de éxito (verde) */
+  .alm-notification-success {
+    border-left: 4px solid #2ecc71; /* Borde izquierdo verde */
+  }
+  
+  /* Variante de error (rojo) */
+  .alm-notification-error {
+    border-left: 4px solid #e74c3c; /* Borde izquierdo rojo */
+  }
+  
+  /* Variante de información (azul) */
+  .alm-notification-info {
+    border-left: 4px solid #3498db; /* Borde izquierdo azul */
+  }
+  
+  /* Icono de notificación */
+  .alm-notification-icon {
+    font-size: 1.5rem; /* Tamaño grande */
+  }
+  
+  /* Color de icono para éxito */
+  .alm-notification-success .alm-notification-icon {
+    color: #2ecc71; /* Verde */
+  }
+  
+  /* Color de icono para error */
+  .alm-notification-error .alm-notification-icon {
+    color: #e74c3c; /* Rojo */
+  }
+  
+  /* Color de icono para información */
+  .alm-notification-info .alm-notification-icon {
+    color: #3498db; /* Azul */
+  }
+  
+  /* Contenido de notificación */
+  .alm-notification-content h4 {
+    margin: 0 0 5px; /* Márgenes */
+    color: #2c3e50; /* Color oscuro */
+    font-size: 1rem; /* Tamaño de fuente */
+  }
+  
+  /* Texto de notificación */
+  .alm-notification-content p {
+    margin: 0; /* Sin márgenes */
+    color: #7f8c8d; /* Color gris */
+    font-size: 0.9rem; /* Tamaño pequeño */
+  }
+  
+  /* Botón cerrar notificación */
+  .alm-notification-close {
+    background: none; /* Sin fondo */
+    border: none; /* Sin bordes */
+    color: #bdc3c7; /* Color gris */
+    cursor: pointer; /* Cursor tipo puntero */
+    margin-left: auto; /* Alineado a la derecha */
+  }
+  
+  /* ============================================= */
+  /* ==== CLASE PARA CUANDO HAY MODAL ABIERTO ==== */
+  /* ============================================= */
+  
+  .alm-modal-open {
+    overflow: hidden; /* Oculta el scroll del body */
+  }
+  
+  /* ============================================= */
+  /* ============= RESPONSIVE DESIGN ============= */
+  /* ============================================= */
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+    }
+    .sidebar:hover {
+        width: 200px;
+    }
+    .main-content {
+        margin-left: 60px;
+    }
+    .sidebar:hover~.main-content {
+        margin-left: 200px;
+    }
+    .submenu {
+        max-height: 0;
+        opacity: 0;
+    }
+    .sidebar ul li:hover .submenu {
+        max-height: 200px;
+        opacity: 1;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    #projectForm {
+        grid-template-columns: 1fr; /* Una sola columna en móviles */
+    }
+    #projectForm button {
+        grid-column: span 1; /* Ocupa una sola columna */
+    }
+  }
+  
+  /* ============================================= */
+  /* ============= RESPONSIVE DESIGN ============= */
+  /* ============================================= */
+  
+  @media (min-width: 768px) {
+    /* Restaurar estilos para tablets y desktop */
+    .alm-modal-dialog {
+      width: 85%; /* Más ancho en tablets */
+      margin: 0; /* Sin margen */
+    }
+    
+    .alm-modal-header {
+      padding: 20px;
+      flex-direction: row; /* Volver a fila en desktop */
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .alm-modal-title {
+      font-size: 1.5rem;
+    }
+    
+    .alm-modal-body {
+      padding: 20px;
+    }
+    
+    .alm-modal-footer {
+      padding: 15px 20px;
+      flex-direction: row; /* Botones en fila */
+      justify-content: flex-end;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .alm-modal-dialog {
+      width: 80%; /* Más ancho en pantallas grandes */
+    }
+  }
+  
+  /* Ajustes específicos para el grid de información en móviles */
+  .alm-info-grid {
+    grid-template-columns: 1fr; /* Una columna en móviles */
+  }
+  
+  @media (min-width: 576px) {
+    .alm-info-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+  }
+  
+  /* Ajustes para formularios en móviles */
+  .alm-form-grid {
+    grid-template-columns: 1fr; /* Una columna en móviles */
+  }
+  
+  @media (min-width: 768px) {
+    .alm-form-grid {
+      grid-template-columns: 1fr 1fr; /* Dos columnas en tablets/desktop */
+    }
+  }

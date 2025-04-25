@@ -7,200 +7,243 @@
     <title>Ingegases & Redes</title>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
 
 <body>
+    
     <header class="header">
         <div class="menu container">
             <nav class="navbar">
                 <ul>
-                    <li><a href="#"><i class="fas fa-home"></i><i class="fas fa-house-user hover-icon"></i>Inicio</a></li>
-                    <li><a href="#servicios"><i class="fas fa-cogs"></i><i class="fas fa-tools hover-icon"></i>Servicios</a></li>
-                    <li><a href="#productos"><i class="fas fa-box-open"></i><i class="fas fa-briefcase hover-icon"></i>Productos</a></li>
-                    <li><a href="#contacto"><i class="fas fa-envelope"></i><i class="fas fa-phone hover-icon"></i>Contacto</a></li>
+                    <li class="has-submenu">
+                        <a href="index.html#quienes_somos" class="icon-link"><i class="fas fa-building default-icon"></i><i class="fas fa-cog hover-icon"></i><span>Quiénes Somos</span></a>
+                        <ul class="submenu">
+                            <li><a href="experiencia.html">Acerca de Nosotros</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#servicios" class="icon-link"><i class="fas fa-cogs default-icon"></i><i class="fas fa-tools hover-icon"></i><span>Servicios</span></a>
+                        <ul class="submenu">
+                            <li><a href="medicinales.html">Medicinales</a></li>  
+                            <li><a href="industriales.html">Industriales</a></li>
+                            <li><a href="gases-especiales.html">Gases Especiales</a></li>
+                            <li><a href="plantas-estacion-llenado.html">Plantas y Estación de Llenado</a></li>
+                            <li><a href="tanques-tanqueros.html">Tanques y Tanqueros</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="experiencia.html" class="icon-link"><i class="fas fa-chart-line default-icon"></i><i class="fas fa-award hover-icon"></i><span>Experiencia</span></a></li>
+                    <li><a href="#contacto" class="icon-link"><i class="fas fa-envelope default-icon"></i><i class="fas fa-phone hover-icon"></i><span>Contacto</span></a></li>
                 </ul>
             </nav>
         </div>
         <div class="header-content container">
             <div class="header-txt">
-                <h1>Ingegases & Redes</h1>
-                <p>
-                    Somos una empresa especializada en el diseño, instalación y mantenimiento de sistemas médicos e
-                    industriales. Ofrecemos venta de equipos, suministro de gases y desarrollo de infraestructura
-                    hospitalaria. Nos comprometemos con la satisfacción de nuestros clientes, manteniendo altos
-                    estándares de calidad y promoviendo el bienestar de nuestros empleados, la comunidad y el medio
-                    ambiente.
-                </p>
-                <button class="boton-informacion">Información</button>
-            </div>
+                <h1>Ingegases & Redes s.a.s</h1>
+                <div class="highlight-container">
+                    <p class="highlight-text"></p>
         </div>
+
+         <button class="boton-login">Iniciar Sesión</button>
+
     </header>
 
-    <section class="general container">
-        <h2></h2>
-        <div class="general-content">
-            <div class="general-txt">
-                <h3>Nuestro Equipo</h3>
-                <p>
-                    Contamos con todo el respaldo de un equipo de Ingeniería y Profesional Administrativo necesarios
-                    para satisfacer sus necesidades, enfocados al cambio de acuerdo a las necesidades de nuestros
-                    clientes, esforzándonos en ser innovadores, suministrando productos con una avanzada tecnología y
-                    calidad.
-                </p>
-            </div>
-            <div id="servicios" class="general-txt">
-                <h3>Servicios</h3>
-                <p>
-                <p style="line-height: 5.;">
-                    * Servicios de fabricación, montaje, suministro e instalación de redes para gases medicinales e
-                    industriales.<br><br>
-                    * Mantenimiento y Montajes Medicinales e Industriales.<br><br>
-                    * Equipos de Proceso.<br><br>
-                    * Suministro de Gases.
-                </p>
-                </p>
-            </div>
-            <div class="general-txt">
-                <h3>Productos</h3>
-                <p>
-                <p style="line-height: 5.;"></p>
-                *Productos industriales<br><br>
-                *Productos Medicinales <br><br>
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section class="info-1">
-        <div class="info-content container">
-            <div id="tipos-servicios"></div>
-            <h2>TIPO DE SERVICIOS</h2>
-            <div class="info-services">
-                <div class="service">
-                    <h3 class="service-title">Servicios Médicos</h3>
-                    <div class="service-info">
-                        <ul>
-                            <li><strong>Suministro e Instalación de Redes:</strong> Diseñamos, suministramos e
-                                instalamos sistemas de redes para gases medicinales.</li>
-                            <li><strong>Mantenimiento y Montajes:</strong> Montaje y mantenimiento de equipos médicos.
-                            </li>
-                            <li><strong>Equipos de Procesos:</strong> Diseño e instalación de equipos médicos e
-                                industriales.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="service">
-                    <h3 class="service-title">Servicios Industriales</h3>
-                    <div class="service-info">
-                        <ul>
-                            <li><strong>Instalación de Tanques:</strong> Para gases del aire y CO2.</li>
-                            <li><strong>Mantenimiento de Termos:</strong> Servicio de mantenimiento.</li>
-                            <li><strong>Instalación de Redes Industriales:</strong> Para corte láser y más.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="info-2">
-        <div id="productos">
-        <div class="info-content container">
-            <h2>PRODUCTOS</h2>
-            <div class="products">
-                <div class="product">
-                    <h3>Accesorios de Oxigenoterapia y Vacío</h3>
-                    <ul>
-                        <li>Flujometros de oxígeno y aire</li>
-                        <li>Frascos de recolección con soporte, tapa y flotador</li>
-                        <li>Unidades de succión quirúrgica portátiles</li>
-                        <li>Reguladores de Presión</li>
-                        <li>Reguladores de Alta presión</li>
-                    </ul>
-                </div>
-                <div class="product">
-                    <h3>Equipos Secundarios</h3>
-                    <ul>
-                        <li>Tomas para suministro de gases medicinales</li>
-                        <li>Reguladores de vacío intermitentes</li>
-                        <li>Reguladores de vacío común</li>
-                        <li>Tomas con flujómetro Integrado</li>
-                        <li>Conectores y Trámos</li>
-                        <li>Unidad de Succión quirúrgica</li>
-                        <li>Sistema Venturi para vacío</li>
-                    </ul>
-                </div>
-                <div class="product">
-                    <h3>Soluciones Arquitectónicas</h3>
-                    <ul>
-                        <li>Consolas horizontales</li>
-                        <li>Módulos de pared</li>
-                        <li>Consolas verticales de 1 y 2 cuerpos</li>
-                        <li>Columnas de piso a techo</li>
-                        <li>Brazos de servicios con movimiento</li>
-                    </ul>
-                </div>
-                <div class="product">
-                    <h3>Equipos para Rehabilitación</h3>
-                    <ul>
-                        <li>Oxígeno Terapia</li>
-                        <li>Sillas de ruedas</li>
-                        <li>Cama hospitalaria</li>
-                        <li>Muletas</li>
-                        <li>Caminador</li>
-                        <li>Concentradores</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    </section>
-
-    <footer class="footer">
-        <footer id="contacto" class="footer"></footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Acerca de Nosotros</h4>
-                <img class="footer-image" src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Logo">
-                <p>Ingegases y redes S.A.S</p> 
-            </div>
-            <div class="footer-section">
-                <h4>Enlaces</h4>
-                <ul>
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Servicios</a></li>
-                    <li><a href="#">Productos</a></li>
-                    <li><a href="#">Contacto</a></li>
+    <section id="quienes_somos" class="about-section">
+        <div class="about-container">
+            <!-- Sección izquierda (Texto) -->
+            <div class="about-text">
+                <h2>Acerca de INGEGASES Y REDES S.A.S</h2>
+                <p><strong>INGEGASES Y REDES S.A.S</strong> Empresa colombiana, fundada en el año 2015, dedicada a la instalacion y mantenimiento de todo lo relacionado con gases, Especiales, Medicinales e Industriales</p>
+                
+                <p>Somos especialistas en el diseño, instalación y mantenimiento de sistemas para gases medicinales, industriales y especiales, ofreciendo soluciones integrales en procesos criogénicos.</p>
+                
+                <p>Nuestros servicios incluyen:</p>
+                
+                <ul class="services-list">
+                    <li>Mantenimiento de plantas de producción de gases</li>
+                    <li>Mantenimiento de estaciones de llenado</li>
+                    <li>Servicio técnico para equipos criogénicos</li>
+                    <li>Mantenimiento de Tanques Estacionarios y Tanqueros</li>
+                    <li>Asesoría técnica especializada</li>
                 </ul>
+    
+                <a href="experiencia.html" class="read-more-btn">LEER MÁS SOBRE NOSOTROS</a>
             </div>
-            <div class="footer-section">
-                <li><a href="#contacto"></li>
-                <h4>Contacto</h4>
-                <p>Dirección: Calle 12b Sur 52 A 77, Bogota</p>
-                <p>Teléfono: 311 238 26 36</p>
-                <p>Email: ingegasesyredes@gmail.com</p>
-            </div>
-            <div class="footer-section">
-                <h4>Redes Sociales</h4>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+    
+            <!-- Sección derecha (Galería de imágenes) -->
+            <div class="about-gallery">
+                <div class="gallery-stack">
+                    <div class="photo-card card-1">
+                        <img src="imagenes/Industreial2.jpg" alt="Técnicos soldando">
+                    </div>
+                    <div class="photo-card card-2">
+                        <img src="imagenes/gases1.PNG" alt="Gases">
+                    </div>
+                    <div class="photo-card card-3">
+                        <img src="imagenes/PlantasELLenado1.jpg" alt="Industrial">
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Ingegases. Todos los derechos reservados.</p>
+    </section>
+
+    <section class="ingegases-stats-section">
+        <div class="ingegases-stats-container">
+            <!-- Eslogan -->
+            <div class="ingegases-slogan-box">
+                <h2 class="ingegases-slogan-title">INGENIERÍA Y TECNOLOGÍA AVANZADA <br>PARA RESULTADOS QUE INSPIRAN CONFIANZA  </h2>
+                <p class="ingegases-slogan-text">Liderados por profesionales con amplia trayectoria, transformamos desafíos técnicos en soluciones eficientes, manteniendo estándares de calidad y desempeño en cada proyecto.</p>
+            </div>
+            
+            <!-- Estadísticas -->
+            <div class="ingegases-stats-grid">
+                <div class="ingegases-stat-card">
+                    <div class="ingegases-stat-number" data-count="15">0+</div>
+                    <div class="ingegases-stat-label">Años de Experiencia</div>
+                </div>
+                <div class="ingegases-stat-card">
+                    <div class="ingegases-stat-number" data-count="200">0+</div>
+                    <div class="ingegases-stat-label">Proyectos Ejecutados</div>
+                </div>
+                
+                
+                
+                
+            </div>
         </div>
-    </footer>
+    </section>
+        
 
 
-    </section />
+    
+<footer id="contacto" class="footer">
+    <div class="footer-content">
+        <div class="footer-grid">
+            <!-- Columna 1: Logo e información -->
+            <div class="footer-column logo-info">
+                <div class="logo-container">
+                    <img class="footer-logo" src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Logo Ingegases">
+                </div>
+                <div class="footer-info">
+                    <h3>Ingegases y Redes s.a.s</h3>
+                    <p class="company-description">Especialistas en instalación y mantenimiento de sistemas de gases y redes industriales con más de 10 años de experiencia.</p>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Cra. 54 #17a-69, Bogotá</p>
+                        <p><i class="fas fa-phone"></i> 311 238 26 36</p>
+                        <p><i class="fas fa-envelope"></i> ingegasesyredes@gmail.com</p>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Columna 2: Redes sociales -->
+            <div class="footer-column social-section">
+                <h3>Conéctate con Nosotros</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/Ingegasesyredes/?locale=es_LA" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="social-btn facebook" 
+                    aria-label="Facebook de Ingegases">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ingegasesyredes/?hl=es-la" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="social-btn instagram" 
+                    aria-label="Instagram de Ingegases">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/573112382636" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="social-btn whatsapp" 
+                    aria-label="WhatsApp de Ingegases">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
 
+                <div class="business-hours">
+                    <h4><i class="fas fa-building"></i> Sedes a Nivel Nacional</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52 A 77, Cali</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Cra 1 C2 No 47-67, Ciudadela 20 Julio Barranquilla</p>
+                    
+                </div>
+            </div>
+
+            <!-- Columna 3: Formulario de cotización -->
+            <div class="footer-column quotation-form">
+                <h3>¿Necesitas una Cotización?</h3>
+                <form id="cotizacionForm" class="quote-form" 
+                    action="https://formspree.io/f/ingegasesyredes@gmail.com" 
+                    method="POST">
+                    
+                    <!-- Campos del formulario (agrega 'name' a cada campo) -->
+                    <div class="input-group">
+                        <input type="text" name="nombre" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" name="email" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" name="telefono" placeholder="Teléfono/Celular">
+                    </div>
+                    <div class="input-group">
+                        <textarea name="mensaje" placeholder="Describe tu proyecto o necesidad"></textarea>
+                    </div>
+                    
+                    <!-- Configuración adicional de Formspree -->
+                    <input type="hidden" name="_subject" value="Nueva cotización desde el sitio web">
+                    <input type="hidden" name="_replyto" value="%email%"> <!-- Auto-respuesta al remitente -->
+                    
+                    <button type="submit" class="btn-quote">
+                        <span>Enviar Solicitud</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Columna 4: Ubicación -->
+            <div class="footer-column location">
+                <h3>Nuestra Sede Principal</h3>
+                <div class="map-wrapper">
+
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.7852446060936!2d-74.0837229246869!3d4.632550942081605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNMKwMzccNTcuMiJOIDc0wrAwNCc1OC4xIlc!5e0!3m2!1ses!2sco!4v1620000000000!5m2!1ses!2sco" 
+                        width="100%" 
+                        height="250" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy"
+                        class="google-map"
+                        aria-label="Mapa de ubicación de Ingegases"
+                    ></iframe>
+                    <div class="location-info">
+                        <p class="map-address">
+                            <i class="fas fa-map-marker-alt"></i> Calle 12 No 68-109, Bogotá
+                        </p>
+                        <a href="https://maps.google.com" class="btn-directions" target="_blank">
+                            <i class="fas fa-directions"></i> Cómo llegar
+                        </a>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Footer inferior -->
+    <div class="footer-bottom">
+        <div class="footer-legal">
+            <a href="#">Términos y condiciones</a>
+            <span class="divider">•</span>
+            <a href="#">Política de privacidad</a>
+            <span class="divider">•</span>
+            <a href="#">Aviso legal</a>
+        </div>
+        <p class="copyright">&copy; 2025 Ingegases y Redes s.a.s. Todos los derechos reservados. <span class="nit">NIT: 900901915</span></p>
+    </div>
+    
+    
     <script src="index.js"></script>
+    
 
 
 </body>
