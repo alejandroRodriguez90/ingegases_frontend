@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
     /* Estilos generales */
+    
     * {
     margin: 0;
     padding: 0;
@@ -29,8 +30,8 @@
     overflow-x: hidden;
     }
 
-     /* Efecto Loading Circular */
-     .loading-overlay {
+    /* Efecto Loading Circular */
+    .loading-overlay {
         position: fixed;
         top: 0;
         left: 0;
@@ -126,7 +127,6 @@
         50% { transform: scale(1.05); opacity: 1; }
     }
 
-
         
     .container {
     width: 100%;
@@ -135,7 +135,7 @@
     padding: 0 15px;
     }
 
-        /* ===== ESTILOS GENERALES DEL NAVBAR ===== */
+    /* ===== ESTILOS GENERALES DEL NAVBAR ===== */
 .top-navbar {
     position: fixed;
     top: 0;
@@ -411,207 +411,338 @@
     }
 }
     
-        /* Header */
-        .industrial-header {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('imagenes/industria.PNG');
-            background-size: 100% auto; 
-            background-position: center 70%; /* Más cerca del fondo */
-            background-repeat: no-repeat;
-            color: white;
-            padding: 40px 0px; 
-            text-align: center;
-            height: 350px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            
-        }
-        
-        
-        .industrial-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-        
-        .industrial-header p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        /* Sección de productos */
-        .products-section {
-            padding: 60px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 40px;
-            color: #2a6496;
-            position: relative;
-        }
-        
-        .section-title:after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 3px;
-            background: #e63946;
-            margin: 15px auto;
-        }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-        }
-        
-        .product-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .product-img {
-            height: 200px;
-            overflow: hidden;
-        }
-        
-        .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .product-card:hover .product-img img {
-            transform: scale(1.1);
-        }
-        
-        .product-content {
-            padding: 25px;
-        }
-        
-        .product-content h3 {
-            color: #e63946;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-        
-        .product-content p {
-            margin-bottom: 20px;
-            color: #666;
-        }
-        
-        .product-features {
-            margin: 20px 0;
-        }
-        
-        .product-features li {
-            margin-bottom: 8px;
-            list-style-type: none;
-            position: relative;
-            padding-left: 25px;
-        }
-        
-        .product-features li:before {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: #4CAF50;
-            position: absolute;
-            left: 0;
-        }
-        
-        /* Sección de aplicaciones */
-        .applications-section {
-            background: #e3f2fd;
-            padding: 60px 0;
-        }
-        
-        .applications-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        
-        .application-card {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .application-icon {
-            font-size: 2.5rem;
-            color: #2a6496;
-            margin-bottom: 15px;
-        }
-        
-        /* Normativas */
-        .standards-section {
-            padding: 60px 0;
-        }
-        
-        .standards-list {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .standards-list li {
-            margin-bottom: 15px;
-            padding-left: 25px;
-            position: relative;
-        }
-        
-        .standards-list li:before {
-            content: '\f05d';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: #2a6496;
-            position: absolute;
-            left: 0;
-        }
-        
-        /* CTA */
-        .cta-section {
-            background: #e63946;
-            color: white;
-            text-align: center;
-            padding: 60px 0;
-        }
-        
-        .cta-section h2 {
-            margin-bottom: 20px;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #e63946;
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .cta-button:hover {
-            background: #f8f9fa;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+.industrial-header {
+    /* Mantén todo tu fondo gradient/image existente */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('imagenes/industria.PNG');
+    background-size: 100% auto;
+    background-position: center 70%;
+    background-repeat: no-repeat;
+    color: white;
+    padding: 60px 20px; /* Aumenté padding vertical */
+    text-align: center;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative; /* Para pseudo-elemento opcional */
+}
+
+.industrial-header h1 {
+    font-size: 3rem; /* Tamaño aumentado */
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8); /* Sombra de texto */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    font-weight: 700; /* Negrita fuerte */
+}
+
+.industrial-header p {
+    font-size: 1.3rem; /* Tamaño aumentado */
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6; /* Mejor interlineado */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6); /* Sombra sutil */
+    font-weight: 300; /* Peso fino para contraste */
+}
+
+/* Opcional: Efecto brillo detrás del texto */
+.industrial-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+        /* ================================
+        SECCIÓN SERVICIOS (TEXTOS RESALTADOS)
+        ================================ */
+
+        .servicios-section {
+        padding: 100px 0;
+        position: relative;
+        background-color: transparent; /* Fondo transparente */
+        background-image: none; /* Elimina cualquier imagen de fondo */
         }
 
+
+        .servicios-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        /* --- Texto principal resaltado --- */
+        .servicios-info {
+            padding-right: 40px;
+        }
+
+        .servicios-info p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 25px;
+            /* Eliminado: background y box-shadow */
+            padding: 0; /* Restaurado a valor normal */
+        }
+
+        /* --- Lista de servicios mejorada --- */
+        .servicios-features {
+            list-style: none;
+            padding-left: 0;
+            margin: 30px 0;
+        }
+
+        .servicios-features li {
+            padding: 12px 0;
+            padding-left: 40px;
+            position: relative;
+            color: #444;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            /* Eliminado: background */
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border-left: 3px solid #c8b6a6; /* Cambiado a color kaki */
+        }
+
+        /* Icono más destacado */
+        .servicios-features li::before {
+            content: '▹';
+            position: absolute;
+            left: 15px;
+            color: #c8b6a6; /* Cambiado a color kaki */
+            font-size: 1.6rem;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        /* Efectos hover mejorados */
+        .servicios-features li:hover {
+            transform: translateX(8px);
+            background: rgba(200, 182, 166, 0.1); /* Cambiado a kaki pastel */
+            /* Eliminado: box-shadow azul */
+        }
+
+        .servicios-features li:hover::before {
+            color: #a38f7a; /* Cambiado a kaki más oscuro */
+        }
+
+
+/* 
+================================
+GALERÍA DE IMÁGENES (ESTILO NAIPE)
+================================
+*/
+
+/* Contenedor de la galería */
+.gallery-stack {
+    position: relative;
+    height: 500px; /* Altura ajustable */
+    width: 100%;
+    margin-left: 80px; /* Nuevo: Desplaza todo el contenedor a la derecha */
+}
+
+/* Estilos base para tarjetas de imagen */
+.photo-card {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    aspect-ratio: 4/5;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Imágenes dentro de las tarjetas */
+.photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Posicionamiento de las tarjetas */
+.card-1 {
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%) rotate(5deg);
+    z-index: 2;
+}
+
+.card-2 {
+    top: 50%;
+    right: 80px;
+    transform: translateY(-50%) rotate(-3deg);
+    z-index: 3;
+    width: 90%;
+}
+
+.card-3 {
+    top: 50%;
+    right: 160px;
+    transform: translateY(-50%) rotate(2deg);
+    z-index: 1;
+    width: 85%;
+}
+
+/* Efectos hover */
+.photo-card:hover {
+    z-index: 10;
+    transform: translateY(-50%) scale(1.05) rotate(0deg);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Efectos hover (solo para dispositivos con hover) */
+@media (hover: hover) {
+    .photo-card:hover {
+        z-index: 10;
+        transform: translateY(-50%) scale(1.05) rotate(0deg);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+}
+
+/* ================================
+MEDIA QUERIES PARA RESPONSIVE
+================================ */
+
+/* Tabletas (768px - 1024px) */
+@media (min-width: 768px) {
+    .gallery-stack {
+        height: 450px;
+        margin-left: 40px;
+    }
+    
+    .photo-card {
+        width: 70%;
+    }
+    
+    .card-2 {
+        right: 60px;
+        width: 80%;
+    }
+    
+    .card-3 {
+        right: 120px;
+        width: 75%;
+    }
+}
+
+/* Desktop (1025px en adelante) */
+@media (min-width: 1025px) {
+    .gallery-stack {
+        height: 500px;
+        margin-left: 80px;
+    }
+    
+    .photo-card {
+        width: 100%;
+    }
+    
+    .card-2 {
+        right: 80px;
+        width: 90%;
+    }
+    
+    .card-3 {
+        right: 160px;
+        width: 85%;
+    }
+}
+
+/* Móviles pequeños (hasta 480px) */
+@media (max-width: 480px) {
+    .gallery-stack {
+        height: 350px;
+    }
+    
+    .photo-card {
+        width: 85%;
+        border-radius: 12px;
+    }
+    
+    /* Cambio a disposición vertical en móviles */
+    .card-1, .card-2, .card-3 {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%) rotate(0deg);
+    }
+    
+    .card-1 {
+        top: 0;
+    }
+    
+    .card-2 {
+        top: 100px;
+    }
+    
+    .card-3 {
+        top: 200px;
+    }
+}
+
+.section-title {
+    font-size: 2.2rem;
+    color: #010101;
+    margin-bottom: 50px; /* Espacio aumentado */
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #fa5454;
+}
+
+/* Sección de aplicaciones */
+.applications-section {
+    background: #def1ff;
+    padding: 80px 0;
+    text-align: center; /* Centrado general para títulos/descripciones */
+}
+
+.applications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px; /* Opcional: para contener el ancho */
+    margin: 0 auto; /* Centra el grid */
+    padding: 0 20px; /* Espaciado lateral */
+}
+
+.application-card {
+    background: white;
+    padding: 35px;
+    border-radius: 8px;
+    text-align: center; /* Texto centrado dentro de cada tarjeta */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrado horizontal de elementos hijos */
+}
+
+.application-icon {
+    font-size: 2.5rem;
+    color: #2a6496;
+    margin-bottom: 15px;
+}
+
+        
         /* ========== FOOTER BLANCO PROFESIONAL ========== */
         .footer {
             background: #ffffff;
@@ -951,7 +1082,7 @@
     </style>
     </head>
     <body>
-
+        
         <div class="loading-overlay">
             <div class="loading-circle">
                 <div class="circle"></div>
@@ -960,7 +1091,6 @@
                 </div>
             </div>
         </div>
-
         
         <nav class="top-navbar">
             <div class="nav-container">
@@ -994,78 +1124,44 @@
                 </div>
             </div>
         </nav>
-
-        <!-- Header Hero -->
-        <header class="industrial-header">
+        <!-- Header Hero (agregado id para navegación) -->
+        <header id="inicio" class="industrial-header">
             <div class="container">
                 <h1>Gases Industriales</h1>
                 <p>Soluciones integrales para procesos industriales con los más altos estándares de calidad y seguridad.</p>
             </div>
         </header>
 
-        <!-- Productos principales -->
-        <section class="products-section">
-            <div class="container">
-                
-                <div class="products-grid">
-                    <!-- Nitrógeno Industrial -->
-                    <div class="product-card">
-                        <div class="product-img">
-                            <img src="imagenes/Industreial2.jpg" alt="Nitrógeno Industrial">
+        <section class="servicios-section">
+            <div class="servicios-container">
+                <!-- Texto a la izquierda -->
+                <div class="servicios-info">
+                    <p>Servicios de fabricación, montaje, suministro e instalación de redes para gases industriales.</p>
+                    <ul class="servicios-features">
+                        <li>Mantenimiento en redes de gases industriales.</li>
+                        <li>Diseño de redes de gases industriales.</li>  
+                        <li>Venta y suministro de equipos.</li>
+                        <li>Asesoría técnica especializada.</li>
+                    </ul>
+                </div>
+            
+                <!-- Galería de imágenes a la derecha (3 apiladas) -->
+                <div class="servicios-gallery">
+                    <div class="gallery-stack">
+                        <div class="photo-card card-1">
+                            <img src="imagenes/Industreial2.jpg" alt="Redes de gases industriales">
                         </div>
-                        <div class="product-content">
-                            
-                            <p>Servicios de fabricación, montaje, suministro e instalación de redes para gases industriales.</p>
-                            
-                            <ul class="product-features">
-                                <li>Mantenimiento en redes de gases industriales.</li>
-                                <li>Diseño de redes de gases industriales.</li>
-                                <li>Venta y suministro de equipos.</li>
-                                <li>Asesoría técnica especializada</li>
-                            </ul>
+                        <div class="photo-card card-3">
+                            <img src="imagenes/Industrial3.jpg" alt="Equipos industriales">
                         </div>
-                    </div>
-                    
-                    <!-- Oxígeno Industrial -->
-                    <div class="product-card">
-                        <div class="product-img">
-                            <img src="imagenes/Industrial3.jpg" alt="Oxígeno Industrial">
-                        </div>
-                        <div class="product-content">
-                            <h3>Oxígeno Industrial</h3>
-                            <p>Comburente esencial para procesos de combustión, corte y tratamiento de aguas.</p>
-                            
-                            <ul class="product-features">
-                                <li>Pureza: 90% a 99.5%</li>
-                                <li>Sistemas de generación in situ</li>
-                                <li>Para corte y soldadura oxiacetilénica</li>
-                                <li>Tratamiento de aguas residuales</li>
-                            </ul>
+                        <div class="photo-card card-2">
+                            <img src="imagenes/Industrial1.jpg" alt="Instalación técnica">
                         </div>
                     </div>
-                    
-                    <!-- Acetileno -->
-                    <div class="product-card">
-                        <div class="product-img">
-                            <img src="imagenes/Industrial1.jpg" alt="Acetileno">
-                        </div>
-                        <div class="product-content">
-                            <h3>Acetileno</h3>
-                            <p>Combustible para soldadura y corte de metales con la llama más caliente disponible.</p>
-                            
-                            <ul class="product-features">
-                                <li>Alta pureza para soldadura profesional</li>
-                                <li>Cilindros especiales con material poroso</li>
-                                <li>Seguridad garantizada en manipulación</li>
-                                <li>Asesoría técnica especializada</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    
                 </div>
             </div>
         </section>
+                                                                                                                
 
         <!-- Aplicaciones -->
         <section class="applications-section">
@@ -1077,7 +1173,6 @@
                             <i class="fas fa-wrench"></i>
                         </div>
                         <h3>Metalurgia</h3>
-                        
                     </div>
                     
                     <div class="application-card">
@@ -1085,7 +1180,6 @@
                             <i class="fas fa-industry"></i>
                         </div>
                         <h3>Manufactura</h3>
-                        
                     </div>
                     
                     <div class="application-card">
@@ -1093,7 +1187,6 @@
                             <i class="fas fa-utensils"></i>
                         </div>
                         <h3>Alimentos</h3>
-                        
                     </div>
                     
                     <div class="application-card">
@@ -1101,7 +1194,6 @@
                             <i class="fas fa-flask"></i>
                         </div>
                         <h3>Química</h3>
-                        
                     </div>
                     
                     <div class="application-card">
@@ -1109,7 +1201,6 @@
                             <i class="fas fa-microchip"></i>
                         </div>
                         <h3>Electrónica</h3>
-                        
                     </div>
                     
                     <div class="application-card">
@@ -1117,23 +1208,20 @@
                             <i class="fas fa-tint"></i>
                         </div>
                         <h3>Tratamiento de Aguas</h3>
-                        
                     </div>
+                    
                     <div class="application-card">
                         <div class="application-icon">
-                            <i class="fas fa-tint"></i>
+                            <i class="fas fa-cogs"></i>
                         </div>
-                        <h3>procesos industriales.</h3>
-
+                        <h3>Procesos Industriales</h3>
                     </div>
+                    
                     <div class="application-card">
                         <div class="application-icon">
-                            <i class="fas fa-tint"></i>
+                            <i class="fas fa-tractor"></i>
                         </div>
-                        <h3>Agricola</h3>
-
-                        
-                        
+                        <h3>Agrícola</h3>
                     </div>
                 </div>
             </div>
@@ -1141,7 +1229,6 @@
 
         
 
-        <!-- Footer -->
         <footer id="contacto" class="footer">
             <div class="footer-content">
                 <div class="footer-grid">
@@ -1152,7 +1239,7 @@
                         </div>
                         <div class="footer-info">
                             <h3>Ingegases y Redes s.a.s</h3>
-                            <p class="company-description">Especialistas en instalación y mantenimiento de sistemas de gases y redes industriales con más de 10 años de experiencia.</p>
+                            <p class="company-description">Especialistas en instalación y mantenimiento de sistemas de gases y redes industriales con más de 15 años de experiencia.</p>
                             <div class="contact-info">
                                 <p><i class="fas fa-map-marker-alt"></i> Cra. 54 #17a-69, Bogotá</p>
                                 <p><i class="fas fa-phone"></i> 311 238 26 36</p>
@@ -1267,25 +1354,25 @@
                 </div>
                 <p class="copyright">&copy; 2025 Ingegases y Redes s.a.s. Todos los derechos reservados. <span class="nit">NIT: 900901915</span></p>
             </div>
-        </footer>
 
-        <script>
+    </div>
+
+    <script>
         
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    const loader = document.querySelector('.loading-overlay');
-                    if (loader) {
-                        loader.classList.add('fade-out');
-                        
-                        // Elimina el loader después de la animación
-                        setTimeout(() => {
-                            loader.remove();
-                        }, 800);
-                    }
-                }, 500); // Ajusta este tiempo según tu carga real
-            });
-        
-            </script>
-        
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            const loader = document.querySelector('.loading-overlay');
+            if (loader) {
+                loader.classList.add('fade-out');
+                
+                // Elimina el loader después de la animación
+                setTimeout(() => {
+                    loader.remove();
+                }, 800);
+            }
+        }, 500); // Ajusta este tiempo según tu carga real
+    });
+
+    </script>
     </body>
     </html>

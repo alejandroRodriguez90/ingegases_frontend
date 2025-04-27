@@ -421,7 +421,69 @@
             color: #4b5563;
             font-weight: 500;
         }
-        
+
+    .clientes-header {
+        padding: 200px 10px;
+        text-align: center;
+        position: relative;
+        background-image: url('imagenes/companias.PNG');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+    
+    /* Mejoras de imagen */
+    image-rendering: -webkit-optimize-contrast; /* Chrome */
+    image-rendering: crisp-edges; /* Firefox */
+    -ms-interpolation-mode: nearest-neighbor; /* IE */
+    
+    /* Mejora de calidad sutil */
+    filter: contrast(1.1) brightness(0.95);
+    
+    /* Fondo semitransparente optimizado */
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 25, 40, 0.78);
+        z-index: 1;
+    }
+}
+
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.clientes-header h1 {
+    font-size: 2.3rem;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #fff;
+    line-height: 1.4;
+    text-shadow: 0 2px 4px rgba(108, 108, 108, 0.25);
+}
+
+@media (max-width: 768px) {
+    .clientes-header {
+        padding: 120px 10px;
+        filter: contrast(1.05) brightness(0.98);
+    }
+    
+    .clientes-header h1 {
+        font-size: 1.7rem;
+        padding: 0 10px;
+    }
+}
+  
         #map {
             height: 400px;
             border-radius: 16px;
@@ -1059,7 +1121,16 @@
         // Verificar visibilidad al cargar y al hacer scroll
         window.addEventListener('load', checkVisibility);
         window.addEventListener('scroll', checkVisibility);
+
     </script>
+
+
+    <section class="clientes-header">
+        <div class="header-content">
+            <h1>CON LA CONFIANZA DE +8 CLIENTES Y PROYECTOS EXITOSOS</h1>
+        </div>
+    </section>
+
 
     <footer id="contacto" class="footer">
     <div class="footer-content">
@@ -1071,7 +1142,7 @@
                 </div>
                 <div class="footer-info">
                     <h3>Ingegases y Redes s.a.s</h3>
-                    <p class="company-description">Especialistas en instalación y mantenimiento de sistemas de gases y redes industriales con más de 10 años de experiencia.</p>
+                    <p class="company-description">Especialistas en instalación y mantenimiento de sistemas de gases y redes industriales con más de 15 años de experiencia.</p>
                     <div class="contact-info">
                         <p><i class="fas fa-map-marker-alt"></i> Cra. 54 #17a-69, Bogotá</p>
                         <p><i class="fas fa-phone"></i> 311 238 26 36</p>
