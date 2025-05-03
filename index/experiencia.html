@@ -422,67 +422,92 @@
             font-weight: 500;
         }
 
-    .clientes-header {
-        padding: 200px 10px;
-        text-align: center;
-        position: relative;
-        background-image: url('imagenes/Empresas.PNG');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-    
-    /* Mejoras de imagen */
-    image-rendering: -webkit-optimize-contrast; /* Chrome */
-    image-rendering: crisp-edges; /* Firefox */
-    -ms-interpolation-mode: nearest-neighbor; /* IE */
-    
-    /* Mejora de calidad sutil */
-    filter: contrast(1.1) brightness(0.95);
-    
-    /* Fondo semitransparente optimizado */
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(10, 25, 40, 0.78);
-        z-index: 1;
-    }
+        .clientes-header {
+    padding: 320px 50px;
+    text-align: center;
+    position: relative;
+    background-image: url('imagenes/gaseras.PNG');
+    background-size: 90% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Otras propiedades... */
 }
 
-
+/* Contenedor del texto - Asegúrate que este elemento existe en tu HTML */
 .header-content {
     position: relative;
     z-index: 2;
     max-width: 900px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 30px 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    backdrop-filter: blur(1px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    
+    /* Estado inicial para la animación */
+    opacity: 0;
+    transform: translateY(30px);
+    
+    /* Animación aplicada directamente */
+    animation: appearAnimation 1s ease-out forwards;
+    animation-delay: 0.5s;
 }
 
+/* Texto principal */
 .clientes-header h1 {
-    font-size: 2.3rem;
+    font-size: 2rem;
     margin: 0;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-weight: 900;
+    letter-spacing: 2px;
     color: #fff;
-    line-height: 1.4;
-    text-shadow: 0 2px 4px rgba(108, 108, 108, 0.25);
+    line-height: 1.3;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    
+    /* Animación adicional para el texto */
+    opacity: 0;
+    animation: textAppear 0.8s ease-out forwards;
+    animation-delay: 1s; /* Retraso para que aparezca después del contenedor */
 }
 
+/* Definición de animaciones */
+@keyframes appearAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes textAppear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Versión móvil */
 @media (max-width: 768px) {
     .clientes-header {
-        padding: 120px 10px;
-        filter: contrast(1.05) brightness(0.98);
+        padding: 180px 20px;
+    }
+    
+    .header-content {
+        animation-duration: 0.8s;
+        animation-delay: 0.3s;
     }
     
     .clientes-header h1 {
-        font-size: 1.7rem;
-        padding: 0 10px;
+        animation-delay: 0.6s;
     }
 }
+
   
         #map {
             height: 400px;
@@ -996,7 +1021,7 @@
                         <div class="ingegases-stat-label">Años de Experiencia</div>
                     </div>
                     <div class="ingegases-stat-card">
-                        <div class="ingegases-stat-number" data-count="200">0+</div>
+                        <div class="ingegases-stat-number" data-count="500">0+</div>
                         <div class="ingegases-stat-label">Proyectos Ejecutados</div>
                     </div>
                 </div>
@@ -1181,7 +1206,7 @@
                 <div class="business-hours">
                     <h4><i class="fas fa-building"></i> Sedes a Nivel Nacional</h4>
                     <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52 A 77, Cali</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Calle 12 # 68 - 109, Cali</p>
                     <p><i class="fas fa-map-marker-alt"></i> Cra 1 C2 No 47-67, Ciudadela 20 Julio Barranquilla</p>
                     
                 </div>
