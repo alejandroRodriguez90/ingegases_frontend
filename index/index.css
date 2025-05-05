@@ -20,122 +20,98 @@
     text-decoration: none;
     list-style: none;
 }
-/* 
-===========================================
-ESTILOS GENERALES DEL CUERPO DEL DOCUMENTO
-===========================================
-- Fondo de pantalla con imagen
-- Configuración de tipografía base
-- Ajustes de visualización completa
-*/
+
 /* ========== ESTILOS DEL BODY ========== */
 body {
-    background-image: url('imagenes/IYRindustria1.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    min-height: 100vh;
     font-family: "Poppins", sans-serif;
     color: var(--text-color);
     overflow-x: hidden;
-}
-
-/* Filtro oscuro sobre la imagen de fondo */
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.3); /* Negro con 50% de opacidad */
-    z-index: -1; /* Coloca detrás del contenido */
-}
-/*
-============================
-CONTENEDOR PRINCIPAL DE PÁGINA
-============================
-- Define el ancho máximo del contenido
-- Centrado horizontal automático
-- Padding lateral para espacio en los bordes
-*/
-.container {
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: 0 20px;
+    background-color: #000;
 }
 
 /* 
 ==================
 ESTILOS DE CABECERA
 ==================
-- Configuración de altura completa
-- Posicionamiento de fondo
-- Centrado de elementos hijos
 */
 .header {
+    width: 100%;
     height: 100vh;
+    position: relative;
+    overflow: hidden;
+    
+    /* Fondo con imagen */
+    background-image: url('imagenes/IYRindustria1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Capa oscura sobre la imagen */
+.header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+/* Contenido del header */
+.header-content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
 }
+
+/* Media Queries para diferentes tamaños */
+@media (max-width: 768px) {
+    .header {
+        background-attachment: scroll; /* Desactiva fixed en móviles */
+        height: 80vh; /* Altura menor en móviles */
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        height: 70vh;
+        min-height: 300px;
+    }
+    
+    .header-content {
+        padding: 15px;
+        text-align: center; /* Centrar texto en móviles */
+    }
+}
+
 /* 
 =====================
-ESTILOS DEL MENÚ SUPERIOR
+ESTILOS DEL NAVBAR
 =====================
-- Posicionamiento fijo en parte superior
-- Flexbox para alineación
-- Z-index para superposición
 */
 .menu {
-    position: absolute; /* Posicionamiento absoluto */
-    top: 0; /* Alineado arriba */
-    left: 0; /* Alineado a la izquierda */
-    right: 0; /* Alineado a la derecha */
-    display: flex; /* Activa flexbox */
-    align-items: center; /* Centrado vertical */
-    justify-content: center; /* Centrado horizontal */
-    z-index: 100; /* Asegura que esté encima */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    padding-top: 0px;
 }
 
-/* Ajustes para pantallas más pequeñas */
-@media (max-width: 768px) {
-    .container {
-        padding: 0 10px;
-    }
-
-    .menu {
-        flex-direction: column;
-        align-items: center;
-        padding: 0px;
-    }
-
-    .header {
-        padding-top: 60px;
-    }
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
-/* 
-==================================
-ESTILOS DE LA BARRA DE NAVEGACIÓN
-==================================
-- Diseño de lista horizontal
-- Efectos visuales con sombras y bordes
-- Espaciado y dimensiones específicas
-
-
-/* 
-================================================================================================
-BARRA DE NAVEGACIÓN MEJORADA
-============================================================================================
-*/
-
-html {
-    scroll-behavior: smooth;
-}
-
-/* ESTILOS PRINCIPALES DEL NAVBAR */
 .navbar ul {
     display: flex;
     justify-content: center;
@@ -145,31 +121,22 @@ html {
     border-radius: 0 0 50px 50px;
     padding: clamp(20px, 4vw, 35px) clamp(30px, 8vw, 75px) clamp(15px, 3vw, 20px);
     width: min(95%, 900px);
-    height: auto;
     list-style: none;
-    margin: 0 auto;
+    margin: 0;
     align-items: center;
     backdrop-filter: blur(90px);
     transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.3);
-    position: relative;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    overflow: visible;
-    perspective: 1000px;
-    transform-style: preserve-3d;
-    border-top: none;
     box-shadow: 
         0 3px 0 #000000,
         0 20px 40px rgba(39, 39, 39, 1),
         inset 0 -8px 20px rgba(0, 0, 0, 0.8),
         inset 0 6px 8px rgba(255, 255, 255, 0.1);
-    z-index: 1000;
+    position: relative;
+    z-index: 1001;
 }
 
-/* Efectos hover y active */
 .navbar ul:hover {
-    transform: translateX(-50%) translateY(-2px);
+    transform: translateY(-2px);
     box-shadow: 
         0 5px 0 #000000,
         0 25px 50px rgba(39, 39, 39, 1),
@@ -178,7 +145,7 @@ html {
 }
 
 .navbar ul:active {
-    transform: translateX(-50%) translateY(2px);
+    transform: translateY(2px);
     box-shadow: 
         0 2px 0 #000,
         0 5px 15px rgba(0,0,0,0.4),
@@ -186,7 +153,6 @@ html {
         inset 0 3px 10px rgba(255,255,255,0.05);
 }
 
-/* Elementos de la lista */
 .navbar li {
     margin: 0 clamp(10px, 2vw, 20px);
     position: relative;
@@ -194,7 +160,6 @@ html {
     flex-shrink: 0;
 }
 
-/* Enlaces principales */
 .navbar a {
     color: #ffffff;
     font-weight: 500;
@@ -237,7 +202,6 @@ html {
     width: 100%;
 }
 
-/* Efectos de iconos */
 .navbar a i:first-child {
     opacity: 1;
 }
@@ -256,12 +220,10 @@ html {
     opacity: 1;
 }
 
-/* Efecto click */
 .navbar li:active {
     transform: translateY(2px) scale(0.98);
 }
 
-/* Borde 3D */
 .navbar ul::after {
     content: '';
     position: absolute;
@@ -278,10 +240,10 @@ html {
     pointer-events: none;
 }
 
-/* SUBMENÚ - VERSIÓN RESPONSIVA */
+/* SUBMENÚ */
 .navbar .submenu {
     position: absolute;
-    top: calc(100% + clamp(8px, 1.5vw, 12px));
+    top: calc(100% + clamp(20px, 1.5vw, 12px));
     left: 50%;
     transform: translateX(-50%) translateY(-10px);
     background: 
@@ -353,7 +315,36 @@ html {
     transform: translateY(1px);
 }
 
-/* SCROLL HORIZONTAL PARA PANTALLAS MUY PEQUEÑAS */
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 15px 20px;
+        border-radius: 0 0 30px 30px;
+    }
+    
+    .navbar li {
+        margin: 5px 10px;
+    }
+    
+    .submenu {
+        position: static;
+        width: 100%;
+        transform: none !important;
+        margin-top: 5px;
+        border-radius: 0 0 15px 15px;
+        opacity: 1;
+        visibility: visible;
+        display: none;
+    }
+    
+    .navbar li.has-submenu:hover .submenu,
+    .navbar li.has-submenu:focus-within .submenu {
+        display: block;
+    }
+}
+
 @media (max-width: 480px) {
     .navbar ul {
         justify-content: flex-start;
@@ -373,28 +364,22 @@ BOTON LOGIN
 */
 .boton-login {
     display: block;
-    margin: 200px auto 0; /* Reducir margen */
+    margin: 200px auto 0;
     padding: 15px 30px;
-
-    /* Base 3D con gradiente negro mejorado */
     background: 
         linear-gradient(145deg, #050505, #151515) padding-box,
         linear-gradient(145deg, #494949, #2d2d2d) border-box;
-
     color: #f5f5f5;
     border: 1px solid transparent;
     border-radius: 12px;
     font-size: 1.1rem;
     font-weight: 700;
-    cursor: pointer;  /* Asegura que el cursor cambie al pasar el ratón */
-
-    /* Sistema de sombras 3D mejorado */
+    cursor: pointer;
     box-shadow:
-        0 5px 0 #000000,  /* Sombra base de profundidad */
-        0 15px 30px rgba(39, 39, 39, 0.9),  /* Sombra ambiental */
-        inset 0 -8px 15px rgba(0, 0, 0, 0.7),  /* Sombras internas */
-        inset 0 4px 6px rgba(236, 235, 235, 0.08);  /* Brillos superiores */
-
+        0 5px 0 #000000,
+        0 15px 30px rgba(39, 39, 39, 0.9),
+        inset 0 -8px 15px rgba(0, 0, 0, 0.7),
+        inset 0 4px 6px rgba(236, 235, 235, 0.08);
     transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.3);
     position: relative;
     z-index: 10;
@@ -402,7 +387,12 @@ BOTON LOGIN
     overflow: hidden;
     perspective: 1000px;
     transform-style: preserve-3d;
-    -webkit-tap-highlight-color: transparent; /* Elimina el resaltado azul en dispositivos táctiles */
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Nuevas propiedades para responsive */
+    width: auto; /* Ancho automático */
+    max-width: 100%; /* No exceder el ancho del contenedor */
+    white-space: nowrap; /* Evitar salto de línea */
 }
 
 /* Efecto de hundimiento ultra realista */
@@ -466,6 +456,8 @@ BOTON LOGIN
     pointer-events: none;
 }
 
+
+
 /* 
 ================================
 ESTILOS DEL CONTENIDO PRINCIPAL
@@ -513,30 +505,6 @@ EFECTO DE IMAGEN EN TEXTO (h1)
 }
 
 
-
-/* Media queries para ajustes específicos en diferentes tamaños de pantalla */
-@media (max-width: 1200px) {
-    .header-txt h1 {
-        font-size: 7vw;
-        margin-top: 15vh;
-    }
-}
-
-@media (max-width: 768px) {
-    .header-txt h1 {
-        font-size: 10vw;
-        background-size: 60%;
-        margin-top: 10vh;
-    }
-}
-
-@media (max-width: 480px) {
-    .header-txt h1 {
-        font-size: 12vw;
-        background-size: 80%;
-        margin-top: 8vh;
-    }
-}
 /* 
 ================================
 EFECTO DE PROFUNDIDAD 3D
@@ -576,10 +544,24 @@ SECCION QUIENES SOMOS
 
 /* Contenedor principal de la sección */
 .about-section {
-    padding: 100px 0; /* Espaciado vertical grande */
-    background-image: url('imagenes/Blanco.PNG'); /* Imagen de fondo */
-    position: relative; /* Para posicionamiento de elementos hijos */
-    overflow: hidden; /* Oculta cualquier desbordamiento */
+    /* Configuración de fondo completa */
+    background-image: url('imagenes/Blanco.PNG');
+    background-size: 100% auto; /* Cubre el 100% del ancho */
+    background-position: center top; /* Alineación superior */
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    
+    /* Dimensiones y espaciado */
+    padding: 100px 0;
+    min-height: 500px; /* Altura mínima recomendada */
+    width: 100%;
+    
+    /* Posicionamiento */
+    position: relative;
+    overflow: hidden;
+    
+    /* Respaldo visual */
+    background-color: white; /* Color similar a tu imagen */
 }
 
 /* Contenedor del contenido (texto + imágenes) */
@@ -713,6 +695,7 @@ SECCION QUIENES SOMOS
     left: 100%; /* Mueve el brillo a la derecha */
 }
 
+
 /* 
 ================================
 GALERÍA DE IMÁGENES - ESTILOS FINALES
@@ -803,122 +786,6 @@ Posicionamiento de las tarjetas en efecto naipe horizontal
 
 /* 
 ================================
-DISEÑO RESPONSIVE - AJUSTES PARA DIFERENTES PANTALLAS
-================================
-*/
-
-/* Pantallas grandes (hasta 1200px) */
-@media (max-width: 1200px) {
-    .about-container {
-        gap: 40px; /* Reduce el espacio entre columnas */
-    }
-}
-
-/* Tabletas (hasta 992px) */
-@media (max-width: 992px) {
-    .about-container {
-        grid-template-columns: 1fr; /* Cambia a una columna */
-        gap: 30px; /* Reduce el espacio */
-        padding: 0 30px; /* Ajusta el padding */
-    }
-    
-    .about-text {
-        padding-right: 0; /* Elimina padding derecho */
-        text-align: center; /* Centra el texto */
-    }
-    
-    /* Centra el subrayado del título */
-    .about-text h2::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    /* Ajustes para la galería */
-    .gallery-stack {
-        height: 400px; /* Altura fija */
-        margin-top: 40px; /* Espacio superior */
-        margin-left: 0; /* Elimina margen izquierdo */
-    }
-    
-    .photo-card {
-        width: 65%; /* Reduce el ancho */
-    }
-    
-    /* Reposicionamiento vertical para móviles */
-    .card-1 {
-        top: 0;
-        right: 50%;
-        transform: translateX(50%) rotate(5deg);
-    }
-    
-    .card-2 {
-        top: 100px;
-        right: 50%;
-        transform: translateX(50%) rotate(-3deg);
-    }
-    
-    .card-3 {
-        top: 200px;
-        right: 50%;
-        transform: translateX(50%) rotate(2deg);
-    }
-}
-
-/* Tabletas pequeñas (hasta 768px) */
-@media (max-width: 768px) {
-    .about-section {
-        padding: 80px 0; /* Reduce el padding vertical */
-    }
-    
-    .about-text h2 {
-        font-size: 2.4rem; /* Reduce el tamaño del título */
-    }
-    
-    .gallery-stack {
-        height: 380px; /* Altura reducida */
-    }
-    
-    .photo-card {
-        width: 75%; /* Ancho aumentado */
-    }
-}
-
-/* Móviles (hasta 576px) */
-@media (max-width: 576px) {
-    .about-container {
-        padding: 0 20px; /* Reduce el padding */
-    }
-    
-    .about-text h2 {
-        font-size: 2.2rem; /* Título más pequeño */
-    }
-    
-    .gallery-stack {
-        height: 350px; /* Altura reducida */
-    }
-    
-    .photo-card {
-        width: 85%; /* Ancho casi completo */
-        border-radius: 12px; /* Bordes menos redondeados */
-    }
-    
-    /* Ajuste de posiciones */
-    .card-1 {
-        top: 0;
-    }
-    
-    .card-2 {
-        top: 90px;
-    }
-    
-    .card-3 {
-        top: 180px;
-    }
-}
-
-
-/* 
-================================
 SECCIÓN ESTADÍSTICAS INGEGASES
 Diseño compatible con el tema principal
 ================================
@@ -927,11 +794,61 @@ Diseño compatible con el tema principal
 /* Contenedor principal */
 .ingegases-stats-section {
     padding: 100px 0;
-    background-color: rgba(255, 255, 255, 0.7); /* Fondo oscuro semitransparente */
     position: relative;
-    overflow: hidden;
-    border-top: 1px solid rgba(244, 251, 50, 0.2); /* Borde superior amarillo */
-    border-bottom: 1px solid rgba(244, 251, 50, 0.2); /* Borde inferior amarillo */
+    border-top: 1px solid rgba(244, 251, 50, 0.2);
+    border-bottom: 1px solid rgba(244, 251, 50, 0.2);
+    /* Hereda la misma imagen de fondo fija del header */
+    background-image: url('imagenes/IYRindustria1.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+    /* Asegura que el contenido esté por encima */
+    z-index: 1;
+}
+
+/* Filtro oscuro para mejorar legibilidad */
+.ingegases-stats-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(144, 144, 144, 0.7); /* Ajusta esta opacidad según necesites */
+    z-index: -1;
+}
+
+/* MEDIA QUERIES PARA RESPONSIVE */
+
+/* Tablets (mejor rendimiento) */
+@media (max-width: 1024px) {
+    .ingegases-stats-section {
+        background-attachment: scroll; /* Elimina parallax en tablets */
+        padding: 60px 0;
+    }
+    
+    .ingegases-stats-section::before {
+        background-color: rgba(144, 144, 144, 0.8); /* Más opaco para mejor legibilidad */
+    }
+}
+
+/* Móviles grandes */
+@media (max-width: 768px) {
+    .ingegases-stats-section {
+        padding: 50px 0;
+        background-position: center 30%; /* Ajuste de posición vertical */
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+    .ingegases-stats-section {
+        padding: 40px 0;
+    }
+    
+    .ingegases-stats-section::before {
+        background-color: rgba(144, 144, 144, 0.85); /* Aún más opaco en móviles */
+    }
 }
 
 /* Contenedor interno */
@@ -1478,5 +1395,222 @@ Diseño compatible con el tema principal
     
     .divider {
         display: none;
+    }
+}
+
+/* ========== MEDIA QUERIES GLOBALES ========== */
+
+/* Pantallas medianas (tabletas) */
+@media (max-width: 992px) {
+    /* Ajustes generales */
+    .container {
+        padding: 0 15px;
+    }
+    
+    /* Header */
+    .header {
+        height: auto;
+        min-height: 80vh;
+        padding: 120px 0 60px;
+    }
+    
+    .header-txt h1 {
+        font-size: 5rem;
+        margin-top: 80px;
+    }
+    
+    /* Navbar */
+    .navbar ul {
+        width: 95%;
+        padding: 20px 40px 15px;
+        border-radius: 0 0 30px 30px;
+    }
+    
+    /* About section */
+    .about-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .about-text {
+        padding-right: 0;
+        text-align: center;
+    }
+    
+    .about-text h2::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    /* Gallery */
+    .gallery-stack {
+        height: 400px;
+        margin-left: 0;
+    }
+    
+    .photo-card {
+        width: 70%;
+    }
+    
+    /* Stats */
+    .ingegases-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Pantallas pequeñas (móviles grandes) */
+@media (max-width: 768px) {
+    /* Header */
+    .header-txt h1 {
+        font-size: 4rem;
+        background-size: 40%;
+        margin-top: 60px;
+    }
+    
+    /* Navbar */
+    .navbar ul {
+        padding: 15px 30px 10px;
+        border-radius: 0 0 25px 25px;
+    }
+    
+    .navbar li {
+        margin: 0 10px;
+    }
+    
+    /* About section */
+    .about-section {
+        padding: 60px 0;
+    }
+    
+    .about-text h2 {
+        font-size: 2.2rem;
+    }
+    
+    /* Gallery */
+    .gallery-stack {
+        height: 350px;
+    }
+    
+    .photo-card {
+        width: 80%;
+    }
+    
+    /* Stats */
+    .ingegases-stats-grid {
+        gap: 20px;
+    }
+    
+    .ingegases-stat-card {
+        padding: 30px 15px;
+    }
+    
+    .ingegases-stat-number {
+        font-size: 2.5rem;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 576px) {
+    /* Header */
+    .header-txt h1 {
+        font-size: 3rem;
+        background-size: 60%;
+        margin-top: 40px;
+    }
+    
+    /* Navbar */
+    .navbar ul {
+        justify-content: flex-start;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        padding: 12px 20px 8px;
+        border-radius: 0 0 20px 20px;
+        width: 100%;
+    }
+    
+    .navbar ul::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .navbar li {
+        margin: 0 8px;
+        flex-shrink: 0;
+    }
+    
+    /* About section */
+    .about-section {
+        padding: 40px 0;
+    }
+    
+    .about-text h2 {
+        font-size: 1.8rem;
+    }
+    
+    .services-list li {
+        padding: 6px 0 6px 25px;
+        font-size: 0.95rem;
+    }
+    
+    .read-more-btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+    
+    /* Gallery */
+    .gallery-stack {
+        height: 300px;
+    }
+    
+    .photo-card {
+        width: 90%;
+        border-radius: 15px;
+    }
+    
+    /* Stats */
+    .ingegases-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .ingegases-stat-card {
+        min-width: 100%;
+    }
+    
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-column {
+        padding: 0 10px;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 400px) {
+    /* Header */
+    .header-txt h1 {
+        font-size: 2.5rem;
+        background-size: 70%;
+    }
+    
+    /* Navbar */
+    .navbar a {
+        font-size: 0.8rem;
+    }
+    
+    /* About section */
+    .about-text h2 {
+        font-size: 1.6rem;
+    }
+    
+    /* Gallery */
+    .gallery-stack {
+        height: 250px;
     }
 }

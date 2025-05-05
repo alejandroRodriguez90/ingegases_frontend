@@ -105,27 +105,32 @@
             
             @media (max-width: 768px) {
                 .logo-absolute {
-                    left: 50%;
-                    transform: translateX(-50%) translateY(-100%);
+                    left: 0;
+                    top: 100%; /* Posiciona debajo del navbar */
+                    transform: translateX(-100%) translateY(0);
                     animation: 
-                        logoSlideDownMobile 1s ease-out 0.5s forwards,
+                        logoSlideLeft 1s ease-out 0.5s forwards,
                         logoBreath 4s ease-in-out infinite 1.5s;
-                }
-                
-                @keyframes logoSlideDownMobile {
-                    0% {
-                        transform: translateX(-50%) translateY(-100%);
-                    }
-                    100% {
-                        transform: translateX(-50%) translateY(0);
-                    }
                 }
                 
                 .isolated-logo {
                     height: 60px;
                     width: 90px;
-                    padding: 10px 6px 15px;
-                    border-radius: 0 0 12px 12px;
+                    padding: 6px 15px 6px 10px; /* Más padding a la derecha */
+                    border-radius: 0 12px 12px 0; /* Bordes redondeados a la derecha */
+                    border-top: 1px solid rgba(0,0,0,0.08);
+                    border-right: none;
+                    border-left: none;
+                    border-bottom: none;
+                }
+                
+                @keyframes logoSlideLeft {
+                    0% {
+                        transform: translateX(-100%) translateY(0);
+                    }
+                    100% {
+                        transform: translateX(0) translateY(0);
+                    }
                 }
             }
             
@@ -133,8 +138,8 @@
                 .isolated-logo {
                     height: 50px;
                     width: 80px;
-                    padding: 8px 5px 12px;
-                    border-radius: 0 0 10px 10px;
+                    padding: 5px 12px 5px 8px;
+                    border-radius: 0 10px 10px 0;
                 }
             }
         </style>

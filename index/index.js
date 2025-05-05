@@ -1,15 +1,3 @@
-// index.js
-document.addEventListener('DOMContentLoaded', () => {
-    const loginButton = document.querySelector('.boton-login');
-
-    loginButton.addEventListener('click', (event) => {
-        event.preventDefault(); // Evita cualquier comportamiento por defecto
-
-        // Redirige al usuario a la página de login.html
-        window.location.href = '../login/login.html';
-    });
-});
-
 document.addEventListener('DOMContentLoaded', () => {
     // Función mejorada de scroll suave con offsets específicos
     const smoothScroll = (targetId, customOffset = -150) => {
@@ -31,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Configuración de eventos para navegación
     const setupNavigation = () => {
-        // Enlace "Quiénes Somos" con offset de -100
+        // Enlace "Quiénes Somos"
         const quienesSomosLink = document.querySelector('a[href="#quienes_somos"]');
         if (quienesSomosLink) {
             quienesSomosLink.addEventListener('click', (e) => {
@@ -41,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Enlace "Servicios" con offset de -150
+        // Enlace "Servicios"
         const serviciosLink = document.querySelector('a[href="#servicios"]');
         if (serviciosLink) {
             serviciosLink.addEventListener('click', (e) => {
@@ -51,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Enlace "Contacto" (offset por defecto de 100)
+        // Enlace "Contacto"
         const contactoLink = document.querySelector('a[href="#contacto"]');
         if (contactoLink) {
             contactoLink.addEventListener('click', (e) => {
@@ -61,12 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Botón de Login (va a servicios con offset de -150)
-        const botonLogin = document.querySelector('.boton-login');
-        if (botonLogin) {
-            botonLogin.addEventListener('click', (e) => {
+        // Botón de Login - Redirige a login.html
+        const loginButton = document.querySelector('.boton-login');
+        if (loginButton) {
+            loginButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                smoothScroll('#servicios', -80);
+                window.location.href = '../login/login.html';
             });
         }
     };
@@ -100,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { 
             threshold: 0.3,
-            rootMargin: '-100px 0px -160px 0px' // Ajuste para diferentes offsets
+            rootMargin: '-100px 0px -160px 0px'
         });
 
         sectionConfigs.forEach(config => {
@@ -109,23 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Inicialización
-    setupNavigation();
-    setupIntersectionObserver();
-
-    // Debug: Verificar configuración
-    console.log('Configuración de scroll:', {
-        quienes_somos: { offset: -130 },
-        servicios: { offset: -80 },
-        contacto: { offset: 100 },
-        boton_login: { target: '#servicios', offset: -80 }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const statsNumbers = document.querySelectorAll('.ingegases-stat-number');
-    
-    function animateStats() {
+    // Animación de estadísticas
+    const animateStats = () => {
+        const statsNumbers = document.querySelectorAll('.ingegases-stat-number');
+        
         statsNumbers.forEach(number => {
             const target = parseInt(number.getAttribute('data-count'));
             const suffix = number.textContent.includes('+') ? '+' : '';
@@ -154,7 +129,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             observer.observe(number);
         });
-    }
+    };
     
+    
+
+    // Inicialización
+    setupNavigation();
+    setupIntersectionObserver();
     animateStats();
+    setupSubmenus();
 });
+
+
