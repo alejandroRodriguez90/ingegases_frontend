@@ -315,45 +315,113 @@ ESTILOS DEL NAVBAR
     transform: translateY(1px);
 }
 
-/* RESPONSIVE */
+/* 
+=====================
+NAVBAR MÓVIL ULTRA SIMPLIFICADO
+=====================
+*/
 @media (max-width: 768px) {
-    .navbar ul {
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 15px 20px;
-        border-radius: 0 0 30px 30px;
+    .menu {
+        padding: 0;
+        justify-content: flex-end;
+        height: 60px;
+        background: transparent;
     }
-    
-    .navbar li {
-        margin: 5px 10px;
+
+    /* Botón hamburguesa minimalista */
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        margin: 30px;
+        cursor: pointer;
+        z-index: 1002;
     }
-    
-    .submenu {
-        position: static;
+
+    .menu-toggle span {
+        display: block;
+        height: 3px;
         width: 100%;
-        transform: none !important;
-        margin-top: 5px;
-        border-radius: 0 0 15px 15px;
-        opacity: 1;
-        visibility: visible;
-        display: none;
+        background: #ffffff;
+        border-radius: 3px;
+        transition: all 0.3s ease;
     }
-    
-    .navbar li.has-submenu:hover .submenu,
-    .navbar li.has-submenu:focus-within .submenu {
+
+    .menu-toggle.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Menú principal - diseño limpio */
+    .navbar ul {
+        position: fixed;
+        top: 60px;
+        right: 10px;
+     
+        width: 100px;
+        max-height: calc(90vh - 60px);
+        flex-direction: column;
+        padding: 0;
+        
+        border-radius: 50px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transform: translateY(-150%);
+        transition: transform 0.2s ease;
+        overflow-y: auto;
+        z-index: 1000;
+        margin: 0;
+        list-style: none;
+    }
+
+    .navbar ul.active {
+        transform: translateZ(0);
+    }
+
+    .navbar li {
+        width: 100%;
+        margin: 0;
+    }
+
+    /* Items principales */
+    .navbar > ul > li > a {
+        padding: 5px 20px;
+        font-size: 1rem;
+        display: block;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Submenús - espacio propio */
+    .submenu {
+        display: none;
+       
+        padding-left: 75px;
+    }
+
+    .has-submenu.active .submenu {
         display: block;
     }
-}
 
-@media (max-width: 480px) {
-    .navbar ul {
-        justify-content: flex-start;
-        overflow-x: auto;
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
+    .submenu li a {
+        padding: 5px 20px;
+    
+       
+        color: #aaa;
+        
     }
-    .navbar ul::-webkit-scrollbar {
-        display: none;
+
+    /* Eliminar todos los adornos */
+    .has-submenu > a::after,
+    .navbar a i {
+        display: none !important;
     }
 }
 
@@ -536,253 +604,6 @@ ANIMACIÓN DE ENTRADA DE TEXTO
     }
 }
 
-/* 
-================================
-SECCION QUIENES SOMOS 
-================================
-*/
-
-/* Contenedor principal de la sección */
-.about-section {
-    /* Configuración de fondo completa */
-    background-image: url('imagenes/Blanco.PNG');
-    background-size: 100% auto; /* Cubre el 100% del ancho */
-    background-position: center top; /* Alineación superior */
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    
-    /* Dimensiones y espaciado */
-    padding: 100px 0;
-    min-height: 500px; /* Altura mínima recomendada */
-    width: 100%;
-    
-    /* Posicionamiento */
-    position: relative;
-    overflow: hidden;
-    
-    /* Respaldo visual */
-    background-color: white; /* Color similar a tu imagen */
-}
-
-/* Contenedor del contenido (texto + imágenes) */
-.about-container {
-    max-width: 1200px; /* Ancho máximo del contenido */
-    margin: 0 auto; /* Centrado horizontal */
-    display: grid; /* Usa CSS Grid para layout */
-    grid-template-columns: 1.2fr 1fr; /* Más espacio para el texto (60%/40%) */
-    gap: 60px; /* Espacio entre columnas */
-    align-items: center; /* Centrado vertical */
-    padding: 0 40px; /* Espaciado lateral */
-}
-
-/* Estilos para el área de texto */
-.about-text {
-    padding-right: 40px; /* Espaciado derecho */
-}
-
-/* Estilo del título principal */
-.about-text h2 {
-    font-size: 2.8rem; /* Tamaño grande */
-    color: #222; /* Color oscuro */
-    margin-bottom: 30px; /* Espacio inferior */
-    position: relative; /* Para el pseudo-elemento */
-    padding-bottom: 15px; /* Espacio para el subrayado */
-    font-weight: 700; /* Negrita */
-    line-height: 1.2; /* Interlineado */
-}
-
-/* Efecto de subrayado animado */
-.about-text h2::after {
-    content: ''; /* Pseudo-elemento */
-    position: absolute; /* Posicionamiento absoluto */
-    left: 0; /* Alineado a la izquierda */
-    bottom: 0; /* En la parte inferior */
-    width: 80px; /* Ancho inicial */
-    height: 4px; /* Grosor */
-    background: #0066cc; /* Color azul corporativo */
-    border-radius: 2px; /* Bordes redondeados */
-    transition: width 0.3s ease; /* Transición suave */
-}
-
-/* Efecto hover para el subrayado */
-.about-text:hover h2::after {
-    width: 120px; /* Ancho expandido */
-}
-
-/* Estilos para párrafos */
-.about-text p {
-    font-size: 1.15rem; /* Tamaño legible */
-    line-height: 1.8; /* Buen interlineado */
-    color: #444; /* Color gris oscuro */
-    margin-bottom: 25px; /* Espacio entre párrafos */
-}
-
-/* Lista de servicios */
-.services-list {
-    list-style: none; /* Quita viñetas */
-    padding-left: 0; /* Quita padding izquierdo */
-    margin: 30px 0; /* Espacio vertical */
-}
-
-/* Items de la lista */
-.services-list li {
-    padding: 10px 0; /* Espacio vertical */
-    padding-left: 35px; /* Espacio para el icono */
-    position: relative; /* Para posicionar el icono */
-    color: #555; /* Color gris */
-    font-size: 1.1rem; /* Tamaño de fuente */
-    transition: transform 0.3s ease; /* Animación suave */
-}
-
-/* Efecto hover para items */
-.services-list li:hover {
-    transform: translateX(5px); /* Movimiento a la derecha */
-}
-
-/* Icono personalizado para items */
-.services-list li::before {
-    content: '▹'; /* Triángulo como icono */
-    position: absolute; /* Posicionamiento */
-    left: 0; /* Alineado a la izquierda */
-    color: #0066cc; /* Color azul */
-    font-size: 1.4rem; /* Tamaño */
-    transition: color 0.3s ease; /* Transición de color */
-}
-
-/* Efecto hover para iconos */
-.services-list li:hover::before {
-    color: #004080; /* Color azul más oscuro */
-}
-
-/* Estilos para el botón "Leer más" */
-.read-more-btn {
-    display: inline-block; /* Display inline con propiedades de bloque */
-    margin-top: 30px; /* Espacio superior */
-    padding: 14px 35px; /* Espaciado interno */
-    background: linear-gradient(135deg, #0066cc, #004d99); /* Degradado azul */
-    color: white; /* Texto blanco */
-    border: none; /* Sin borde */
-    border-radius: 8px; /* Bordes redondeados */
-    text-decoration: none; /* Sin subrayado */
-    font-weight: 600; /* Negrita */
-    font-size: 1.1rem; /* Tamaño */
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transición personalizada */
-    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3); /* Sombra */
-    position: relative; /* Para el pseudo-elemento */
-    overflow: hidden; /* Oculta desbordamiento */
-}
-
-/* Efecto de brillo al pasar el mouse */
-.read-more-btn::after {
-    content: ''; /* Pseudo-elemento */
-    position: absolute; /* Posicionamiento absoluto */
-    top: 0; /* Arriba */
-    left: -100%; /* Inicia fuera del botón */
-    width: 100%; /* Ancho completo */
-    height: 100%; /* Alto completo */
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); /* Brillo */
-    transition: 0.5s; /* Duración de la transición */
-}
-
-/* Efectos hover para el botón */
-.read-more-btn:hover {
-    transform: translateY(-3px); /* Elevación */
-    box-shadow: 0 8px 25px rgba(0, 102, 204, 0.4); /* Sombra más pronunciada */
-}
-
-/* Animación del brillo al hacer hover */
-.read-more-btn:hover::after {
-    left: 100%; /* Mueve el brillo a la derecha */
-}
-
-
-/* 
-================================
-GALERÍA DE IMÁGENES - ESTILOS FINALES
-Efecto naipe horizontal (derecha a izquierda)
-================================
-*/
-
-/* Contenedor de la galería */
-.gallery-stack {
-    position: relative; /* Posicionamiento relativo */
-    height: 600px; /* Altura fija */
-    width: 100%; /* Ancho completo */
-    margin-left: 150px; /* Compensación de desplazamiento */
-}
-
-/* Estilos base para las tarjetas de imagen */
-.photo-card {
-    position: absolute; /* Posicionamiento absoluto */
-    width: 110%; /* Ancho grande (80% del contenedor) */
-    height: auto; /* Altura automática */
-    border-radius: 20px; /* Bordes redondeados */
-    overflow: hidden; /* Oculta desbordamiento */
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12); /* Sombra suave */
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Transición suave */
-    aspect-ratio: 4/5; /* Relación de aspecto 4:5 */
-    background: #fff; /* Fondo blanco */
-    border: 1px solid rgba(0, 0, 0, 0.05); /* Borde sutil */
-}
-
-/* Imagen dentro de la tarjeta */
-.photo-card img {
-    width: 100%; /* Ancho completo */
-    height: 100%; /* Alto completo */
-    object-fit: cover; /* Cubre el espacio sin distorsión */
-    transition: transform 0.5s ease, filter 0.3s ease; /* Transiciones */
-}
-
-/* 
-Posicionamiento de las tarjetas en efecto naipe horizontal
-(de derecha a izquierda)
-*/
-
-/* Primera tarjeta (frente) */
-.card-1 {
-    top: 50%; /* Centrado vertical */
-    right: 0; /* Alineada a la derecha */
-    transform: translateY(-50%) rotate(5deg); /* Centrado y rotación */
-    z-index: 2; /* En la parte superior */
-}
-
-/* Segunda tarjeta (medio) */
-.card-2 {
-    top: 50%; /* Centrado vertical */
-    right: 80px; /* Separación horizontal */
-    transform: translateY(-50%) rotate(-3deg); /* Centrado y rotación */
-    z-index: 3; /* Nivel intermedio */
-}
-
-/* Tercera tarjeta (fondo) */
-.card-3 {
-    top: 50%; /* Centrado vertical */
-    right: 160px; /* Separación horizontal */
-    transform: translateY(-50%) rotate(2deg); /* Centrado y rotación */
-    z-index: 1; /* En la parte inferior */
-}
-
-/* Efectos hover para las tarjetas */
-.photo-card:hover {
-    z-index: 10; /* Asegura que esté sobre todo */
-    transform: translateY(-50%) scale(1.05) rotate(0deg); /* Escala y endereza */
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada */
-}
-
-/* Efecto de superposición al hacer hover */
-.photo-card::after {
-    content: ''; /* Pseudo-elemento */
-    position: absolute; /* Posicionamiento absoluto */
-    top: 0; left: 0; right: 0; bottom: 0; /* Cubre toda la tarjeta */
-    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1), rgba(0, 102, 204, 0.2)); /* Degradado azul */
-    opacity: 0; /* Inicialmente transparente */
-    transition: opacity 0.4s ease; /* Transición suave */
-}
-
-/* Mostrar superposición al hacer hover */
-.photo-card:hover::after {
-    opacity: 1; /* Visible */
-}
 
 /* 
 ================================
@@ -1163,6 +984,35 @@ Diseño compatible con el tema principal
     opacity: 0.9;
 }
 
+.social-btn.sgsst { 
+    background: #0066cc;
+    border: 1px solid #0066cc;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-btn.sgsst:hover {
+    background: #004d99;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sgsst-icon {
+    font-style: italic;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+    display: inline-block;
+    line-height: 1;
+}
+
 /* Horario de atención */
 .business-hours {
     margin-top: 25px;
@@ -1307,13 +1157,10 @@ Diseño compatible con el tema principal
     padding: 30px 0;
     text-align: center;
     border-top: 1px solid rgba(255,255,255,0.1);
+    width: 100vw; /* Ocupa el 100% del viewport */
+    margin-left: calc(-50vw + 50%); /* Centrado forzado */
     position: relative;
-    width: 100vw; /* Ocupa el 100% del viewport width */
-    left: 50%; /* Centrado inicial */
-    right: 50%; /* Centrado inicial */
-    margin-left: -50vw; /* Compensación para centrado perfecto */
-    margin-right: -50vw; /* Compensación para centrado perfecto */
-    box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
+    
 }
 
 .footer-legal {
@@ -1426,32 +1273,6 @@ Diseño compatible con el tema principal
         border-radius: 0 0 30px 30px;
     }
     
-    /* About section */
-    .about-container {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-    
-    .about-text {
-        padding-right: 0;
-        text-align: center;
-    }
-    
-    .about-text h2::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    /* Gallery */
-    .gallery-stack {
-        height: 400px;
-        margin-left: 0;
-    }
-    
-    .photo-card {
-        width: 70%;
-    }
-    
     /* Stats */
     .ingegases-stats-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1543,14 +1364,6 @@ Diseño compatible con el tema principal
         flex-shrink: 0;
     }
     
-    /* About section */
-    .about-section {
-        padding: 40px 0;
-    }
-    
-    .about-text h2 {
-        font-size: 1.8rem;
-    }
     
     .services-list li {
         padding: 6px 0 6px 25px;
@@ -1562,15 +1375,6 @@ Diseño compatible con el tema principal
         font-size: 1rem;
     }
     
-    /* Gallery */
-    .gallery-stack {
-        height: 300px;
-    }
-    
-    .photo-card {
-        width: 90%;
-        border-radius: 15px;
-    }
     
     /* Stats */
     .ingegases-stats-grid {
@@ -1602,15 +1406,5 @@ Diseño compatible con el tema principal
     /* Navbar */
     .navbar a {
         font-size: 0.8rem;
-    }
-    
-    /* About section */
-    .about-text h2 {
-        font-size: 1.6rem;
-    }
-    
-    /* Gallery */
-    .gallery-stack {
-        height: 250px;
     }
 }

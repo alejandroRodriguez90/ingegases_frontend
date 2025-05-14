@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Función mejorada de scroll suave con offsets específicos
+    // =============================================
+    // FUNCIONALIDADES EXISTENTES
+    // =============================================
+
+    // 1. Scroll suave mejorado
     const smoothScroll = (targetId, customOffset = -150) => {
         const targetElement = document.querySelector(targetId);
         
@@ -17,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Configuración de eventos para navegación
+    // 2. Configuración de navegación
     const setupNavigation = () => {
         // Enlace "Quiénes Somos"
         const quienesSomosLink = document.querySelector('a[href="#quienes_somos"]');
@@ -49,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Botón de Login - Redirige a login.html
+        // Botón de Login
         const loginButton = document.querySelector('.boton-login');
         if (loginButton) {
             loginButton.addEventListener('click', (e) => {
@@ -59,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Función para establecer el enlace activo
+    // 3. Establecer enlace activo
     const setActiveLink = (activeLink) => {
         document.querySelectorAll('.navbar a').forEach(link => {
             link.classList.remove('active');
@@ -67,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         activeLink.classList.add('active');
     };
 
-    // Observador de intersección para secciones con offsets personalizados
+    // 4. Observador de intersección
     const setupIntersectionObserver = () => {
         const sectionConfigs = [
             { id: 'quienes_somos', offset: -150 },
@@ -97,47 +101,122 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Animación de estadísticas
+    // 5. Animación de estadísticas
     const animateStats = () => {
         const statsNumbers = document.querySelectorAll('.ingegases-stat-number');
         
-        statsNumbers.forEach(number => {
-            const target = parseInt(number.getAttribute('data-count'));
-            const suffix = number.textContent.includes('+') ? '+' : '';
+        const animateNumber = (element, target, suffix) => {
+            let start = 0;
             const duration = 2000;
+            const increment = target / (duration / 16);
             
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    let start = 0;
-                    const end = target;
-                    const increment = end / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    clearInterval(timer);
+                    element.textContent = target + suffix;
+                } else {
+                    element.textContent = Math.floor(start) + suffix;
+                }
+            }, 16);
+        };
+        
+        const statsObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const number = entry.target;
+                    const target = parseInt(number.getAttribute('data-count'));
+                    const suffix = number.textContent.includes('+') ? '+' : '';
                     
-                    const timer = setInterval(() => {
-                        start += increment;
-                        if (start >= end) {
-                            clearInterval(timer);
-                            number.textContent = end + suffix;
-                            number.classList.add('animated');
-                        } else {
-                            number.textContent = Math.floor(start) + suffix;
-                        }
-                    }, 16);
-                    
+                    animateNumber(number, target, suffix);
                     observer.unobserve(number);
                 }
-            }, { threshold: 0.5 });
-            
-            observer.observe(number);
+            });
+        }, { threshold: 0.5 });
+        
+        statsNumbers.forEach(number => {
+            statsObserver.observe(number);
         });
     };
-    
+
     
 
-    // Inicialización
+    // =============================================
+    // INICIALIZACIÓN DE TODAS LAS FUNCIONALIDADES
+    // =============================================
     setupNavigation();
     setupIntersectionObserver();
     animateStats();
-    setupSubmenus();
+
+
+    // =============================================
+    // CÓDIGO DEL MENÚ RESPONSIVE
+    // =============================================
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navbarUl = document.querySelector('.navbar ul');
+    const hasSubmenus = document.querySelectorAll('.has-submenu');
+
+    if (menuToggle && navbarUl) {
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+            navbarUl.classList.toggle('active');
+
+            if (!navbarUl.classList.contains('active')) {
+                hasSubmenus.forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
+        });
+
+        hasSubmenus.forEach(item => {
+            const link = item.querySelector('a');
+
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    const clickedOnSubmenuLink = e.target.closest('.submenu a');
+                    if (clickedOnSubmenuLink) return;
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    hasSubmenus.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+
+                    item.classList.toggle('active');
+                }
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                hasSubmenus.forEach(item => item.classList.remove('active'));
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!navbarUl.contains(e.target) && e.target !== menuToggle && !menuToggle.contains(e.target)) {
+                menuToggle.classList.remove('active');
+                navbarUl.classList.remove('active');
+                hasSubmenus.forEach(item => item.classList.remove('active'));
+            }
+        });
+
+        navbarUl.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768 && link.parentElement.classList.contains('has-submenu')) {
+                    return;
+                } else {
+                    setTimeout(() => {
+                        menuToggle.classList.remove('active');
+                        navbarUl.classList.remove('active');
+                        hasSubmenus.forEach(item => item.classList.remove('active'));
+                    }, 100);
+                }
+            });
+        });
+    }
 });
-
-

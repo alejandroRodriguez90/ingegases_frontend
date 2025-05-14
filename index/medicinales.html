@@ -18,7 +18,7 @@
     body {
     color: #333;
     line-height: 1.6;
-    background-image: url('imagenes/Blanco.PNG');
+    background-image: url('imagenes/IngegasesBlanco11.PNG');
     background-repeat: no-repeat;       /* Evita la repetición */
     background-size: cover;            /* Cubre todo el área */
     background-position: center 90%; /* Ajustado para mover hacia abajo */
@@ -37,10 +37,10 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('imagenes/Blanco.PNG');
+        background-image: url('imagenes/IngegasesBlanco11.PNG');
         background-repeat: no-repeat;
         background-size: cover;
-        background-position: center 10%;
+        background-position: center 40%;
         background-attachment: fixed;
         display: flex;
         justify-content: center;
@@ -411,282 +411,341 @@
         }
     }
     
+/* Header Medicinal - Responsive */
 .medicinal-header {
-    /* Mantén todo tu fondo gradient/image existente */
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('imagenes/Medicinal.jpg');
-    background-size: 100% auto;
-    background-position: center 30%;
-    background-repeat: no-repeat;
+    /* Mantenemos todos los estilos originales */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('imagenes/medicinal.jpg');
+    background-size: cover; /* Cambiado a cover para mejor adaptación */
+    background-position: center 40%;
     color: white;
-    padding: 60px 20px; /* Aumenté padding vertical */
+    padding: 40px 20px; /* Padding reducido para móviles */
     text-align: center;
-    height: 350px;
+    height: auto; /* Altura automática */
+    min-height: 250px; /* Altura mínima */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative; /* Para pseudo-elemento opcional */
+    position: relative;
 }
 
 .medicinal-header h1 {
-    font-size: 3rem; /* Tamaño aumentado */
-    margin-bottom: 25px;
-    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8); /* Sombra de texto */
-    letter-spacing: 1px; /* Espaciado entre letras */
-    font-weight: 700; /* Negrita fuerte */
+    font-size: 2rem; /* Reducido para móviles */
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.5px;
+    font-weight: 700;
 }
 
 .medicinal-header p {
-    font-size: 1.3rem; /* Tamaño aumentado */
-    max-width: 800px;
+    font-size: 1rem; /* Reducido para móviles */
+    max-width: 90%; /* Más estrecho en móviles */
     margin: 0 auto;
-    line-height: 1.6; /* Mejor interlineado */
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6); /* Sombra sutil */
-    font-weight: 300; /* Peso fino para contraste */
+    line-height: 1.5;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+    font-weight: 300;
 }
 
-/* Opcional: Efecto brillo detrás del texto */
-.medicinal-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(ellipse at center, rgba(255,255,255,0.15) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-        /* ================================
-        SECCIÓN SERVICIOS (TEXTOS RESALTADOS)
-        ================================ */
-
-        .servicios-section {
-        padding: 100px 0;
-        position: relative;
-        background-color: transparent; /* Fondo transparente */
-        background-image: none; /* Elimina cualquier imagen de fondo */
-        }
-
-
-        .servicios-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 60px;
-            align-items: center;
-            padding: 0 40px;
-        }
-
-        /* --- Texto principal resaltado --- */
-        .servicios-info {
-            padding-right: 40px;
-        }
-
-        .servicios-info p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #333;
-            font-weight: 500;
-            margin-bottom: 25px;
-            /* Eliminado: background y box-shadow */
-            padding: 0; /* Restaurado a valor normal */
-        }
-
-        /* --- Lista de servicios mejorada --- */
-        .servicios-features {
-            list-style: none;
-            padding-left: 0;
-            margin: 30px 0;
-        }
-
-        .servicios-features li {
-            padding: 12px 0;
-            padding-left: 40px;
-            position: relative;
-            color: #444;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            /* Eliminado: background */
-            margin-bottom: 8px;
-            border-radius: 6px;
-            border-left: 3px solid #c8b6a6; /* Cambiado a color kaki */
-        }
-
-        /* Icono más destacado */
-        .servicios-features li::before {
-            content: '▹';
-            position: absolute;
-            left: 15px;
-            color: #c8b6a6; /* Cambiado a color kaki */
-            font-size: 1.6rem;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        /* Efectos hover mejorados */
-        .servicios-features li:hover {
-            transform: translateX(8px);
-            background: rgba(200, 182, 166, 0.1); /* Cambiado a kaki pastel */
-            /* Eliminado: box-shadow azul */
-        }
-
-        .servicios-features li:hover::before {
-            color: #a38f7a; /* Cambiado a kaki más oscuro */
-        }
-
-
-/* 
-================================
-GALERÍA DE IMÁGENES (ESTILO NAIPE)
-================================
-*/
-
-/* Contenedor de la galería */
-.gallery-stack {
-    position: relative;
-    height: 500px; /* Altura ajustable */
-    width: 100%;
-    margin-left: 80px; /* Nuevo: Desplaza todo el contenedor a la derecha */
-}
-
-/* Estilos base para tarjetas de imagen */
-.photo-card {
-    position: absolute;
-    width: 100%;
-    height: auto;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    aspect-ratio: 4/5;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-/* Imágenes dentro de las tarjetas */
-.photo-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Posicionamiento de las tarjetas */
-.card-1 {
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%) rotate(5deg);
-    z-index: 2;
-}
-
-.card-2 {
-    top: 50%;
-    right: 80px;
-    transform: translateY(-50%) rotate(-3deg);
-    z-index: 3;
-    width: 90%;
-}
-
-.card-3 {
-    top: 50%;
-    right: 160px;
-    transform: translateY(-50%) rotate(2deg);
-    z-index: 1;
-    width: 85%;
-}
-
-/* Efectos hover */
-.photo-card:hover {
-    z-index: 10;
-    transform: translateY(-50%) scale(1.05) rotate(0deg);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
-}
-
-
-/* Efectos hover (solo para dispositivos con hover) */
-@media (hover: hover) {
-    .photo-card:hover {
-        z-index: 10;
-        transform: translateY(-50%) scale(1.05) rotate(0deg);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+/* Media Queries para Header */
+@media (min-width: 768px) {
+    .medicinal-header {
+        padding: 60px 20px;
+        height: 350px;
+    }
+    
+    .medicinal-header h1 {
+        font-size: 3rem;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
+    }
+    
+    .medicinal-header p {
+        font-size: 1.3rem;
+        max-width: 800px;
+        line-height: 1.6;
     }
 }
 
 /* ================================
-MEDIA QUERIES PARA RESPONSIVE
+   SECCIÓN SERVICIOS (RESPONSIVE CON EFECTOS ORIGINALES)
 ================================ */
 
-/* Tabletas (768px - 1024px) */
+.servicios-section {
+padding: 50px 0;
+position: relative;
+background-color: transparent;
+background-image: none;
+}
+
+.servicios-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: block;
+    padding: 0 20px;
+}
+
+/* --- Texto principal resaltado --- */
+.servicios-info {
+    padding-right: 0;
+    margin-bottom: 40px;
+}
+
+.servicios-info p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* --- Lista de servicios con efectos originales --- */
+.servicios-features {
+    list-style: none;
+    padding-left: 0;
+    margin: 20px 0;
+}
+
+.servicios-features li {
+    padding: 10px 0 10px 35px;
+    position: relative;
+    color: #444;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    border-left: 3px solid #c8b6a6; /* Color kaki original */
+}
+
+/* Icono con estilo original */
+.servicios-features li::before {
+    content: '▹';
+    position: absolute;
+    left: 10px;
+    color: #c8b6a6; /* Color kaki original */
+    font-size: 1.4rem;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+/* Efectos hover originales */
+.servicios-features li:hover {
+    transform: translateX(8px);
+    background: rgba(200, 182, 166, 0.1); /* Kaki pastel original */
+}
+
+.servicios-features li:hover::before {
+    color: #a38f7a; /* Kaki más oscuro original */
+}
+
+/* ============ VERSIÓN ESCRITORIO ============ */
 @media (min-width: 768px) {
-    .gallery-stack {
+    .servicios-section {
+        padding: 100px 0;
+    }
+    
+    .servicios-container {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 60px;
+        padding: 0 40px;
+    }
+    
+    .servicios-info {
+        padding-right: 40px;
+        margin-bottom: 0;
+    }
+    
+    .servicios-info p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin-bottom: 25px;
+    }
+    
+    .servicios-features {
+        margin: 30px 0;
+    }
+    
+    .servicios-features li {
+        padding: 12px 0 12px 40px;
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+    
+    .servicios-features li::before {
+        left: 15px;
+        font-size: 1.6rem;
+    }
+}
+/* 
+================================
+GALERÍA DE IMÁGENES (EFECTO CILÍNDRICO RÁPIDO) - RESPONSIVE CENTRADA
+================================
+*/
+
+/* Contenedor principal de la galería */
+.gallery-rotator {
+    position: relative;
+    height: 700px;
+    width: 100%;
+    perspective: 1200px;
+    overflow: visible;
+    margin: 0 auto; /* Centrado horizontal */
+}
+
+/* Contenedor de las tarjetas */
+.gallery-cards {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center; /* Cambiado a center para centrar */
+    align-items: center;
+}
+
+/* Estilos base para las tarjetas */
+.rotator-card {
+    position: absolute;
+    width: 500px;
+    height: 650px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
+    transform-style: preserve-3d;
+    transform-origin: center center -350px;
+}
+
+/* Imágenes dentro de las tarjetas */
+.rotator-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    backface-visibility: hidden;
+}
+
+/* Estados de las tarjetas (se mantienen igual) */
+.rotator-card.active {
+    transform: rotateY(0deg) translateZ(0);
+    z-index: 3;
+    opacity: 1;
+}
+
+.rotator-card.next {
+    transform: rotateY(60deg) translateZ(-150px);
+    z-index: 2;
+    opacity: 0.7;
+    filter: brightness(0.8);
+}
+
+.rotator-card.prev {
+    transform: rotateY(-60deg) translateZ(-150px);
+    z-index: 2;
+    opacity: 0.7;
+    filter: brightness(0.8);
+}
+
+.rotator-card.hidden {
+    transform: rotateY(90deg) translateZ(-250px);
+    opacity: 0;
+    z-index: 1;
+}
+
+/* Efecto hover (se mantiene igual) */
+.rotator-card:hover {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Indicadores de navegación (se mantienen igual) */
+.gallery-nav {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.gallery-nav button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-nav button.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+/* ================================
+MEDIA QUERIES PARA RESPONSIVE CENTRADO
+================================ */
+
+/* Pantallas grandes (más de 1600px) - Opcional para ultra wide */
+@media (min-width: 1600px) {
+    .gallery-rotator {
+        max-width: 1600px;
+    }
+}
+
+/* Tabletas (768px - 1024px) */
+@media (max-width: 1024px) {
+    .gallery-rotator {
+        height: 550px;
+    }
+    
+    .rotator-card {
+        width: 400px;
+        height: 550px;
+        transform-origin: center center -300px;
+    }
+    
+    .rotator-card.next,
+    .rotator-card.prev {
+        transform: rotateY(65deg) translateZ(-120px);
+    }
+}
+
+/* Móviles medianos (576px - 767px) */
+@media (max-width: 767px) {
+    .gallery-rotator {
         height: 450px;
-        margin-left: 40px;
+        perspective: 900px;
     }
     
-    .photo-card {
-        width: 70%;
+    .rotator-card {
+        width: 320px;
+        height: 420px;
+        transform-origin: center center -200px;
     }
     
-    .card-2 {
-        right: 60px;
-        width: 80%;
-    }
-    
-    .card-3 {
-        right: 120px;
-        width: 75%;
+    .rotator-card.next,
+    .rotator-card.prev {
+        transform: rotateY(70deg) translateZ(-80px);
+        opacity: 0.5;
     }
 }
 
-/* Desktop (1025px en adelante) */
-@media (min-width: 1025px) {
-    .gallery-stack {
-        height: 500px;
-        margin-left: 80px;
+/* Móviles pequeños (hasta 575px) */
+@media (max-width: 575px) {
+    .gallery-rotator {
+        height: 380px;
+        perspective: 800px;
     }
     
-    .photo-card {
-        width: 100%;
+    .rotator-card {
+        width: 280px;
+        height: 360px;
+        transform-origin: center center -150px;
     }
     
-    .card-2 {
-        right: 80px;
-        width: 90%;
-    }
-    
-    .card-3 {
-        right: 160px;
-        width: 85%;
-    }
-}
-
-/* Móviles pequeños (hasta 480px) */
-@media (max-width: 480px) {
-    .gallery-stack {
-        height: 350px;
-    }
-    
-    .photo-card {
-        width: 85%;
-        border-radius: 12px;
-    }
-    
-    /* Cambio a disposición vertical en móviles */
-    .card-1, .card-2, .card-3 {
-        right: auto;
-        left: 50%;
-        transform: translateX(-50%) rotate(0deg);
-    }
-    
-    .card-1 {
-        top: 0;
-    }
-    
-    .card-2 {
-        top: 100px;
-    }
-    
-    .card-3 {
-        top: 200px;
+    .rotator-card.next,
+    .rotator-card.prev {
+        transform: rotateY(75deg) translateZ(-60px);
     }
 }
 
@@ -889,6 +948,35 @@ MEDIA QUERIES PARA RESPONSIVE
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             opacity: 0.9;
+        }
+
+        .social-btn.sgsst { 
+            background: #0066cc;
+            border: 1px solid #0066cc;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn.sgsst:hover {
+            background: #004d99;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .sgsst-icon {
+            font-style: italic;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            text-decoration: underline;
+            text-decoration-thickness: 1.5px;
+            text-underline-offset: 3px;
+            text-decoration-color: rgba(255, 255, 255, 0.7);
+            font-size: 20px;
+            display: inline-block;
+            line-height: 1;
         }
 
         /* Horario de atención */
@@ -1156,19 +1244,25 @@ MEDIA QUERIES PARA RESPONSIVE
             
                 <!-- Galería de imágenes a la derecha (3 apiladas) -->
                 <div class="servicios-gallery">
-                    <div class="gallery-stack">
-                        <div class="photo-card card-1">
-                            <img src="imagenes/Medicinal2.PNG" alt="Redes de gases medicinales">
+                    <div class="gallery-rotator">
+                        <div class="gallery-cards">
+                            <div class="rotator-card card-1">
+                                <img src="imagenes/Medicinal2.jpg" alt="Redes de gases medicinales">
+                            </div>
+                            <div class="rotator-card card-2">
+                                <img src="imagenes/Medicinal1.PNG" alt="Instalación técnica">
+                            </div>
+                            <div class="rotator-card card-3">
+                                <img src="imagenes/medicinal3.jpg" alt="Equipos médicos">
+                            </div>
                         </div>
-                        <div class="photo-card card-3">
-                            <img src="imagenes/medicinal3.PNG" alt="Equipos médicos">
-                        </div>
-                        <div class="photo-card card-2">
-                            <img src="imagenes/Medicinal1.PNG" alt="Instalación técnica">
+                        <div class="gallery-nav">
+                            <button data-index="0"></button>
+                            <button data-index="1"></button>
+                            <button data-index="2"></button>
                         </div>
                     </div>
                 </div>
-            </div>
 
         </section>
                                                                                                                 
@@ -1176,7 +1270,7 @@ MEDIA QUERIES PARA RESPONSIVE
         <!-- Aplicaciones -->
         <section class="applications-section">
             <div class="container">
-                <h2 class="section-title">Aplicaciones en Redes Medicinales</h2>
+                <h2 class="section-title">Aplicaciones de Redes Medicinales</h2>
                 <div class="applications-grid">
                     <div class="application-card">
                         <div class="application-icon">
@@ -1221,7 +1315,7 @@ MEDIA QUERIES PARA RESPONSIVE
                             <h3>Ingegases y Redes s.a.s</h3>
                             <p class="company-description">Especialistas en instalación y mantenimiento de sistemas de gases y redes industriales con más de 15 años de experiencia.</p>
                             <div class="contact-info">
-                                <p><i class="fas fa-map-marker-alt"></i> Cra. 54 #17a-69, Bogotá</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín</p>
                                 <p><i class="fas fa-phone"></i> 311 238 26 36</p>
                                 <p><i class="fas fa-envelope"></i> ingegasesyredes@gmail.com</p>
                             </div>
@@ -1253,12 +1347,19 @@ MEDIA QUERIES PARA RESPONSIVE
                             aria-label="WhatsApp de Ingegases">
                                 <i class="fab fa-whatsapp"></i>
                             </a>
+                            <a href="https://sgsst.co/publico" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="social-btn sgsst" 
+                            aria-label="Sistema de Gestión de Seguridad y Salud en el Trabajo">
+                                <span style="font-weight: bold; font-family: Arial, sans-serif;">S</span>
+                            </a>
                         </div>
         
                         <div class="business-hours">
                             <h4><i class="fas fa-building"></i> Sedes a Nivel Nacional</h4>
-                            <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín</p>
-                            <p><i class="fas fa-map-marker-alt"></i> Calle 12 # 68 - 109, Cali</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Carrera 54 #17A - 69 Bogota, Barrio Puente Aranda.</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Calle 12 # 68 - 109 Cali, Barrio el Limonar</p>
                             <p><i class="fas fa-map-marker-alt"></i> Cra 1 C2 No 47-67, Ciudadela 20 Julio Barranquilla</p>
                             
                         </div>
@@ -1300,9 +1401,8 @@ MEDIA QUERIES PARA RESPONSIVE
                     <div class="footer-column location">
                         <h3>Nuestra Sede Principal</h3>
                         <div class="map-wrapper">
-        
                             <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.7852446060936!2d-74.0837229246869!3d4.632550942081605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNMKwMzccNTcuMiJOIDc0wrAwNCc1OC4xIlc!5e0!3m2!1ses!2sco!4v1620000000000!5m2!1ses!2sco" 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521673867072!2d-75.57890792468696!3d6.201604493739862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4429d3a5d5d5a5%3A0x5b5b5b5b5b5b5b5b!2sCl.%2012b%20Sur%20%2352a-77%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1620000000000!5m2!1ses!2sco" 
                                 width="100%" 
                                 height="250" 
                                 style="border:0;" 
@@ -1313,13 +1413,17 @@ MEDIA QUERIES PARA RESPONSIVE
                             ></iframe>
                             <div class="location-info">
                                 <p class="map-address">
-                                    <i class="fas fa-map-marker-alt"></i> Calle 12 No 68-109, Bogotá
+                                    <i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín
                                 </p>
-                                <a href="https://maps.google.com" class="btn-directions" target="_blank">
+                                <a href="https://www.google.com/maps/place/Cl.+12b+Sur+%2352a-77,+Medell%C3%ADn,+Antioquia/@6.2016045,-75.5789079,17z/data=!3m1!4b1!4m5!3m4!1s0x8e4429d3a5d5d5a5:0x5b5b5b5b5b5b5b5b!8m2!3d6.2016045!4d-75.5767192" 
+                                class="btn-directions" 
+                                target="_blank"
+                                rel="noopener noreferrer">
                                     <i class="fas fa-directions"></i> Cómo llegar
                                 </a>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         
@@ -1353,8 +1457,129 @@ MEDIA QUERIES PARA RESPONSIVE
         }, 500); // Ajusta este tiempo según tu carga real
     });
 
-    </script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const gallery = document.querySelector('.gallery-rotator');
+        const cards = document.querySelectorAll('.rotator-card');
+        const navButtons = document.querySelectorAll('.gallery-nav button');
+        let currentIndex = 0;
+        let autoRotateInterval;
+        const rotationDuration = 3000; // REDUCIDO A 3 SEGUNDOS 
+        const transitionSpeed = 900; // REDUCIDO DE 1500ms a 800ms
 
+        // Inicializar galería
+        function initGallery() {
+            if (cards.length === 0) return;
+            
+            // Configurar estado inicial
+            cards.forEach((card, index) => {
+                card.style.transitionDuration = `${transitionSpeed}ms`;
+                if (index === 0) {
+                    card.classList.add('active');
+                } else if (index === 1) {
+                    card.classList.add('next');
+                } else if (index === cards.length - 1) {
+                    card.classList.add('prev');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            // Configurar botones de navegación
+            if (navButtons.length > 0) {
+                navButtons[0].classList.add('active');
+            }
+            
+            // Iniciar rotación automática
+            startAutoRotation();
+            
+            // Event listeners para navegación manual
+            navButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    goToSlide(index);
+                });
+            });
+            
+            // Pausar al hacer hover
+            gallery.addEventListener('mouseenter', pauseRotation);
+            gallery.addEventListener('mouseleave', startAutoRotation);
+        }
+
+        // Rotar a una slide específica
+        function goToSlide(index) {
+            if (index === currentIndex || index < 0 || index >= cards.length) return;
+            
+            // Determinar dirección de rotación
+            const direction = index > currentIndex ? 'right' : 'left';
+            
+            // Actualizar clases
+            cards[currentIndex].classList.remove('active');
+            cards[index].classList.remove('prev', 'next', 'hidden');
+            
+            // Aplicar transición según dirección
+            if (direction === 'right') {
+                cards[currentIndex].classList.add('prev');
+                cards[index].classList.add('active');
+            } else {
+                cards[currentIndex].classList.add('next');
+                cards[index].classList.add('active');
+            }
+            
+            // Actualizar navegación
+            navButtons[currentIndex].classList.remove('active');
+            navButtons[index].classList.add('active');
+            
+            // Actualizar índice
+            currentIndex = index;
+            
+            // Preparar siguiente y anterior
+            prepareAdjacentCards();
+        }
+
+        // Preparar tarjetas adyacentes
+        function prepareAdjacentCards() {
+            const nextIndex = (currentIndex + 1) % cards.length;
+            const prevIndex = (currentIndex - 1 + cards.length) % cards.length;
+            
+            // Resetear todas las tarjetas no activas
+            cards.forEach((card, index) => {
+                if (index !== currentIndex && index !== nextIndex && index !== prevIndex) {
+                    card.classList.remove('prev', 'next', 'active');
+                    card.classList.add('hidden');
+                }
+            });
+            
+            // Configurar siguiente y anterior
+            if (cards[nextIndex]) {
+                cards[nextIndex].classList.remove('hidden', 'prev');
+                cards[nextIndex].classList.add('next');
+            }
+            
+            if (cards[prevIndex]) {
+                cards[prevIndex].classList.remove('hidden', 'next');
+                cards[prevIndex].classList.add('prev');
+            }
+        }
+
+        // Rotación automática
+        function rotateGallery() {
+            const nextIndex = (currentIndex + 1) % cards.length;
+            goToSlide(nextIndex);
+        }
+
+        function startAutoRotation() {
+            clearInterval(autoRotateInterval);
+            autoRotateInterval = setInterval(rotateGallery, rotationDuration);
+        }
+
+        function pauseRotation() {
+            clearInterval(autoRotateInterval);
+        }
+
+        // Inicializar
+        initGallery();
+    });
+
+    </script>
 
         
     </body>
