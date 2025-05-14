@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingegases & Redes</title>
+    <link rel="icon" type="image/png" href="imagenes/favicon.PNG" style="border-radius: 90%;">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    
+    <header class="header">
+
+        <div class="logo-absolute">
+            <a href="index.html">
+                <img src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Ingegases & Redes s.a.s" class="isolated-logo">
+            </a>
+        </div>
+
+        <style>
+            /* ESTILOS PARA LOGO-PESTAÑA CON EFECTO DE BAJADA */
+.logo-absolute {
+    position: absolute;
+    top: 0;
+    left: 195px;
+    z-index: 10000;
+    pointer-events: auto;
+    overflow: visible;
+    transform: translateY(-100%);
+    animation: logoSlideDown 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s forwards;
+}
+
+.isolated-logo {
+    height: 90px;
+    width: 110px;
+    object-fit: contain;
+    border-radius: 0 0 20px 20px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 
+        0 2px 10px rgba(0,0,0,0.15),
+        0 1px 0 rgba(255,255,255,0.8) inset;
+    transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    margin: 0 !important;
+    border: none !important;
+    display: block !important;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-top: none;
+    transform-origin: top center;
+}
+
+/* Efecto hover */
+.logo-absolute:hover .isolated-logo {
+    transform: scaleY(1.1) scaleX(1.05);
+    padding-bottom: 15px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 
+        0 5px 15px rgba(0,0,0,0.2),
+        0 2px 0 rgba(255,255,255,0.9) inset;
+}
+
+/* Efecto click */
+.logo-absolute:active .isolated-logo {
+    transform: scaleY(0.98) scaleX(0.99);
+    transition: all 0.2s ease;
+}
+
+/* Animación de bajada */
+@keyframes logoSlideDown {
+    0% { transform: translateY(-100%); }
+    60% { transform: translateY(15px); }
+    80% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+ 
+/* Responsive */
+@media (max-width: 1200px) {
+    .logo-absolute { left: 180px; }
+}
+
+@media (max-width: 992px) {
+    .isolated-logo {
+        height: 70px;
+        width: 100px;
+        padding: 12px 8px 18px;
+        border-radius: 0 0 15px 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-absolute {
+        position: fixed;
+        left: 0;
+        top: 50px; /* Posición más abajo (ajustar este valor según necesidad) */
+        transform: none;
+        animation: none;
+        z-index: 9999;
+    }
+    
+    .isolated-logo {
+        height: 50px;
+        width: 70px;
+        padding: 8px 10px;
+        border-radius: 0 12px 12px 0;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        border: 1px solid rgba(0,0,0,0.1);
+        border-left: none;
+    }
+    
+    /* Efecto hover simplificado para móvil */
+    .logo-absolute:hover .isolated-logo {
+        transform: scale(1.05);
+        padding-bottom: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-absolute {
+        top: 60px; /* Posición ligeramente más alta en móviles pequeños */
+    }
+    
+    .isolated-logo {
+        height: 45px;
+        width: 65px;
+        padding: 6px 8px;
+        border-radius: 0 10px 10px 0;
+    }
+}
+
+        /* 
+        =====================
+        ESTILOS DEL NAVBAR DESKTOP
+        =====================
+        */
+        .desktop-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            padding-top: 0px;
+        }
+
+        .navbar {
+            width: 80%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar ul {
+            display: flex;
+            justify-content: center;
+            background: 
+                linear-gradient(145deg, #0a0a0a, #202020) padding-box,
+                linear-gradient(145deg, #0f0f0f, #171717) border-box;
+            border-radius: 0 0 50px 50px;
+            padding: clamp(20px, 4vw, 35px) clamp(30px, 8vw, 75px) clamp(15px, 3vw, 20px);
+            width: min(95%, 900px);
+            list-style: none;
+            margin: 0;
+            align-items: center;
+            backdrop-filter: blur(90px);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.3);
+            box-shadow: 
+                0 3px 0 #000000,
+                0 20px 40px rgba(39, 39, 39, 1),
+                inset 0 -8px 20px rgba(0, 0, 0, 0.8),
+                inset 0 6px 8px rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1001;
+        }
+
+        .navbar ul:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 5px 0 #000000,
+                0 25px 50px rgba(39, 39, 39, 1),
+                inset 0 -10px 25px rgba(0, 0, 0, 0.8),
+                inset 0 8px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar li {
+            margin: 0 clamp(10px, 2vw, 20px);
+            position: relative;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: clamp(5px, 1vw, 7px);
+            position: relative;
+            white-space: nowrap;
+            text-shadow: 0 -1px 2px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+        }
+
+        .navbar a:hover {
+            color: #f4fb32c6;
+        }
+
+        .icon-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .icon-link i {
+            font-size: clamp(16px, 2.5vw, 18px);
+            transition: all 0.3s ease;
+        }
+
+        .icon-link .default-icon {
+            opacity: 1;
+        }
+
+        .icon-link .hover-icon {
+            position: absolute;
+            left: 0;
+            opacity: 0;
+        }
+
+        .icon-link:hover .default-icon {
+            opacity: 0;
+        }
+
+        .icon-link:hover .hover-icon {
+            opacity: 1;
+        }
+
+        .navbar a:hover i {
+            color: #f4fb32c6;
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #f4fb32c6;
+            transition: width 0.3s ease;
+        }
+
+        .navbar a:hover::after {
+            width: 100%;
+        }
+
+        /* SUBMENÚ DESKTOP */
+        .navbar .submenu {
+            position: absolute;
+            top: calc(100% + clamp(20px, 1.5vw, 12px));
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: 
+                linear-gradient(145deg, #0a0a0a, #202020) padding-box,
+                linear-gradient(145deg, #0f0f0f, #171717) border-box;
+            min-width: clamp(180px, 25vw, 200px);
+            width: auto;
+            box-shadow: 
+                0 3px 0 #000000,
+                0 20px 40px rgba(39, 39, 39, 1),
+                inset 0 -8px 20px rgba(0, 0, 0, 0.8),
+                inset 0 6px 8px rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.3);
+            z-index: 100;
+            padding: clamp(8px, 1.5vw, 10px) 0;
+            display: block;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 0 0 50px 50px;
+            white-space: nowrap;
+        }
+
+        .navbar > ul > li.has-submenu:hover .submenu,
+        .navbar > ul > li.has-submenu.active .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .submenu li {
+            display: block;
+            padding: 0 clamp(12px, 2vw, 15px);
+            margin: clamp(3px, 1vw, 5px) 0;
+            transition: all 0.3s ease;
+        }
+
+        .submenu li a {
+            color: white;
+            padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2vw, 15px);
+            display: block;
+            transition: all 0.2s ease;
+            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .submenu li a:hover {
+            color: #f4fb32c6;
+        }
+
+        /* 
+        =====================
+        ESTILOS DEL NAVBAR MÓVIL
+        =====================
+        */
+        .mobile-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            display: none; /* Oculto por defecto */
+            justify-content: flex-end;
+            align-items: center;
+            background: rgba(17, 17, 18, 0.5); /* Color negro semitransparente */
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Botón hamburguesa */
+        .hamburger-btn {
+            width: 30px;
+            height: 24px;
+            margin-right: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* Estado activo del botón hamburguesa */
+        .hamburger-btn.active span:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
+        }
+
+        /* Menú desplegable móvil */
+        .mobile-menu {
+            position: fixed;
+            top: 50px;
+            right: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: calc(100vh - 70px);
+            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s ease;
+            z-index: 999;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        /* Lista de navegación móvil */
+        .mobile-nav-list {
+            list-style: none;
+            padding: 15px 0;
+            margin: 0;
+        }
+
+        .mobile-nav-list li {
+            width: 100%;
+        }
+
+        .mobile-nav-list > li > a {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-weight: 500;
+        }
+
+        .mobile-nav-list > li > a i {
+            margin-right: 12px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .mobile-nav-list > li > a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #f4fb32;
+        }
+
+        /* Submenús móviles */
+        .mobile-submenu {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding-left: 15px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .mobile-submenu.active {
+            display: block;
+        }
+
+        .mobile-submenu a {
+            display: block;
+            padding: 12px 25px 12px 45px;
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .mobile-submenu a::before {
+            content: "→";
+            position: absolute;
+            left: 25px;
+            color: #f4fb32;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-submenu a:hover {
+            color: #f4fb32;
+            padding-left: 50px;
+        }
+
+        .mobile-submenu a:hover::before {
+            opacity: 1;
+            left: 30px;
+        }
+
+        /* Flecha para items con submenú */
+        .mobile-has-submenu {
+            position: relative;
+        }
+
+        .mobile-has-submenu::after {
+            content: '›';
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+            color: white;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .mobile-has-submenu.active::after {
+            transform: translateY(-50%) rotate(-90deg);
+            color: #f4fb32;
+        }
+
+        /* Overlay para fondo cuando el menú está abierto */
+        .menu-overlay {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 70px);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 
+        =====================
+        MEDIA QUERIES
+        =====================
+        */
+        /* Ocultar navbar desktop en móvil */
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none !important;
+            }
+            
+            .mobile-navbar {
+                display: flex;
+            }
+        }
+
+        /* Mostrar navbar desktop en pantallas grandes */
+        @media (min-width: 769px) {
+            .mobile-navbar,
+            .mobile-menu,
+            .menu-overlay {
+                display: none !important;
+            }
+            
+            .desktop-menu {
+                display: flex;
+            }
+        }
+
+/* ================================
+   SECCIÓN QUIÉNES SOMOS
+================================ */
+.about-section {
+    background-image: url('imagenes/IngegasesBlanco11.PNG');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 120px 20px;
+    min-height: 80vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    align-items: center;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.7); /* Mayor opacidad para mejor legibilidad */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.about-text {
+    padding-right: 40px;
+}
+
+.about-text h2 {
+    font-size: 2.8rem;
+    color: #222;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.about-text h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 80px;
+    height: 4px;
+    background: #0066cc;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.about-text:hover h2::after {
+    width: 120px;
+}
+
+.about-text p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 25px;
+}
+
+.services-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 30px 0;
+}
+
+.services-list li {
+    padding: 10px 0 10px 35px;
+    position: relative;
+    color: #555;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.services-list li:hover {
+    transform: translateX(5px);
+}
+
+.services-list li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: #0066cc;
+    font-size: 1.4rem;
+    transition: color 0.3s ease;
+}
+
+.services-list li:hover::before {
+    color: #004080;
+}
+
+.read-more-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 14px 35px;
+    background: linear-gradient(135deg, #0066cc, #004d99);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.read-more-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.read-more-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 102, 204, 0.4);
+}
+
+.read-more-btn:hover::after {
+    left: 100%;
+}
+
+/* Media Queries para Quiénes Somos */
+@media (max-width: 1200px) {
+    .about-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .about-text {
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-section {
+        padding: 80px 15px;
+        min-height: auto;
+    }
+    .about-container {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-section {
+        padding: 60px 10px;
+        background-size: contain;
+    }
+    .about-text h2 {
+        font-size: 2.2rem;
+    }
+}
+
+/* ================================
+   SECCIÓN GALERÍA
+   ================================ */
+.gallery-3d-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 400px; /* Altura mínima garantizada */
+    overflow: hidden; /* Asegura que nada se desborde */
+}
+
+.gallery-3d {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    perspective: 1000px;
+    overflow: visible; /* Cambiado de hidden a visible */
+}
+
+.photo-card {
+    position: absolute;
+    width: 90%; /* Reducido del 100% */
+    height: 90%; /* Reducido del 100% */
+    left: 5%; /* Centrado horizontal */
+    top: 5%; /* Centrado vertical */
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    backface-visibility: hidden;
+    transform-origin: center center;
+    transform: rotateY(75deg) translateZ(-150px);
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.photo-card:first-child {
+    transform: rotateY(0deg) translateZ(0);
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+}
+
+/* Media Queries para Galería */
+@media (max-width: 1200px) {
+    .gallery-3d-container {
+        height: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-3d-container {
+        height: 400px;
+    }
+}
+
+@media (max-width: 576px) {
+    .gallery-3d-container {
+        height: 350px;
+    }
+}
+
+.photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-card[data-card="1"] {
+    transform: rotateY(0deg) translateZ(0);
+    z-index: 3;
+}
+
+.photo-card[data-card="2"] {
+    transform: rotateY(60deg) translateZ(-100px);
+    z-index: 2;
+    opacity: 0.8;
+}
+
+.photo-card[data-card="3"] {
+    transform: rotateY(-60deg) translateZ(-100px);
+    z-index: 2;
+    opacity: 0.8;
+}
+
+.gallery-nav {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.nav-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-dot.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+/* Media Queries para Galería - ACTUALIZADAS */
+@media (max-width: 1200px) {
+    .about-container {
+        grid-template-columns: 1fr;
+    }
+    .gallery-3d-container {
+        min-height: 500px;
+        order: -1; /* Mover la galería arriba en móviles */
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-3d {
+        min-height: 350px;
+    }
+    .photo-card {
+        width: 95%;
+        height: 95%;
+        left: 2.5%;
+        top: 2.5%;
+    }
+}
+
+@media (max-width: 576px) {
+    .gallery-3d {
+        min-height: 300px;
+        perspective: 800px;
+    }
+}
+
+
+</style>
+
+        <div class="menu container">
+
+           <!-- Navbar móvil (solo visible en móvil) -->
+        <nav class="mobile-navbar">
+            <div class="hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+
+    <!-- Menú desplegable móvil -->
+    <div class="mobile-menu">
+        <ul class="mobile-nav-list">
+            <li class="mobile-has-submenu">
+                <a href="index.html#quienes_somos"><i class="fas fa-building"></i>Quiénes Somos</a>
+                <ul class="mobile-submenu">
+                    <li><a href="experiencia.html">Acerca de Nosotros</a></li>
+                </ul>
+            </li>
+            <li class="mobile-has-submenu">
+                <a href="#servicios"><i class="fas fa-cogs"></i>Servicios</a>
+                <ul class="mobile-submenu">
+                    <li><a href="medicinales.html">Medicinales</a></li>  
+                    <li><a href="industriales.html">Industriales</a></li>
+                    <li><a href="gases-especiales.html">Gases Especiales</a></li>
+                    <li><a href="plantas-estacion-llenado.html">Plantas y Estación de Llenado</a></li>
+                    <li><a href="tanques-tanqueros.html">Tanques y Tanqueros</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="experiencia.html"><i class="fas fa-chart-line"></i>Experiencia</a>
+            </li>
+            <li>
+                <a href="#contacto"><i class="fas fa-envelope"></i>Contacto</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Overlay -->
+    <div class="menu-overlay"></div>
+
+    <!-- Navbar desktop (solo visible en desktop) -->
+    <div class="desktop-menu">
+        <nav class="navbar">
+            <ul>
+                <li class="has-submenu">
+                    <a href="index.html#quienes_somos" class="icon-link"><i class="fas fa-building default-icon"></i><i class="fas fa-cog hover-icon"></i><span>Quiénes Somos</span></a>
+                    <ul class="submenu">
+                        <li><a href="experiencia.html">Acerca de Nosotros</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a href="#servicios" class="icon-link"><i class="fas fa-cogs default-icon"></i><i class="fas fa-tools hover-icon"></i><span>Servicios</span></a>
+                    <ul class="submenu">
+                        <li><a href="medicinales.html">Medicinales</a></li>  
+                        <li><a href="industriales.html">Industriales</a></li>
+                        <li><a href="gases-especiales.html">Gases Especiales</a></li>
+                        <li><a href="plantas-estacion-llenado.html">Plantas y Estación de Llenado</a></li>
+                        <li><a href="tanques-tanqueros.html">Tanques y Tanqueros</a></li>
+                    </ul>
+                </li>
+                <li><a href="experiencia.html" class="icon-link"><i class="fas fa-chart-line default-icon"></i><i class="fas fa-award hover-icon"></i><span>Experiencia</span></a></li>
+                <li><a href="#contacto" class="icon-link"><i class="fas fa-envelope default-icon"></i><i class="fas fa-phone hover-icon"></i><span>Contacto</span></a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos del menú móvil
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const menuOverlay = document.querySelector('.menu-overlay');
+            const submenuItems = document.querySelectorAll('.mobile-has-submenu');
+
+            // Toggle del menú principal móvil
+            if(hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                    menuOverlay.classList.toggle('active');
+                    
+                    // Bloquear scroll cuando el menú está abierto
+                    document.body.style.overflow = this.classList.contains('active') ? 'hidden' : '';
+                });
+            }
+
+            // Cerrar menú al hacer clic en el overlay
+            if(menuOverlay) {
+                menuOverlay.addEventListener('click', function() {
+                    hamburgerBtn.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    this.classList.remove('active');
+                    document.body.style.overflow = '';
+                    
+                    // Cerrar todos los submenús al cerrar el menú principal
+                    submenuItems.forEach(item => {
+                        item.classList.remove('active');
+                        item.querySelector('.mobile-submenu').classList.remove('active');
+                    });
+                });
+            }
+
+            // Manejo de submenús móviles
+            submenuItems.forEach(item => {
+                const submenuTrigger = item.querySelector('a');
+                const submenu = item.querySelector('.mobile-submenu');
+                
+                submenuTrigger.addEventListener('click', function(e) {
+                    // Prevenir que el clic se propague si ya estamos en un submenú
+                    if (e.target.closest('.mobile-submenu')) return;
+                    
+                    // Evitar que el enlace principal se active al hacer clic
+                    e.preventDefault();
+                    
+                    // Cerrar otros submenús abiertos
+                    submenuItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.mobile-submenu').classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle del submenú actual
+                    item.classList.toggle('active');
+                    submenu.classList.toggle('active');
+                });
+            });
+
+            // Manejo de submenús desktop
+            const desktopSubmenuItems = document.querySelectorAll('.has-submenu');
+            desktopSubmenuItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.classList.add('active');
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.classList.remove('active');
+                });
+            });
+        });
+    </script>
+
+            <nav class="navbar">
+            </nav>
+        </div>
+        <div class="header-content container">
+            <div class="header-txt">
+                <h1>Ingegases & Redes s.a.s</h1>
+                <div class="highlight-container">
+                    <p class="highlight-text"></p>
+        </div>
+
+         <button class="boton-login">Iniciar Sesión</button>
+
+    </header>
+
+    <section id="quienes_somos" class="about-section">
+        <div class="about-container">
+            <!-- Sección izquierda (Texto) - SIN CAMBIOS -->
+            <div class="about-text">
+                <h2>Acerca de INGEGASES Y REDES S.A.S</h2>
+                <p><strong>INGEGASES Y REDES S.A.S</strong> Empresa colombiana, fundada en el año 2015, dedicada a la instalacion y mantenimiento de todo lo relacionado con gases, Especiales, Medicinales e Industriales</p>
+                
+                <p>Somos especialistas en el diseño, instalación y mantenimiento de sistemas para gases medicinales, industriales y especiales, de igual manera brindamos soluciones integrales en procesos criogénicos.</p>
+                
+                <p>Nuestros servicios incluyen:</p>
+                
+                <ul class="services-list">
+                    <li>Mantenimiento de plantas de producción de gases del aire.</li>
+                    <li>Mantenimiento de estaciones de llenado</li>
+                    <li>Servicio técnico para equipos criogénicos</li>
+                    <li>Mantenimiento de Tanques Estacionarios y Tanqueros</li>
+                    <li>Asesoría técnica especializada</li>
+                </ul>
+    
+                <a href="experiencia.html" class="read-more-btn">LEER MÁS SOBRE NOSOTROS</a>
+            </div>
+    
+            <!-- Sección derecha (Galería 3D) -->
+            <div class="gallery-3d-container">
+                <div class="gallery-3d">
+                    <div class="photo-card" data-card="1">
+                        <img src="imagenes/Medicinal1.PNG" alt="Técnicos soldando">
+                    </div>
+                    <div class="photo-card" data-card="2">
+                        <img src="imagenes/Especiales1.PNG" alt="Gases">
+                    </div>
+                    <div class="photo-card" data-card="3">
+                        <img src="imagenes/Tanques3.PNG" alt="Industrial">
+                    </div>
+                </div>
+                <div class="gallery-nav">
+                    <button class="nav-dot active" data-index="0"></button>
+                    <button class="nav-dot" data-index="1"></button>
+                    <button class="nav-dot" data-index="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    
+
+    
+    <section class="ingegases-stats-section">
+        <div class="ingegases-stats-container">
+            <!-- Eslogan -->
+            <div class="ingegases-slogan-box">
+                <h2 class="ingegases-slogan-title">INGENIERÍA Y TECNOLOGÍA AVANZADA <br>PARA RESULTADOS QUE INSPIRAN CONFIANZA  </h2>
+                <p class="ingegases-slogan-text">Liderados por profesionales con amplia trayectoria, transformamos desafíos técnicos en soluciones eficientes, manteniendo estándares de calidad y desempeño en cada proyecto.</p>
+            </div>
+            
+            <!-- Estadísticas -->
+            <div class="ingegases-stats-grid">
+                <div class="ingegases-stat-card">
+                    <div class="ingegases-stat-number" data-count="15">+0</div>
+                    <div class="ingegases-stat-label">Años de Experiencia</div>
+                </div>
+                <div class="ingegases-stat-card">
+                    <div class="ingegases-stat-number" data-count="500">+0</div>
+                    <div class="ingegases-stat-label">Proyectos Ejecutados</div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+
+
+    
+    <footer id="contacto" class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <!-- Columna 1: Logo e información -->
+                <div class="footer-column logo-info">
+                    <div class="logo-container">
+                        <img class="footer-logo" src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Logo Ingegases">
+                    </div>
+                    <div class="footer-info">
+                        <h3>Ingegases y Redes s.a.s</h3>
+                        <p class="company-description">Especialistas en instalación y mantenimiento de sistemas de gases y redes industriales con más de 15 años de experiencia.</p>
+                        <div class="contact-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín</p>
+                            <p><i class="fas fa-phone"></i> 311 238 26 36</p>
+                            <p><i class="fas fa-envelope"></i> ingegasesyredes@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Columna 2: Redes sociales -->
+                <div class="footer-column social-section">
+                    <h3>Conéctate con Nosotros</h3>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/Ingegasesyredes/?locale=es_LA" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="social-btn facebook" 
+                        aria-label="Facebook de Ingegases">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/ingegasesyredes/?hl=es-la" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="social-btn instagram" 
+                        aria-label="Instagram de Ingegases">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/573112382636" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="social-btn whatsapp" 
+                        aria-label="WhatsApp de Ingegases">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://sgsst.co/publico" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="social-btn sgsst" 
+                        aria-label="Sistema de Gestión de Seguridad y Salud en el Trabajo">
+                            <span style="font-weight: bold; font-family: Arial, sans-serif;">S</span>
+                        </a>
+                    </div>
+    
+                    <div class="business-hours">
+                        <h4><i class="fas fa-building"></i> Sedes a Nivel Nacional</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> Carrera 54 #17A - 69 Bogota, Barrio Puente Aranda.</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Calle 12 # 68 - 109 Cali, Barrio el Limonar</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Cra 1 C2 No 47-67, Ciudadela 20 Julio Barranquilla</p>
+                        
+                    </div>
+                </div>
+    
+                <!-- Columna 3: Formulario de cotización -->
+                <div class="footer-column quotation-form">
+                    <h3>¿Necesitas una Cotización?</h3>
+                    <form id="cotizacionForm" class="quote-form" 
+                        action="https://formspree.io/f/ingegasesyredes@gmail.com" 
+                        method="POST">
+                        
+                        <!-- Campos del formulario (agrega 'name' a cada campo) -->
+                        <div class="input-group">
+                            <input type="text" name="nombre" placeholder="Nombre completo" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" name="email" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="tel" name="telefono" placeholder="Teléfono/Celular">
+                        </div>
+                        <div class="input-group">
+                            <textarea name="mensaje" placeholder="Describe tu proyecto o necesidad"></textarea>
+                        </div>
+                        
+                        <!-- Configuración adicional de Formspree -->
+                        <input type="hidden" name="_subject" value="Nueva cotización desde el sitio web">
+                        <input type="hidden" name="_replyto" value="%email%"> <!-- Auto-respuesta al remitente -->
+                        
+                        <button type="submit" class="btn-quote">
+                            <span>Enviar Solicitud</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+    
+                <!-- Columna 4: Ubicación -->
+                <div class="footer-column location">
+                    <h3>Nuestra Sede Principal</h3>
+                    <div class="map-wrapper">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521673867072!2d-75.57890792468696!3d6.201604493739862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4429d3a5d5d5a5%3A0x5b5b5b5b5b5b5b5b!2sCl.%2012b%20Sur%20%2352a-77%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1620000000000!5m2!1ses!2sco" 
+                            width="100%" 
+                            height="250" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy"
+                            class="google-map"
+                            aria-label="Mapa de ubicación de Ingegases"
+                        ></iframe>
+                        <div class="location-info">
+                            <p class="map-address">
+                                <i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín
+                            </p>
+                            <a href="https://www.google.com/maps/place/Cl.+12b+Sur+%2352a-77,+Medell%C3%ADn,+Antioquia/@6.2016045,-75.5789079,17z/data=!3m1!4b1!4m5!3m4!1s0x8e4429d3a5d5d5a5:0x5b5b5b5b5b5b5b5b!8m2!3d6.2016045!4d-75.5767192" 
+                            class="btn-directions" 
+                            target="_blank"
+                            rel="noopener noreferrer">
+                                <i class="fas fa-directions"></i> Cómo llegar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Footer inferior -->
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <a href="#">Términos y condiciones</a>
+                <span class="divider">•</span>
+                <a href="#">Política de privacidad</a>
+                <span class="divider">•</span>
+                <a href="#">Aviso legal</a>
+            </div>
+            <p class="copyright">&copy; 2025 Ingegases y Redes s.a.s. Todos los derechos reservados. <span class="nit">NIT: 900901915</span></p>
+        </div>
+
+</div>
+
+
+<script>
+    // Carrusel 3D Autoejecutable - Versión Optimizada
+(function() {
+    function init3DGallery() {
+        const gallery = document.querySelector('.gallery-3d');
+        if (!gallery) return;
+
+        const cards = document.querySelectorAll('.photo-card');
+        const dots = document.querySelectorAll('.nav-dot');
+        if (cards.length === 0 || dots.length === 0) return;
+
+        let currentIndex = 0;
+        let rotateInterval;
+
+        // Configuración optimizada
+        const config = {
+            rotationSpeed: 4000,       // Mantenemos los 4000ms de rotación
+            initialDelay: 100,        // Reducido de 1000ms a 100ms
+            transitionDuration: '0.5s', // Transición más rápida
+            activeZIndex: 10,
+            hiddenZIndex: -1,
+            rotationAngle: 75,
+            translateZ: -150
+        };
+
+        // Aplicar estilos iniciales de forma más eficiente
+        function applyInitialStyles() {
+            const style = document.createElement('style');
+            style.textContent = `
+                .photo-card {
+                    transition: transform ${config.transitionDuration} ease, 
+                                opacity ${config.transitionDuration} ease;
+                    will-change: transform, opacity;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Función de rotación optimizada
+        function rotateGallery(index) {
+            currentIndex = index;
+
+            cards.forEach((card, i) => {
+                const isActive = i === index;
+                const isNext = i === (index + 1) % cards.length;
+
+                card.style.transform = isActive
+                    ? 'rotateY(0deg) translateZ(0)'
+                    : `rotateY(${isNext ? config.rotationAngle : -config.rotationAngle}deg) translateZ(${config.translateZ}px)`;
+
+                card.style.zIndex = isActive ? config.activeZIndex : config.hiddenZIndex;
+                card.style.opacity = isActive ? '1' : '0';
+                card.style.visibility = isActive ? 'visible' : 'hidden';
+            });
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        // Auto-rotación con inicio más rápido
+        function startAutoRotate() {
+            clearInterval(rotateInterval);
+            rotateGallery(currentIndex); // Mostrar el primer elemento inmediatamente
+            
+            // Iniciar el intervalo después de un pequeño delay
+            rotateInterval = setInterval(() => {
+                rotateGallery((currentIndex + 1) % cards.length);
+            }, config.rotationSpeed);
+        }
+
+        // Event listeners mejorados
+        function setupEventListeners() {
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    if (index !== currentIndex) {
+                        rotateGallery(index);
+                        clearInterval(rotateInterval);
+                        setTimeout(startAutoRotate, config.rotationSpeed);
+                    }
+                });
+            });
+
+            gallery.addEventListener('mouseenter', () => {
+                clearInterval(rotateInterval);
+            });
+
+            gallery.addEventListener('mouseleave', startAutoRotate);
+        }
+
+        // Inicialización optimizada
+        applyInitialStyles();
+        setupEventListeners();
+        
+        // Inicio más rápido con pequeño delay
+        setTimeout(startAutoRotate, config.initialDelay);
+    }
+
+    // Carga más inteligente
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        init3DGallery();
+    } else {
+        document.addEventListener('DOMContentLoaded', init3DGallery);
+    }
+})();
+</script>
+
+    
+    
+    <script src="index.js"></script>
+    
+
+
+</body>
+
+</html>

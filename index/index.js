@@ -101,43 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // 5. Animación de estadísticas
-    const animateStats = () => {
-        const statsNumbers = document.querySelectorAll('.ingegases-stat-number');
-        
-        const animateNumber = (element, target, suffix) => {
-            let start = 0;
-            const duration = 2000;
-            const increment = target / (duration / 16);
-            
-            const timer = setInterval(() => {
-                start += increment;
-                if (start >= target) {
-                    clearInterval(timer);
-                    element.textContent = target + suffix;
-                } else {
-                    element.textContent = Math.floor(start) + suffix;
-                }
-            }, 16);
-        };
-        
-        const statsObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const number = entry.target;
-                    const target = parseInt(number.getAttribute('data-count'));
-                    const suffix = number.textContent.includes('+') ? '+' : '';
-                    
-                    animateNumber(number, target, suffix);
-                    observer.unobserve(number);
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        statsNumbers.forEach(number => {
-            statsObserver.observe(number);
-        });
-    };
+
 
     
 

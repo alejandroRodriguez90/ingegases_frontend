@@ -147,7 +147,7 @@
         }
 
         .navbar {
-            width: 100%;
+            width: 80%;
             display: flex;
             justify-content: center;
         }
@@ -539,7 +539,7 @@
             }
         }
 
-        /* ================================
+/* ================================
    SECCIÓN QUIÉNES SOMOS
 ================================ */
 .about-section {
@@ -847,6 +847,151 @@
     }
 }
 
+/* 
+================================
+ESTILOS BASE PARA TODOS LOS DISPOSITIVOS
+================================
+*/
+.header-content {
+    text-align: center;
+    display: flex;
+    padding: 40px 10px;
+    width: auto;
+    perspective: 1000px;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-txt {
+    transform-style: preserve-3d;
+    animation: textIntro 1.5s ease-out forwards;
+    opacity: 0;
+    transform: translateY(10px) rotateX(60deg);
+    width: 100%;
+    max-width: 100%;
+}
+
+/* 
+================================
+VERSIÓN PARA ESCRITORIO (≥992px)
+================================
+*/
+@media (min-width: 992px) {
+    .header-content {
+        padding: 80px 10px;
+    }
+    
+    .header-txt h1 {
+        font-size: 100px;
+        margin-top: 50px;
+    }
+}
+
+/* 
+================================
+VERSIÓN PARA TABLET (768px - 991px)
+================================
+*/
+@media (max-width: 991px) and (min-width: 768px) {
+    .header-txt h1 {
+        font-size: 72px;
+        margin-top: 40px;
+    }
+}
+
+/* 
+================================
+VERSIÓN PARA MÓVIL (≤767px)
+================================
+*/
+@media (max-width: 767px) {
+    .header-content {
+        padding: 30px 15px;
+        perspective: 800px;
+    }
+    
+    .header-txt h1 {
+        font-size: 42px;
+        background-size: 50%;
+        margin-top: 30px;
+        line-height: 1.2;
+        filter: 
+            drop-shadow(3px 3px 6px rgb(0, 0, 9))
+            brightness(0.9);
+    }
+    
+    .header-txt {
+        transform: translateY(5px) rotateX(45deg);
+    }
+    
+    /* Optimización de efectos 3D para móvil */
+    .header-txt::before {
+        transform: translateZ(-10px);
+    }
+    
+    .header-txt:hover p {
+        transform: translateZ(2px);
+    }
+    
+    /* Reducción de animación para mejor rendimiento */
+    @keyframes textIntro {
+        to {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+    }
+}
+
+/* 
+================================
+EFECTOS DE TEXTO COMUNES
+================================
+*/
+.header-txt h1 {
+    background-image: url('imagenes/PHOTO-2025-01-22-08-45-11.jpg');
+    background-size: 20%;
+    background-position: center;
+    background-clip: text;
+    text-transform: uppercase;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+    filter: 
+        drop-shadow(5px 5px 10px rgb(0, 0, 9))
+        brightness(0.9);
+    transition: all 0.3s ease;
+}
+
+.header-txt::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 15px;
+    z-index: 1;
+    transform: translateZ(-20px);
+}
+
+.header-txt:hover p {
+    transform: translateZ(4px);
+}
+
+/* 
+================================
+ANIMACIÓN DE ENTRADA
+================================
+*/
+@keyframes textIntro {
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
 
 </style>
 
@@ -1004,7 +1149,7 @@
                     <p class="highlight-text"></p>
         </div>
 
-         <button class="boton-login">Iniciar Sesión</button>
+         
 
     </header>
 
@@ -1068,19 +1213,60 @@
             <!-- Estadísticas -->
             <div class="ingegases-stats-grid">
                 <div class="ingegases-stat-card">
-                    <div class="ingegases-stat-number" data-count="15">0+</div>
+                    <div class="ingegases-stat-number" data-count="15">+0</div>
                     <div class="ingegases-stat-label">Años de Experiencia</div>
                 </div>
                 <div class="ingegases-stat-card">
-                    <div class="ingegases-stat-number" data-count="500">0+</div>
+                    <div class="ingegases-stat-number" data-count="500">+0</div>
                     <div class="ingegases-stat-label">Proyectos Ejecutados</div>
                 </div>
             </div>
         </div>
     </section>
+    
+    <Script>
+    
+    // Versión mejorada del script
+    document.addEventListener('DOMContentLoaded', function() {
+        const statsNumbers = document.querySelectorAll('.ingegases-stat-number');
         
+        if (!statsNumbers.length) return; // Salir si no hay elementos
+        
+        const animateCounter = (element, target, prefix) => {
+            let current = 0;
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    clearInterval(timer);
+                    element.textContent = `${prefix}${target}`;
+                } else {
+                    element.textContent = `${prefix}${Math.floor(current)}`;
+                }
+            }, 16);
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const target = parseInt(element.dataset.count) || 0;
+                    animateCounter(element, target, '+');
+                    observer.unobserve(element);
+                }
+            });
+        }, { threshold: 0.1 }); // Umbral más bajo para activación
+        
+        // Inicialización
+        statsNumbers.forEach(number => {
+            number.textContent = '+0'; // Fuerza el formato inicial
+            observer.observe(number);
+        });
+    });
 
-
+    </Script>
+    
     
     <footer id="contacto" class="footer">
         <div class="footer-content">
@@ -1222,67 +1408,86 @@
 
 
 <script>
-    // Carrusel 3D Autoejecutable
-    (function() {
-        function init3DGallery() {
-            const gallery = document.querySelector('.gallery-3d');
-            if (!gallery) return;
+    // Carrusel 3D Autoejecutable - Versión Optimizada
+(function() {
+    function init3DGallery() {
+        const gallery = document.querySelector('.gallery-3d');
+        if (!gallery) return;
 
-            const cards = document.querySelectorAll('.photo-card');
-            const dots = document.querySelectorAll('.nav-dot');
-            if (cards.length === 0 || dots.length === 0) return;
+        const cards = document.querySelectorAll('.photo-card');
+        const dots = document.querySelectorAll('.nav-dot');
+        if (cards.length === 0 || dots.length === 0) return;
 
-            let currentIndex = 0;
-            let rotateInterval;
+        let currentIndex = 0;
+        let rotateInterval;
 
-            const config = {
-                rotationSpeed: 4000, // Intervalo entre rotaciones (en ms)
-                initialDelay: 1000, // Retardo inicial antes de la primera rotación (en ms)
-                transitionDuration: '0.6s',
-                activeZIndex: 10,
-                hiddenZIndex: -1,
-                rotationAngle: 75,
-                translateZ: -150
-            };
+        // Configuración optimizada
+        const config = {
+            rotationSpeed: 4000,       // Mantenemos los 4000ms de rotación
+            initialDelay: 100,        // Reducido de 1000ms a 100ms
+            transitionDuration: '0.5s', // Transición más rápida
+            activeZIndex: 10,
+            hiddenZIndex: -1,
+            rotationAngle: 75,
+            translateZ: -150
+        };
 
-            cards.forEach(card => {
-                card.style.transition = `transform ${config.transitionDuration} ease, opacity ${config.transitionDuration} ease`;
+        // Aplicar estilos iniciales de forma más eficiente
+        function applyInitialStyles() {
+            const style = document.createElement('style');
+            style.textContent = `
+                .photo-card {
+                    transition: transform ${config.transitionDuration} ease, 
+                                opacity ${config.transitionDuration} ease;
+                    will-change: transform, opacity;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Función de rotación optimizada
+        function rotateGallery(index) {
+            currentIndex = index;
+
+            cards.forEach((card, i) => {
+                const isActive = i === index;
+                const isNext = i === (index + 1) % cards.length;
+
+                card.style.transform = isActive
+                    ? 'rotateY(0deg) translateZ(0)'
+                    : `rotateY(${isNext ? config.rotationAngle : -config.rotationAngle}deg) translateZ(${config.translateZ}px)`;
+
+                card.style.zIndex = isActive ? config.activeZIndex : config.hiddenZIndex;
+                card.style.opacity = isActive ? '1' : '0';
+                card.style.visibility = isActive ? 'visible' : 'hidden';
             });
 
-            function rotateGallery(index) {
-                currentIndex = index;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
 
-                cards.forEach((card, i) => {
-                    const isActive = i === index;
-                    const isNext = i === (index + 1) % cards.length;
+        // Auto-rotación con inicio más rápido
+        function startAutoRotate() {
+            clearInterval(rotateInterval);
+            rotateGallery(currentIndex); // Mostrar el primer elemento inmediatamente
+            
+            // Iniciar el intervalo después de un pequeño delay
+            rotateInterval = setInterval(() => {
+                rotateGallery((currentIndex + 1) % cards.length);
+            }, config.rotationSpeed);
+        }
 
-                    card.style.transform = isActive
-                        ? 'rotateY(0deg) translateZ(0)'
-                        : `rotateY(${isNext ? config.rotationAngle : -config.rotationAngle}deg) translateZ(${config.translateZ}px)`;
-
-                    card.style.zIndex = isActive ? config.activeZIndex : config.hiddenZIndex;
-                    card.style.opacity = isActive ? '1' : '0';
-                    card.style.visibility = isActive ? 'visible' : 'hidden';
-                });
-
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === index);
-                });
-            }
-
-            function startAutoRotate() {
-                clearInterval(rotateInterval);
-                rotateInterval = setInterval(() => {
-                    rotateGallery((currentIndex + 1) % cards.length);
-                }, config.rotationSpeed);
-            }
-
+        // Event listeners mejorados
+        function setupEventListeners() {
             dots.forEach(dot => {
                 dot.addEventListener('click', function() {
                     const index = parseInt(this.dataset.index);
-                    rotateGallery(index);
-                    clearInterval(rotateInterval);
-                    setTimeout(startAutoRotate, 10000); // Delay despues de clickear el dot
+                    if (index !== currentIndex) {
+                        rotateGallery(index);
+                        clearInterval(rotateInterval);
+                        setTimeout(startAutoRotate, config.rotationSpeed);
+                    }
                 });
             });
 
@@ -1291,21 +1496,23 @@
             });
 
             gallery.addEventListener('mouseleave', startAutoRotate);
-
-            // Iniciar con un retardo inicial
-            setTimeout(() => {
-                rotateGallery(0);
-                startAutoRotate();
-            }, config.initialDelay);
         }
 
-        // Esperar a que todo cargue
-        if (document.readyState === 'complete') {
-            init3DGallery();
-        } else {
-            window.addEventListener('load', init3DGallery);
-        }
-    })();
+        // Inicialización optimizada
+        applyInitialStyles();
+        setupEventListeners();
+        
+        // Inicio más rápido con pequeño delay
+        setTimeout(startAutoRotate, config.initialDelay);
+    }
+
+    // Carga más inteligente
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        init3DGallery();
+    } else {
+        document.addEventListener('DOMContentLoaded', init3DGallery);
+    }
+})();
 </script>
 
     
