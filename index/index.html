@@ -25,7 +25,7 @@
 .logo-absolute {
     position: absolute;
     top: 0;
-    left: 195px;
+    left: 280px;
     z-index: 10000;
     pointer-events: auto;
     overflow: visible;
@@ -34,8 +34,8 @@
 }
 
 .isolated-logo {
-    height: 90px;
-    width: 110px;
+    height: 80px;
+    width: 100px;
     object-fit: contain;
     border-radius: 0 0 20px 20px;
     background: rgba(255, 255, 255, 0.96);
@@ -951,17 +951,19 @@ EFECTOS DE TEXTO COMUNES
 */
 .header-txt h1 {
     background-image: url('imagenes/PHOTO-2025-01-22-08-45-11.jpg');
-    background-size: 20%;
+    background-size: 50%;
     background-position: center;
     background-clip: text;
     text-transform: uppercase;
     -webkit-background-clip: text;
     color: transparent;
-    display: inline-block;
     filter: 
         drop-shadow(5px 5px 10px rgb(0, 0, 9))
         brightness(0.9);
     transition: all 0.3s ease;
+    /* Una sola línea */
+    display: inline-block;
+  
 }
 
 .header-txt::before {
@@ -1228,45 +1230,116 @@ ANIMACIÓN DE ENTRADA
     
     // Versión mejorada del script
     document.addEventListener('DOMContentLoaded', function() {
+    // Configuración adaptable a dispositivos
+    const isMobile = window.innerWidth <= 768;
+    const isEdge = /Edg/.test(navigator.userAgent);
+    const animationDuration = isMobile ? 1500 : 2000;
+    const frameRate = isMobile ? 30 : 60; // Reducir frames en móviles para mejor rendimiento
+    
+    // Polyfill mejorado para IntersectionObserver
+    if (!('IntersectionObserver' in window) || (isEdge && !window.IntersectionObserverEntry)) {
         const statsNumbers = document.querySelectorAll('.ingegases-stat-number');
+        statsNumbers.forEach(number => {
+            const target = parseInt(number.getAttribute('data-count')) || 0;
+            number.textContent = `+${target}`;
+            number.style.opacity = 1; // Asegurar visibilidad
+        });
+        return;
+    }
+
+    const statsNumbers = document.querySelectorAll('.ingegases-stat-number');
+    if (!statsNumbers.length) return;
+
+    // Función de animación optimizada para móviles y Edge
+    const animateCounter = (element, target, prefix) => {
+        let start = null;
+        const frameDuration = 1000 / frameRate;
+        let lastFrameTime = 0;
         
-        if (!statsNumbers.length) return; // Salir si no hay elementos
-        
-        const animateCounter = (element, target, prefix) => {
-            let current = 0;
-            const duration = 2000;
-            const increment = target / (duration / 16);
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    clearInterval(timer);
-                    element.textContent = `${prefix}${target}`;
-                } else {
-                    element.textContent = `${prefix}${Math.floor(current)}`;
-                }
-            }, 16);
+        const step = (timestamp) => {
+            if (!start) start = timestamp;
+            const elapsed = timestamp - start;
+            
+            // Control de frame rate para mejor rendimiento
+            if (elapsed - lastFrameTime < frameDuration) {
+                window.requestAnimationFrame(step);
+                return;
+            }
+            lastFrameTime = elapsed;
+            
+            const progress = Math.min(elapsed / animationDuration, 1);
+            const value = Math.floor(progress * target);
+            
+            // Usamos textContent que es más eficiente
+            element.textContent = `${prefix}${value}`;
+            
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                element.textContent = `${prefix}${target}`;
+                // Forzar repintado para Edge
+                element.style.transform = 'translateZ(0)';
+            }
         };
         
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const element = entry.target;
-                    const target = parseInt(element.dataset.count) || 0;
+        window.requestAnimationFrame(step);
+    };
+    
+    // Configuración del Observer optimizada
+    const observerOptions = {
+        root: null,
+        rootMargin: isMobile ? '50px' : '0px',
+        threshold: isMobile ? 0.05 : 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                const target = parseInt(element.getAttribute('data-count')) || 0;
+                
+                // Pequeño retraso para mejor rendimiento en móviles
+                setTimeout(() => {
                     animateCounter(element, target, '+');
-                    observer.unobserve(element);
-                }
-            });
-        }, { threshold: 0.1 }); // Umbral más bajo para activación
-        
-        // Inicialización
-        statsNumbers.forEach(number => {
-            number.textContent = '+0'; // Fuerza el formato inicial
-            observer.observe(number);
+                }, isMobile ? 100 : 50);
+                
+                observer.unobserve(element);
+            }
         });
+    }, observerOptions);
+
+    // Inicialización con optimizaciones
+    statsNumbers.forEach(number => {
+        // Estilos iniciales para mejor renderizado
+        number.style.opacity = isMobile ? '0' : '1';
+        number.style.willChange = 'contents';
+        number.textContent = '+0';
+        
+        // Pequeño retraso para la observación en móviles
+        setTimeout(() => {
+            observer.observe(number);
+            if (isMobile) {
+                number.style.transition = 'opacity 0.5s ease';
+                number.style.opacity = '1';
+            }
+        }, isMobile ? 200 : 0);
     });
 
+    // Manejar cambios de orientación y resize
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            statsNumbers.forEach(number => {
+                if (!number.textContent.includes('+')) return;
+                const target = parseInt(number.getAttribute('data-count')) || 0;
+                number.textContent = `+${target}`;
+            });
+        }, 250);
+    });
+});
+
     </Script>
-    
     
     <footer id="contacto" class="footer">
         <div class="footer-content">
@@ -1277,7 +1350,7 @@ ANIMACIÓN DE ENTRADA
                         <img class="footer-logo" src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Logo Ingegases">
                     </div>
                     <div class="footer-info">
-                        <h3>Ingegases y Redes s.a.s</h3>
+                        <h3>Ingegases y Redes S.A.S.</h3>
                         <p class="company-description">Especialistas en instalación y mantenimiento de sistemas de gases y redes industriales con más de 15 años de experiencia.</p>
                         <div class="contact-info">
                             <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín</p>
@@ -1326,7 +1399,6 @@ ANIMACIÓN DE ENTRADA
                         <p><i class="fas fa-map-marker-alt"></i> Carrera 54 #17A - 69 Bogota, Barrio Puente Aranda.</p>
                         <p><i class="fas fa-map-marker-alt"></i> Calle 12 # 68 - 109 Cali, Barrio el Limonar</p>
                         <p><i class="fas fa-map-marker-alt"></i> Cra 1 C2 No 47-67, Ciudadela 20 Julio Barranquilla</p>
-                        
                     </div>
                 </div>
     
@@ -1334,7 +1406,7 @@ ANIMACIÓN DE ENTRADA
                 <div class="footer-column quotation-form">
                     <h3>¿Necesitas una Cotización?</h3>
                     <form id="cotizacionForm" class="quote-form" 
-                        action="https://formspree.io/f/ingegasesyredes@gmail.com" 
+                        action="https://formspree.io/f/roger.herrera@ingegasesyredes.com" 
                         method="POST">
                         
                         <!-- Campos del formulario (agrega 'name' a cada campo) -->
@@ -1361,8 +1433,45 @@ ANIMACIÓN DE ENTRADA
                         </button>
                     </form>
                 </div>
+                <!-- Nueva Columna 5: Trabaja con Nosotros -->
+                <div class="footer-column work-with-us">
+                    <h3>Trabaja con Nosotros</h3>
+                    <form id="trabajoForm" class="work-form" 
+                        action="https://formspree.io/f/roger.herrera@ingegasesyredes.com" 
+                        method="POST"
+                        enctype="multipart/form-data">
+                        
+                        <div class="input-group">
+                            <input type="text" name="nombre" placeholder="Nombre completo" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" name="email" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="tel" name="telefono" placeholder="Teléfono/Celular" required>
+                        </div>
+
+                        <div class="input-group file-upload">
+                            <label for="hoja-vida">
+                                <i class="fas fa-cloud-upload-alt"></i> Adjunta tu hoja de vida (PDF)
+                                <input type="file" id="hoja-vida" name="hoja_vida" accept=".pdf" required>
+                                <span class="file-name">No se ha seleccionado archivo</span>
+                            </label>
+                        </div>
+                        
+                        <!-- Configuración adicional de Formspree -->
+                        <input type="hidden" name="_subject" value="Nueva solicitud de empleo">
+                        <input type="hidden" name="_replyto" value="%email%">
+                        <input type="hidden" name="_cc" value="rrhh@ingegases.com"> <!-- Correo específico para RRHH -->
+                        
+                        <button type="submit" class="btn-work">
+                            <span>Enviar Solicitud</span>
+                            <i class="fas fa-briefcase"></i>
+                        </button>
+                    </form>
+                </div>
     
-                <!-- Columna 4: Ubicación -->
+                <!-- Columna 4: Ubicación (MAPA) -->
                 <div class="footer-column location">
                     <h3>Nuestra Sede Principal</h3>
                     <div class="map-wrapper">
@@ -1389,21 +1498,26 @@ ANIMACIÓN DE ENTRADA
                         </div>
                     </div>
                 </div>
+
+                
             </div>
         </div>
     
         <!-- Footer inferior -->
-        <div class="footer-bottom">
-            <div class="footer-legal">
-                <a href="#">Términos y condiciones</a>
-                <span class="divider">•</span>
-                <a href="#">Política de privacidad</a>
-                <span class="divider">•</span>
-                <a href="#">Aviso legal</a>
-            </div>
-            <p class="copyright">&copy; 2025 Ingegases y Redes s.a.s. Todos los derechos reservados. <span class="nit">NIT: 900901915</span></p>
-        </div>
-
+<div class="footer-bottom">
+    <div class="footer-legal">
+        <a href="#">Términos y condiciones</a>
+        <span class="divider">•</span>
+        <a href="#">Política de privacidad</a>
+        <span class="divider">•</span>
+        <a href="#">Aviso legal</a>
+    </div>
+    <p class="copyright">
+        &copy; 2025 Ingegases y Redes s.a.s. Todos los derechos reservados. 
+        <span class="nit">NIT: 900901915</span>
+        <span class="divider">•</span>
+        <a href="firma.html" class="dev-credit">DesarrolloWeb: @SmartDev</a>
+    </p>
 </div>
 
 
