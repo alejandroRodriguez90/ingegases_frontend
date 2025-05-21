@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Alejandro Rodríguez | Desarrollador Web</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --text-color: #333;
+            --text-light: #6c757d;
+            --success-color: #4cc9f0;
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('imagenes/FondoFirma.PNG');
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .presentation-card {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-section {
+            background-image: url('imagenes/Firma.PNG');
+            padding: 40px 30px;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .photo-container {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 4px solid white;
+            background-image: url('imagenes/David.PNG');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(1.05) contrast(1.1) saturate(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .photo-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            mix-blend-mode: overlay;
+        }
+
+        .photo-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .facebook:hover { background: #3b5998; }
+        .instagram:hover { background: linear-gradient(45deg, #405de6, #833ab4, #c13584, #e1306c); }
+        .linkedin:hover { background: #0077b5; }
+        .whatsapp:hover { background: #25D366; }
+
+        .info-section {
+            padding: 40px;
+        }
+
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: rgb(58, 137, 194);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 i {
+            font-size: 22px;
+        }
+
+        .about-me {
+            margin-bottom: 25px;
+        }
+
+        .about-me p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .skills {
+            margin-bottom: 25px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .skills-grid span {
+            background: #f0f4f8;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .contact i {
+            width: 20px;
+            color: var(--accent-color);
+        }
+
+        .download-btn {
+            margin-top: 30px;
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .download-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .presentation-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-section {
+                padding: 30px 20px;
+            }
+            
+            .info-section {
+                padding: 30px;
+            }
+            
+            .photo-container {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .skills-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            h2 {
+                font-size: 16px;
+            }
+            
+            h3 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-card">
+        <div class="profile-section">
+            <div class="photo-container"></div>
+            
+            <h1>David Alejandro Rodríguez</h1>
+            <h2>Desarrollador Web</h2>
+            
+            <div class="social-links">
+                <a href="https://www.facebook.com/alejandro.rodguez" class="social-btn facebook" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/mac_twizy_official?igsh=bTI0bWNncW05dDd4&utm_source=qr" class="social-btn instagram" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/david-alejandro-rodriguez-69624979?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="social-btn linkedin" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://wa.me/573142038816" class="social-btn whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <div class="about-me">
+                <h3><i class="fas fa-user-tie"></i> Sobre Mí</h3>
+                <p>Desarrollador web con 2 año de experiencia creando soluciones digitales innovadoras. Especializado en desarrollo frontend con React y backend con Python. Apasionado por el diseño UX/UI y la creación de experiencias digitales memorables.</p>
+            </div>
+            
+            <div class="skills">
+                <h3><i class="fas fa-code"></i> Habilidades Técnicas</h3>
+                <div class="skills-grid">
+                    <span>HTML5 & CSS3</span>
+                    <span>JavaScript (ES6+)</span>
+                    <span>React.js</span>
+                    <span>Node.js</span>
+                    <span>Python</span>
+                    <span>mySQL</span>
+                    <span>Git/Github</span>
+                    <span>Responsive Design</span>
+                    <span>UI/UX Design</span>
+                </div>
+            </div>
+            
+            <div class="contact">
+                <h3><i class="fas fa-envelope"></i> Contacto</h3>
+                <p><i class="fas fa-envelope"></i> davidalejandro.rx@live.com</p>
+                <p><i class="fas fa-phone"></i> +57 3142038816</p>
+                <p><i class="fas fa-map-marker-alt"></i> Bogotá, Colombia</p>
+            </div>
+            
+    </div>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Efecto hover en botones sociales
+            const socialBtns = document.querySelectorAll('.social-btn');
+            socialBtns.forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px)';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Botón de descarga (simulado)
+            const downloadBtn = document.querySelector('.download-btn');
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function() {
+                    alert('Esta función descargaría tu CV en un entorno real');
+                    // Aquí iría la lógica real para descargar el CV
+                });
+            }
+        });
+    </script>
+</body>
+</html>
