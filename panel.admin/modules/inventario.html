@@ -1,0 +1,1562 @@
+<div class="inventario-module">
+    <!-- Pantalla principal con tarjetas -->
+    <div id="mainScreen" class="main-screen">
+        <div class="main-header">
+            <h1 class="main-title">
+                <div class="title-icon-container">
+                    <div class="title-icon">📦</div>
+                </div>
+                Control de Inventario
+            </h1>
+            <p class="main-subtitle">Gestión de inventario para Ingegases y Redes s.a.s.</p>
+            
+            <div class="card-container">
+                <div class="inventario-card" onclick="navigateToTuberia()">
+                    <div class="card-icon-container">
+                        <div class="card-icon">🛠️</div>
+                    </div>
+                    <h3>Tubería</h3>
+                    <p class="card-description">Inventario de Tuberia y control detallado.</p>
+                </div>
+                
+                <div class="inventario-card" onclick="navigateToAccesorios()">
+                    <div class="card-icon-container">
+                        <div class="card-icon">🔩</div>
+                    </div>
+                    <h3>Accesorios</h3>
+                    <p class="card-description">Inventario de accesorios y control detallado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submenú interno (oculto inicialmente) -->
+    <div id="detailScreen" style="display: none;">
+        <div class="submenu-inventario">
+            <!-- Mantener estos botones pero ocultos visualmente -->
+            <button id="tuberiaTab" class="active" style="position: absolute; left: -9999px;" onclick="navigateToTuberia(); return false;">Tubería</button>
+            <button id="accesoriosTab" style="position: absolute; left: -9999px;" onclick="navigateToAccesorios(); return false;">Accesorios</button>
+            
+            <!-- Botón de volver visible -->
+            <button class="back-button" onclick="backToMain()">
+                <i class="fas fa-arrow-left"></i> Volver
+            </button>
+        </div>
+        
+        <div id="inventarioContent" class="content-transition"></div>
+    </div>
+
+    <style>
+       :root {
+    --primary-color: #4361ee;
+    --primary-hover: #3a56d4;
+    --secondary-color: #3f37c9;
+    --accent-blue: #4cc9f0;
+    --accent-orange: #f8961e;
+    --text-dark: #2b2d42;
+    --text-medium: #4a4e69;
+    --text-light: #8e9aaf;
+    --background-light: #f8f9fa;
+    --white: #ffffff;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
+    --border-radius: 16px;
+}
+
+/* ============ PANTALLA PRINCIPAL ============= */
+
+.main-screen {
+    width: 100%;
+    height: 100vh;
+    padding: 40px 40px; /* Reducido padding */
+    background-color: var(--background-light);
+    text-align: center;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow: hidden; /* Elimina scroll */
+    position: fixed; /* Fija la posición */
+    top: 0;
+    left: 0;
+}
+
+.main-header {
+    max-width: 1200px;
+    margin: 0 auto 20px; /* Reducido margen */
+    padding-top: 100px;
+}
+
+.main-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.main-title i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-text-fill-color: transparent;
+}
+
+.main-subtitle {
+    color: var(--text-light);
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 60px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* Ajustes para el contenedor de tarjetas */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px; /* Reducido gap */
+    max-width: 1200px;
+    margin: 0 auto;
+    max-height: calc(100vh - 250px); /* Altura máxima calculada */
+    overflow: hidden; /* Oculta overflow */
+}
+
+.inventario-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    padding: 30px 20px; /* Reducido padding */
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.inventario-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.7s ease;
+}
+
+.inventario-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.inventario-card:hover::before {
+    transform: scaleX(1);
+}
+
+.card-icon-container {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(63, 55, 201, 0.1));
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.inventario-card:hover .card-icon-container {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.card-icon {
+    font-size: 3.5rem;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.inventario-card:hover .card-icon {
+    transform: scale(1.2);
+}
+
+.inventario-card h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+.card-description {
+    color: var(--text-light);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    opacity: 1;
+    height: auto;
+}
+
+/* ============ RESPONSIVE IMPROVEMENTS ============= */
+@media (max-width: 1200px) {
+    .card-container {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .inventario-card {
+        min-height: 260px;
+        padding: 25px;
+    }
+    .card-icon-container {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        padding: 0 15px;
+    }
+    .inventario-card {
+        min-height: 240px;
+        padding: 30px 20px;
+        max-width: 100%;
+    }
+    .card-icon {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-container {
+        gap: 20px;
+    }
+    .inventario-card {
+        min-height: 220px;
+        padding: 25px 15px;
+    }
+    .card-icon-container {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
+    }
+    .inventario-card h3 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .card-container {
+        padding: 0 10px;
+    }
+    .inventario-card {
+        min-height: 200px;
+        padding: 20px 15px;
+    }
+    .card-icon {
+        font-size: 2.8rem;
+    }
+}
+
+        /* ============================================= */
+        /* ============ ESTILOS EXISTENTES ============= */
+        /* ============================================= */
+        /* (Manteniendo todos tus estilos existentes) */
+       
+        
+        .inventario-module {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .submenu-inventario {
+            display: flex;
+            margin: 15px 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .submenu-inventario button {
+            padding: 8px 16px;
+            margin-right: 10px;
+            background-color: #ecf0f1;
+            border: none;
+            border-radius: 4px;
+            color: #34495e;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submenu-inventario button:hover, 
+        .submenu-inventario button.active {
+            background-color: #3498db;
+            color: white;
+        }
+
+        /* Contenedor principal para título y tabla */
+        .table-title-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            min-height: 60px;
+        }
+
+        .section-title.vertical-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            text-align: center;
+            padding: 80px 10px;
+            background-color: #f4fb32c6;
+            color: rgb(68, 61, 61);
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+            border-radius: 5px 0 0 5px;
+            height: 50px;
+            min-height: 60px;
+            flex-shrink: 0;
+        }
+
+        .table-container {
+            display: inline-flex;
+            flex-direction: column;
+            width: calc(100% - 100px);
+            background: white;
+            border-radius: 0 5px 5px 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+            font-weight: 500;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        input[type="text"], 
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus, 
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
+        }
+
+        #inputUbicacion, #inputUbicacionAccesorio {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 14px;
+            padding-right: 25px;
+        }
+
+        .no-stock {
+            color: #e74c3c;
+            font-weight: bold;
+            padding: 8px 12px;
+            display: inline-block;
+            background-color: #fde8e8;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .no-stock:hover {
+            background-color: #fad2d2;
+            transform: scale(1.05);
+        }
+        
+
+        .export-button-container {
+            padding: 15px;
+            text-align: right;
+        }
+
+        #btnExportar, #btnExportarAccesorios {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        #btnExportar:hover, #btnExportarAccesorios:hover {
+            background-color: #27ae60;
+        }
+
+        /* CONTENEDORES DE GRÁFICAS - IGUALES PARA AMBOS */
+        .chart-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: calc(100% - 40px);
+            height: 300px;
+            display: block !important;
+        }
+
+        #tuberiaChart, #accesoriosChart {
+            width: 100% !important;
+            height: calc(100% - 40px) !important;
+            min-height: 250px;
+            display: block !important;
+        }
+
+        .chart-container h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #34495e;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .table-title-container {
+            margin-bottom: 20px;
+        }
+
+        /* AJUSTES ESPECÍFICOS PARA ACCESORIOS */
+        /* Para mantener consistencia con tubería */
+        #listaAccesorios {
+            width: 100%;
+        }
+
+        #inputDescripcionAccesorio {
+            width: 100%;
+        }
+
+        #cantidadCellAccesorio {
+            width: 120px;
+        }
+        
+
+        .back-button {
+            background: #c1defa !important;  /* Color azul */
+            color: rgb(0, 0, 0) !important;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: auto; /* Alinea a la derecha */
+            display: block;
+        }
+
+        .back-button:hover {
+            background: #7cc1fa !important;  /* Azul más oscuro */
+            transform: translateY(-2px);
+        }
+
+        /* RESPONSIVE - IGUAL PARA AMBOS */
+        @media (max-width: 768px) {
+            .table-title-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .section-title.vertical-title {
+                writing-mode: horizontal-tb;
+                transform: none;
+                padding: 15px;
+                width: 100%;
+                height: auto;
+                min-height: auto;
+                border-radius: 12px 12px 0 0;
+                margin-right: 0;
+                display: block;
+            }
+            
+            .table-container {
+                width: 100%;
+                border-radius: 0 0 12px 12px;
+            }
+            
+            .chart-container {
+                width: 100%;
+                height: 250px;
+            }
+            
+            #tuberiaChart, #accesoriosChart {
+                min-height: 200px;
+            }
+            
+            .main-title {
+                font-size: 1.8rem;
+            }
+            
+            .main-subtitle {
+                font-size: 0.95rem;
+            }
+            
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .inventario-card {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Se agregaron ajustes específicos para móviles: */
+        @media (max-width: 576px) {
+            .inventario-card {
+                min-height: 220px;
+                padding: 25px 15px;
+            }
+            /* ... */
+        }
+    </style>
+
+
+    <script>
+
+// ==========================================================================
+// FUNCIONES DE NAVEGACIÓN (ACTUALIZADAS)
+// ==========================================================================
+function backToMain() {
+    document.getElementById('mainScreen').style.display = 'block';
+    document.getElementById('detailScreen').style.display = 'none';
+}
+
+function showDetailScreen() {
+    document.getElementById('mainScreen').style.display = 'none';
+    document.getElementById('detailScreen').style.display = 'block';
+}
+
+function navigateToTuberia() {
+    showDetailScreen();
+    document.getElementById('tuberiaTab').classList.add('active');
+    document.getElementById('accesoriosTab').classList.remove('active');
+    loadTuberia();
+}
+
+function navigateToAccesorios() {
+    showDetailScreen();
+    document.getElementById('accesoriosTab').classList.add('active');
+    document.getElementById('tuberiaTab').classList.remove('active');
+    loadAccesorios();
+}
+
+
+
+    // ==========================================================================
+    // INVENTARIO TUBERIA 
+    // ==========================================================================
+    const tuberiasDisponibles = [
+    // Tuberías de Cobre
+    {codigo: "IYR0001", descripcion: "TuberíaCobre K 1/4"},
+    {codigo: "IYR0002", descripcion: "TuberíaCobre K 3/8"},
+    {codigo: "IYR0003", descripcion: "TuberíaCobre K 1/2"},
+    {codigo: "IYR0004", descripcion: "TuberíaCobre K 3/4"},
+    {codigo: "IYR0005", descripcion: "TuberíaCobre K 1"},
+    {codigo: "IYR0006", descripcion: "TuberíaCobre K 1.1/4"},
+    {codigo: "IYR0007", descripcion: "TuberíaCobre K 1.1/2"},
+    {codigo: "IYR0008", descripcion: "TuberíaCobre K 2"},
+    {codigo: "IYR0009", descripcion: "TuberíaCobre K 2.1/2"},
+    {codigo: "IYR0010", descripcion: "TuberíaCobre K 3"},
+    {codigo: "IYR0011", descripcion: "TuberíaCobre L 1/4"},
+    {codigo: "IYR0012", descripcion: "TuberíaCobre L 3/8"},
+    {codigo: "IYR0013", descripcion: "TuberíaCobre L 1/2"},
+    {codigo: "IYR0014", descripcion: "TuberíaCobre L 3/4"},
+    {codigo: "IYR0015", descripcion: "TuberíaCobre L 1"},
+    {codigo: "IYR0016", descripcion: "TuberíaCobre L 1.1/4"},
+    {codigo: "IYR0017", descripcion: "TuberíaCobre L 1.1/2"},
+    {codigo: "IYR0018", descripcion: "TuberíaCobre L 2"},
+    {codigo: "IYR0019", descripcion: "TuberíaCobre L 2.1/2"},
+    {codigo: "IYR0020", descripcion: "TuberíaCobre L 3"},
+    
+    // Tuberías de Acero Inoxidable
+    {codigo: "IYR0021", descripcion: "TuberíaAceroInoxidable Sch10 1/4"},
+    {codigo: "IYR0022", descripcion: "TuberíaAceroInoxidable Sch10 3/8"},
+    {codigo: "IYR0023", descripcion: "TuberíaAceroInoxidable Sch10 1/2"},
+    {codigo: "IYR0024", descripcion: "TuberíaAceroInoxidable Sch10 3/4"},
+    {codigo: "IYR0025", descripcion: "TuberíaAceroInoxidable Sch10 1"},
+    {codigo: "IYR0026", descripcion: "TuberíaAceroInoxidable Sch10 1.1/4"},
+    {codigo: "IYR0027", descripcion: "TuberíaAceroInoxidable Sch10 1.1/2"},
+    {codigo: "IYR0028", descripcion: "TuberíaAceroInoxidable Sch10 2"},
+    {codigo: "IYR0029", descripcion: "TuberíaAceroInoxidable Sch10 2.1/2"},
+    {codigo: "IYR0030", descripcion: "TuberíaAceroInoxidable Sch10 3"},
+    {codigo: "IYR0031", descripcion: "TuberíaAceroInoxidable Sch40 1/4"},
+    {codigo: "IYR0032", descripcion: "TuberíaAceroInoxidable Sch40 3/8"},
+    {codigo: "IYR0033", descripcion: "TuberíaAceroInoxidable Sch40 1/2"},
+    {codigo: "IYR0034", descripcion: "TuberíaAceroInoxidable Sch40 3/4"},
+    {codigo: "IYR0035", descripcion: "TuberíaAceroInoxidable Sch40 1"},
+    {codigo: "IYR0036", descripcion: "TuberíaAceroInoxidable Sch40 1.1/4"},
+    {codigo: "IYR0037", descripcion: "TuberíaAceroInoxidable Sch40 1.1/2"},
+    {codigo: "IYR0038", descripcion: "TuberíaAceroInoxidable Sch40 2"},
+    {codigo: "IYR0039", descripcion: "TuberíaAceroInoxidable Sch40 2.1/2"},
+    {codigo: "IYR0040", descripcion: "TuberíaAceroInoxidable Sch40 3"},
+    {codigo: "IYR0041", descripcion: "TuberíaAceroInoxidable Sch80 1/4"},
+    {codigo: "IYR0042", descripcion: "TuberíaAceroInoxidable Sch80 3/8"},
+    {codigo: "IYR0043", descripcion: "TuberíaAceroInoxidable Sch80 1/2"},
+    {codigo: "IYR0044", descripcion: "TuberíaAceroInoxidable Sch80 3/4"},
+    {codigo: "IYR0045", descripcion: "TuberíaAceroInoxidable Sch80 1"},
+    {codigo: "IYR0046", descripcion: "TuberíaAceroInoxidable Sch80 1.1/4"},
+    {codigo: "IYR0047", descripcion: "TuberíaAceroInoxidable Sch80 1.1/2"},
+    {codigo: "IYR0048", descripcion: "TuberíaAceroInoxidable Sch80 2"},
+    {codigo: "IYR0049", descripcion: "TuberíaAceroInoxidable Sch80 2.1/2"},
+    {codigo: "IYR0050", descripcion: "TuberíaAceroInoxidable Sch80 3"},
+    
+    // Tuberías de Acero Carbono
+    {codigo: "IYR0051", descripcion: "TuberíaAceroCarbono Sch10 1/4"},
+    {codigo: "IYR0052", descripcion: "TuberíaAceroCarbono Sch10 3/8"},
+    {codigo: "IYR0053", descripcion: "TuberíaAceroCarbono Sch10 1/2"},
+    {codigo: "IYR0054", descripcion: "TuberíaAceroCarbono Sch10 3/4"},
+    {codigo: "IYR0055", descripcion: "TuberíaAceroCarbono Sch10 1"},
+    {codigo: "IYR0056", descripcion: "TuberíaAceroCarbono Sch10 1.1/4"},
+    {codigo: "IYR0057", descripcion: "TuberíaAceroCarbono Sch10 1.1/2"},
+    {codigo: "IYR0058", descripcion: "TuberíaAceroCarbono Sch10 2"},
+    {codigo: "IYR0059", descripcion: "TuberíaAceroCarbono Sch10 2.1/2"},
+    {codigo: "IYR0060", descripcion: "TuberíaAceroCarbono Sch10 3"},
+    {codigo: "IYR0061", descripcion: "TuberíaAceroCarbono Sch40 1/4"},
+    {codigo: "IYR0062", descripcion: "TuberíaAceroCarbono Sch40 3/8"},
+    {codigo: "IYR0063", descripcion: "TuberíaAceroCarbono Sch40 1/2"},
+    {codigo: "IYR0064", descripcion: "TuberíaAceroCarbono Sch40 3/4"},
+    {codigo: "IYR0065", descripcion: "TuberíaAceroCarbono Sch40 1"},
+    {codigo: "IYR0066", descripcion: "TuberíaAceroCarbono Sch40 1.1/4"},
+    {codigo: "IYR0067", descripcion: "TuberíaAceroCarbono Sch40 1.1/2"},
+    {codigo: "IYR0068", descripcion: "TuberíaAceroCarbono Sch40 2"},
+    {codigo: "IYR0069", descripcion: "TuberíaAceroCarbono Sch40 2.1/2"},
+    {codigo: "IYR0070", descripcion: "TuberíaAceroCarbono Sch40 3"},
+    {codigo: "IYR0071", descripcion: "TuberíaAceroCarbono Sch80 1/4"},
+    {codigo: "IYR0072", descripcion: "TuberíaAceroCarbono Sch80 3/8"},
+    {codigo: "IYR0073", descripcion: "TuberíaAceroCarbono Sch80 1/2"},
+    {codigo: "IYR0074", descripcion: "TuberíaAceroCarbono Sch80 3/4"},
+    {codigo: "IYR0075", descripcion: "TuberíaAceroCarbono Sch80 1"},
+    {codigo: "IYR0076", descripcion: "TuberíaAceroCarbono Sch80 1.1/4"},
+    {codigo: "IYR0077", descripcion: "TuberíaAceroCarbono Sch80 1.1/2"},
+    {codigo: "IYR0078", descripcion: "TuberíaAceroCarbono Sch80 2"},
+    {codigo: "IYR0079", descripcion: "TuberíaAceroCarbono Sch80 2.1/2"},
+    {codigo: "IYR0080", descripcion: "TuberíaAceroCarbono Sch80 3"},
+    
+    // Tuberías de PVC
+    {codigo: "IYR0081", descripcion: "TuberíaPVCPresion 3/8"},
+    {codigo: "IYR0082", descripcion: "TuberíaPVCPresion 1/2"},
+    {codigo: "IYR0083", descripcion: "TuberíaPVCPresion 3/4"},
+    {codigo: "IYR0084", descripcion: "TuberíaPVCPresion 1"},
+    {codigo: "IYR0085", descripcion: "TuberíaPVCPresion 1.1/4"},
+    {codigo: "IYR0086", descripcion: "TuberíaPVCPresion 1.1/2"},
+    {codigo: "IYR0087", descripcion: "TuberíaPVCPresion 2"},
+    {codigo: "IYR0088", descripcion: "TuberíaPVCPresion 2.1/2"},
+    {codigo: "IYR0089", descripcion: "TuberíaPVCPresion 3"},
+    
+    // Tuberías EMT
+    {codigo: "IYR0090", descripcion: "TuberíaEMT 1/2"},
+    {codigo: "IYR0091", descripcion: "TuberíaEMT 3/4"},
+    {codigo: "IYR0092", descripcion: "TuberíaEMT 1"},
+    {codigo: "IYR0093", descripcion: "TuberíaEMT 1.1/2"},
+    {codigo: "IYR0094", descripcion: "TuberíaEMT 2"}
+];
+// Crear mapeo de descripciones a códigos
+const descripcionToCodigo = {};
+tuberiasDisponibles.forEach(item => {
+    descripcionToCodigo[item.descripcion] = item.codigo;
+});
+
+// Variables globales
+let itemActual = null;
+let chart = null;
+const ubicacionesDisponibles = ["Bogotá", "Cali"];
+
+// Funciones principales
+function loadTuberia() {
+    const tableContent = `
+        <div class="table-title-container">
+            <div class="section-title vertical-title">Tubería</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Descripción</th>
+                            <th>Ubicación</th>
+                            <th>Cantidad</th>
+                            <th>Valor Unitario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${generarFilaConsulta()}
+                    </tbody>
+                </table>
+                <div class="export-button-container">
+                    <button id="btnExportar" class="btn-export">Exportar a Excel</button>
+                </div>
+            </div>
+        </div>
+        <div class="chart-container" style="display: none;">
+            <h3>Gráfica de Consulta</h3>
+            <canvas id="tuberiaChart"></canvas>
+        </div>
+    `;
+
+    document.getElementById('inventarioContent').innerHTML = tableContent;
+    configurarEventos();
+}
+
+function generarFilaConsulta() {
+    return `
+        <tr class="fila-consulta">
+            <td id="codigoGenerado"></td>
+            <td>
+                <input type="text" id="inputDescripcion" 
+                    placeholder="Buscar tubería..." 
+                    list="listaTuberias" autocomplete="off">
+                <datalist id="listaTuberias">
+                    ${tuberiasDisponibles.map(item => 
+                        `<option value="${item.descripcion}" data-codigo="${item.codigo}">${item.descripcion}</option>`).join('')}
+                </datalist>
+            </td>
+            <td>
+                <select id="inputUbicacion" class="form-select">
+                    ${ubicacionesDisponibles.map(ubicacion => 
+                        `<option value="${ubicacion}">${ubicacion}</option>`).join('')}
+                </select>
+            </td>
+            <td id="cantidadCell">
+                <input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()">
+            </td>
+            <td>
+                <input type="number" id="inputValor" placeholder="Valor" min="0" step="0.01">
+            </td>
+        </tr>
+    `;
+}
+
+function actualizarEstadoStock() {
+    const cantidadInput = document.getElementById('inputCantidad');
+    const cantidadCell = document.getElementById('cantidadCell');
+    const valor = parseFloat(cantidadInput.value) || 0;
+    
+    if (valor === 0) {
+        cantidadCell.innerHTML = `
+            <span class="no-stock" onclick="restaurarInputCantidad()">No Stock</span>
+            <input type="number" id="inputCantidad" value="0" min="0" style="display:none;">
+        `;
+    } else {
+        cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="${valor}" onchange="actualizarEstadoStock()">`;
+    }
+    
+    if (itemActual) {
+        itemActual.cantidad = valor;
+        actualizarGrafica();
+    }
+}
+
+function restaurarInputCantidad() {
+    const cantidadCell = document.getElementById('cantidadCell');
+    cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()">`;
+    document.getElementById('inputCantidad').focus();
+}
+
+function configurarEventos() {
+    const inputDesc = document.getElementById('inputDescripcion');
+    
+    inputDesc.addEventListener('input', function() {
+        const descripcion = this.value;
+        const selectedOption = document.querySelector(`#listaTuberias option[value="${descripcion}"]`);
+        const codigo = selectedOption ? selectedOption.getAttribute('data-codigo') : '';
+        
+        document.getElementById('codigoGenerado').textContent = codigo || '';
+        
+        if (codigo) {
+            itemActual = {
+                codigo: codigo,
+                descripcion: descripcion,
+                ubicacion: document.getElementById('inputUbicacion').value || 'Bogotá',
+                cantidad: parseFloat(document.getElementById('inputCantidad').value) || 0,
+                valor: parseFloat(document.getElementById('inputValor').value) || 0
+            };
+            
+            // Restaurar input de cantidad
+            const cantidadCell = document.getElementById('cantidadCell');
+            cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="${itemActual.cantidad}" onchange="actualizarEstadoStock()">`;
+            
+            actualizarGrafica();
+        } else {
+            // Si no hay item seleccionado válido, ocultar gráfica
+            document.getElementById('tuberiaChart').style.display = 'none';
+            if (chart) {
+                chart.destroy();
+                chart = null;
+            }
+        }
+    });
+
+    ['inputUbicacion', 'inputValor'].forEach(id => {
+        document.getElementById(id).addEventListener('change', function() {
+            if (itemActual) {
+                itemActual.ubicacion = document.getElementById('inputUbicacion').value;
+                itemActual.valor = parseFloat(document.getElementById('inputValor').value) || 0;
+                actualizarGrafica();
+            }
+        });
+    });
+    
+    document.getElementById('btnExportar').addEventListener('click', exportarAExcel);
+    actualizarEstadoStock();
+}
+
+function actualizarGrafica() {
+    const chartContainer = document.querySelector('.chart-container');
+    const chartElement = document.getElementById('tuberiaChart');
+    
+    if (!itemActual || itemActual.cantidad <= 0) {
+        chartContainer.style.display = 'none';
+        if (chart) {
+            chart.destroy();
+            chart = null;
+        }
+        return;
+    }
+    
+    chartContainer.style.display = 'block';
+    
+    if (chart) {
+        chart.destroy();
+    }
+    
+    // Configurar dimensiones fijas para el canvas
+    chartElement.width = chartElement.offsetWidth;
+    chartElement.height = 250; // Altura fija
+    
+    chart = new Chart(chartElement, {
+        type: 'bar',
+        data: {
+            labels: [itemActual.descripcion],
+            datasets: [{
+                label: 'Cantidad',
+                data: [itemActual.cantidad],
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: { 
+                    beginAtZero: true,
+                    ticks: { precision: 0 }
+                },
+                y: { 
+                    ticks: { 
+                        autoSkip: false,
+                        font: { size: 12 }
+                    } 
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        afterLabel: () => {
+                            return `Código: ${itemActual.codigo}\nValor: $${itemActual.valor.toFixed(2)}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function exportarAExcel() {
+    if (!itemActual) {
+        alert("No hay datos para exportar");
+        return;
+    }
+    
+    const cantidadInput = document.getElementById('inputCantidad');
+    const cantidad = parseFloat(cantidadInput.value) || 0;
+    
+    const datos = [{
+        'Código': itemActual.codigo,
+        'Descripción': itemActual.descripcion,
+        'Ubicación': itemActual.ubicacion || 'Bogotá',
+        'Cantidad': cantidad === 0 ? 'No Stock' : cantidad,
+        'Valor': itemActual.valor
+    }];
+    
+    const csvRows = [];
+    const headers = Object.keys(datos[0]);
+    csvRows.push(headers.join(','));
+    
+    for (const row of datos) {
+        const values = headers.map(header => {
+            const escaped = ('' + row[header]).replace(/"/g, '\\"');
+            return `"${escaped}"`;
+        });
+        csvRows.push(values.join(','));
+    }
+    
+    const csvString = csvRows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `tuberia_${itemActual.codigo}.csv`);
+    link.style.visibility = 'hidden';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// ================================================================================
+// INVENTARIO ACCESORIOS
+// ================================================================================
+// ================================================================================
+// INVENTARIO ACCESORIOS - NUEVA ESTRUCTURA
+// ================================================================================
+
+const accesoriosData = {
+    "Cobre": {
+        "Union": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2", "2.1/2", "3"],
+        "Tee": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2", "2.1/2", "3", "Reducida"],
+        "Tee Reducida": ["1*3/4", "1*1/2", "3/4*1/2", "1/2*3/8", "1/2*1", "1.1/4*3/4"],
+        "Codo": ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2", "2.1/2", "3"],
+        "Semicodo": ["1/2", "3/4", "1", "1.1/4", "1.1/2", "2", "3"],
+        "CopaRed": ["3*2.1/2", "3*2", "2*1.1/2", "2*1.1/4", "2*1", "1*3/4", "1*3/8", "1*1/2", "3/4*1/2", "3/4*3/8", "3/4*1/4", "1/2*3/8", "1/2*1/4", "1/2*1/8"],
+        "Universales": ["3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2", "2.1/2", "3"],
+        "Tapon": ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2", "2.1/2", "3"],
+        "Adaptador": {
+            "Soldeo": {
+                "NPTH": ["3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
+                "NPTM": ["3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"]
+            }
+        }
+    },
+    "Acero Inoxidable": {
+        "Conector": {
+            "OD": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
+            "NPTM": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
+            "NPTH": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
+            "OD/NPTM": {
+                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
+                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
+            },
+            "OD/NPTH": {
+                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
+                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
+            },
+            "NPTM/NPTH": {
+                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
+                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
+            }
+        },
+        "Tee": {
+            "OD": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
+            "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
+            "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
+            "Sch40": {
+                "SoldeoTope": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
+                "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
+                "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
+            }
+        },
+        "Codo": {
+            "OD": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
+            "NPTM": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
+            "NPTH": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
+            "OD/NPTM": {
+                "1/8": ["1/8", "1/4", "1/2"],
+                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
+                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
+            },
+            "OD/NPTH": {
+                "1/8": ["1/8", "1/4", "1/2"],
+                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
+                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
+            },
+            "NPTM/NPTH": {
+                "1/8": ["1/8", "1/4", "1/2"],
+                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
+                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
+            },
+            "Sch40": {
+                "SoldeoTope": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
+                "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
+                "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
+            }
+        },
+        "Niple": {
+            "Sch40": {
+                "SoldeoTope": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
+                "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
+                "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
+            }
+        },
+        "Universal": ["1/2", "3/4", "1", "1.1/4", "1.1/2"],
+        "Tapon": {
+            "Sch40": ["1/4", "3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
+            "NPTH": ["1/4", "3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
+            "NPTM": ["1/4", "3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"]
+        },
+        "Bushing": {
+            "Sch40": {
+                "1/4": ["3/8", "1/2", "1"],
+                "1/2": ["1", "1.1/2", "2"],
+                "3/8": ["1/2", "1"],
+                "3/4": ["1", "1.1/4", "1.1/2", "2"],
+                "1": ["1/4", "1/2", "2"],
+                "1.1/4": ["1.1/2", "2"],
+                "1.1/2": ["2"]
+            }
+        },
+        "CopaRed": {
+            "Sch40": {
+                "1/4": ["1/2", "3/4"],
+                "1/2": ["3/4", "1", "1.1/2"],
+                "3/4": ["1", "1.1/2", "2"],
+                "1": ["1.1/2"],
+                "1.1/2": ["2"]
+            }
+        },
+        "Brida": {
+            "Sch40": {
+                "SoldeoTope": ["1/2", "3/4", "1", "1.1/2", "2"]
+            }
+        },
+        "Valvula": {
+            "4Tornillos": ["1/4", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
+            "deBola": ["1/4", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
+            "TipoL": {
+                "OD": ["1/4"],
+                "OD/NPTM": ["1/4*1/4"],
+                "NPTH": ["1/4"],
+                "DosVias": ["1/4 OD"],
+                "Recta": ["1/4 NPTH"]
+            }
+        }
+    },
+
+    "Bronce": {
+        "Niple": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
+        "Conector": {
+            "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
+            "OD/NPTM": {
+                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
+                "1/2": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
+                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
+            },
+            "OD/NPTH": {
+                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
+                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
+            },
+            "NPTM/NPTH": {
+                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
+                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
+                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
+                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
+            }
+        },
+        "Racore": {
+            "NPTM/DISS": {
+                "1/2": ["aire", "oxigeno", "vacio", "nitrogeno"],
+                "3/4": ["aire", "oxigeno", "vacio", "nitrogeno"]
+            },
+            "RoscaSoldeo": ["1/2", "3/4", "1", "1.1/4", "1.1/2"]
+        },
+        "Tapon": {
+            "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"]
+        },
+        "Bushing": {
+            "1/4": ["3/8", "1/2", "1"],
+            "1/2": ["1", "1.1/2", "2"],
+            "3/8": ["1/2", "1"],
+            "3/4": ["1", "1.1/4", "1.1/2", "2"],
+            "1": ["1/4", "1/2", "2"],
+            "1.1/4": ["1.1/2", "2"],
+            "1.1/2": ["2"]
+        },
+        "Valvula": {
+            "4Tornillos": ["1/4", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
+            "deBola": ["1/4", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
+            "4Vias": ["1/8 NPTH"]
+        },
+        "Codo": {
+            "OD": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
+            "NPTM": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
+            "NPTH": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
+            "OD/NPTM": {
+                "1/8": ["1/8", "1/4", "1/2"],
+                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
+                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
+            },
+            "OD/NPTH": {
+                "1/8": ["1/8", "1/4", "1/2"],
+                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
+                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
+            },
+            "NPTM/NPTH": {
+                "1/8": ["1/8", "1/4", "1/2"],
+                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
+                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
+                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
+            }
+        },
+        "Tee": {
+            "OD": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
+            "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
+            "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"]
+        }
+    },
+    "Acero Carbon": {
+        // Similar a Acero Inoxidable pero con menos variedad
+        "Tee": {
+            "Sch40": {
+                "SoldeoTope": ["1/2", "3/4", "1", "1.1/2", "2"],
+                "NPTM": ["1/2", "3/4", "1", "1.1/2", "2"],
+                "NPTH": ["1/2", "3/4", "1", "1.1/2", "2"]
+            }
+        },
+        "Codo": {
+            "Sch40": {
+                "SoldeoTope": ["1/2", "3/4", "1", "1.1/2", "2"],
+                "NPTM": ["1/2", "3/4", "1", "1.1/2", "2"],
+                "NPTH": ["1/2", "3/4", "1", "1.1/2", "2"]
+            }
+        },
+        "Brida": {
+            "Sch40": {
+                "SoldeoTope": ["1/2", "3/4", "1", "1.1/2", "2"]
+            }
+        },
+        "Bushing": {
+            "Sch40": {
+                "1/2": ["1", "1.1/2", "2"],
+                "3/4": ["1", "1.1/2", "2"],
+                "1": ["1.1/2", "2"],
+                "1.1/2": ["2"]
+            }
+        }
+    }
+};
+
+
+
+
+
+
+        // Generar mapeo de descripciones a códigos para accesorios
+const descripcionToCodigoAccesorios = {};
+const descripcionesDisponiblesAccesorios = [];
+let codigoCounterAccesorios = 95; // Comenzar desde IYR0095
+
+// Función para generar códigos basados en la estructura de datos
+function generarCodigosAccesorios(material, tipo, detalles, prefijo = '') {
+    const materialKey = material.replace(/\s+/g, '');
+    
+    if (Array.isArray(detalles)) {
+        // Para elementos simples como diámetros
+        detalles.forEach(diametro => {
+            const descripcion = `${tipo}${materialKey}${prefijo}${diametro}`;
+            const codigo = "IYR" + codigoCounterAccesorios.toString().padStart(4, '0');
+            
+            descripcionToCodigoAccesorios[descripcion] = codigo;
+            descripcionesDisponiblesAccesorios.push(descripcion);
+            codigoCounterAccesorios++;
+        });
+    } else if (typeof detalles === 'object') {
+        // Para estructuras anidadas
+        for (const [subtipo, subdetalles] of Object.entries(detalles)) {
+            generarCodigosAccesorios(
+                material, 
+                tipo, 
+                subdetalles, 
+                `${prefijo}${prefijo ? ' ' : ''}${subtipo} `
+            );
+        }
+    }
+}
+
+// Generar todos los códigos para cada material
+for (const [material, tipos] of Object.entries(accesoriosData)) {
+    for (const [tipo, detalles] of Object.entries(tipos)) {
+        generarCodigosAccesorios(material, tipo, detalles);
+    }
+}
+
+// Variables para accesorios
+let itemActualAccesorio = null;
+let chartAccesorios;
+
+// Funciones para accesorios
+function loadAccesorios() {
+    // Actualizar pestaña activa
+    document.getElementById('accesoriosTab').classList.add('active');
+    document.getElementById('tuberiaTab').classList.remove('active');
+    
+    const tableContent = `
+        <div class="table-title-container">
+            <div class="section-title vertical-title">Accesorios</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Descripción</th>
+                            <th>Ubicación</th>
+                            <th>Cantidad</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${generarFilaConsultaAccesorios()}
+                    </tbody>
+                </table>
+                <div class="export-button-container">
+                    <button id="btnExportarAccesorios">Exportar a Excel</button>
+                </div>
+            </div>
+        </div>
+        <div class="chart-container">
+            <h3>Gráfica de Consulta</h3>
+            <canvas id="accesoriosChart"></canvas>
+        </div>
+    `;
+
+    document.getElementById('inventarioContent').innerHTML = tableContent;
+    document.getElementById('inventarioContent').classList.add('content-transition');
+    
+    // Configurar eventos
+    configurarEventosAccesorios();
+    
+    // Mostrar gráfica (aunque vacía)
+    document.getElementById('accesoriosChart').style.display = 'block';
+}
+
+
+function generarFilaConsultaAccesorios() {
+    return `
+        <tr class="fila-consulta">
+            <td id="codigoGeneradoAccesorio"></td>
+            <td>
+                <input type="text" id="inputDescripcionAccesorio" 
+                    placeholder="Buscar accesorio..." 
+                    list="listaAccesorios" autocomplete="off">
+                <datalist id="listaAccesorios">
+                    ${descripcionesDisponiblesAccesorios.map(desc => 
+                        `<option value="${desc}">${desc}</option>`).join('')}
+                </datalist>
+            </td>
+            <td>
+                <select id="inputUbicacionAccesorio" class="form-select">
+                    ${ubicacionesDisponibles.map(ubicacion => 
+                        `<option value="${ubicacion}">${ubicacion}</option>`).join('')}
+                </select>
+            </td>
+            <td id="cantidadCellAccesorio" style="width: 120px;">
+                <div class="cantidad-container">
+                    <input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()">
+                </div>
+            </td>
+            <td>
+                <input type="number" id="inputValorAccesorio" placeholder="Valor" min="0" step="0.01">
+            </td>
+        </tr>
+    `;
+}
+
+function actualizarEstadoStockAccesorios() {
+    const cantidadInput = document.getElementById('inputCantidadAccesorio');
+    const cantidadCell = document.getElementById('cantidadCellAccesorio');
+    const valor = parseFloat(cantidadInput.value) || 0;
+    
+    if (valor === 0) {
+        cantidadCell.innerHTML = `
+            <div class="cantidad-container">
+                <span class="no-stock" onclick="restaurarInputCantidadAccesorios()">No Stock</span>
+                <input type="number" id="inputCantidadAccesorio" value="0" min="0" style="display:none;">
+            </div>
+        `;
+    } else {
+        cantidadCell.innerHTML = `
+            <div class="cantidad-container">
+                <input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="${valor}" onchange="actualizarEstadoStockAccesorios()">
+            </div>
+        `;
+    }
+    
+    if (itemActualAccesorio) {
+        itemActualAccesorio.cantidad = valor;
+        actualizarGraficaAccesorios();
+    }
+}
+
+function restaurarInputCantidadAccesorios() {
+    const cantidadCell = document.getElementById('cantidadCellAccesorio');
+    cantidadCell.innerHTML = `<input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()">`;
+    document.getElementById('inputCantidadAccesorio').focus();
+}
+
+        function configurarEventosAccesorios() {
+            const inputDesc = document.getElementById('inputDescripcionAccesorio');
+            
+            inputDesc.addEventListener('input', function() {
+                const cantidadCell = document.getElementById('cantidadCellAccesorio');
+                cantidadCell.innerHTML = `<input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()">`;
+                
+                const descripcion = this.value;
+                const codigo = descripcionToCodigoAccesorios[descripcion];
+                document.getElementById('codigoGeneradoAccesorio').textContent = codigo || '';
+                
+                if (codigo) {
+                    itemActualAccesorio = {
+                        codigo: codigo,
+                        descripcion: descripcion,
+                        ubicacion: document.getElementById('inputUbicacionAccesorio').value || 'Bogotá',
+                        cantidad: 0,
+                        valor: parseFloat(document.getElementById('inputValorAccesorio').value) || 0
+                    };
+                    actualizarGraficaAccesorios();
+                }
+            });
+
+            ['inputUbicacionAccesorio', 'inputValorAccesorio'].forEach(id => {
+                document.getElementById(id).addEventListener('change', function() {
+                    if (itemActualAccesorio) {
+                        itemActualAccesorio.ubicacion = document.getElementById('inputUbicacionAccesorio').value;
+                        itemActualAccesorio.valor = parseFloat(document.getElementById('inputValorAccesorio').value) || 0;
+                        actualizarGraficaAccesorios();
+                    }
+                });
+            });
+            
+            document.getElementById('btnExportarAccesorios').addEventListener('click', exportarAExcelAccesorios);
+            actualizarEstadoStockAccesorios();
+        }
+
+        function actualizarGraficaAccesorios() {
+            if (!itemActualAccesorio) {
+                document.getElementById('accesoriosChart').style.display = 'none';
+                return;
+            }
+            
+            const ctx = document.getElementById('accesoriosChart').getContext('2d');
+            ctx.canvas.style.display = 'block';
+            ctx.canvas.width = ctx.canvas.offsetWidth;
+            ctx.canvas.height = 300;
+            
+            if (chartAccesorios) {
+                chartAccesorios.destroy();
+            }
+            
+            chartAccesorios = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [itemActualAccesorio.descripcion],
+                    datasets: [{
+                        label: 'Cantidad',
+                        data: [itemActualAccesorio.cantidad],
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { 
+                            beginAtZero: true,
+                            ticks: { precision: 0 }
+                        },
+                        y: { 
+                            ticks: { 
+                                autoSkip: false,
+                                font: { size: 12 }
+                            } 
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: () => {
+                                    return `Código: ${itemActualAccesorio.codigo}\nValor: $${itemActualAccesorio.valor.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            top: 10,
+                            right: 10,
+                            bottom: 10,
+                            left: 10
+                        }
+                    }
+                }
+            });
+        }
+
+        function exportarAExcelAccesorios() {
+            if (!itemActualAccesorio) {
+                alert("No hay datos para exportar");
+                return;
+            }
+            
+            const cantidadInput = document.getElementById('inputCantidadAccesorio');
+            const cantidad = parseFloat(cantidadInput.value) || 0;
+            
+            const datos = [{
+                'Código': itemActualAccesorio.codigo,
+                'Descripción': itemActualAccesorio.descripcion,
+                'Ubicación': itemActualAccesorio.ubicacion || 'Bogotá',
+                'Cantidad': cantidad === 0 ? 'No Stock' : cantidad,
+                'Valor': itemActualAccesorio.valor
+            }];
+            
+            const csvRows = [];
+            const headers = Object.keys(datos[0]);
+            csvRows.push(headers.join(','));
+            
+            for (const row of datos) {
+                const values = headers.map(header => {
+                    const escaped = ('' + row[header]).replace(/"/g, '\\"');
+                    return `"${escaped}"`;
+                });
+                csvRows.push(values.join(','));
+            }
+            
+            const csvString = csvRows.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `accesorio_${itemActualAccesorio.codigo}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Inicializar módulo mostrando la pantalla principal
+        document.addEventListener('DOMContentLoaded', function() {
+            // No cargar tubería por defecto, mostrar pantalla principal
+            document.getElementById('mainScreen').style.display = 'block';
+            document.getElementById('detailScreen').style.display = 'none';
+        });
+
+        
+    </script>
+</body>
+</html>

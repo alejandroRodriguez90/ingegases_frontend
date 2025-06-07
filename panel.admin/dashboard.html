@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Ingegases</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Estilos para el loader */
+        .module-loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+        }
+        .loader-spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Mensaje de error */
+        .error-message {
+            text-align: center;
+            padding: 40px;
+            color: #e74c3c;
+        }
+        .error-message h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        .error-message p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+        .retry-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .retry-btn:hover {
+            background-color: #2980b9;
+        }
+        .retry-btn i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra superior -->
+    <div class="top-bar">
+        <div class="logo">
+            <img src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Logo Ingegases">
+        </div>
+        <div class="logout">
+            <button onclick="window.location.href='../login/login.html'">
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </button>
+        </div>
+    </div>
+    
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <ul>
+            <li><a href="#" onclick="loadModule('inventario')">
+                <i class="fas fa-boxes icon"></i>
+                <span class="text">Inventario</span>
+            </a></li>
+            <li><a href="#" onclick="loadModule('proyectos')">
+                <i class="fas fa-project-diagram icon"></i>
+                <span class="text">Proyectos</span>
+            </a></li>
+            <li><a href="#" onclick="loadModule('requisicion')">
+                <i class="fas fa-file-alt icon"></i>
+                <span class="text">Requisición</span>
+            </a></li>
+            <li><a href="#" onclick="loadModule('proveedores')">
+                <i class="fas fa-truck icon"></i>
+                <span class="text">Proveedores</span>
+            </a></li>
+            <li><a href="#" onclick="loadModule('almacen')">
+                <i class="fas fa-warehouse icon"></i>
+                <span class="text">Almacén</span>
+            </a></li>
+            <li><a href="#" onclick="loadModule('soporte')">
+                <i class="fas fa-headset icon"></i>
+                <span class="text">Soporte</span>
+            </a></li>
+        </ul>
+    </div>
+    
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div id="dynamicContent">
+            <div class="welcome-message">
+                <img src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Logo Ingegases">
+                <h1><i class="fas fa-home"></i> Bienvenido al Panel de Ingegases Y Redes</h1>
+                <p>Seleccione un módulo del menú lateral para iniciar.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts base -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Cargador dinámico de módulos
+        async function loadModule(moduleName) {
+            try {
+                // Mostrar loader
+                document.getElementById('dynamicContent').innerHTML = `
+                    <div class="module-loader">
+                        <div class="loader-spinner"></div>
+                        <p>Cargando módulo ${moduleName}...</p>
+                    </div>
+                `;
+                
+                // Cargar el módulo
+                const response = await fetch(`modules/${moduleName}.html`);
+                if (!response.ok) throw new Error('Módulo no encontrado');
+                
+                const html = await response.text();
+                document.getElementById('dynamicContent').innerHTML = html;
+                
+                // Ejecutar scripts incrustados en el módulo
+                const scripts = Array.from(document.getElementById('dynamicContent').querySelectorAll('script'));
+                
+                for (const script of scripts) {
+                    try {
+                        if (script.src) {
+                            await loadScript(script.src);
+                        } else {
+                            const newScript = document.createElement('script');
+                            newScript.textContent = script.textContent;
+                            document.body.appendChild(newScript);
+                        }
+                    } catch (error) {
+                        console.error(`Error al cargar script: ${error}`);
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Error al cargar el módulo:', error);
+                document.getElementById('dynamicContent').innerHTML = `
+                    <div class="error-message">
+                        <h2><i class="fas fa-exclamation-triangle"></i> Error al cargar el módulo</h2>
+                        <p>No se pudo cargar el módulo ${moduleName}. Por favor intente nuevamente.</p>
+                        <button onclick="loadModule('${moduleName}')" class="retry-btn">
+                            <i class="fas fa-sync-alt"></i> Reintentar
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Función para cargar scripts externos
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.body.appendChild(script);
+            });
+        }
+        
+        // Configuración inicial - No cargar módulo por defecto
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mostrar pantalla de bienvenida inicialmente
+            console.log('Dashboard cargado correctamente');
+            
+            // Opcional: Puedes cargar un módulo por defecto aquí si lo deseas
+            // loadModule('inventario');
+        });
+    </script>
+</body>
+</html>

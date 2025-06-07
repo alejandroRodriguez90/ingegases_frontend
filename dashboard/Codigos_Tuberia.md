@@ -1,147 +1,119 @@
 +----------+-----------------------------------------+
 | Código   | Descripción                             |
 +----------+-----------------------------------------+
-| IYR0001  | TuberíaCobreM1/8                        |
-| IYR0002  | TuberíaCobreM1/4                        |
-| IYR0003  | TuberíaCobreM3/8                        |
-| IYR0004  | TuberíaCobreM1/2                        |
-| IYR0005  | TuberíaCobreM3/4                        |
-| IYR0006  | TuberíaCobreM1                          |
-| IYR0007  | TuberíaCobreM1-1/4                      |
-| IYR0008  | TuberíaCobreM1-1/2                      |
-| IYR0009  | TuberíaCobreM3                          |
-| IYR0010  | TuberíaCobreM3-1/2                      |
-| IYR0011  | TuberíaCobreM4                          |
-| IYR0012  | TuberíaCobreK1/8                        |
-| IYR0013  | TuberíaCobreK1/4                        |
-| IYR0014  | TuberíaCobreK3/8                        |
-| IYR0015  | TuberíaCobreK1/2                        |
-| IYR0016  | TuberíaCobreK3/4                        |
-| IYR0017  | TuberíaCobreK1                          |
-| IYR0018  | TuberíaCobreK1-1/4                      |
-| IYR0019  | TuberíaCobreK1-1/2                      |
-| IYR0020  | TuberíaCobreK3                          |
-| IYR0021  | TuberíaCobreK3-1/2                      |
-| IYR0022  | TuberíaCobreK4                          |
-| IYR0023  | TuberíaCobreL1/8                        |
-| IYR0024  | TuberíaCobreL1/4                        |
-| IYR0025  | TuberíaCobreL3/8                        |
-| IYR0026  | TuberíaCobreL1/2                        |
-| IYR0027  | TuberíaCobreL3/4                        |
-| IYR0028  | TuberíaCobreL1                          |
-| IYR0029  | TuberíaCobreL1-1/4                      |
-| IYR0030  | TuberíaCobreL1-1/2                      |
-| IYR0031  | TuberíaCobreL3                          |
-| IYR0032  | TuberíaCobreL3-1/2                      |
-| IYR0033  | TuberíaCobreL4                          |
-| IYR0034  | TuberíaAceroInoxidable101/8             |
-| IYR0035  | TuberíaAceroInoxidable101/4             |
-| IYR0036  | TuberíaAceroInoxidable103/8             |
-| IYR0037  | TuberíaAceroInoxidable101/2             |
-| IYR0038  | TuberíaAceroInoxidable103/4             |
-| IYR0039  | TuberíaAceroInoxidable101               |
-| IYR0040  | TuberíaAceroInoxidable101-1/4           |
-| IYR0041  | TuberíaAceroInoxidable101-1/2           |
-| IYR0042  | TuberíaAceroInoxidable103               |
-| IYR0043  | TuberíaAceroInoxidable103-1/2           |
-| IYR0044  | TuberíaAceroInoxidable104               |
-| IYR0045  | TuberíaAceroInoxidable401/8             |
-| IYR0046  | TuberíaAceroInoxidable401/4             |
-| IYR0047  | TuberíaAceroInoxidable403/8             |
-| IYR0048  | TuberíaAceroInoxidable401/2             |
-| IYR0049  | TuberíaAceroInoxidable403/4             |
-| IYR0050  | TuberíaAceroInoxidable401               |
-| IYR0051  | TuberíaAceroInoxidable401-1/4           |
-| IYR0052  | TuberíaAceroInoxidable401-1/2           |
-| IYR0053  | TuberíaAceroInoxidable403               |
-| IYR0054  | TuberíaAceroInoxidable403-1/2           |
-| IYR0055  | TuberíaAceroInoxidable404               |
-| IYR0056  | TuberíaAceroInoxidable801/8             |
-| IYR0057  | TuberíaAceroInoxidable801/4             |
-| IYR0058  | TuberíaAceroInoxidable803/8             |
-| IYR0059  | TuberíaAceroInoxidable801/2             |
-| IYR0060  | TuberíaAceroInoxidable803/4             |
-| IYR0061  | TuberíaAceroInoxidable801               |
-| IYR0062  | TuberíaAceroInoxidable801-1/4           |
-| IYR0063  | TuberíaAceroInoxidable801-1/2           |
-| IYR0064  | TuberíaAceroInoxidable803               |
-| IYR0065  | TuberíaAceroInoxidable803-1/2           |
-| IYR0066  | TuberíaAceroInoxidable804               |
-| IYR0067  | TuberíaAceroCarbono101/8                |
-| IYR0068  | TuberíaAceroCarbono101/4                |
-| IYR0069  | TuberíaAceroCarbono103/8                |
-| IYR0070  | TuberíaAceroCarbono101/2                |
-| IYR0071  | TuberíaAceroCarbono103/4                |
-| IYR0072  | TuberíaAceroCarbono101                  |
-| IYR0073  | TuberíaAceroCarbono101-1/4              |
-| IYR0074  | TuberíaAceroCarbono101-1/2              |
-| IYR0075  | TuberíaAceroCarbono103                  |
-| IYR0076  | TuberíaAceroCarbono103-1/2              |
-| IYR0077  | TuberíaAceroCarbono104                  |
-| IYR0078  | TuberíaAceroCarbono401/8                |
-| IYR0079  | TuberíaAceroCarbono401/4                |
-| IYR0080  | TuberíaAceroCarbono403/8                |
-| IYR0081  | TuberíaAceroCarbono401/2                |
-| IYR0082  | TuberíaAceroCarbono403/4                |
-| IYR0083  | TuberíaAceroCarbono401                  |
-| IYR0084  | TuberíaAceroCarbono401-1/4              |
-| IYR0085  | TuberíaAceroCarbono401-1/2              |
-| IYR0086  | TuberíaAceroCarbono403                  |
-| IYR0087  | TuberíaAceroCarbono403-1/2              |
-| IYR0088  | TuberíaAceroCarbono404                  |
-| IYR0089  | TuberíaAceroCarbono801/8                |
-| IYR0090  | TuberíaAceroCarbono801/4                |
-| IYR0091  | TuberíaAceroCarbono803/8                |
-| IYR0092  | TuberíaAceroCarbono801/2                |
-| IYR0093  | TuberíaAceroCarbono803/4                |
-| IYR0094  | TuberíaAceroCarbono801                  |
-| IYR0095  | TuberíaAceroCarbono801-1/4              |
-| IYR0096  | TuberíaAceroCarbono801-1/2              |
-| IYR0097  | TuberíaAceroCarbono803                  |
-| IYR0098  | TuberíaAceroCarbono803-1/2              |
-| IYR0099  | TuberíaAceroCarbono804                  |
-| IYR0100  | TuberíaPVCPresion1/8                    |
-| IYR0101  | TuberíaPVCPresion1/4                    |
-| IYR0102  | TuberíaPVCPresion3/8                    |
-| IYR0103  | TuberíaPVCPresion1/2                    |
-| IYR0104  | TuberíaPVCPresion3/4                    |
-| IYR0105  | TuberíaPVCPresion1                      |
-| IYR0106  | TuberíaPVCPresion1-1/4                  |
-| IYR0107  | TuberíaPVCPresion1-1/2                  |
-| IYR0108  | TuberíaPVCPresion3                      |
-| IYR0109  | TuberíaPVCPresion3-1/2                  |
-| IYR0110  | TuberíaPVCPresion4                      |
-| IYR0111  | TuberíaPVCElectrica1/8                  |
-| IYR0112  | TuberíaPVCElectrica1/4                  |
-| IYR0113  | TuberíaPVCElectrica3/8                  |
-| IYR0114  | TuberíaPVCElectrica1/2                  |
-| IYR0115  | TuberíaPVCElectrica3/4                  |
-| IYR0116  | TuberíaPVCElectrica1                    |
-| IYR0117  | TuberíaPVCElectrica1-1/4                |
-| IYR0118  | TuberíaPVCElectrica1-1/2                |
-| IYR0119  | TuberíaPVCElectrica3                    |
-| IYR0120  | TuberíaPVCElectrica3-1/2                |
-| IYR0121  | TuberíaPVCElectrica4                    |
-| IYR0122  | TuberíaPVCSanitaria1/8                  |
-| IYR0123  | TuberíaPVCSanitaria1/4                  |
-| IYR0124  | TuberíaPVCSanitaria3/8                  |
-| IYR0125  | TuberíaPVCSanitaria1/2                  |
-| IYR0126  | TuberíaPVCSanitaria3/4                  |
-| IYR0127  | TuberíaPVCSanitaria1                    |
-| IYR0128  | TuberíaPVCSanitaria1-1/4                |
-| IYR0129  | TuberíaPVCSanitaria1-1/2                |
-| IYR0130  | TuberíaPVCSanitaria3                    |
-| IYR0131  | TuberíaPVCSanitaria3-1/2                |
-| IYR0132  | TuberíaPVCSanitaria4                    |
-| IYR0133  | TuberíaPVCVentilacion1/8                |
-| IYR0134  | TuberíaPVCVentilacion1/4                |
-| IYR0135  | TuberíaPVCVentilacion3/8                |
-| IYR0136  | TuberíaPVCVentilacion1/2                |
-| IYR0137  | TuberíaPVCVentilacion3/4                |
-| IYR0138  | TuberíaPVCVentilacion1                  |
-| IYR0139  | TuberíaPVCVentilacion1-1/4              |
-| IYR0140  | TuberíaPVCVentilacion1-1/2              |
-| IYR0141  | TuberíaPVCVentilacion3                  |
-| IYR0142  | TuberíaPVCVentilacion3-1/2              |
-| IYR0143  | TuberíaPVCVentilacion4                  |
+| IYR0001  | TuberíaCobre K 1/4                      |
+| IYR0002  | TuberíaCobre K 3/8                      |
+| IYR0003  | TuberíaCobre K 1/2                      |
+| IYR0004  | TuberíaCobre K 3/4                      |
+| IYR0005  | TuberíaCobre K 1                        |
+| IYR0006  | TuberíaCobre K 1.1/4                    |
+| IYR0007  | TuberíaCobre K 1.1/2                    |
+| IYR0008  | TuberíaCobre K 2                        |
+| IYR0009  | TuberíaCobre K 2.1/2                    |
+| IYR0010  | TuberíaCobre K 3                        |
+| IYR0011  | TuberíaCobre L 1/4                      |
+| IYR0012  | TuberíaCobre L 3/8                      |
+| IYR0013  | TuberíaCobre L 1/2                      |
+| IYR0014  | TuberíaCobre L 3/4                      |
+| IYR0015  | TuberíaCobre L 1                        |
+| IYR0016  | TuberíaCobre L 1.1/4                    |
+| IYR0017  | TuberíaCobre L 1.1/2                    |
+| IYR0018  | TuberíaCobre L 2                        |
+| IYR0019  | TuberíaCobre L 2.1/2                    |
+| IYR0020  | TuberíaCobre L 3                        |
+| IYR0021  | TuberíaAceroInoxidable Sch10 1/4        |
+| IYR0022  | TuberíaAceroInoxidable Sch10 3/8        |
+| IYR0023  | TuberíaAceroInoxidable Sch10 1/2        |
+| IYR0024  | TuberíaAceroInoxidable Sch10 3/4        |
+| IYR0025  | TuberíaAceroInoxidable Sch10 1          |
+| IYR0026  | TuberíaAceroInoxidable Sch10 1.1/4      |
+| IYR0027  | TuberíaAceroInoxidable Sch10 1.1/2      |
+| IYR0028  | TuberíaAceroInoxidable Sch10 2          |
+| IYR0029  | TuberíaAceroInoxidable Sch10 2.1/2      |
+| IYR0030  | TuberíaAceroInoxidable Sch10 3          |
+| IYR0031  | TuberíaAceroInoxidable Sch40 1/4        |
+| IYR0032  | TuberíaAceroInoxidable Sch40 3/8        |
+| IYR0033  | TuberíaAceroInoxidable Sch40 1/2        |
+| IYR0034  | TuberíaAceroInoxidable Sch40 3/4        |
+| IYR0035  | TuberíaAceroInoxidable Sch40 1          |
+| IYR0036  | TuberíaAceroInoxidable Sch40 1.1/4      |
+| IYR0037  | TuberíaAceroInoxidable Sch40 1.1/2      |
+| IYR0038  | TuberíaAceroInoxidable Sch40 2          |
+| IYR0039  | TuberíaAceroInoxidable Sch40 2.1/2      |
+| IYR0040  | TuberíaAceroInoxidable Sch40 3          |
+| IYR0041  | TuberíaAceroInoxidable Sch80 1/4        |
+| IYR0042  | TuberíaAceroInoxidable Sch80 3/8        |
+| IYR0043  | TuberíaAceroInoxidable Sch80 1/2        |
+| IYR0044  | TuberíaAceroInoxidable Sch80 3/4        |
+| IYR0045  | TuberíaAceroInoxidable Sch80 1          |
+| IYR0046  | TuberíaAceroInoxidable Sch80 1.1/4      |
+| IYR0047  | TuberíaAceroInoxidable Sch80 1.1/2      |
+| IYR0048  | TuberíaAceroInoxidable Sch80 2          |
+| IYR0049  | TuberíaAceroInoxidable Sch80 2.1/2      |
+| IYR0050  | TuberíaAceroInoxidable Sch80 3          |
+| IYR0051  | TuberíaAceroCarbono Sch10 1/4           |
+| IYR0052  | TuberíaAceroCarbono Sch10 3/8           |
+| IYR0053  | TuberíaAceroCarbono Sch10 1/2           |
+| IYR0054  | TuberíaAceroCarbono Sch10 3/4           |
+| IYR0055  | TuberíaAceroCarbono Sch10 1             |
+| IYR0056  | TuberíaAceroCarbono Sch10 1.1/4         |
+| IYR0057  | TuberíaAceroCarbono Sch10 1.1/2         |
+| IYR0058  | TuberíaAceroCarbono Sch10 2             |
+| IYR0059  | TuberíaAceroCarbono Sch10 2.1/2         |
+| IYR0060  | TuberíaAceroCarbono Sch10 3             |
+| IYR0061  | TuberíaAceroCarbono Sch40 1/4           |
+| IYR0062  | TuberíaAceroCarbono Sch40 3/8           |
+| IYR0063  | TuberíaAceroCarbono Sch40 1/2           |
+| IYR0064  | TuberíaAceroCarbono Sch40 3/4           |
+| IYR0065  | TuberíaAceroCarbono Sch40 1             |
+| IYR0066  | TuberíaAceroCarbono Sch40 1.1/4         |
+| IYR0067  | TuberíaAceroCarbono Sch40 1.1/2         |
+| IYR0068  | TuberíaAceroCarbono Sch40 2             |
+| IYR0069  | TuberíaAceroCarbono Sch40 2.1/2         |
+| IYR0070  | TuberíaAceroCarbono Sch40 3             |
+| IYR0071  | TuberíaAceroCarbono Sch80 1/4           |
+| IYR0072  | TuberíaAceroCarbono Sch80 3/8           |
+| IYR0073  | TuberíaAceroCarbono Sch80 1/2           |
+| IYR0074  | TuberíaAceroCarbono Sch80 3/4           |
+| IYR0075  | TuberíaAceroCarbono Sch80 1             |
+| IYR0076  | TuberíaAceroCarbono Sch80 1.1/4         |
+| IYR0077  | TuberíaAceroCarbono Sch80 1.1/2         |
+| IYR0078  | TuberíaAceroCarbono Sch80 2             |
+| IYR0079  | TuberíaAceroCarbono Sch80 2.1/2         |
+| IYR0080  | TuberíaAceroCarbono Sch80 3             |
+| IYR0081  | TuberíaPVCPresion 3/8                   |
+| IYR0082  | TuberíaPVCPresion 1/2                   |
+| IYR0083  | TuberíaPVCPresion 3/4                   |
+| IYR0084  | TuberíaPVCPresion 1                     |
+| IYR0085  | TuberíaPVCPresion 1.1/4                 |
+| IYR0086  | TuberíaPVCPresion 1.1/2                 |
+| IYR0087  | TuberíaPVCPresion 2                     |
+| IYR0088  | TuberíaPVCPresion 2.1/2                 |
+| IYR0089  | TuberíaPVCPresion 3                     |
+| IYR0090  | TuberíaEMT 1/2                          |
+| IYR0091  | TuberíaEMT 3/4                          |
+| IYR0092  | TuberíaEMT 1                            |
+| IYR0093  | TuberíaEMT 1.1/2                        |
+| IYR0094  | TuberíaEMT 2                            |
 +----------+-----------------------------------------+
+
+
+1. Estructura de archivos recomendada:
+
+panel-admin/
+├── css/
+│   ├── main.css         # Estilos generales
+│   ├── modules.css      # Estilos específicos de módulos
+│   └── responsive.css   # Media queries
+├── js/
+│   ├── main.js          # Lógica principal
+│   ├── moduleManager.js # Gestión de módulos
+│   └── modules/         # JS específico por módulo
+│       ├── inventario.js
+│       ├── proyectos.js
+│       └── ...
+├── modules/             # HTML de cada módulo
+│   ├── inventario.html
+│   ├── proyectos.html
+│   └── ...
+└── dashboard.html       # Archivo principal

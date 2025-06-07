@@ -904,7 +904,7 @@ td.action-icons {
 .form-header {
   text-align: center; /* Centra el texto en el encabezado */
   margin-bottom: 20px; /* Margen inferior del encabezado */
-  padding-bottom: 15px; /* Espacio interno inferior */
+  padding-bottom: 10px; /* Espacio interno inferior */
   border-bottom: 1px solid #eaeaea; /* Borde inferior */
 }
 

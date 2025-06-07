@@ -1,0 +1,1320 @@
+<div class="proyectos-module">
+    <!-- Pantalla principal con tarjetas -->
+    <div class="proyectos-main-screen">
+        <div class="main-header">
+            <h1 class="main-title">
+                <div class="title-icon-container">
+                    <div class="title-icon">📋</div>
+                </div>
+                Gestión de Proyectos
+            </h1>
+            <p class="main-subtitle">Control y seguimiento de proyectos para Ingegases y Redes s.a.s.</p>
+
+            <div class="card-container">
+                <div class="proyecto-card" onclick="ProyectosModule.loadProyectos()">
+                    <div class="card-icon-container">
+                        <div class="card-icon">📝</div>
+                    </div>
+                    <h3>Proyectos</h3>
+                    <p class="card-description">Gestión completa de proyectos y adiciones.</p>
+                </div>
+
+                <div class="proyecto-card" onclick="ProyectosModule.loadReportes()">
+                    <div class="card-icon-container">
+                        <div class="card-icon">📊</div>
+                    </div>
+                    <h3>Reportes</h3>
+                    <p class="card-description">Generación de reportes y estadísticas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submenú interno (oculto inicialmente) -->
+    <div class="proyectos-detail-screen" style="display: none;">
+        <div class="submenu-proyectos">
+            <button class="back-button" onclick="ProyectosModule.backToMain()">
+                <i class="fas fa-arrow-left"></i> Volver
+            </button>
+        </div>
+
+        <!-- Contenido dinámico -->
+        <div id="proyectosContent" class="content-transition"></div>
+    </div>
+</div>
+
+
+
+<!-- Modal para proyectos (similar al del dashboard) -->
+<div id="projectModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="ProyectosModule.closeModal()">×</span>
+        <h2 id="modalTitle">Título del Proyecto</h2>
+        <form id="projectForm">
+            <label for="projectId">ID:</label>
+            <input type="text" id="projectId" name="projectId" required>
+
+            <label for="projectName">Proyecto:</label>
+            <input type="text" id="projectName" name="projectName" required>
+
+            <label for="projectDescription">Descripción:</label>
+            <textarea id="projectDescription" name="projectDescription" required></textarea>
+
+            <label for="projectLocation">Ubicación:</label>
+            <input type="text" id="projectLocation" name="projectLocation" required>
+
+            <label for="projectStartDate">Fecha de Inicio:</label>
+            <input type="date" id="projectStartDate" name="projectStartDate" required>
+
+            <label for="projectEndDate">Fecha de Fin:</label>
+            <input type="date" id="projectEndDate" name="projectEndDate" required>
+
+            <label for="projectManager">Encargado:</label>
+            <select id="projectManager" name="projectManager" required>
+                <option value="Ing Alexander Herrera">Ing Alexander Herrera</option>
+                <option value="Ing Javier Sierra">Ing Javier Sierra</option>
+                <option value="Ing Daniel Buitrago">Ing Daniel Buitrago</option>
+                <option value="Ing Javier Penagos">Ing Javier Penagos</option>
+                <option value="Ing Nicolás Saavedra">Ing Nicolás Saavedra</option>
+                <option value="Ing Melissa Gonzalez">Ing Melissa Gonzalez</option>
+            </select>
+
+            <label for="projectStatus">Estado:</label>
+            <select id="projectStatus" name="projectStatus" required>
+                <option value="Asignado">Asignado</option>
+                <option value="En Ejecución">En Ejecución</option>
+                <option value="Realizado">Realizado</option>
+                <option value="Facturado">Facturado</option>
+                <option value="Anulado">Anulado</option>
+            </select>
+
+            <label for="projectBudget">Presupuesto:</label>
+            <input type="text" id="projectBudget" name="projectBudget" required>
+
+            <button type="submit" id="saveButton">Guardar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de confirmación para eliminar -->
+<div id="confirmModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="ProyectosModule.closeConfirmModal()">×</span>
+        <h2>¿Realmente quieres eliminar el proyecto?</h2>
+        <div class="modal-buttons">
+            <button id="confirmDelete">Sí</button>
+            <button id="cancelDelete">No</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ============================================= */
+    /* ========== MÓDULO DE PROYECTOS ============== */
+    /* ============================================= */
+    
+    /* Estilos base del módulo */
+    .proyectos-module {
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Pantalla principal */
+    .proyectos-main-screen {
+        width: 100%;
+        height: 100vh;
+        padding: 40px;
+        background-color: #f8f9fa;
+        text-align: center;
+        box-sizing: border-box;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+
+    .main-header {
+        max-width: 1200px;
+        margin: 0 auto 20px;
+        padding-top: 100px;
+    }
+
+    .main-title {
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: #2b2d42;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .title-icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .title-icon {
+        font-size: 2.5rem;
+    }
+
+    .main-subtitle {
+        color: #8e9aaf;
+        font-size: 1.3rem;
+        font-weight: 400;
+        margin-bottom: 60px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+    }
+
+    /* Contenedor de tarjetas */
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        max-height: calc(100vh - 250px);
+        overflow: hidden;
+    }
+
+    /* Tarjetas de proyectos */
+    .proyecto-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        padding: 30px 20px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .proyecto-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #4361ee, #3f37c9);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.7s ease;
+    }
+
+    .proyecto-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .proyecto-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .card-icon-container {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(63, 55, 201, 0.1));
+        border-radius: 50%;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .proyecto-card:hover .card-icon-container {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .card-icon {
+        font-size: 3.5rem;
+        line-height: 1;
+        transition: transform 0.3s ease;
+    }
+
+    .proyecto-card:hover .card-icon {
+        transform: scale(1.2);
+    }
+
+    .proyecto-card h3 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: #2b2d42;
+        margin-bottom: 15px;
+    }
+
+    .card-description {
+        color: #8e9aaf;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        opacity: 1;
+        height: auto;
+    }
+
+    /* Submenú interno */
+    .submenu-proyectos {
+        display: flex;
+        margin: 15px 0;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    /* Botón de volver */
+    .back-button {
+        background: #c1defa !important;
+        color: rgb(0, 0, 0) !important;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-left: auto;
+        display: block;
+    }
+
+    .back-button:hover {
+        background: #7cc1fa !important;
+        transform: translateY(-2px);
+    }
+
+    /* Transición de contenido */
+    .content-transition {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Estilos para la tabla de proyectos */
+    .table-title-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-height: 60px;
+    }
+
+    .section-title.vertical-title {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        text-align: center;
+        padding: 80px 10px;
+        background-color: #f4fb32c6;
+        color: rgb(68, 61, 61);
+        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 5px;
+        border-radius: 5px 0 0 5px;
+        height: 50px;
+        min-height: 60px;
+        flex-shrink: 0;
+    }
+
+    .table-container {
+        display: inline-flex;
+        flex-direction: column;
+        width: 100%; /* Ocupa todo el ancho */
+        background: white;
+        border-radius: 0 5px 5px 5px;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+        background-color: #34495e;
+        color: white;
+        font-weight: 500;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    /* Estilos para los botones de acción */
+    .action-icons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .action-icons i {
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 3px;
+        transition: all 0.2s;
+    }
+
+    .action-icons i:hover {
+        background-color: #f0f0f0;
+    }
+
+    .fa-edit { color: #3498db; }
+    .fa-plus-square { color: #2ecc71; }
+    .fa-file-pdf { color: #e74c3c; }
+    .fa-download { color: #9b59b6; }
+    .fa-trash { color: #e74c3c; }
+
+    /* Formulario de proyectos */
+    #projectForm {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    #projectForm label {
+        font-weight: bold;
+        color: #34495e;
+        margin-bottom: 5px;
+    }
+
+    #projectForm input,
+    #projectForm textarea,
+    #projectForm select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        background-color: #f9f9f9;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #projectForm textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    #projectForm select {
+        appearance: none;
+    }
+
+    #projectForm button {
+        grid-column: span 2;
+        background-color: #34495e;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #projectForm button:hover {
+        background-color: #2c3e50;
+    }
+
+    #projectForm input[type="date"] {
+        padding: 9px;
+    }
+
+    /* Botón crear proyecto */
+    #createProjectButton {
+        margin-top: 30px;
+        padding: 8px 16px;
+        background-color: #385879;
+        color: white;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        float: right;
+        font-size: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    #createProjectButton:hover {
+        background-color: #f4fb32c6;
+        color: rgb(0, 0, 0);
+    }
+
+    /* Estilos para filas de adiciones */
+    .addition-row {
+        display: none;
+        background-color: #f9f9f9;
+    }
+
+    .show-additions {
+        display: table-row;
+    }
+
+    /* Estilos para el icono de mostrar/ocultar adiciones */
+    .toggle-additions {
+        cursor: pointer;
+        color: #3498db;
+        margin-right: 5px;
+    }
+
+    /* ============================================= */
+    /* ========= COMPONENTES COMPARTIDOS =========== */
+    /* ============================================= */
+
+    /* Ventana modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /* Contenido de modal */
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 600px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.3s;
+    }
+
+    /* Animación de fadeIn */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Botón cerrar modal */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover {
+        color: #000;
+    }
+
+    /* Título de modal */
+    #modalTitle {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-bottom: 2px solid #929708;
+        border-radius: 15px;
+    }
+
+    /* Modal de confirmación */
+    #confirmModal .modal-content {
+        text-align: center;
+        max-width: 400px;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    /* Título de confirmación */
+    #confirmModal h2 {
+        margin-bottom: 10px;
+        font-size: 24px;
+        color: #34495e;
+    }
+
+    /* Contenedor de botones */
+    .modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    /* Botones de modal */
+    #confirmModal button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Botón confirmar */
+    #confirmDelete {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    #confirmDelete:hover {
+        background-color: #c0392b;
+    }
+
+    /* Botón cancelar */
+    #cancelDelete {
+        background-color: #34495e;
+        color: white;
+    }
+
+    #cancelDelete:hover {
+        background-color: #2c3e50;
+    }
+
+    /* Iconos de acción */
+    .action-icons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .action-icons i {
+        margin: 8px 10px;
+        cursor: pointer;
+    }
+
+    td.action-icons {
+        white-space: nowrap;
+    }
+
+    /* Tooltips */
+    .action-icons i[title]:hover::after {
+        content: attr(title);
+        position: absolute;
+        background-color: rgba(32, 32, 32, 0.7);
+        color: white;
+        padding: 6px;
+        border-radius: 3px;
+        font-size: 11px;
+        white-space: nowrap;
+        z-index: 1001;
+        font-family: Arial, sans-serif;
+        text-transform: capitalize;
+    }
+
+    /* Botones de exportación */
+    .export-button-container {
+        text-align: right;
+        margin-top: 15px;
+        padding-right: 10px;
+    }
+
+    /* Estilo base para botones de exportación */
+    #btnExportar, #btnExportarAccesorios {
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Botón exportar tubería */
+    #btnExportar {
+        background-color: #2e7d32;
+    }
+
+    /* Botón exportar accesorios */
+    #btnExportarAccesorios {
+        background-color: #2e7d32;
+    }
+
+    /* Efecto hover */
+    #btnExportar:hover, #btnExportarAccesorios:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    #btnExportar:hover {
+        background-color: #1b5e20;
+    }
+
+    #btnExportarAccesorios:hover {
+        background-color: #1b5e20;
+    }
+
+    /* Efecto active */
+    #btnExportar:active, #btnExportarAccesorios:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Icono Excel */
+    #btnExportar::before, #btnExportarAccesorios::before {
+        content: "";
+        display: inline-block;
+        width: 20px; height: 20px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="white" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm60.1 106.5L224 336h60.1v-93.5zm-223.1 93.5h60.1v-93.5l-60.1 93.5zm0-134.5V176h60.1v93.5zm60.1 134.5v93.5H61l60.1-93.5zm120.2 0h60.1v-93.5l-60.1 93.5zM224 176v93.5h60.1V176H224zM384 121.9v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"/></svg>');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    /* ============================================= */
+    /* ============== VISIBILIDAD ================== */
+    /* ============================================= */
+
+    /* Estilos para el icono del ojo */
+    .toggle-additions {
+        cursor: pointer;
+        margin-right: 5px;
+    }
+
+    /* Estilos para la celda con el icono */
+    .eye-icon-cell {
+        width: 20px;
+        text-align: center;
+    }
+
+    /* ============================================= */
+    /* ============= RESPONSIVO ==================== */
+
+    @media (max-width: 768px) {
+        /* Ajusta el ancho del formulario en pantallas pequeñas */
+        #projectForm {
+            grid-template-columns: 1fr;  /* Una columna en pantallas pequeñas */
+            gap: 10px;
+        }
+
+        #projectForm label {
+            font-size: 12px;
+        }
+
+        #projectForm input,
+        #projectForm textarea,
+        #projectForm select {
+            font-size: 12px;
+            padding: 8px;
+        }
+
+       /* Coloca el botón Crear Proyecto fuera del contenedor */
+        #createProjectButton {
+            position: relative;
+            float: right;
+            margin-top: 10px; /* Espacio adicional si es necesario */
+            right: 0; /* Elimina el espaciado en el lado derecho */
+            font-size: 12px;
+        }
+
+    }
+    @media (max-width: 1200px) {
+        .card-container {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+    }
+
+    @media (max-width: 992px) {
+        .proyecto-card {
+            min-height: 260px;
+            padding: 25px;
+        }
+        .card-icon-container {
+            width: 90px;
+            height: 90px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .card-container {
+            grid-template-columns: 1fr;
+            max-width: 500px;
+            padding: 0 15px;
+        }
+        .proyecto-card {
+            min-height: 240px;
+            padding: 30px 20px;
+            max-width: 100%;
+        }
+        .card-icon {
+            font-size: 3rem;
+        }
+        
+        .table-title-container {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .section-title.vertical-title {
+            writing-mode: horizontal-tb;
+            transform: none;
+            padding: 15px;
+            width: 100%;
+            height: auto;
+            min-height: auto;
+            border-radius: 12px 12px 0 0;
+            margin-right: 0;
+            display: block;
+        }
+        
+        .table-container {
+            width: 100%;
+            border-radius: 0 0 12px 12px;
+        }
+
+        #projectForm {
+            grid-template-columns: 1fr;
+        }
+
+        #projectForm button {
+            grid-column: span 1;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-container {
+            gap: 20px;
+        }
+        .proyecto-card {
+            min-height: 220px;
+            padding: 25px 15px;
+        }
+        .card-icon-container {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+        .proyecto-card h3 {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .card-container {
+            padding: 0 10px;
+        }
+        .proyecto-card {
+            min-height: 200px;
+            padding: 20px 15px;
+        }
+        .card-icon {
+            font-size: 2.8rem;
+        }
+    }
+
+</style>
+
+<script>
+        // Módulo de Proyectos - Namespace para evitar colisiones
+        const ProyectosModule = (function() {
+        // Constantes
+        const PROJECT_ID_PREFIX = 'OT-';
+        const ADDITION_ID_PREFIX = 'AD-';
+        
+        // Variables de estado
+        let proyectosData = [];
+        let proyectoEditandoId = null;
+        
+        // Campos editables para proyectos principales
+        const MAIN_PROJECT_EDITABLE_FIELDS = ['descripcion', 'encargado', 'estado'];
+        
+        // Campos editables para adiciones
+        const ADDITION_EDITABLE_FIELDS = ['descripcion', 'ubicacion', 'fechaInicio', 'fechaFin', 'encargado', 'estado', 'presupuesto'];
+        
+        // Funciones públicas
+        return {
+            // Cargar pantalla principal
+            loadProyectos: function() {
+                document.querySelector('.proyectos-main-screen').style.display = 'none';
+                document.querySelector('.proyectos-detail-screen').style.display = 'block';
+                
+                const tableContent = `
+                    <div class="table-title-container">
+                        <div class="section-title vertical-title">Proyectos</div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>ID</th>
+                                        <th>Proyecto</th>
+                                        <th>Descripción</th>
+                                        <th>Ubicación</th>
+                                        <th>Fecha de Inicio</th>
+                                        <th>Fecha de Fin</th>
+                                        <th>Encargado</th>
+                                        <th>Estado</th>
+                                        <th>Presupuesto</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="proyectosTableBody">
+                                    ${this.renderProyectosRecursivamente(proyectosData)}
+                                </tbody>
+                            </table>
+                            <div class="export-button-container">
+                                <button id="createProjectButton">Crear Proyecto</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('proyectosContent').innerHTML = tableContent;
+                this.assignEventListeners();
+            },
+            
+            // Cargar pantalla de reportes
+            loadReportes: function() {
+                document.querySelector('.proyectos-main-screen').style.display = 'none';
+                document.querySelector('.proyectos-detail-screen').style.display = 'block';
+                
+                const reportesContent = `
+                    <div class="table-title-container">
+                        <div class="section-title vertical-title">Reportes</div>
+                        <div class="table-container">
+                            <h3>Estadísticas de Proyectos</h3>
+                            <div class="chart-container">
+                                <canvas id="proyectosChart"></canvas>
+                            </div>
+                            <div class="report-actions">
+                                <button class="btn-export" onclick="ProyectosModule.generarReporteExcel()">
+                                    <i class="fas fa-file-excel"></i> Exportar a Excel
+                                </button>
+                                <button class="btn-export" onclick="ProyectosModule.generarReportePDF()">
+                                    <i class="fas fa-file-pdf"></i> Exportar a PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('proyectosContent').innerHTML = reportesContent;
+                this.renderProyectosChart();
+            },
+            
+            // Volver a la pantalla principal
+            backToMain: function() {
+                document.querySelector('.proyectos-main-screen').style.display = 'block';
+                document.querySelector('.proyectos-detail-screen').style.display = 'none';
+                document.getElementById('proyectosContent').innerHTML = '';
+            },
+            
+            // Renderizar proyectos recursivamente (para mostrar jerarquía)
+            renderProyectosRecursivamente: function(proyectos, parentId = null) {
+                let html = '';
+                const proyectosFiltrados = proyectos.filter(proyecto => proyecto.parentId === parentId);
+                
+                proyectosFiltrados.forEach(proyecto => {
+                    let actionIcons = '';
+                    
+                    if (proyecto.isAddition) {
+                        actionIcons = `
+                            <i class="fas fa-edit edit-project" data-id="${proyecto.id}" title="Editar"></i>
+                            <i class="fas fa-trash delete-project" data-id="${proyecto.id}" title="Eliminar"></i>
+                        `;
+                    } else {
+                        actionIcons = `
+                            <i class="fas fa-edit edit-project" data-id="${proyecto.id}" title="Editar"></i>
+                            <i class="fas fa-plus-square add-addition" data-id="${proyecto.id}" title="Adición"></i>
+                            <i class="fas fa-file-pdf load-pdf" data-id="${proyecto.id}" title="Cargar PDF"></i>
+                            <i class="fas fa-download download-project" data-id="${proyecto.id}" title="Descargar"></i>
+                            <i class="fas fa-trash delete-project" data-id="${proyecto.id}" title="Eliminar"></i>
+                        `;
+                    }
+                    
+                    const rowClass = proyecto.isAddition ? 'project-row addition-row' : 'project-row';
+                    
+                    let eyeIcon = '';
+                    if (!proyecto.isAddition && proyectosData.some(p => p.parentId === proyecto.id)) {
+                        eyeIcon = `<i class="fas fa-eye toggle-additions" data-project-id="${proyecto.id}" title="Mostrar/Ocultar Adiciones"></i>`;
+                    }
+                    
+                    html += `
+                        <tr class="${rowClass}" data-id="${proyecto.id}" data-parent-id="${proyecto.parentId || ''}">
+                            <td class="eye-icon-cell">${eyeIcon}</td>
+                            <td>${proyecto.id}</td>
+                            <td>${proyecto.nombre}</td>
+                            <td>${proyecto.descripcion}</td>
+                            <td>${proyecto.ubicacion}</td>
+                            <td>${proyecto.fechaInicio}</td>
+                            <td>${proyecto.fechaFin}</td>
+                            <td>${proyecto.encargado}</td>
+                            <td>${proyecto.estado}</td>
+                            <td>${proyecto.presupuesto}</td>
+                            <td class="action-icons">${actionIcons}</td>
+                        </tr>
+                    `;
+                    
+                    html += this.renderProyectosRecursivamente(proyectos, proyecto.id);
+                });
+                
+                return html;
+            },
+            
+            // Asignar eventos a los elementos
+            assignEventListeners: function() {
+                const tableBody = document.querySelector('#proyectosTableBody');
+                if (tableBody) {
+                    tableBody.addEventListener('click', (event) => {
+                        const target = event.target;
+                        const projectId = target.dataset.id;
+                        
+                        if (target.classList.contains('edit-project')) {
+                            this.editProject(projectId);
+                        } else if (target.classList.contains('add-addition')) {
+                            this.addAddition(projectId);
+                        } else if (target.classList.contains('load-pdf')) {
+                            this.loadPDF(projectId);
+                        } else if (target.classList.contains('download-project')) {
+                            this.downloadProject(projectId);
+                        } else if (target.classList.contains('delete-project')) {
+                            proyectoEditandoId = projectId;
+                            this.openConfirmModal();
+                        } else if (target.classList.contains('toggle-additions')) {
+                            const parentProjectId = target.dataset.projectId;
+                            this.toggleAdditions(parentProjectId);
+                        }
+                    });
+                }
+                
+                document.getElementById('createProjectButton')?.addEventListener('click', () => {
+                    this.createProject();
+                });
+            },
+            
+            // Alternar visibilidad de adiciones
+            toggleAdditions: function(projectId) {
+                const additionRows = document.querySelectorAll(`.project-row[data-parent-id="${projectId}"]`);
+                additionRows.forEach(row => {
+                    row.classList.toggle('show-additions');
+                });
+            },
+            
+            // Crear nuevo proyecto
+            createProject: function() {
+                proyectoEditandoId = null;
+                this.openModal("Crear Proyecto");
+                this.renderProjectForm();
+            },
+            
+            // Editar proyecto existente
+            editProject: function(projectId) {
+                proyectoEditandoId = projectId;
+                const proyecto = proyectosData.find(p => p.id === projectId);
+                
+                if (!proyecto) return;
+                
+                this.openModal("Editar Proyecto");
+                this.renderProjectForm(proyecto);
+            },
+            
+            // Añadir adición a proyecto
+            addAddition: function(projectId) {
+                proyectoEditandoId = null;
+                this.openModal("Adición a Proyecto");
+                this.renderProjectForm(null, projectId);
+            },
+
+             // Renderizar formulario de proyecto (crear o editar)
+            renderProjectForm: function(proyecto = null, parentId = null) {
+                 const isNew = proyecto === null;
+                const isAddition = parentId !== null;
+                const title = isNew ? (isAddition ? "Crear Adición" : "Crear Proyecto") : "Editar Proyecto";
+                const modalTitle = isNew ? (isAddition ? "Adición a Proyecto" : "Crear Proyecto") : "Editar Proyecto";
+
+                const projectData = proyecto || {
+                    id: this.generateId(isAddition ? ADDITION_ID_PREFIX : PROJECT_ID_PREFIX),
+                    nombre: '',
+                    descripcion: '',
+                    ubicacion: '',
+                    fechaInicio: '',
+                    fechaFin: '',
+                    encargado: 'Ing Alexander Herrera',
+                    estado: 'Asignado',
+                    presupuesto: ''
+                };
+                
+                let projectForm = `
+                    <div class="modal-content">
+                        <span class="close" onclick="ProyectosModule.closeModal()">×</span>
+                        <h2 id="modalTitle">${modalTitle}</h2>
+                        <form id="projectForm">
+                            <label for="projectId">ID:</label>
+                            <input type="text" id="projectId" name="projectId" value="${projectData.id}" ${!isNew ? 'readonly' : ''} required>
+                            
+                            <label for="projectName">Proyecto:</label>
+                            <input type="text" id="projectName" name="projectName" value="${projectData.nombre}" ${!isNew ? 'readonly' : ''} required>
+                            
+                            <label for="projectDescription">Descripción:</label>
+                            <textarea id="projectDescription" name="projectDescription" required>${projectData.descripcion}</textarea>
+                            
+                            <label for="projectLocation">Ubicación:</label>
+                            <input type="text" id="projectLocation" name="projectLocation" value="${projectData.ubicacion}" ${!isNew ? 'readonly' : ''} required>
+                            
+                            <label for="projectStartDate">Fecha de Inicio:</label>
+                            <input type="date" id="projectStartDate" name="projectStartDate" value="${projectData.fechaInicio}" ${!isNew ? 'readonly' : ''} required>
+                            
+                            <label for="projectEndDate">Fecha de Fin:</label>
+                            <input type="date" id="projectEndDate" name="projectEndDate" value="${projectData.fechaFin}" ${!isNew ? 'readonly' : ''} required>
+                            
+                            <label for="projectManager">Encargado:</label>
+                            <select id="projectManager" name="projectManager" required>
+                                <option value="Ing Alexander Herrera" ${projectData.encargado === 'Ing Alexander Herrera' ? 'selected' : ''}>Ing Alexander Herrera</option>
+                                <option value="Ing Javier Sierra" ${projectData.encargado === 'Ing Javier Sierra' ? 'selected' : ''}>Ing Javier Sierra</option>
+                                <option value="Ing Daniel Buitrago" ${projectData.encargado === 'Ing Daniel Buitrago' ? 'selected' : ''}>Ing Daniel Buitrago</option>
+                                <option value="Ing Javier Penagos" ${projectData.encargado === 'Ing Javier Penagos' ? 'selected' : ''}>Ing Javier Penagos</option>
+                                <option value="Ing Nicolás Saavedra" ${projectData.encargado === 'Ing Nicolás Saavedra' ? 'selected' : ''}>Ing Nicolás Saavedra</option>
+                                <option value="Ing Melissa Gonzalez" ${projectData.encargado === 'Ing Melissa Gonzalez' ? 'selected' : ''}>Ing Melissa Gonzalez</option>
+                            </select>
+                            
+                            <label for="projectStatus">Estado:</label>
+                            <select id="projectStatus" name="projectStatus" required>
+                                <option value="Asignado" ${projectData.estado === 'Asignado' ? 'selected' : ''}>Asignado</option>
+                                <option value="En Ejecución" ${projectData.estado === 'En Ejecución' ? 'selected' : ''}>En Ejecución</option>
+                                <option value="Realizado" ${projectData.estado === 'Realizado' ? 'selected' : ''}>Realizado</option>
+                                <option value="Facturado" ${projectData.estado === 'Facturado' ? 'selected' : ''}>Facturado</option>
+                                <option value="Anulado" ${projectData.estado === 'Anulado' ? 'selected' : ''}>Anulado</option>
+                            </select>
+                            
+                            <label for="projectBudget">Presupuesto:</label>
+                            <input type="text" id="projectBudget" name="projectBudget" value="${projectData.presupuesto}" required>
+                            
+                            ${parentId ? `<input type="hidden" id="parentProjectId" name="parentProjectId" value="${parentId}">` : ''}
+                            
+                            <button type="submit" id="saveButton">${isNew ? 'Guardar' : 'Actualizar'}</button>
+                        </form>
+                    </div>
+                `;
+                
+                document.getElementById('projectModal').innerHTML = projectForm;
+                document.getElementById('projectForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveProject();
+                });
+                document.getElementById('projectModal').style.display = 'block';
+            },
+            
+            // Guardar proyecto (crear o actualizar)
+            saveProject: function() {
+                const form = document.getElementById('projectForm');
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+                
+                const isNew = proyectoEditandoId === null;
+                const isAddition = document.getElementById('parentProjectId') !== null;
+
+                const projectData = {
+                    id: document.getElementById('projectId').value,
+                    nombre: document.getElementById('projectName').value,
+                    descripcion: document.getElementById('projectDescription').value,
+                    ubicacion: document.getElementById('projectLocation').value,
+                    fechaInicio: document.getElementById('projectStartDate').value,
+                    fechaFin: document.getElementById('projectEndDate').value,
+                    encargado: document.getElementById('projectManager').value,
+                    estado: document.getElementById('projectStatus').value,
+                    presupuesto: document.getElementById('projectBudget').value,
+                    parentId: document.getElementById('parentProjectId')?.value || null,
+                    isAddition: isAddition
+                };
+                
+                if (!isNew) {
+                    // Actualizar proyecto existente
+                    const index = proyectosData.findIndex(p => p.id === proyectoEditandoId);
+                    if (index !== -1) {
+                        const existingProject = proyectosData[index];
+                        
+                        let fieldsToUpdate = MAIN_PROJECT_EDITABLE_FIELDS;
+                        if (existingProject.isAddition) {
+                            fieldsToUpdate = ADDITION_EDITABLE_FIELDS;
+                        }
+
+                        fieldsToUpdate.forEach(field => {
+                            if (projectData.hasOwnProperty(field)) {
+                                existingProject[field] = projectData[field];
+                            }
+                        });
+                        
+                        proyectosData[index] = existingProject;
+                    }
+                } else {
+                    // Crear nuevo proyecto o adición
+                    proyectosData.push(projectData);
+                }
+                
+                this.closeModal();
+                this.loadProyectos();
+                proyectoEditandoId = null;
+            },
+            
+            // Eliminar proyecto y sus adiciones
+            deleteProjectAndAdditions: function(projectId) {
+                proyectosData = proyectosData.filter(p => p.id !== projectId);
+                
+                // Eliminar adiciones recursivamente
+                const additionsToDelete = proyectosData.filter(p => p.parentId === projectId).map(p => p.id);
+                additionsToDelete.forEach(addId => this.deleteProjectAndAdditions(addId));
+                
+                this.loadProyectos();
+            },
+            
+            // Cargar PDF (simulado)
+            loadPDF: function(projectId) {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'application/pdf';
+                input.click();
+                
+                input.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        alert(`PDF cargado para el proyecto ${projectId}: ${file.name}`);
+                    }
+                });
+            },
+            
+            // Descargar proyecto
+            downloadProject: function(projectId) {
+                const proyecto = proyectosData.find(p => p.id === projectId);
+                if (proyecto) {
+                    const blob = new Blob([JSON.stringify(proyecto, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `proyecto_${proyecto.id}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }
+            },
+            
+            // Generar ID único
+            generateId: function(prefix) {
+                return prefix + Math.floor(Math.random() * 10000);
+            },
+            
+            // Abrir modal de confirmación
+            openConfirmModal: function() {
+                const confirmModal = document.getElementById('confirmModal');
+                confirmModal.style.display = 'block';
+
+                const confirmDeleteButton = document.getElementById('confirmDelete');
+                confirmDeleteButton.onclick = () => {
+                  this.deleteProjectAndAdditions(proyectoEditandoId);
+                  this.closeConfirmModal();
+                  this.loadProyectos();
+                };
+                const cancelDeleteButton = document.getElementById('cancelDelete');
+                cancelDeleteButton.onclick = () => {
+                    this.closeConfirmModal();
+                };
+
+            },
+            
+            // Cerrar modal de confirmación
+            closeConfirmModal: function() {
+                const confirmModal = document.getElementById('confirmModal');
+                confirmModal.style.display = 'none';
+                proyectoEditandoId = null;
+            },
+            
+            // Abrir modal genérico
+            openModal: function(title) {
+                const modalTitle = document.getElementById('modalTitle');
+                modalTitle.textContent = title;
+                document.getElementById('projectModal').style.display = 'block';
+            },
+            
+            // Cerrar modal genérico
+            closeModal: function() {
+                 document.getElementById('projectModal').style.display = 'none';
+                 const projectForm = document.getElementById('projectForm');
+                 if (projectForm) {
+                    projectForm.removeEventListener('submit', this.saveProject);
+                 }
+            },
+            
+            // Renderizar gráfico de proyectos
+            renderProyectosChart: function() {
+                const ctx = document.getElementById('proyectosChart').getContext('2d');
+                
+                // Datos de ejemplo para el gráfico
+                const data = {
+                    labels: ['Asignado', 'En Ejecución', 'Realizado', 'Facturado', 'Anulado'],
+                    datasets: [{
+                        label: 'Estado de Proyectos',
+                        data: [
+                            proyectosData.filter(p => p.estado === 'Asignado' && !p.isAddition).length,
+                            proyectosData.filter(p => p.estado === 'En Ejecución' && !p.isAddition).length,
+                            proyectosData.filter(p => p.estado === 'Realizado' && !p.isAddition).length,
+                            proyectosData.filter(p => p.estado === 'Facturado' && !p.isAddition).length,
+                            proyectosData.filter(p => p.estado === 'Anulado' && !p.isAddition).length
+                        ],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                };
+                
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            },
+            
+            // Generar reporte en Excel
+            generarReporteExcel: function() {
+                alert('Generando reporte en Excel...');
+                // Implementación real usaría una librería como SheetJS
+            },
+            
+            // Generar reporte en PDF
+            generarReportePDF: function() {
+                alert('Generando reporte en PDF...');
+                // Implementación real usaría una librería como jsPDF
+            }
+        };
+    })();
+
+    // Inicialización del módulo
+    document.addEventListener('DOMContentLoaded', function() {
+        // Datos de ejemplo para proyectos
+        proyectosData = [
+            
+        ];
+    });
+</script>

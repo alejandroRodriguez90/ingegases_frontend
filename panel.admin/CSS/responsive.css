@@ -1,0 +1,126 @@
+/* ============= MEDIA QUERIES ================= */
+/* Tablets (768px-992px) */
+@media (max-width: 992px) {
+    .sidebar {
+      width: 60px;
+    }
+    
+    .sidebar:hover {
+      width: 200px;
+    }
+    
+    .main-content {
+      margin-left: 60px;
+      padding: 20px;
+    }
+    
+    .sidebar:hover ~ .main-content {
+      margin-left: 200px;
+    }
+    
+    .modal-content {
+      width: 90%;
+    }
+    
+    #projectForm {
+      grid-template-columns: 1fr;
+    }
+    
+    #saveButton {
+      grid-column: span 1;
+    }
+  
+    .welcome-message {
+      margin-top: 30%;
+    }
+  }
+  
+  /* Teléfonos (menos de 768px) */
+  @media (max-width: 767px) {
+    .top-bar {
+      height: 50px;
+      padding: 0 10px;
+    }
+    
+    .top-bar .logo {
+      width: 35px;
+      height: 35px;
+    }
+    
+    .top-bar .logo img {
+      width: 30px;
+      height: 30px;
+    }
+    
+    .top-bar .logout button {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+    
+    .sidebar {
+      width: 50px;
+      top: 50px;
+    }
+    
+    .sidebar:hover {
+      width: 180px;
+    }
+    
+    .sidebar li {
+      padding: 15px 10px;
+    }
+    
+    .sidebar .icon {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+    
+    .main-content {
+      margin-left: 50px;
+      margin-top: 50px;
+      padding: 15px;
+    }
+    
+    .sidebar:hover ~ .main-content {
+      margin-left: 180px;
+    }
+  
+    .welcome-message h1 {
+      font-size: 1.8rem;
+    }
+  
+    .welcome-message p {
+      font-size: 1rem;
+    }
+  }
+  
+  /* Móviles pequeños (menos de 480px) */
+  @media (max-width: 479px) {
+    .sidebar {
+      display: none;
+    }
+    
+    .main-content {
+      margin-left: 0;
+    }
+    
+    .top-bar {
+      justify-content: center;
+    }
+    
+    .top-bar .logout {
+      position: absolute;
+      right: 10px;
+    }
+  
+    .welcome-message {
+      margin-top: 50%;
+      padding: 0 15px;
+    }
+  
+    .modal-content {
+      margin: 30% auto;
+      width: 95%;
+      padding: 15px;
+    }
+  }

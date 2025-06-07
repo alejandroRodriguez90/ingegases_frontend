@@ -1,0 +1,1465 @@
+<div class="requisiciones-module">
+    <!-- Pantalla principal con tarjetas -->
+    <div class="requisiciones-main-screen">
+        <div class="main-header">
+            <h1 class="main-title">
+                <div class="title-icon-container">
+                    <div class="card-icon">📜</div>
+                </div>
+                Creación de Requisiciones
+            </h1>
+            <p class="main-subtitle">Solicita y administra tus requisiciones de manera eficiente.</p>
+            <div class="card-container">
+                <div class="requisicion-card" onclick="RequisicionesModule.loadCrearRequisicion()">
+                    <div class="card-icon-container">
+                        <div class="title-icon">🧾</div>
+                    </div>
+                    <h3>Crear Requisición</h3>
+                    <p class="card-description">Genera una nueva solicitud de materiales.</p>
+                </div>
+                <div class="requisicion-card" onclick="RequisicionesModule.loadHistorialRequisiciones()">
+                    <div class="card-icon-container">
+                        <div class="title-icon">🔍</div>
+                    </div>
+                    <h3>Historial</h3>
+                    <p class="card-description">Consulta y gestiona requisiciones anteriores.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Submenú interno (oculto inicialmente) -->
+<div class="requisiciones-detail-screen" style="display: none;">
+    <div class="submenu-requisiciones">
+        <button class="back-button" onclick="RequisicionesModule.backToMain()">
+            <i class="fas fa-arrow-left"></i> Volver
+        </button>
+    </div>
+
+    <!-- Contenido dinámico -->
+    <div id="requisicionesContent" class="content-transition"></div>
+</div>
+
+<style>
+    /* ============================================= */
+    /* ========== MÓDULO DE REQUISICIONES ========= */
+    /* ============================================= */
+
+    .requisiciones-module {
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Pantalla principal */
+    .requisiciones-main-screen {
+        width: 100%;
+        height: 100vh;
+        padding: 40px;
+        background-color: #f8f9fa;
+        text-align: center;
+        box-sizing: border-box;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+
+    .main-header {
+        max-width: 1200px;
+        margin: 0 auto 20px;
+        padding-top: 100px;
+    }
+
+    .main-title {
+        font-size: 2.4rem; /* Tamaño ligeramente reducido */
+        font-weight: 700;
+        color: #2b2d42;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .title-icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .title-icon {
+        font-size: 2.5rem;
+    }
+
+    .main-subtitle {
+        color: #8e9aaf;
+        font-size: 1.3rem;
+        font-weight: 400;
+        margin-bottom: 60px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+    }
+
+    /* Contenedor de tarjetas */
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        max-height: none; /* Eliminado el límite fijo */
+        overflow: hidden;
+    }
+
+    /* Tarjetas de requisiciones */
+    .requisicion-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        padding: 30px 20px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .requisicion-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #4361ee, #3f37c9);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.7s ease;
+    }
+
+    .requisicion-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .requisicion-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .card-icon-container {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(63, 55, 201, 0.1));
+        border-radius: 50%;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .requisicion-card:hover .card-icon-container {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .card-icon {
+        font-size: 3.5rem;
+        line-height: 1;
+        transition: transform 0.3s ease;
+    }
+
+    .requisicion-card:hover .card-icon {
+        transform: scale(1.2);
+    }
+
+    .requisicion-card h3 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: #2b2d42;
+        margin-bottom: 15px;
+    }
+
+    .card-description {
+        color: #8e9aaf;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        opacity: 1;
+        height: auto;
+    }
+
+    /* Estilos para el submenú de detalles */
+    .requisiciones-detail-screen {
+        width: 100%;
+        height: 100vh;
+        padding: 20px;
+        background-color: #f8f9fa;
+        box-sizing: border-box;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+
+    .submenu-requisiciones {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .back-button {
+        background-color: #4361ee;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+        background-color: #3f37c9;
+    }
+
+/* ========================== */
+/* FORMULARIO DE REQUISICIÓN - VERSIÓN MEJORADA */
+/* ========================== */
+.requisicion-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto; /* Centrado horizontal */
+}
+
+/* Encabezado del formulario - más compacto */
+.form-header {
+  text-align: center; /* Centra el texto en el encabezado */
+  margin-bottom: 20px; /* Margen inferior del encabezado */
+  padding-bottom: 15px; /* Espacio interno inferior */
+  border-bottom: 1px solid #eaeaea; /* Borde inferior */
+}
+
+.form-header h2 {
+  font-size: 1.4rem; /* Tamaño de la fuente del título */
+  margin-bottom: 5px; /* Margen inferior del título */
+  font-weight: 600; /* Grosor de la fuente del título */
+  color: #2c3e50; /* Color del título */
+}
+
+.form-header-details {
+  display: flex; /* Usa flexbox para la disposición */
+  flex-direction: column; /* Apila los elementos verticalmente */
+  align-items: center; /* Centra horizontalmente los elementos apilados */
+  font-size: 0.8rem; /* Tamaño de la fuente */
+  color: #7f8c8d; /* Color del texto */
+}
+
+/* Filas del formulario */
+.form-row {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los campos se envuelvan en pantallas pequeñas */
+  gap: 20px; /* Espacio entre los campos */
+  margin-bottom: 15px;
+}
+
+.form-group {
+  flex: 1; /* Permite que el elemento se expanda para llenar el espacio */
+  min-width: 250px; /* Ancho mínimo */
+}
+
+/* Etiquetas de los campos del formulario */
+.form-group label {
+  display: block;
+  color: var(--dark-color);
+  margin-bottom: 5px;
+  font-size: 1em; /* Ajusta el tamaño de la etiqueta */
+  font-weight: bold; /* Hace la etiqueta más visible */
+}
+
+/* Campos de entrada de texto, fecha, número, select y textarea */
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px; /* Aumenta el padding para un mejor espaciado */
+    border: 1px solid #ced4da;
+    border-radius: 5px; /* Redondea los bordes de los campos */
+    font-size: 1em; /* Ajusta el tamaño del texto */
+    color: var(--text-color);
+    box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
+}
+
+/* Área de texto (textarea) */
+.form-group textarea {
+  resize: vertical; /* Permite redimensionar verticalmente */
+  min-height: 100px; /* Altura mínima para el área de texto */
+}
+
+.form-control:focus {
+  border-color: #3498db; /* Color del borde al enfocar */
+  outline: none; /* Elimina el contorno al enfocar */
+}
+
+/* Contenedor de tabla - centrado y ajustado */
+.table-container {
+  overflow-x: auto; /* Permite el desplazamiento horizontal si la tabla es demasiado ancha */
+  margin: 0 auto 20px; /* Centrado horizontal con margen inferior */
+  width: 100%; /* Ancho */
+  max-width: 100%; /* Ancho máximo */
+}
+
+/* Tabla de items - diseño limpio */
+.items-table {
+  width: 100%; /* Ancho */
+  min-width: 1000px; /* Ancho mínimo */
+  border-collapse: collapse; /* Colapsa los bordes de la tabla */
+  font-size: 0.8rem; /* Tamaño de la fuente */
+  margin: 0 auto; /* Centrado horizontal */
+}
+
+/* Encabezado de la tabla */
+.items-table th {
+  background-color: #2c3e50; /* Fondo para las celdas del encabezado */
+  color: white; /* Color del texto para las celdas del encabezado */
+  font-weight: 600; /* Grosor de la fuente para las celdas del encabezado */
+  padding: 10px 12px; /* Espacio interno */
+  text-align: left; /* Alineación del texto a la izquierda */
+}
+
+.items-table td {
+  padding: 8px 12px; /* Espacio interno */
+  border-bottom: 1px solid #eaeaea; /* Borde inferior */
+  vertical-align: middle; /* Alineación vertical al medio */
+}
+
+/* Estilos para el contenedor de la tabla con el boton a la derecha */
+.table-actions {
+  padding: 8px 12px; /* Espacio interno */
+  text-align: right; /* Alinea los elementos a la derecha */
+}
+
+/* Campos de la tabla - solo línea inferior */
+.items-table input {
+  width: 100%; /* Ancho */
+  padding: 5px 0; /* Espacio interno */
+  border: none; /* Elimina el borde */
+  border-bottom: 1px solid #ddd; /* Borde inferior */
+  font-size: 0.8rem; /* Tamaño de la fuente */
+  background-color: transparent; /* Fondo transparente */
+  box-shadow: none; /* Elimina la margen cuadrada */
+}
+
+.items-table input:focus {
+  border-color: #3498db; /* Color del borde al enfocar */
+  outline: none; /* Elimina el contorno al enfocar */
+  box-shadow: none; /* Asegura que no haya margen al enfocar */
+}
+
+/* Área de observaciones - ajustada al ancho */
+.observations-container {
+  margin-top: 90px; /* Margen superior */
+}
+
+.observations-container label {
+  display: block; /* Muestra la etiqueta como bloque */
+  margin-bottom: 5px; /* Margen inferior de la etiqueta */
+  font-weight: 600; /* Grosor de la fuente de la etiqueta */
+  font-size: 0.85rem; /* Tamaño de la fuente de la etiqueta */
+  color: #2c3e50; /* Color de la etiqueta */
+}
+
+.observations-container textarea {
+  width: 100%; /* Ancho */
+  padding: 10px; /* Espacio interno */
+  border: none; /* Elimina el borde */
+  border-bottom: 1px solid #ddd; /* Borde inferior */
+  font-size: 0.85rem; /* Tamaño de la fuente */
+  resize: vertical; /* Permite redimensionar verticalmente */
+  min-height: 80px; /* Altura mínima */
+  background-color: transparent; /* Fondo transparente */
+  box-shadow: none; /* Elimina la margen cuadrada */
+}
+
+/* Sección de firmas - diseño simplificado */
+.signature-section {
+  display: flex; /* Usa flexbox para la disposición */
+  justify-content: space-between; /* Distribuye los elementos horizontalmente */
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+  gap: 20px; /* Espacio entre los elementos */
+  margin-top: 30px; /* Margen superior */
+  padding-top: 20px; /* Espacio interno superior */
+  border-top: 1px solid #eaeaea; /* Borde superior */
+}
+
+/* Cuadros de firma */
+.signature-box {
+  flex: 1; /* Permite que el elemento se expanda para llenar el espacio */
+  min-width: 200px; /* Ancho mínimo */
+}
+
+/* Etiquetas de los cuadros de firma */
+.signature-box label {
+  display: block; /* Muestra la etiqueta como bloque */
+  margin-bottom: 5px; /* Margen inferior de la etiqueta */
+  font-weight: 600; /* Grosor de la fuente de la etiqueta */
+  font-size: 0.85rem; /* Tamaño de la fuente de la etiqueta */
+}
+
+.signature-box input {
+  width: 100%; /* Ancho */
+  padding: 8px 0; /* Espacio interno */
+  border: none; /* Elimina el borde */
+  border-bottom: 1px solid #333; /* Borde inferior */
+  font-size: 0.85rem; /* Tamaño de la fuente */
+  box-shadow: none; /* Elimina la margen cuadrada */
+}
+
+/* Botones de acción - diseño consistente */
+.action-buttons {
+  display: flex; /* Usa flexbox para la disposición */
+  justify-content: flex-end; /* Alinea los elementos al final horizontalmente */
+  gap: 15px; /* Espacio entre los elementos */
+  margin-top: 30px; /* Margen superior */
+}
+
+/* Variables de color (reutilizando las existentes) */
+:root {
+  --primary-color: #3498db; /* Azul, similar al de Bootstrap */
+  --secondary-color: #6c757d; /* Gris, también similar al de Bootstrap */
+  --success-color: #1d7a33; /* Verde, para acciones exitosas */
+  --danger-color: #dc3545; /* Rojo, para errores o acciones peligrosas */
+  --warning-color: #ffc107; /* Amarillo, para advertencias */
+  --info-color: #17a2b8; /* Turquesa, para información */
+  --light-color: #f8f9fa; /* Gris claro, para fondos */
+  --dark-color: #343a40; /* Gris oscuro, para textos importantes */
+  --text-color: #495057; /* Color de texto general */
+  --requisicion-color: #3498db; /* Azul para la temática de Requisición */
+  --historial-color: #9b59b6; /* Fucsia para la temática de Historial */
+}
+
+/* Estilos Base para los Botones */
+.btn {
+    display: inline-block; /* Permite aplicar margen y padding */
+    font-weight: 500; /* Fuente ligeramente más gruesa */
+    line-height: 1.5; /* Espaciado entre líneas */
+    color: var(--light-color); /* Texto siempre claro */
+    text-align: center; /* Alineación del texto al centro */
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+    vertical-align: middle; /* Alineación vertical al medio */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    user-select: none; /* Evita la selección de texto al hacer clic */
+    background-color: transparent; /* Fondo transparente por defecto */
+    border: none; /* Elimina el borde */
+    padding: 0.5rem 1rem; /* Padding más pequeño */
+    font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+    border-radius: 0.25rem; /* Bordes más redondeados */
+    transition: transform 0.2s ease-in-out; /* Transición suave para los efectos hover */
+    box-shadow: none; /* Elimina la sombra */
+}
+
+/* Estilos para el botón Primario (Azul) - Temática Requisición */
+.btn-primary {
+    background-color: var(--primary-color); /* Fondo azul para Requisición */
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px); /* Ligeramente levanta el botón al hacer hover */
+}
+
+.btn-primary:focus, .btn-primary:active {
+    outline: none; /* Elimina el borde de enfoque */
+    box-shadow: none; /* Elimina la sombra de enfoque */
+}
+
+/* Estilos para el botón Secundario (Fucsia) - Temática Historial */
+.btn-secondary {
+    background-color: var(--danger-color)
+}
+
+.btn-secondary:hover {
+    transform: translateY(-1px); /* Ligeramente levanta el botón al hacer hover */
+}
+
+.btn-secondary:focus, .btn-secondary:active {
+    outline: none; /* Elimina el borde de enfoque */
+    box-shadow: none; /* Elimina la sombra de enfoque */
+}
+
+/* Estilos para el botón de Éxito (Verde) */
+.btn-success {
+    background-color: var(--success-color); /* Fondo verde de éxito */
+}
+
+.btn-success:hover {
+    transform: translateY(-1px); /* Ligeramente levanta el botón al hacer hover */
+}
+
+.btn-success:focus, .btn-success:active {
+    outline: none; /* Elimina el borde de enfoque */
+    box-shadow: none; /* Elimina la sombra de enfoque */
+}
+
+/* Estilos para el botón de Peligro (Rojo) */
+.btn-danger {
+    background-color: var(--danger-color); /* Fondo rojo de peligro */
+}
+
+.btn-danger:hover {
+    transform: translateY(-1px); /* Ligeramente levanta el botón al hacer hover */
+}
+
+.btn-danger:focus, .btn-danger:active {
+    outline: none; /* Elimina el borde de enfoque */
+    box-shadow: none; /* Elimina la sombra de enfoque */
+}
+
+/* Estilos para el botón Pequeño */
+.btn-sm {
+    padding: 0.25rem 0.5rem; /* Reduce el padding para botones más pequeños */
+    font-size: 0.8rem; /* Reduce el tamaño de la fuente */
+    border-radius: 0.2rem; /* Bordes ligeramente menos redondeados */
+}
+
+/* Estilos para el botón con Icono */
+.btn-icon {
+    display: inline-flex; /* Permite alinear el icono y el texto */
+    align-items: center; /* Alineación vertical al centro */
+    justify-content: center; /* Alineación horizontal al centro */
+    gap: 0.5rem; /* Espacio entre el icono y el texto */
+}
+
+/* Estilos para el botón "Volver" */
+.btn-back {
+    background-color: var(--secondary-color); /* Fondo gris secundario */
+}
+
+.btn-back:hover {
+    transform: translateY(-1px); /* Ligeramente levanta el botón al hacer hover */
+}
+
+.btn-back i {
+    margin-right: 0.5rem; /* Espacio entre el icono y el texto */
+}
+
+/* Estilos para botones deshabilitados */
+.btn:disabled {
+    opacity: 0.6; /* Reduce la opacidad para indicar que está deshabilitado */
+    cursor: not-allowed; /* Cambia el cursor para indicar que no se puede hacer clic */
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+.table-container {
+  overflow-x: auto; /* Permite el desplazamiento horizontal si la tabla es demasiado ancha */
+}
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-header h2 {
+      font-size: 1.2rem; /* Tamaño de la fuente del título */
+  }
+
+  .form-group {
+      min-width: 100%; /* Ancho mínimo */
+  }
+
+  .signature-section {
+      flex-direction: column; /* Apila los elementos verticalmente */
+      gap: 15px; /* Espacio entre los elementos */
+  }
+
+  .action-buttons {
+      flex-direction: column; /* Apila los elementos verticalmente */
+      gap: 10px; /* Espacio entre los elementos */
+  }
+
+  .btn {
+      width: 100%; /* Ancho */
+  }
+}
+
+/* ===================== */
+/* PÁGINA DE HISTORIAL */
+/* ===================== */
+.history-container {
+  padding: 25px; /* Espacio interno */
+}
+
+/* Encabezado del historial */
+.history-header {
+  display: flex; /* Usa flexbox para la disposición */
+  justify-content: space-between; /* Distribuye los elementos horizontalmente */
+  align-items: center; /* Centra los elementos verticalmente */
+  margin-bottom: 20px; /* Margen inferior */
+  padding-bottom: 15px; /* Espacio interno inferior */
+  border-bottom: 1px solid #eee; /* Borde inferior */
+}
+
+/* Filtros del historial */
+.history-filters {
+  display: flex; /* Usa flexbox para la disposición */
+  gap: 12px; /* Espacio entre los elementos */
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+  align-items: flex-end; /* Alinea los elementos al final verticalmente */
+  margin-bottom: 20px; /* Margen inferior */
+}
+
+.filter-group {
+  display: flex; /* Usa flexbox para la disposición */
+  flex-direction: column; /* Apila los elementos verticalmente */
+  min-width: 140px; /* Ancho mínimo */
+}
+
+.filter-group label {
+  margin-bottom: 5px; /* Margen inferior de la etiqueta */
+  font-weight: 600; /* Grosor de la fuente de la etiqueta */
+  font-size: 0.8rem; /* Tamaño de la fuente de la etiqueta */
+}
+
+/* Tarjetas de estadísticas */
+.history-stats {
+  display: flex; /* Usa flexbox para la disposición */
+  justify-content: space-between; /* Distribuye los elementos horizontalmente */
+  margin: 20px 0; /* Margen superior e inferior */
+  gap: 12px; /* Espacio entre los elementos */
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+}
+
+.stat-card {
+  flex: 1; /* Permite que el elemento se expanda para llenar el espacio */
+  min-width: 140px; /* Ancho mínimo */
+  background: white; /* Fondo blanco */
+  border-radius: 6px; /* Bordes redondeados */
+  padding: 12px; /* Espacio interno */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+  text-align: center; /* Centra el texto */
+  transition: transform 0.2s; /* Transición suave para el efecto hover */
+}
+
+.stat-card:hover {
+  transform: translateY(-3px); /* Desplaza el elemento ligeramente al hacer hover */
+}
+
+.stat-card h4 {
+  margin-top: 0; /* Elimina el margen superior */
+  font-size: 0.8rem; /* Tamaño de la fuente */
+  text-transform: uppercase; /* Convierte el texto a mayúsculas */
+  letter-spacing: 0.5px; /* Espaciado entre letras */
+  color: #6c757d; /* Color del texto */
+}
+
+.stat-card p {
+  font-size: 1.3rem; /* Tamaño de la fuente */
+  font-weight: bold; /* Grosor de la fuente */
+  margin-bottom: 0; /* Elimina el margen inferior */
+}
+
+/* Colores para los estados */
+.stat-card.total { border-top: 3px solid #6c757d; }
+.stat-card.approved { border-top: 3px solid #28a745; }
+.stat-card.pending { border-top: 3px solid #ffc107; }
+.stat-card.rejected { border-top: 3px solid #dc3545; }
+
+/* Tabla del historial */
+.history-table {
+  width: 100%; /* Ancho */
+  border-collapse: collapse; /* Colapsa los bordes de la tabla */
+}
+
+.history-table th {
+  background-color: #2c3e50; /* Fondo para las celdas del encabezado */
+  color: white; /* Color del texto para las celdas del encabezado */
+  padding: 12px 15px; /* Espacio interno */
+  text-align: left; /* Alineación del texto a la izquierda */
+}
+
+.history-table td {
+  padding: 10px 15px; /* Espacio interno */
+  border-bottom: 1px solid #eaeaea; /* Borde inferior */
+}
+
+/* Paginación */
+.pagination-controls {
+  display: flex; /* Usa flexbox para la disposición */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  align-items: center; /* Centra los elementos verticalmente */
+  gap: 15px; /* Espacio entre los elementos */
+  margin-top: 20px; /* Margen superior */
+}
+
+/* ===================== */
+/* DISEÑO RESPONSIVE */
+/* ===================== */
+@media (max-width: 992px) {
+  /* Ajustes para tablets */
+  .module-container {
+      border-radius: 0; /* Elimina el borde redondeado */
+  }
+
+  .option-card {
+      width: 100%; /* Ancho */
+      max-width: 350px; /* Ancho máximo */
+  }
+
+  .form-row, .history-filters, .history-stats {
+      gap: 15px; /* Espacio entre los elementos */
+  }
+}
+
+@media (max-width: 768px) {
+  /* Ajustes para móviles */
+  .requisicion-module {
+      padding: 15px; /* Espacio interno */
+  }
+
+  .welcome-header {
+      padding: 20px 15px; /* Espacio interno */
+  }
+
+  .recent-item {
+      flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+      gap: 8px; /* Espacio entre los elementos */
+  }
+
+  .recent-id, .recent-project,
+  .recent-date, .recent-status {
+      width: auto; /* Ancho automático */
+      flex: 1 1 100px; /* Permite que los elementos se expandan y contraigan */
+  }
+
+  .form-row, .signature-section,
+  .action-buttons, .history-filters {
+      flex-direction: column; /* Apila los elementos verticalmente */
+  }
+
+  .form-group, .signature-box,
+  .filter-group, .stat-card {
+      min-width: 100%; /* Ancho mínimo */
+  }
+
+  .btn {
+      width: 100%; /* Ancho */
+      justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ajustes para móviles pequeños */
+  .welcome-header h1 {
+      font-size: 1.6rem; /* Tamaño de la fuente del título */
+  }
+
+  .form-header h2, .history-header h2 {
+      font-size: 1.3rem; /* Tamaño de la fuente del título */
+  }
+
+  .form-header-details {
+      flex-direction: column; /* Apila los elementos verticalmente */
+      gap: 5px; /* Espacio entre los elementos */
+  }
+}
+
+
+
+    
+</style>
+
+<script>
+const RequisicionesModule = {
+    // Datos de ejemplo
+    requisicionData: [],
+    historyData: [],
+
+    // Cargar pantalla de creación de requisición
+    loadCrearRequisicion: function() {
+        document.querySelector('.requisiciones-main-screen').style.display = 'none';
+        document.querySelector('.requisiciones-detail-screen').style.display = 'block';
+        
+        document.getElementById('requisicionesContent').innerHTML = `
+            <div class="requisicion-form">
+                <div class="form-header">
+                    <h3>SISTEMA INTEGRADO DE GESTIÓN</h3>
+                    <h4>REQUISICIÓN DE BIENES Y/O SERVICIOS</h4>
+                    <div class="form-header-details">
+                        <span>CÓDIGO: CP-RQ-01</span>
+                        <span>FECHA: <span id="currentDate">${new Date().toISOString().split('T')[0]}</span></span>
+                        <span>VERSIÓN: 1</span>
+                        <span>PÁGINA: 1 DE 1</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="solicitante">SOLICITA:</label>
+                        <input type="text" id="solicitante" name="solicitante" placeholder="Ingrese el solicitante">
+                    </div>
+                    <div class="form-group">
+                        <label for="proyecto">NOMBRE PROYECTO:</label>
+                        <input type="text" id="proyecto" name="proyecto" placeholder="Ingrese el nombre del proyecto">
+                    </div>
+                    <div class="form-group">
+                        <label for="numeroOrden">NÚMERO DE ORDEN:</label>
+                        <input type="text" id="numeroOrden" name="numeroOrden" placeholder="Ingrese el número de orden">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="numeroRequisicion">No. DE REQUISICIÓN:</label>
+                        <input type="text" id="numeroRequisicion" name="numeroRequisicion" placeholder="Ingrese el número de requisición">
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaRequisicion">FECHA DE REQUISICIÓN:</label>
+                        <input type="date" id="fechaRequisicion" name="fechaRequisicion">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>ITEM</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>UNIDAD</th>
+                                <th>FECHA NECESIDAD</th>
+                                <th>CANT. SOLICITADA</th>
+                                <th>VALOR UNITARIO</th>
+                                <th>CANT. ENTREGADA (ALMACÉN)</th>
+                                <th>VALOR ENTREGADO (ALMACÉN)</th>
+                                <th>CANT. PENDIENTE</th>
+                                <th>CANT. ENTREGADA (COMPRAS)</th>
+                                <th>VALOR ENTREGADO (COMPRAS)</th>
+                                <th>DEVOLUCIÓN</th>
+                                <th>VALOR DEVOLUCIÓN</th>
+                                <th>ACCIÓN</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requisicionItems">
+                            <!-- Los items se cargarán dinámicamente aquí -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6">TOTALES</td>
+                                <td id="totalEntregadoAlmacen">0</td>
+                                <td id="totalValorAlmacen">0</td>
+                                <td></td>
+                                <td id="totalEntregadoCompras">0</td>
+                                <td id="totalValorCompras">0</td>
+                                <td></td>
+                                <td id="totalValorDevolucion">0</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="table-actions">
+                        <button class="btn btn-sm btn-success" id="addItemBtn">
+                            <i class="fas fa-plus"></i> Agregar Item
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="observaciones">OBSERVACIONES / RELACIÓN DE ANEXOS:</label>
+                    <textarea id="observaciones" name="observaciones" placeholder="Ingrese las observaciones"></textarea>
+                </div>
+
+                <div class="signature-section">
+                    <div class="signature-box">
+                        <label>Solicitó:</label>
+                        <input type="text" class="signature-field" id="solicitoNombre" placeholder="Ingrese el nombre">
+                        <div class="signature-line"></div>
+                        <div class="signature-position">INGENIERO DE PROYECTOS</div>
+                    </div>
+
+                    <div class="signature-box">
+                        <label>Aprobó:</label>
+                        <input type="text" class="signature-field" id="aproboNombre" placeholder="Ingrese el nombre">
+                        <div class="signature-line"></div>
+                        <div class="signature-position">SUBGERENTE DE PROYECTOS</div>
+                    </div>
+
+                    <div class="signature-box">
+                        <label>Recibe:</label>
+                        <input type="text" class="signature-field" id="recibeNombre" placeholder="Ingrese el nombre">
+                        <div class="signature-line"></div>
+                        <div class="signature-position">ANALISTA DE COMPRAS</div>
+                    </div>
+
+                    <div class="signature-box">
+                        <label>Aprobó:</label>
+                        <input type="text" class="signature-field" id="aproboGerenteNombre" placeholder="Ingrese el nombre">
+                        <div class="signature-line"></div>
+                        <div class="signature-position">GERENTE</div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="cancelRequisicionBtn">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button class="btn btn-success" id="saveRequisicionBtn">
+                        <i class="fas fa-check"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Inicializar el formulario
+        this.initializeRequisicionForm();
+    },
+
+    // Cargar pantalla de historial de requisiciones
+    loadHistorialRequisiciones: function() {
+        document.querySelector('.requisiciones-main-screen').style.display = 'none';
+        document.querySelector('.requisiciones-detail-screen').style.display = 'block';
+        
+        document.getElementById('requisicionesContent').innerHTML = `
+            <div class="history-container">
+                <div class="history-header">
+                    <h2><i class="fas fa-history"></i> Historial de Requisiciones</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" id="exportHistoryBtn">
+                            <i class="fas fa-file-export"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="history-filters">
+                    <div class="filter-group">
+                        <label for="filterDateFrom">Desde:</label>
+                        <input type="date" id="filterDateFrom" name="filterDateFrom">
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterDateTo">Hasta:</label>
+                        <input type="date" id="filterDateTo" name="filterDateTo">
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterStatus">Estado:</label>
+                        <select id="filterStatus" name="filterStatus">
+                            <option value="all">Todos</option>
+                            <option value="pending">Pendiente</option>
+                            <option value="approved">Aprobado</option>
+                            <option value="rejected">Rechazado</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterProject">Proyecto:</label>
+                        <input type="text" id="filterProject" name="filterProject" placeholder="Buscar proyecto...">
+                    </div>
+                    <button class="btn btn-primary" id="filterHistoryBtn">
+                        <i class="fas fa-filter"></i> Filtrar
+                    </button>
+                    <button class="btn btn-secondary" id="resetFiltersBtn">
+                        <i class="fas fa-undo"></i> Limpiar
+                    </button>
+                </div>
+
+                <div class="history-stats">
+                    <div class="stat-card total">
+                        <h4>Total</h4>
+                        <p>${this.historyData.length}</p>
+                    </div>
+                    <div class="stat-card approved">
+                        <h4>Aprobadas</h4>
+                        <p>${this.historyData.filter(item => item.estado === 'approved').length}</p>
+                    </div>
+                    <div class="stat-card pending">
+                        <h4>Pendientes</h4>
+                        <p>${this.historyData.filter(item => item.estado === 'pending').length}</p>
+                    </div>
+                    <div class="stat-card rejected">
+                        <h4>Rechazadas</h4>
+                        <p>${this.historyData.filter(item => item.estado === 'rejected').length}</p>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>N° REQUISICIÓN</th>
+                                <th>FECHA</th>
+                                <th>SOLICITANTE</th>
+                                <th>PROYECTO</th>
+                                <th>ITEMS</th>
+                                <th>ESTADO</th>
+                                <th>ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            ${this.historyData.map(item => `
+                                <tr>
+                                    <td>${item.id}</td>
+                                    <td>${item.fecha}</td>
+                                    <td>${item.solicitante}</td>
+                                    <td>${item.proyecto}</td>
+                                    <td>${item.items}</td>
+                                    <td class="${item.estado}">${this.getEstadoTexto(item.estado)}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-edit-history" data-id="${item.id}" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-export-history" data-id="${item.id}" title="Descargar">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination-controls">
+                    <button class="btn btn-secondary" disabled>
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <span>Página 1 de 1</span>
+                    <button class="btn btn-secondary" disabled>
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Asignar eventos
+        document.getElementById('exportHistoryBtn').addEventListener('click', this.exportHistory.bind(this));
+        document.getElementById('filterHistoryBtn').addEventListener('click', this.filterHistory.bind(this));
+        document.getElementById('resetFiltersBtn').addEventListener('click', this.resetFilters.bind(this));
+    },
+
+    // Volver a la pantalla principal
+    backToMain: function() {
+        document.querySelector('.requisiciones-main-screen').style.display = 'block';
+        document.querySelector('.requisiciones-detail-screen').style.display = 'none';
+    },
+
+    // Inicializar el formulario de requisición
+    initializeRequisicionForm: function() {
+        // Configurar fecha actual si no está configurada
+        const fechaInput = document.getElementById('fechaRequisicion');
+        if (fechaInput && !fechaInput.value) {
+            fechaInput.value = new Date().toISOString().split('T')[0];
+        }
+
+        // Asignar eventos
+        document.getElementById('addItemBtn').addEventListener('click', this.addNewItem.bind(this));
+        document.getElementById('saveRequisicionBtn').addEventListener('click', this.saveRequisition.bind(this));
+        document.getElementById('cancelRequisicionBtn').addEventListener('click', this.cancelRequisition.bind(this));
+    },
+
+    // Agregar nuevo item a la requisición
+    addNewItem: function() {
+        const tbody = document.getElementById('requisicionItems');
+        if (!tbody) return;
+
+        const newItemNumber = tbody.children.length + 1;
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${newItemNumber}</td>
+            <td><input type="text" class="form-control-sm"></td>
+            <td><input type="text" class="form-control-sm"></td>
+            <td><input type="date" class="form-control-sm"></td>
+            <td><input type="number" class="form-control-sm" onchange="RequisicionesModule.calculateRow(this)"></td>
+            <td><input type="number" class="form-control-sm" onchange="RequisicionesModule.calculateRow(this)"></td>
+            <td><input type="number" class="form-control-sm" onchange="RequisicionesModule.calculateRow(this)"></td>
+            <td><input type="number" class="form-control-sm" onchange="RequisicionesModule.calculateRow(this)"></td>
+            <td><input type="number" class="form-control-sm" readonly></td>
+            <td><input type="number" class="form-control-sm" onchange="RequisicionesModule.calculateRow(this)"></td>
+            <td><input type="number" class="form-control-sm" onchange="RequisicionesModule.calculateRow(this)"></td>
+            <td><input type="number" class="form-control-sm" onchange="RequisicionesModule.calculateRow(this)"></td>
+            <td><input type="number" class="form-control-sm" readonly></td>
+            <td>
+                <button class="btn btn-icon btn-danger btn-sm remove-item">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        `;
+        tbody.appendChild(row);
+
+        // Asignar evento al botón de eliminar
+        row.querySelector('.remove-item').addEventListener('click', function() {
+            row.remove();
+            RequisicionesModule.renumberItems();
+            RequisicionesModule.calculateTotals();
+        });
+    },
+
+    // Calcular valores de una fila
+    calculateRow: function(input) {
+        const row = input.closest('tr');
+        if (!row) return;
+
+        const cells = row.cells;
+        const cantidadSolicitada = parseFloat(cells[4].querySelector('input').value) || 0;
+        const cantidadEntregadaAlmacen = parseFloat(cells[6].querySelector('input').value) || 0;
+        const cantidadEntregadaCompras = parseFloat(cells[9].querySelector('input').value) || 0;
+        const valorUnitario = parseFloat(cells[5].querySelector('input').value) || 0;
+        const valorEntregadoAlmacen = parseFloat(cells[7].querySelector('input').value) || 0;
+        const devolucion = parseFloat(cells[11].querySelector('input').value) || 0;
+
+        // Calcular pendiente
+        const cantidadPendiente = cantidadSolicitada - (cantidadEntregadaAlmacen + cantidadEntregadaCompras);
+        cells[8].querySelector('input').value = cantidadPendiente >= 0 ? cantidadPendiente : 0;
+
+        // Calcular valor de devolución
+        const valorDevolucion = valorUnitario * devolucion;
+        cells[12].querySelector('input').value = valorDevolucion.toFixed(2);
+
+        // Recalcular totales
+        this.calculateTotals();
+    },
+
+    // Calcular totales
+    calculateTotals: function() {
+        const rows = document.querySelectorAll('#requisicionItems tr');
+        let totalEntregadoAlmacen = 0;
+        let totalValorAlmacen = 0;
+        let totalEntregadoCompras = 0;
+        let totalValorCompras = 0;
+        let totalValorDevolucion = 0;
+
+        rows.forEach(row => {
+            const cells = row.cells;
+            totalEntregadoAlmacen += parseFloat(cells[6].querySelector('input').value) || 0;
+            totalValorAlmacen += parseFloat(cells[7].querySelector('input').value) || 0;
+            totalEntregadoCompras += parseFloat(cells[9].querySelector('input').value) || 0;
+            totalValorCompras += parseFloat(cells[10].querySelector('input').value) || 0;
+            totalValorDevolucion += parseFloat(cells[12].querySelector('input').value) || 0;
+        });
+
+        // Actualizar totales
+        document.getElementById('totalEntregadoAlmacen').textContent = totalEntregadoAlmacen;
+        document.getElementById('totalValorAlmacen').textContent = totalValorAlmacen.toFixed(2);
+        document.getElementById('totalEntregadoCompras').textContent = totalEntregadoCompras;
+        document.getElementById('totalValorCompras').textContent = totalValorCompras.toFixed(2);
+        document.getElementById('totalValorDevolucion').textContent = totalValorDevolucion.toFixed(2);
+    },
+
+        // Renumerar items
+        renumberItems: function() {
+        const rows = document.querySelectorAll('#requisicionItems tr');
+        rows.forEach((row, index) => {
+            row.cells[0].textContent = index + 1;
+        });
+    },
+
+    // Guardar requisición
+    saveRequisition: function() {
+        // Obtener valores del formulario
+        const solicitante = document.getElementById('solicitante').value;
+        const proyecto = document.getElementById('proyecto').value;
+        const numeroOrden = document.getElementById('numeroOrden').value;
+        const numeroRequisicion = document.getElementById('numeroRequisicion').value;
+        const fechaRequisicion = document.getElementById('fechaRequisicion').value;
+        const observaciones = document.getElementById('observaciones').value;
+        const solicitoNombre = document.getElementById('solicitoNombre').value;
+        const aproboNombre = document.getElementById('aproboNombre').value;
+        const recibeNombre = document.getElementById('recibeNombre').value;
+        const aproboGerenteNombre = document.getElementById('aproboGerenteNombre').value;
+
+        // Validación básica
+        if (!numeroRequisicion || !solicitante || !proyecto) {
+            alert('Por favor complete los campos obligatorios: N° Requisición, Solicitante y Proyecto');
+            return;
+        }
+
+        // Obtener items de la tabla
+        const items = [];
+        const rows = document.querySelectorAll('#requisicionItems tr');
+        
+        rows.forEach(row => {
+            const cells = row.cells;
+            items.push({
+                descripcion: cells[1].querySelector('input').value,
+                unidad: cells[2].querySelector('input').value,
+                fechaNecesidad: cells[3].querySelector('input').value,
+                cantidadSolicitada: cells[4].querySelector('input').value,
+                valorUnitario: cells[5].querySelector('input').value,
+                cantidadEntregadaAlmacen: cells[6].querySelector('input').value,
+                valorEntregadoAlmacen: cells[7].querySelector('input').value,
+                cantidadPendiente: cells[8].querySelector('input').value,
+                cantidadEntregadaCompras: cells[9].querySelector('input').value,
+                valorEntregadoCompras: cells[10].querySelector('input').value,
+                devolucion: cells[11].querySelector('input').value,
+                valorDevolucion: cells[12].querySelector('input').value
+            });
+        });
+
+        // Crear objeto de requisición
+        const nuevaRequisicion = {
+            id: numeroRequisicion,
+            fecha: fechaRequisicion,
+            solicitante: solicitante,
+            proyecto: proyecto,
+            numeroOrden: numeroOrden,
+            items: items.length,
+            estado: 'pending',
+            observaciones: observaciones,
+            solicitoNombre: solicitoNombre,
+            aproboNombre: aproboNombre,
+            recibeNombre: recibeNombre,
+            aproboGerenteNombre: aproboGerenteNombre,
+            detalleItems: items,
+            totalEntregadoAlmacen: document.getElementById('totalEntregadoAlmacen').textContent,
+            totalValorAlmacen: document.getElementById('totalValorAlmacen').textContent,
+            totalEntregadoCompras: document.getElementById('totalEntregadoCompras').textContent,
+            totalValorCompras: document.getElementById('totalValorCompras').textContent,
+            totalValorDevolucion: document.getElementById('totalValorDevolucion').textContent
+        };
+
+        // Agregar al historial
+        this.historyData.unshift(nuevaRequisicion);
+
+        // Mostrar mensaje de éxito
+        alert(`Requisición ${numeroRequisicion} guardada correctamente`);
+
+        // Volver al menú principal
+        this.backToMain();
+    },
+
+    // Cancelar requisición
+    cancelRequisition: function() {
+        if (confirm('¿Está seguro que desea cancelar esta requisición? Los datos no se guardarán.')) {
+            this.backToMain();
+        }
+    },
+
+    // Filtrar historial
+    filterHistory: function() {
+        const fechaDesde = document.getElementById('filterDateFrom').value;
+        const fechaHasta = document.getElementById('filterDateTo').value;
+        const estado = document.getElementById('filterStatus').value;
+        const proyecto = document.getElementById('filterProject').value.toLowerCase();
+
+        let filteredData = this.historyData;
+
+        // Aplicar filtros
+        if (fechaDesde) {
+            filteredData = filteredData.filter(item => item.fecha >= fechaDesde);
+        }
+        if (fechaHasta) {
+            filteredData = filteredData.filter(item => item.fecha <= fechaHasta);
+        }
+        if (estado !== 'all') {
+            filteredData = filteredData.filter(item => item.estado === estado);
+        }
+        if (proyecto) {
+            filteredData = filteredData.filter(item => 
+                item.proyecto.toLowerCase().includes(proyecto)
+            );
+        }
+
+        // Actualizar tabla
+        const tbody = document.getElementById('historyTableBody');
+        tbody.innerHTML = filteredData.map(item => `
+            <tr>
+                <td>${item.id}</td>
+                <td>${item.fecha}</td>
+                <td>${item.solicitante}</td>
+                <td>${item.proyecto}</td>
+                <td>${item.items}</td>
+                <td class="${item.estado}">${this.getEstadoTexto(item.estado)}</td>
+                <td>
+                    <button class="btn btn-sm btn-edit-history" data-id="${item.id}" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-export-history" data-id="${item.id}" title="Descargar">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+
+        // Actualizar estadísticas
+        document.querySelector('.stat-card.total p').textContent = filteredData.length;
+        document.querySelector('.stat-card.approved p').textContent = 
+            filteredData.filter(item => item.estado === 'approved').length;
+        document.querySelector('.stat-card.pending p').textContent = 
+            filteredData.filter(item => item.estado === 'pending').length;
+        document.querySelector('.stat-card.rejected p').textContent = 
+            filteredData.filter(item => item.estado === 'rejected').length;
+    },
+
+    // Resetear filtros
+    resetFilters: function() {
+        document.getElementById('filterDateFrom').value = '';
+        document.getElementById('filterDateTo').value = '';
+        document.getElementById('filterStatus').value = 'all';
+        document.getElementById('filterProject').value = '';
+        this.filterHistory();
+    },
+
+    // Exportar historial
+    exportHistory: function() {
+        // Crear CSV
+        let csv = 'N° Requisición,Fecha,Solicitante,Proyecto,Items,Estado\n';
+        
+        this.historyData.forEach(item => {
+            csv += `"${item.id}","${item.fecha}","${item.solicitante}",` +
+                   `"${item.proyecto}","${item.items}","${this.getEstadoTexto(item.estado)}"\n`;
+        });
+
+        // Crear enlace de descarga
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `historial_requisiciones_${new Date().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    },
+
+    // Obtener texto del estado
+    getEstadoTexto: function(estado) {
+        const estados = {
+            'pending': 'Pendiente',
+            'approved': 'Aprobado',
+            'rejected': 'Rechazado'
+        };
+        return estados[estado] || estado;
+    },
+
+    // Ver detalles de requisición
+    viewRequisition: function(id) {
+        const requisicion = this.historyData.find(item => item.id === id);
+        if (!requisicion) {
+            alert('Requisición no encontrada');
+            return;
+        }
+
+        // Mostrar modal con detalles
+        let detallesHTML = `
+            <h3>Detalles de Requisición ${requisicion.id}</h3>
+            <p><strong>Fecha:</strong> ${requisicion.fecha}</p>
+            <p><strong>Solicitante:</strong> ${requisicion.solicitante}</p>
+            <p><strong>Proyecto:</strong> ${requisicion.proyecto}</p>
+            <p><strong>Estado:</strong> <span class="${requisicion.estado}">${this.getEstadoTexto(requisicion.estado)}</span></p>
+            <p><strong>Observaciones:</strong> ${requisicion.observaciones || 'Ninguna'}</p>
+            
+            <h4>Items (${requisicion.items})</h4>
+            <table class="details-table">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Unidad</th>
+                        <th>Cant. Solicitada</th>
+                        <th>Valor Unitario</th>
+                        <th>Cant. Entregada</th>
+                        <th>Valor Entregado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${requisicion.detalleItems.map(item => `
+                        <tr>
+                            <td>${item.descripcion}</td>
+                            <td>${item.unidad}</td>
+                            <td>${item.cantidadSolicitada}</td>
+                            <td>${item.valorUnitario}</td>
+                            <td>${parseFloat(item.cantidadEntregadaAlmacen) + parseFloat(item.cantidadEntregadaCompras)}</td>
+                            <td>${parseFloat(item.valorEntregadoAlmacen) + parseFloat(item.valorEntregadoCompras)}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+            
+            <div class="details-totals">
+                <p><strong>Total Entregado Almacén:</strong> ${requisicion.totalEntregadoAlmacen}</p>
+                <p><strong>Total Valor Almacén:</strong> ${requisicion.totalValorAlmacen}</p>
+                <p><strong>Total Entregado Compras:</strong> ${requisicion.totalEntregadoCompras}</p>
+                <p><strong>Total Valor Compras:</strong> ${requisicion.totalValorCompras}</p>
+                <p><strong>Total Valor Devolución:</strong> ${requisicion.totalValorDevolucion}</p>
+            </div>
+            
+            <div class="details-signatures">
+                <p><strong>Solicitó:</strong> ${requisicion.solicitoNombre || 'No especificado'}</p>
+                <p><strong>Aprobó:</strong> ${requisicion.aproboNombre || 'No especificado'}</p>
+                <p><strong>Recibió:</strong> ${requisicion.recibeNombre || 'No especificado'}</p>
+                <p><strong>Aprobó Gerente:</strong> ${requisicion.aproboGerenteNombre || 'No especificado'}</p>
+            </div>
+        `;
+
+        // Crear modal
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                ${detallesHTML}
+            </div>
+        `;
+
+        // Mostrar modal
+        document.body.appendChild(modal);
+        
+        // Cerrar modal
+        modal.querySelector('.close-modal').addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+    }
+};
+
+// Inicialización cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    // Asignar eventos a los botones de editar y exportar en el historial
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.btn-edit-history')) {
+            const id = e.target.closest('.btn-edit-history').getAttribute('data-id');
+            RequisicionesModule.viewRequisition(id);
+        }
+        
+        if (e.target.closest('.btn-export-history')) {
+            const id = e.target.closest('.btn-export-history').getAttribute('data-id');
+            const requisicion = RequisicionesModule.historyData.find(item => item.id === id);
+            if (requisicion) {
+                RequisicionesModule.exportSingleRequisition(requisicion);
+            }
+        }
+    });
+});
+
+// Exportar una sola requisición
+RequisicionesModule.exportSingleRequisition = function(requisicion) {
+    // Crear CSV para una sola requisición
+    let csv = 'N° Requisición,Fecha,Solicitante,Proyecto,Estado,Observaciones\n';
+    csv += `"${requisicion.id}","${requisicion.fecha}","${requisicion.solicitante}",` +
+           `"${requisicion.proyecto}","${this.getEstadoTexto(requisicion.estado)}","${requisicion.observaciones || ''}"\n\n`;
+    
+    csv += 'Items\n';
+    csv += 'Descripción,Unidad,Cant. Solicitada,Valor Unitario,Cant. Entregada Almacén,Valor Entregado Almacén,Cant. Entregada Compras,Valor Entregado Compras,Devolución,Valor Devolución\n';
+    
+    requisicion.detalleItems.forEach(item => {
+        csv += `"${item.descripcion}","${item.unidad}","${item.cantidadSolicitada}",` +
+               `"${item.valorUnitario}","${item.cantidadEntregadaAlmacen}","${item.valorEntregadoAlmacen}",` +
+               `"${item.cantidadEntregadaCompras}","${item.valorEntregadoCompras}",` +
+               `"${item.devolucion}","${item.valorDevolucion}"\n`;
+    });
+
+    // Crear enlace de descarga
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `requisicion_${requisicion.id}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
+    
+
+</script>
