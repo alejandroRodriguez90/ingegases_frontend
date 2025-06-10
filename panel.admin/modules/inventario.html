@@ -65,26 +65,27 @@
     --border-radius: 16px;
 }
 
+
+
 /* ============ PANTALLA PRINCIPAL ============= */
 
 .main-screen {
     width: 100%;
-    height: 100vh;
-    padding: 40px 40px; /* Reducido padding */
+    padding: 40px 40px;
     background-color: var(--background-light);
     text-align: center;
     box-sizing: border-box;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    overflow: hidden; /* Elimina scroll */
-    position: fixed; /* Fija la posición */
-    top: 0;
-    left: 0;
+    /* Elimina position: fixed y height: 100vh */
+    /* Agrega min-height para asegurar que ocupe al menos toda la pantalla */
+    min-height: calc(100vh - 60px); /* Ajusta según la altura de tu top-bar */
+    overflow-y: auto; /* Permite el desplazamiento vertical */
 }
 
 .main-header {
     max-width: 1200px;
-    margin: 0 auto 20px; /* Reducido margen */
-    padding-top: 100px;
+    margin: 0 auto 20px;
+    padding-top: 40px; /* Reduce el padding-top */
 }
 
 .main-title {
@@ -116,15 +117,13 @@
     line-height: 1.6;
 }
 
-/* Ajustes para el contenedor de tarjetas */
 .card-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px; /* Reducido gap */
+    gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    max-height: calc(100vh - 250px); /* Altura máxima calculada */
-    overflow: hidden; /* Oculta overflow */
+    padding-bottom: 40px; /* Añade espacio en la parte inferior */
 }
 
 .inventario-card {
@@ -277,7 +276,24 @@
         .inventario-module {
             width: 100%;
             height: 100%;
-            padding: 20px;
+            padding: 0 !important; /* Eliminar padding */
+            box-sizing: border-box;
+        }
+
+        /* Pantalla de detalle (tubería/accesorios) */
+        #detailScreen {
+            width: 100%;
+            min-height: calc(100vh - 60px); /* Ajusta según altura del top-bar */
+            padding: 0 !important; /* Eliminar padding */
+            box-sizing: border-box;
+            overflow-y: auto; /* Permite desplazamiento */
+            display: none; /* Mantenemos oculto inicialmente */
+        }
+        /* Contenedor del contenido */
+        #inventarioContent {
+            width: 100%;
+            min-height: calc(100vh - 120px); /* Ajusta según necesidades */
+            padding: 0 !important; /* Eliminar padding */
             box-sizing: border-box;
         }
 
@@ -315,31 +331,28 @@
         }
 
         .section-title.vertical-title {
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            text-align: center;
-            padding: 80px 10px;
-            background-color: #f4fb32c6;
-            color: rgb(68, 61, 61);
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 5px;
-            border-radius: 5px 0 0 5px;
-            height: 50px;
-            min-height: 60px;
-            flex-shrink: 0;
+            writing-mode: vertical-rl; /* Texto vertical */
+            transform: rotate(180deg); /* Rotación 180° */
+            text-align: center; /* Centrado */
+            padding: 80px 10px; /* Espaciado */
+            background-color: #f4fb32c6; /* Fondo amarillo */
+            color: rgb(68, 61, 61); /* Color texto */
+            font-weight: bold; /* Negrita */
+            display: inline-block; /* Display inline-block */
+            vertical-align: top; /* Alineación superior */
+            margin-right: 5px; /* Margen derecho */
         }
 
+        /* Tablas */
         .table-container {
             display: inline-flex;
             flex-direction: column;
-            width: calc(100% - 100px);
+            width: calc(100% - 50px); /* Margen izquierdo implícito de 100px */
             background: white;
-            border-radius: 0 5px 5px 5px;
+            border-radius: 5px; /* Ajustar bordes */
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             max-height: 60vh;
+            margin-left: 0; /* Eliminar margen izquierdo */
             overflow-y: auto;
         }
 
@@ -349,7 +362,7 @@
         }
 
         th, td {
-            padding: 12px 15px;
+            padding: 15px 15px; /* Padding izquierdo y derecho de 15px */
             text-align: left;
             border-bottom: 1px solid #e0e0e0;
         }
@@ -434,13 +447,15 @@
         /* CONTENEDORES DE GRÁFICAS - IGUALES PARA AMBOS */
         .chart-container {
             margin-top: 20px;
-            padding: 20px;
+            padding: 50px; /* Espaciado interno */
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: calc(100% - 40px);
+            width: calc(100% - 130px); /* Margen izquierdo implícito de 100px */
             height: 300px;
             display: block !important;
+            margin-left: 10px; /* Centrado */
+            margin-right: auto; /* Centrado */
         }
 
         #tuberiaChart, #accesoriosChart {
@@ -511,7 +526,7 @@
                 height: auto;
                 min-height: auto;
                 border-radius: 12px 12px 0 0;
-                margin-right: 0;
+                margin-right: 0px;
                 display: block;
             }
             
@@ -547,6 +562,12 @@
                 max-width: 350px;
             }
         }
+        @media (max-width: 768px) {
+            .section-title.vertical-title {
+                background-color: #f8f8f8; /* Fondo más claro para móviles */
+                color: var(--text-dark); /* Texto más oscuro */
+            }
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -571,11 +592,20 @@
 function backToMain() {
     document.getElementById('mainScreen').style.display = 'block';
     document.getElementById('detailScreen').style.display = 'none';
+    // Ajustar el scroll al inicio
+    window.scrollTo(0, 0);
 }
 
 function showDetailScreen() {
     document.getElementById('mainScreen').style.display = 'none';
     document.getElementById('detailScreen').style.display = 'block';
+    // Ajustar el scroll al inicio
+    window.scrollTo(0, 0);
+    // Forzar redibujado para asegurar dimensiones correctas
+    setTimeout(() => {
+        if (chart) chart.resize();
+        if (chartAccesorios) chartAccesorios.resize();
+    }, 100);
 }
 
 function navigateToTuberia() {
