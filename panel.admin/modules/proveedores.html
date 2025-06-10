@@ -1,0 +1,311 @@
+<div class="proveedores-module">
+    <!-- Pantalla principal con tarjetas de opciones -->
+    <div class="proveedores-main-screen">
+        <div class="main-header">
+            <h1 class="main-title">
+                <div class="title-icon-container">
+                    <div class="card-icon">🏢</div>
+                </div>
+                Gestión de Proveedores
+            </h1>
+            <p class="main-subtitle">Administra y consulta la información de tus socios comerciales.</p>
+            <div class="card-container">
+                <div class="proveedor-card" onclick="ProveedoresModule.loadRegistrarProveedor()">
+                    <div class="card-icon-container">
+                        <div class="title-icon">➕</div>
+                    </div>
+                    <h3>Registrar Proveedor</h3>
+                    <p class="card-description">Añade un nuevo proveedor a tu directorio.</p>
+                </div>
+                <div class="proveedor-card" onclick="ProveedoresModule.loadDirectorioProveedores()">
+                    <div class="card-icon-container">
+                        <div class="title-icon">📚</div>
+                    </div>
+                    <h3>Directorio</h3>
+                    <p class="card-description">Consulta, edita y gestiona tus proveedores existentes.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor para la vista de detalle (donde se carga el formulario o el directorio) -->
+    <div class="proveedores-detail-screen" style="display: none;">
+        <div class="submenu-proveedores">
+            <button class="back-button" onclick="ProveedoresModule.backToMain()">
+                <i class="fas fa-arrow-left"></i> Volver
+            </button>
+        </div>
+        <div id="proveedoresContent" class="content-transition"></div>
+    </div>
+</div>
+
+<style>
+/* Estilos generales del módulo de proveedores */
+.proveedores-module {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: #2b2d42;
+}
+
+/* Pantalla principal */
+.proveedores-main-screen {
+    padding: 40px;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+.main-header { max-width: 1200px; margin: 0 auto 20px; padding-top: 40px; }
+.main-title {
+    font-size: 2.4rem; font-weight: 700; margin-bottom: 24px;
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+}
+.title-icon { font-size: 2.5rem; }
+.main-subtitle { color: #8e9aaf; font-size: 1.3rem; max-width: 700px; margin: 0 auto 60px; line-height: 1.6; }
+
+/* Tarjetas de opciones */
+.card-container {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px; max-width: 1200px; margin: 0 auto; padding-bottom: 40px;
+}
+.proveedor-card {
+    background: #ffffff; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    padding: 30px 20px; cursor: pointer; transition: all 0.3s ease; position: relative;
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.05);
+}
+.proveedor-card:before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+    background: linear-gradient(90deg, #4361ee, #3f37c9); transform: scaleX(0);
+    transform-origin: left; transition: transform 0.7s ease;
+}
+.proveedor-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+.proveedor-card:hover:before { transform: scaleX(1); }
+.card-icon-container {
+    width: 100px; height: 100px; margin: 0 auto 20px; display: flex; align-items: center;
+    justify-content: center; background: linear-gradient(135deg, rgba(67,97,238,0.1), rgba(63,55,201,0.1));
+    border-radius: 50%; transition: all 0.3s ease;
+}
+.proveedor-card:hover .card-icon-container { transform: scale(1.1) rotate(5deg); }
+.card-icon { font-size: 3.5rem; line-height: 1; transition: transform 0.3s ease; }
+.proveedor-card:hover .card-icon { transform: scale(1.2); }
+.proveedor-card h3 { font-size: 1.6rem; font-weight: 600; margin-bottom: 15px; }
+.card-description { color: #8e9aaf; font-size: 1rem; line-height: 1.6; margin-bottom: 20px; }
+
+/* Pantalla de detalle (Formulario/Directorio) */
+.proveedores-detail-screen { min-height: 100%; padding: 20px; background-color: #f8f9fa; box-sizing: border-box; }
+.submenu-proveedores { display: flex; justify-content: flex-end; margin-bottom: 20px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+.back-button {
+    background: #c1defa !important; color: #2b2d42 !important; border: none; padding: 10px 20px; border-radius: 4px;
+    font-weight: 500; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px;
+}
+.back-button:hover { background: #7cc1fa !important; transform: translateY(-2px); }
+#proveedoresContent { max-width: 1200px; margin: 0 auto; }
+
+/* Estilos de Formulario y Tabla */
+.form-proveedor, .directorio-container {
+    background-color: #fff; padding: 25px 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.form-proveedor h3, .directorio-header h2 { text-align: center; color: #2b2d42; margin-bottom: 30px; font-weight: 600; }
+.form-row { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 18px; }
+.form-group { flex: 1; min-width: calc(50% - 10px); }
+.form-group.full-width { min-width: 100%; }
+.form-group label { display: block; color: #4a4e69; margin-bottom: 8px; font-size: 0.9em; font-weight: 600; }
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 12px; border: 1px solid #ced4da; border-radius: 5px; font-size: 1em;
+    color: #4a4e69; box-sizing: border-box; transition: border-color 0.3s ease;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #4361ee; outline: none; }
+.action-buttons {
+    display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px;
+    border-top: 1px solid #eee; padding-top: 20px;
+}
+
+/* Botones genéricos */
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; font-weight: 500; line-height: 1.5; color: white;
+    text-align: center; text-decoration: none; vertical-align: middle; cursor: pointer; user-select: none;
+    background-color: transparent; border: none; padding: 0.7rem 1.2rem; font-size: 0.9rem;
+    border-radius: 0.25rem; transition: all 0.2s ease-in-out; gap: 0.5rem;
+}
+.btn-primary { background-color: #4361ee; }
+.btn-primary:hover { background-color: #3a56d4; transform: translateY(-1px); }
+.btn-secondary { background-color: #6c757d; }
+.btn-secondary:hover { background-color: #5a6268; transform: translateY(-1px); }
+.btn-success { background-color: #28a745; }
+.btn-success:hover { background-color: #218838; transform: translateY(-1px); }
+.btn-danger { background-color: #dc3545; }
+.btn-danger:hover { background-color: #c82333; transform: translateY(-1px); }
+.btn-sm { padding: 0.25rem 0.5rem; font-size: 0.8rem; }
+
+/* Directorio */
+.directorio-filters { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
+.table-responsive { overflow-x: auto; }
+.proveedores-table { width: 100%; border-collapse: collapse; }
+.proveedores-table th, .proveedores-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #dee2e6; }
+.proveedores-table th { background-color: #f8f9fa; font-weight: 600; }
+.proveedores-table .actions-cell { text-align: right; white-space: nowrap; }
+
+@media (max-width: 768px) {
+    .form-group { min-width: 100%; }
+    .action-buttons { flex-direction: column; }
+    .btn, .back-button { width: 100%; }
+}
+</style>
+
+<script>
+// Usamos window.ProveedoresModule para evitar errores de redeclaración al cargar el módulo varias veces.
+window.ProveedoresModule = {
+    // Datos de ejemplo. En una aplicación real, vendrían de una base de datos.
+    proveedoresData: [
+        { id: 'PROV001', nombre: 'Ferretería El Tornillo Feliz', nit: '900.123.456-7', direccion: 'Calle Falsa 123', ciudad: 'Bogotá D.C.', telefono: '3101234567', email: 'ventas@tornillofeliz.com', contacto: 'Carlos Pérez', categoria: 'Herramientas', notas: 'Proveedor confiable para tornillería y herramienta manual.' },
+        { id: 'PROV002', nombre: 'Tuberías y Accesorios S.A.S', nit: '800.987.654-3', direccion: 'Avenida Siempre Viva 742', ciudad: 'Medellín', telefono: '3209876543', email: 'contacto@tuberiasyas.co', contacto: 'Ana García', categoria: 'Materiales', notas: 'Especialistas en tubería de PVC y acero al carbono.' }
+    ],
+    // Variable para controlar si estamos editando
+    editingProviderId: null,
+
+    // Función para cambiar de la pantalla principal a la de detalle
+    showDetailScreen: function() {
+        document.querySelector('.proveedores-main-screen').style.display = 'none';
+        document.querySelector('.proveedores-detail-screen').style.display = 'block';
+    },
+    
+    // Carga el formulario para registrar un nuevo proveedor
+    loadRegistrarProveedor: function(providerId = null) {
+        this.showDetailScreen();
+        this.editingProviderId = providerId;
+        
+        let proveedor = {};
+        let titulo = "Registrar Nuevo Proveedor";
+        let botonTexto = "Guardar Proveedor";
+
+        if (providerId) {
+            proveedor = this.proveedoresData.find(p => p.id === providerId) || {};
+            titulo = "Editar Proveedor";
+            botonTexto = "Actualizar Cambios";
+        }
+
+        document.getElementById('proveedoresContent').innerHTML = `
+            <form class="form-proveedor" id="formProveedor">
+                <h3>${titulo}</h3>
+                <div class="form-row">
+                    <div class="form-group"><label for="provNombre">Nombre o Razón Social</label><input type="text" id="provNombre" value="${proveedor.nombre || ''}" required></div>
+                    <div class="form-group"><label for="provNit">NIT o Cédula</label><input type="text" id="provNit" value="${proveedor.nit || ''}" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="provDireccion">Dirección</label><input type="text" id="provDireccion" value="${proveedor.direccion || ''}"></div>
+                    <div class="form-group"><label for="provCiudad">Ciudad</label><input type="text" id="provCiudad" value="${proveedor.ciudad || ''}"></div>
+                </div>
+                 <div class="form-row">
+                    <div class="form-group"><label for="provTelefono">Teléfono</label><input type="text" id="provTelefono" value="${proveedor.telefono || ''}"></div>
+                    <div class="form-group"><label for="provEmail">Email</label><input type="email" id="provEmail" value="${proveedor.email || ''}"></div>
+                </div>
+                 <div class="form-row">
+                    <div class="form-group"><label for="provContacto">Nombre de Contacto</label><input type="text" id="provContacto" value="${proveedor.contacto || ''}"></div>
+                    <div class="form-group"><label for="provCategoria">Categoría</label>
+                        <select id="provCategoria">
+                            <option value="">Seleccione...</option>
+                            <option value="Materiales" ${proveedor.categoria === 'Materiales' ? 'selected' : ''}>Materiales de Construcción</option>
+                            <option value="Herramientas" ${proveedor.categoria === 'Herramientas' ? 'selected' : ''}>Herramientas</option>
+                            <option value="Servicios" ${proveedor.categoria === 'Servicios' ? 'selected' : ''}>Servicios</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row"><div class="form-group full-width"><label for="provNotas">Notas</label><textarea id="provNotas">${proveedor.notas || ''}</textarea></div></div>
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="ProveedoresModule.backToMain()">Cancelar</button>
+                    <button type="submit" class="btn btn-success">${botonTexto}</button>
+                </div>
+            </form>
+        `;
+
+        document.getElementById('formProveedor').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.saveProveedor();
+        });
+    },
+
+    // Carga la tabla con el directorio de proveedores
+    loadDirectorioProveedores: function() {
+        this.showDetailScreen();
+        this.editingProviderId = null; // Reseteamos por si acaso
+        
+        const tableRows = this.proveedoresData.map(prov => `
+            <tr>
+                <td>${prov.nombre}</td>
+                <td>${prov.nit}</td>
+                <td>${prov.contacto || 'N/A'}</td>
+                <td>${prov.telefono || 'N/A'}</td>
+                <td>${prov.categoria || 'N/A'}</td>
+                <td class="actions-cell">
+                    <button class="btn btn-sm btn-primary" onclick="ProveedoresModule.loadRegistrarProveedor('${prov.id}')" title="Ver / Editar"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger" onclick="ProveedoresModule.deleteProveedor('${prov.id}')" title="Eliminar"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+        `).join('');
+
+        document.getElementById('proveedoresContent').innerHTML = `
+            <div class="directorio-container">
+                <div class="directorio-header"><h2>Directorio de Proveedores</h2></div>
+                <div class="table-responsive">
+                    <table class="proveedores-table">
+                        <thead><tr><th>Nombre</th><th>NIT</th><th>Contacto</th><th>Teléfono</th><th>Categoría</th><th class="actions-cell">Acciones</th></tr></thead>
+                        <tbody>${tableRows}</tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+    },
+
+    // Vuelve a la pantalla principal del módulo
+    backToMain: function() {
+        this.editingProviderId = null;
+        document.querySelector('.proveedores-main-screen').style.display = 'block';
+        document.querySelector('.proveedores-detail-screen').style.display = 'none';
+    },
+
+    // Guarda o actualiza un proveedor
+    saveProveedor: function() {
+        const nombre = document.getElementById('provNombre').value;
+        const nit = document.getElementById('provNit').value;
+        if (!nombre || !nit) {
+            alert('El Nombre y el NIT son campos obligatorios.');
+            return;
+        }
+
+        const proveedorData = {
+            nombre, nit,
+            direccion: document.getElementById('provDireccion').value,
+            ciudad: document.getElementById('provCiudad').value,
+            telefono: document.getElementById('provTelefono').value,
+            email: document.getElementById('provEmail').value,
+            contacto: document.getElementById('provContacto').value,
+            categoria: document.getElementById('provCategoria').value,
+            notas: document.getElementById('provNotas').value,
+        };
+
+        if (this.editingProviderId) {
+            // Actualizar proveedor existente
+            const index = this.proveedoresData.findIndex(p => p.id === this.editingProviderId);
+            if (index > -1) {
+                this.proveedoresData[index] = { ...this.proveedoresData[index], ...proveedorData };
+                alert('Proveedor actualizado exitosamente.');
+            }
+        } else {
+            // Crear nuevo proveedor
+            proveedorData.id = 'PROV' + String(Date.now()).slice(-4); // ID único simple
+            this.proveedoresData.push(proveedorData);
+            alert('Proveedor registrado exitosamente.');
+        }
+
+        this.editingProviderId = null;
+        this.loadDirectorioProveedores(); // Refrescar y mostrar el directorio
+    },
+
+    // Elimina un proveedor
+    deleteProveedor: function(providerId) {
+        const proveedor = this.proveedoresData.find(p => p.id === providerId);
+        if (confirm(`¿Está seguro de que desea eliminar a "${proveedor.nombre}"? Esta acción no se puede deshacer.`)) {
+            this.proveedoresData = this.proveedoresData.filter(p => p.id !== providerId);
+            alert('Proveedor eliminado.');
+            this.loadDirectorioProveedores(); // Recargar la tabla
+        }
+    }
+};
+</script>
