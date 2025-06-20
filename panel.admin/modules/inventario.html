@@ -865,37 +865,46 @@ function restaurarInputCantidad() {
     cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()" disabled>`;
 }
 
-// Actualizar la función configurarEventos() para manejar correctamente las consultas
+// Mejorar la conexión con el inventario global
 function configurarEventos() {
-    const inputCodigo = document.getElementById('inputCodigo');
-    const inputDesc = document.getElementById('inputDescripcion');
-
-    inputCodigo.addEventListener('input', function() {
-        const codigo = this.value;
-        // Busca en tuberiasDisponibles (inventario completo) PRIMERO
-        const productoInventario = tuberiasDisponibles.find(item => item.codigo === codigo);
-        
-        if (productoInventario) {
-            // Verifica si existe en almacén (InventarioCompartido)
-            const productoAlmacen = InventarioCompartido.buscarProducto(codigo);
-            
-            document.getElementById('inputDescripcion').value = productoInventario.descripcion;
-            document.getElementById('inputUbicacion').value = productoAlmacen?.ubicacion || 'Bogotá';
-            document.getElementById('inputCantidad').value = productoAlmacen?.cantidad || 0;
-            document.getElementById('inputValor').value = productoAlmacen?.valor || 0;
-            
-            itemActual = {
-                ...productoInventario,
-                cantidad: productoAlmacen?.cantidad || 0,
-                valor: productoAlmacen?.valor || 0,
-                ubicacion: productoAlmacen?.ubicacion || 'Bogotá'
-            };
-            
-            actualizarGrafica();
-        } else {
-            limpiarCampos();
-        }
-    });
+  const inputCodigo = document.getElementById('inputCodigo');
+  const inputDesc = document.getElementById('inputDescripcion');
+  
+  // Usar el inventario global como fuente de verdad
+  inputCodigo.addEventListener('input', function() {
+    const producto = InventarioCompartido.buscarProducto(this.value);
+    if (producto) {
+      inputDesc.value = producto.descripcion;
+      document.getElementById('inputCantidad').value = producto.cantidad || 0;
+      document.getElementById('inputValor').value = producto.valor || 0;
+      document.getElementById('inputUbicacion').value = producto.ubicacion || 'Bogotá';
+      itemActual = {...producto};
+      actualizarGrafica();
+    }
+  });
+  
+  inputDesc.addEventListener('input', function() {
+    const producto = InventarioCompartido.buscarProducto(this.value);
+    if (producto) {
+      inputCodigo.value = producto.codigo;
+      document.getElementById('inputCantidad').value = producto.cantidad || 0;
+      document.getElementById('inputValor').value = producto.valor || 0;
+      document.getElementById('inputUbicacion').value = producto.ubicacion || 'Bogotá';
+      itemActual = {...producto};
+      actualizarGrafica();
+    }
+  });
+  
+  // Escuchar cambios en el inventario global
+  window.addEventListener('inventarioActualizado', () => {
+    if (itemActual) {
+      const productoActualizado = InventarioCompartido.buscarProducto(itemActual.codigo);
+      if (productoActualizado) {
+        itemActual = {...productoActualizado};
+        actualizarGrafica();
+      }
+    }
+  });
 }
 
 

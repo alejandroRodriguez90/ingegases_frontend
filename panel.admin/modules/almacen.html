@@ -855,23 +855,55 @@
             // Aquí puedes añadir otros listeners que necesites para el módulo
         },
 
-        // FUNCIÓN NUEVA: Lógica de autocompletado aislada
-        handleAutocomplete: function(codigoInput) {
-            const descripcionInput = document.getElementById('productoDescripcion');
-            const valorInput = document.getElementById('productoValor');
-            const codigo = codigoInput.value.trim().toUpperCase();
-            
-            // Siempre buscamos en la fuente de verdad: InventarioCompartido
-            const producto = InventarioCompartido.buscarProducto(codigo);
-            
-            if (producto) {
-                descripcionInput.value = producto.descripcion;
-                if (valorInput) valorInput.value = producto.valor || '0.00';
+        // Mejorar el autocompletado en AlmacenModule
+        handleAutocomplete: function(inputElement) {
+        const esCodigo = inputElement.id === 'productoCodigo';
+        const otroCampo = esCodigo 
+            ? document.getElementById('productoDescripcion') 
+            : document.getElementById('productoCodigo');
+        
+        const valor = inputElement.value.trim();
+        if (valor.length < 2) return;
+        
+        const resultados = esCodigo
+            ? InventarioCompartido.obtenerSugerencias(valor)
+            : InventarioCompartido.obtenerSugerencias(valor);
+        
+        if (resultados.length === 1) {
+            const producto = resultados[0];
+            if (esCodigo) {
+            otroCampo.value = producto.descripcion;
             } else {
-                // Si el código no coincide exactamente, limpiamos los campos
-                descripcionInput.value = '';
-                if (valorInput) valorInput.value = '';
+            otroCampo.value = producto.codigo;
             }
+            
+            // Actualizar otros campos si es necesario
+            document.getElementById('productoValor').value = producto.valor || '';
+        } else if (resultados.length > 1) {
+            // Mostrar sugerencias en un dropdown
+            mostrarSugerencias(resultados, inputElement, esCodigo);
+        }
+        },
+        mostrarSugerencias: function(productos, inputElement, esCodigo) {
+        // Implementar un dropdown con las sugerencias
+        const dropdown = document.createElement('div');
+        dropdown.className = 'autocomplete-dropdown';
+        
+        productos.forEach(producto => {
+            const item = document.createElement('div');
+            item.textContent = esCodigo ? producto.codigo : producto.descripcion;
+            item.onclick = () => {
+            inputElement.value = esCodigo ? producto.codigo : producto.descripcion;
+            const otroCampo = esCodigo 
+                ? document.getElementById('productoDescripcion') 
+                : document.getElementById('productoCodigo');
+            otroCampo.value = esCodigo ? producto.descripcion : producto.codigo;
+            dropdown.remove();
+            };
+            dropdown.appendChild(item);
+        });
+        
+        inputElement.parentNode.appendChild(dropdown);
         },
 
 
