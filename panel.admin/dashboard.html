@@ -117,76 +117,128 @@
     </div>
 
     <!-- Scripts base -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/inventario-global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>º
     <script>
-        // Cargador dinámico de módulos
-        async function loadModule(moduleName) {
-            try {
-                // Mostrar loader
-                document.getElementById('dynamicContent').innerHTML = `
-                    <div class="module-loader">
-                        <div class="loader-spinner"></div>
-                        <p>Cargando módulo ${moduleName}...</p>
-                    </div>
-                `;
-                
-                // Cargar el módulo
-                const response = await fetch(`modules/${moduleName}.html`);
-                if (!response.ok) throw new Error('Módulo no encontrado');
-                
-                const html = await response.text();
-                document.getElementById('dynamicContent').innerHTML = html;
-                
-                // Ejecutar scripts incrustados en el módulo
-                const scripts = Array.from(document.getElementById('dynamicContent').querySelectorAll('script'));
-                
-                for (const script of scripts) {
-                    try {
-                        if (script.src) {
-                            await loadScript(script.src);
-                        } else {
-                            const newScript = document.createElement('script');
-                            newScript.textContent = script.textContent;
-                            document.body.appendChild(newScript);
-                        }
-                    } catch (error) {
-                        console.error(`Error al cargar script: ${error}`);
-                    }
-                }
-                
-            } catch (error) {
-                console.error('Error al cargar el módulo:', error);
-                document.getElementById('dynamicContent').innerHTML = `
-                    <div class="error-message">
-                        <h2><i class="fas fa-exclamation-triangle"></i> Error al cargar el módulo</h2>
-                        <p>No se pudo cargar el módulo ${moduleName}. Por favor intente nuevamente.</p>
-                        <button onclick="loadModule('${moduleName}')" class="retry-btn">
-                            <i class="fas fa-sync-alt"></i> Reintentar
-                        </button>
-                    </div>
-                `;
-            }
-        }
-        
+
         // Función para cargar scripts externos
         function loadScript(src) {
             return new Promise((resolve, reject) => {
                 const script = document.createElement('script');
                 script.src = src;
                 script.onload = resolve;
-                script.onerror = reject;
+                script.onerror = () => reject(new Error(`Error al cargar script: ${src}`));
                 document.body.appendChild(script);
             });
         }
-        
-        // Configuración inicial - No cargar módulo por defecto
-        document.addEventListener('DOMContentLoaded', () => {
-            // Mostrar pantalla de bienvenida inicialmente
-            console.log('Dashboard cargado correctamente');
+
+        // Cargador dinámico de módulos mejorado
+        async function loadModule(moduleName) {
+            try {
+                // Mostrar loader
+                document.getElementById('dynamicContent').innerHTML = `
+                <div class="module-loader">
+                    <div class="loader-spinner"></div>
+                    <p>Cargando módulo ${moduleName}...</p>
+                </div>
+                `;
+
+                // 1. Asegurar que inventario-global.js esté cargado
+                if (typeof InventarioCompartido === 'undefined') {
+                try {
+                    await loadScript('js/inventario-global.js');
+                    
+                    // Esperar a que el inventario se inicialice
+                    await new Promise((resolve, reject) => {
+                    const maxAttempts = 10;
+                    let attempts = 0;
+                    
+                    const checkReady = setInterval(() => {
+                        attempts++;
+                        if (typeof InventarioCompartido !== 'undefined' && InventarioCompartido.productos) {
+                        clearInterval(checkReady);
+                        resolve();
+                        } else if (attempts >= maxAttempts) {
+                        clearInterval(checkReady);
+                        reject(new Error('Tiempo de espera agotado para inicializar InventarioCompartido'));
+                        }
+                    }, 100);
+                    });
+                } catch (error) {
+                    console.error('Error al cargar inventario-global.js:', error);
+                    throw new Error('No se pudo cargar el módulo de inventario. Por favor recargue la página.');
+                }
+        }
+
+            // 2. Cargar el HTML del módulo
+            const response = await fetch(`modules/${moduleName}.html`);
+                if (!response.ok) throw new Error('Módulo no encontrado');
+                
+                const html = await response.text();
+                document.getElementById('dynamicContent').innerHTML = html;
+
+                // 3. Procesar scripts incrustados en el módulo
+                const scripts = Array.from(document.getElementById('dynamicContent').querySelectorAll('script'));
             
-            // Opcional: Puedes cargar un módulo por defecto aquí si lo deseas
-            // loadModule('inventario');
+            for (const script of scripts) {
+                try {
+                    if (script.src) {
+                    // Si es un script externo, cargarlo
+                    await loadScript(script.src);
+                    } else {
+                    // Si es script inline, ejecutarlo
+                    const newScript = document.createElement('script');
+                    newScript.textContent = script.textContent;
+                    
+                    // Agregar atributos para mantener el contexto
+                    if (script.type) newScript.type = script.type;
+                    if (script.async) newScript.async = script.async;
+                    if (script.defer) newScript.defer = script.defer;
+                    
+                    document.body.appendChild(newScript);
+                    }
+                } catch (error) {
+                    console.error(`Error al cargar script: ${error}`);
+                    // Continuar con otros scripts aunque falle uno
+                }
+            }
+
+            // 4. Disparar evento de módulo cargado
+            window.dispatchEvent(new CustomEvent('moduleLoaded', {
+            detail: { moduleName }
+            }));
+
+        } catch (error) {
+            console.error('Error al cargar el módulo:', error);
+            document.getElementById('dynamicContent').innerHTML = `
+            <div class="error-message">
+                <h2><i class="fas fa-exclamation-triangle"></i> Error al cargar el módulo</h2>
+                <p>No se pudo cargar el módulo ${moduleName}. ${error.message}</p>
+                <div class="error-details" style="display: none;">${error.stack || 'No hay detalles disponibles'}</div>
+                <button onclick="loadModule('${moduleName}')" class="retry-btn">
+                <i class="fas fa-sync-alt"></i> Reintentar
+                </button>
+                <button onclick="document.querySelector('.error-details').style.display='block'" 
+                        class="retry-btn" style="background-color: #6c757d; margin-left: 10px;">
+                <i class="fas fa-bug"></i> Ver detalles
+                </button>
+            </div>
+            `;
+        }
+        }
+
+        // Configuración inicial
+        document.addEventListener('DOMContentLoaded', () => {
+        console.log('Dashboard cargado correctamente');
+        
+        // Opcional: Verificar estado del inventario cada 5 segundos
+        setInterval(() => {
+            if (typeof InventarioCompartido === 'undefined') {
+            console.warn('InventarioCompartido no está disponible');
+            }
+        }, 5000);
         });
+        
     </script>
 </body>
 </html>

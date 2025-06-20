@@ -98,22 +98,3 @@
 +----------+-----------------------------------------+
 
 
-1. Estructura de archivos recomendada:
-
-panel-admin/
-├── css/
-│   ├── main.css         # Estilos generales
-│   ├── modules.css      # Estilos específicos de módulos
-│   └── responsive.css   # Media queries
-├── js/
-│   ├── main.js          # Lógica principal
-│   ├── moduleManager.js # Gestión de módulos
-│   └── modules/         # JS específico por módulo
-│       ├── inventario.js
-│       ├── proyectos.js
-│       └── ...
-├── modules/             # HTML de cada módulo
-│   ├── inventario.html
-│   ├── proyectos.html
-│   └── ...
-└── dashboard.html       # Archivo principal

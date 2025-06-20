@@ -585,7 +585,6 @@
 
 
     <script>
-
 // ==========================================================================
 // FUNCIONES DE NAVEGACIÓN (ACTUALIZADAS)
 // ==========================================================================
@@ -743,8 +742,34 @@ let itemActual = null;
 let chart = null;
 const ubicacionesDisponibles = ["Bogotá", "Cali"];
 
-// Funciones principales
+
+// ==========================================================================
+// INVENTARIO TUBERIA - FUNCIONES AUXILIARES
+// ==========================================================================
+function generarFilasTuberia(productos) {
+    return productos.map(producto => `
+        <tr>
+            <td>${producto.codigo}</td>
+            <td>${producto.descripcion}</td>
+            <td>${producto.ubicacion || 'N/A'}</td>
+            <td>${producto.cantidad}</td>
+            <td>${producto.valor ? '$' + producto.valor.toFixed(2) : 'N/A'}</td>
+        </tr>
+    `).join('');
+}
+
+
+// ==========================================================================
+// FUNCIÓN PRINCIPAL PARA CARGAR TUBERÍA
+// ==========================================================================
+
+
 function loadTuberia() {
+    
+    // Obtener productos de tubería del módulo compartido
+    const productosTuberia = InventarioCompartido.obtenerProductos()
+        .filter(p => p.descripcion.includes('Tubería'));
+
     const tableContent = `
         <div class="table-title-container">
             <div class="section-title vertical-title">Tubería</div>
@@ -756,7 +781,7 @@ function loadTuberia() {
                             <th>Descripción</th>
                             <th>Ubicación</th>
                             <th>Cantidad</th>
-                            <th>Valor Unitario</th>
+                            <th>Valor</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -778,17 +803,24 @@ function loadTuberia() {
     configurarEventos();
 }
 
+
 function generarFilaConsulta() {
     return `
         <tr class="fila-consulta">
-            <td id="codigoGenerado"></td>
+            <td>
+                <input type="text" id="inputCodigo" placeholder="Código" list="listaCodigosTuberias" autocomplete="off">
+                <datalist id="listaCodigosTuberias">
+                    ${tuberiasDisponibles.map(item => 
+                        `<option value="${item.codigo}" data-descripcion="${item.descripcion}">${item.descripcion}</option>`).join('')}
+                </datalist>
+            </td>
             <td>
                 <input type="text" id="inputDescripcion" 
                     placeholder="Buscar tubería..." 
                     list="listaTuberias" autocomplete="off">
                 <datalist id="listaTuberias">
                     ${tuberiasDisponibles.map(item => 
-                        `<option value="${item.descripcion}" data-codigo="${item.codigo}">${item.descripcion}</option>`).join('')}
+                        `<option value="${item.descripcion}" data-codigo="${item.codigo}">${item.codigo}</option>`).join('')}
                 </datalist>
             </td>
             <td>
@@ -798,14 +830,15 @@ function generarFilaConsulta() {
                 </select>
             </td>
             <td id="cantidadCell">
-                <input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()">
+                <input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()" disabled>
             </td>
             <td>
-                <input type="number" id="inputValor" placeholder="Valor" min="0" step="0.01">
+                <input type="number" id="inputValor" placeholder="Valor" min="0" step="0.01" disabled>
             </td>
         </tr>
     `;
 }
+
 
 function actualizarEstadoStock() {
     const cantidadInput = document.getElementById('inputCantidad');
@@ -829,57 +862,42 @@ function actualizarEstadoStock() {
 
 function restaurarInputCantidad() {
     const cantidadCell = document.getElementById('cantidadCell');
-    cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()">`;
-    document.getElementById('inputCantidad').focus();
+    cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()" disabled>`;
 }
 
+// Actualizar la función configurarEventos() para manejar correctamente las consultas
 function configurarEventos() {
+    const inputCodigo = document.getElementById('inputCodigo');
     const inputDesc = document.getElementById('inputDescripcion');
-    
-    inputDesc.addEventListener('input', function() {
-        const descripcion = this.value;
-        const selectedOption = document.querySelector(`#listaTuberias option[value="${descripcion}"]`);
-        const codigo = selectedOption ? selectedOption.getAttribute('data-codigo') : '';
+
+    inputCodigo.addEventListener('input', function() {
+        const codigo = this.value;
+        // Busca en tuberiasDisponibles (inventario completo) PRIMERO
+        const productoInventario = tuberiasDisponibles.find(item => item.codigo === codigo);
         
-        document.getElementById('codigoGenerado').textContent = codigo || '';
-        
-        if (codigo) {
-            itemActual = {
-                codigo: codigo,
-                descripcion: descripcion,
-                ubicacion: document.getElementById('inputUbicacion').value || 'Bogotá',
-                cantidad: parseFloat(document.getElementById('inputCantidad').value) || 0,
-                valor: parseFloat(document.getElementById('inputValor').value) || 0
-            };
+        if (productoInventario) {
+            // Verifica si existe en almacén (InventarioCompartido)
+            const productoAlmacen = InventarioCompartido.buscarProducto(codigo);
             
-            // Restaurar input de cantidad
-            const cantidadCell = document.getElementById('cantidadCell');
-            cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="${itemActual.cantidad}" onchange="actualizarEstadoStock()">`;
+            document.getElementById('inputDescripcion').value = productoInventario.descripcion;
+            document.getElementById('inputUbicacion').value = productoAlmacen?.ubicacion || 'Bogotá';
+            document.getElementById('inputCantidad').value = productoAlmacen?.cantidad || 0;
+            document.getElementById('inputValor').value = productoAlmacen?.valor || 0;
+            
+            itemActual = {
+                ...productoInventario,
+                cantidad: productoAlmacen?.cantidad || 0,
+                valor: productoAlmacen?.valor || 0,
+                ubicacion: productoAlmacen?.ubicacion || 'Bogotá'
+            };
             
             actualizarGrafica();
         } else {
-            // Si no hay item seleccionado válido, ocultar gráfica
-            document.getElementById('tuberiaChart').style.display = 'none';
-            if (chart) {
-                chart.destroy();
-                chart = null;
-            }
+            limpiarCampos();
         }
     });
-
-    ['inputUbicacion', 'inputValor'].forEach(id => {
-        document.getElementById(id).addEventListener('change', function() {
-            if (itemActual) {
-                itemActual.ubicacion = document.getElementById('inputUbicacion').value;
-                itemActual.valor = parseFloat(document.getElementById('inputValor').value) || 0;
-                actualizarGrafica();
-            }
-        });
-    });
-    
-    document.getElementById('btnExportar').addEventListener('click', exportarAExcel);
-    actualizarEstadoStock();
 }
+
 
 function actualizarGrafica() {
     const chartContainer = document.querySelector('.chart-container');
@@ -991,9 +1009,6 @@ function exportarAExcel() {
 
 // ================================================================================
 // INVENTARIO ACCESORIOS
-// ================================================================================
-// ================================================================================
-// INVENTARIO ACCESORIOS - NUEVA ESTRUCTURA
 // ================================================================================
 
 const accesoriosData = {
@@ -1327,6 +1342,8 @@ let chartAccesorios;
 
 // Funciones para accesorios
 function loadAccesorios() {
+    const productosAccesorios = InventarioCompartido.obtenerProductos()
+        .filter(p => !p.descripcion.includes('Tubería'));
     // Actualizar pestaña activa
     document.getElementById('accesoriosTab').classList.add('active');
     document.getElementById('tuberiaTab').classList.remove('active');
@@ -1374,14 +1391,20 @@ function loadAccesorios() {
 function generarFilaConsultaAccesorios() {
     return `
         <tr class="fila-consulta">
-            <td id="codigoGeneradoAccesorio"></td>
+            <td>
+                <input type="text" id="inputCodigoAccesorio" placeholder="Código" list="listaCodigosAccesorios" autocomplete="off">
+                <datalist id="listaCodigosAccesorios">
+                    ${descripcionesDisponiblesAccesorios.map(desc => 
+                        `<option value="${descripcionToCodigoAccesorios[desc]}" data-descripcion="${desc}">${desc}</option>`).join('')}
+                </datalist>
+            </td>
             <td>
                 <input type="text" id="inputDescripcionAccesorio" 
                     placeholder="Buscar accesorio..." 
                     list="listaAccesorios" autocomplete="off">
                 <datalist id="listaAccesorios">
                     ${descripcionesDisponiblesAccesorios.map(desc => 
-                        `<option value="${desc}">${desc}</option>`).join('')}
+                        `<option value="${desc}" data-codigo="${descripcionToCodigoAccesorios[desc]}">${descripcionToCodigoAccesorios[desc]}</option>`).join('')}
                 </datalist>
             </td>
             <td>
@@ -1392,11 +1415,11 @@ function generarFilaConsultaAccesorios() {
             </td>
             <td id="cantidadCellAccesorio" style="width: 120px;">
                 <div class="cantidad-container">
-                    <input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()">
+                    <input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()" disabled>
                 </div>
             </td>
             <td>
-                <input type="number" id="inputValorAccesorio" placeholder="Valor" min="0" step="0.01">
+                <input type="number" id="inputValorAccesorio" placeholder="Valor" min="0" step="0.01" disabled>
             </td>
         </tr>
     `;
@@ -1430,46 +1453,77 @@ function actualizarEstadoStockAccesorios() {
 
 function restaurarInputCantidadAccesorios() {
     const cantidadCell = document.getElementById('cantidadCellAccesorio');
-    cantidadCell.innerHTML = `<input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()">`;
-    document.getElementById('inputCantidadAccesorio').focus();
+    cantidadCell.innerHTML = `<input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()" disabled>`;
 }
 
-        function configurarEventosAccesorios() {
-            const inputDesc = document.getElementById('inputDescripcionAccesorio');
+function configurarEventosAccesorios() {
+    const inputCodigo = document.getElementById('inputCodigoAccesorio');
+    const inputDesc = document.getElementById('inputDescripcionAccesorio');
+    
+    // Evento para cuando se escribe en el campo de código
+    inputCodigo.addEventListener('input', function() {
+        const codigo = this.value;
+        const selectedOption = document.querySelector(`#listaCodigosAccesorios option[value="${codigo}"]`);
+        const descripcion = selectedOption ? selectedOption.getAttribute('data-descripcion') : '';
+        
+        if (descripcion) {
+            document.getElementById('inputDescripcionAccesorio').value = descripcion;
+            itemActualAccesorio = {
+                codigo: codigo,
+                descripcion: descripcion,
+                ubicacion: document.getElementById('inputUbicacionAccesorio').value || 'Bogotá',
+                cantidad: 0,
+                valor: parseFloat(document.getElementById('inputValorAccesorio').value) || 0
+            };
             
-            inputDesc.addEventListener('input', function() {
-                const cantidadCell = document.getElementById('cantidadCellAccesorio');
-                cantidadCell.innerHTML = `<input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()">`;
-                
-                const descripcion = this.value;
-                const codigo = descripcionToCodigoAccesorios[descripcion];
-                document.getElementById('codigoGeneradoAccesorio').textContent = codigo || '';
-                
-                if (codigo) {
-                    itemActualAccesorio = {
-                        codigo: codigo,
-                        descripcion: descripcion,
-                        ubicacion: document.getElementById('inputUbicacionAccesorio').value || 'Bogotá',
-                        cantidad: 0,
-                        valor: parseFloat(document.getElementById('inputValorAccesorio').value) || 0
-                    };
-                    actualizarGraficaAccesorios();
-                }
-            });
-
-            ['inputUbicacionAccesorio', 'inputValorAccesorio'].forEach(id => {
-                document.getElementById(id).addEventListener('change', function() {
-                    if (itemActualAccesorio) {
-                        itemActualAccesorio.ubicacion = document.getElementById('inputUbicacionAccesorio').value;
-                        itemActualAccesorio.valor = parseFloat(document.getElementById('inputValorAccesorio').value) || 0;
-                        actualizarGraficaAccesorios();
-                    }
-                });
-            });
-            
-            document.getElementById('btnExportarAccesorios').addEventListener('click', exportarAExcelAccesorios);
-            actualizarEstadoStockAccesorios();
+            actualizarGraficaAccesorios();
+        } else {
+            document.getElementById('inputDescripcionAccesorio').value = '';
+            if (chartAccesorios) {
+                chartAccesorios.destroy();
+                chartAccesorios = null;
+            }
         }
+    });
+    
+    // Evento para cuando se escribe en el campo de descripción
+    inputDesc.addEventListener('input', function() {
+        const descripcion = this.value;
+        const codigo = descripcionToCodigoAccesorios[descripcion];
+        
+        document.getElementById('inputCodigoAccesorio').value = codigo || '';
+        
+        if (codigo) {
+            itemActualAccesorio = {
+                codigo: codigo,
+                descripcion: descripcion,
+                ubicacion: document.getElementById('inputUbicacionAccesorio').value || 'Bogotá',
+                cantidad: 0,
+                valor: parseFloat(document.getElementById('inputValorAccesorio').value) || 0
+            };
+            
+            actualizarGraficaAccesorios();
+        } else {
+            if (chartAccesorios) {
+                chartAccesorios.destroy();
+                chartAccesorios = null;
+            }
+        }
+    });
+
+    ['inputUbicacionAccesorio', 'inputValorAccesorio'].forEach(id => {
+        document.getElementById(id).addEventListener('change', function() {
+            if (itemActualAccesorio) {
+                itemActualAccesorio.ubicacion = document.getElementById('inputUbicacionAccesorio').value;
+                itemActualAccesorio.valor = parseFloat(document.getElementById('inputValorAccesorio').value) || 0;
+                actualizarGraficaAccesorios();
+            }
+        });
+    });
+    
+    document.getElementById('btnExportarAccesorios').addEventListener('click', exportarAExcelAccesorios);
+    actualizarEstadoStockAccesorios();
+}
 
         function actualizarGraficaAccesorios() {
             if (!itemActualAccesorio) {
@@ -1579,11 +1633,132 @@ function restaurarInputCantidadAccesorios() {
             document.body.removeChild(link);
         }
 
-        // Inicializar módulo mostrando la pantalla principal
+        // MODULO COMPARTIDO DE ALMACEN Y INVENTARIO
+        window.InventarioCompartido = {
+            productos: [],
+            
+            init: function() {
+                const datosGuardados = localStorage.getItem('inventarioCompartido');
+                if (datosGuardados) {
+                    this.productos = JSON.parse(datosGuardados);
+                } else {
+                    this.inicializarDatosPorDefecto();
+                }
+                
+                // Escuchar eventos de actualización
+                window.addEventListener('inventarioActualizado', () => {
+                    this.actualizarDesdeLocalStorage();
+                    if (document.getElementById('inventarioContent')) {
+                        // Recargar la vista actual
+                        if (document.getElementById('tuberiaTab').classList.contains('active')) {
+                            loadTuberia();
+                        } else {
+                            loadAccesorios();
+                        }
+                    }
+                });
+            },
+
+            actualizarDesdeLocalStorage: function() {
+                const datosGuardados = localStorage.getItem('inventarioCompartido');
+                if (datosGuardados) {
+                    this.productos = JSON.parse(datosGuardados);
+                }
+            },
+            
+            inicializarDatosPorDefecto: function() {
+                // Tuberías (todos los códigos que proporcionaste)
+                const tuberias = [
+            ];
+                 
+                // Accesorios (generados dinámicamente)
+                const accesorios = [];
+                let codigoCounter = 95; // IYR0095 en adelante
+                
+                // Generar accesorios basados en la estructura de datos
+                for (const [material, tipos] of Object.entries(accesoriosData)) {
+                    for (const [tipo, detalles] of Object.entries(tipos)) {
+                        const nuevosAccesorios = this.generarAccesorios(material, tipo, detalles, codigoCounter);
+                        accesorios.push(...nuevosAccesorios);
+                        codigoCounter += nuevosAccesorios.length;
+                    }
+                }
+                
+                this.productos = [...tuberias, ...accesorios];
+                this.guardarDatos();
+            },
+            
+            generarAccesorios: function(material, tipo, detalles, startCodigo, prefijo = '') {
+                const accesorios = [];
+                let codigoCounter = startCodigo;
+                
+                if (Array.isArray(detalles)) {
+                    // Para elementos simples como diámetros
+                    detalles.forEach(diametro => {
+                        accesorios.push({
+                            codigo: "IYR" + codigoCounter.toString().padStart(4, '0'),
+                            descripcion: `${tipo}${material.replace(/\s+/g, '')}${prefijo}${diametro}`,
+                            cantidad: 0,
+                            valor: 0
+                        });
+                        codigoCounter++;
+                    });
+                } else if (typeof detalles === 'object') {
+                    // Para estructuras anidadas
+                    for (const [subtipo, subdetalles] of Object.entries(detalles)) {
+                        const nuevos = this.generarAccesorios(
+                            material, 
+                            tipo, 
+                            subdetalles, 
+                            codigoCounter,
+                            `${prefijo}${prefijo ? ' ' : ''}${subtipo} `
+                        );
+                        accesorios.push(...nuevos);
+                        codigoCounter += nuevos.length;
+                    }
+                }
+                
+                return accesorios;
+            },
+            
+            buscarProducto: function(codigo) {
+                return this.productos.find(p => p.codigo === codigo);
+            },
+            
+            actualizarProducto: function(codigo, cantidad, valor, ubicacion) {
+                const producto = this.buscarProducto(codigo);
+                if (producto) {
+                    producto.cantidad = (producto.cantidad || 0) + cantidad;
+                    if (valor) producto.valor = valor;
+                    if (ubicacion) producto.ubicacion = ubicacion;
+                    this.guardarDatos();
+                    return true;
+                }
+                return false;
+            },
+            
+            guardarDatos: function() {
+                localStorage.setItem('inventarioCompartido', JSON.stringify(this.productos));
+            },
+            
+            obtenerProductos: function() {
+                return this.productos;
+            }
+        };
+
+                
+
+        // Inicialización robusta al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
-            // No cargar tubería por defecto, mostrar pantalla principal
-            document.getElementById('mainScreen').style.display = 'block';
-            document.getElementById('detailScreen').style.display = 'none';
+            // 1. Inicializa el módulo compartido PRIMERO.
+            // Esto asegura que la lista de productos (InventarioCompartido.productos)
+            // se cargue desde localStorage o se cree con los datos por defecto si no existe.
+            InventarioCompartido.init();
+
+            // 2. Luego, inicializa el módulo específico de la página (Almacén).
+            // Ahora AlmacenModule puede confiar en que InventarioCompartido está listo y 
+            // tiene todos los productos cargados en memoria.
+            AlmacenModule.init();
         });
 
         
