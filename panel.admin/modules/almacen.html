@@ -4,7 +4,7 @@
         <div class="main-header">
             <h1 class="main-title">
                 <div class="title-icon-container">
-                    <div class="title-icon">🏙️</div>
+                    <div class="title-icon">📦</div>
                 </div>
                 Gestión de Almacén
             </h1>
@@ -139,7 +139,7 @@
         /* ============ PANTALLA PRINCIPAL ============= */
         .main-screen {
             width: 100%;
-            padding: 40px 40px;
+            padding: 20px 20px;
             background-color: var(--background-light);
             text-align: center;
             box-sizing: border-box;
@@ -841,49 +841,6 @@
             this.configurarEventListeners();
         },
 
-        setupEventListeners: function() {
-            const productoModal = document.getElementById('productoModal');
-            if (productoModal) {
-                // Usamos delegación de eventos en el modal del producto
-                productoModal.addEventListener('input', (event) => {
-                    // Solo reaccionamos si el evento ocurrió en el input del código
-                    if (event.target.id === 'productoCodigo') {
-                        this.handleAutocomplete(event.target);
-                    }
-                });
-            }
-            // Aquí puedes añadir otros listeners que necesites para el módulo
-        },
-
-        // Mejorar el autocompletado en AlmacenModule
-        handleAutocomplete: function(inputElement) {
-        const esCodigo = inputElement.id === 'productoCodigo';
-        const otroCampo = esCodigo 
-            ? document.getElementById('productoDescripcion') 
-            : document.getElementById('productoCodigo');
-        
-        const valor = inputElement.value.trim();
-        if (valor.length < 2) return;
-        
-        const resultados = esCodigo
-            ? InventarioCompartido.obtenerSugerencias(valor)
-            : InventarioCompartido.obtenerSugerencias(valor);
-        
-        if (resultados.length === 1) {
-            const producto = resultados[0];
-            if (esCodigo) {
-            otroCampo.value = producto.descripcion;
-            } else {
-            otroCampo.value = producto.codigo;
-            }
-            
-            // Actualizar otros campos si es necesario
-            document.getElementById('productoValor').value = producto.valor || '';
-        } else if (resultados.length > 1) {
-            // Mostrar sugerencias en un dropdown
-            mostrarSugerencias(resultados, inputElement, esCodigo);
-        }
-        },
         mostrarSugerencias: function(productos, inputElement, esCodigo) {
         // Implementar un dropdown con las sugerencias
         const dropdown = document.createElement('div');
@@ -1339,12 +1296,23 @@
         }
     };
 
-    if (typeof InventarioCompartido !== 'undefined' && InventarioCompartido.productos.length > 0) {
+    function initAlmacenModule() {
+    if (typeof InventarioCompartido === 'undefined' || !InventarioCompartido.initialized) {
+        setTimeout(initAlmacenModule, 100);
+        return;
+    }
+    
+    if (InventarioCompartido.obtenerProductos().length > 0) {
         AlmacenModule.init();
     } else {
-        console.error('Error Crítico: InventarioCompartido no está listo o está vacío cuando AlmacenModule intentó inicializarse.');
-        alert('Hubo un problema al cargar los datos del inventario. Por favor, intente recargar el módulo o la página.');
+        console.error('Inventario vacío. Intentando inicializar datos por defecto...');
+        InventarioCompartido.inicializarDatosPorDefecto();
+        setTimeout(() => AlmacenModule.init(), 500);
     }
+}
+
+    // Iniciar después de que el DOM esté listo
+    document.addEventListener('DOMContentLoaded', initAlmacenModule);
 
     </script>
 </div>

@@ -26,6 +26,15 @@
                     <h3>Accesorios</h3>
                     <p class="card-description">Inventario de accesorios y control detallado.</p>
                 </div>
+
+                <div class="inventario-card" onclick="navigateToOtros()">
+                    <div class="card-icon-container">
+                        <div class="card-icon">⚠️</div>
+                    </div>
+                    <h3>Otros</h3>
+                    <p class="card-description">Inventario de otros y control detallado.</p>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -36,6 +45,7 @@
             <!-- Mantener estos botones pero ocultos visualmente -->
             <button id="tuberiaTab" class="active" style="position: absolute; left: -9999px;" onclick="navigateToTuberia(); return false;">Tubería</button>
             <button id="accesoriosTab" style="position: absolute; left: -9999px;" onclick="navigateToAccesorios(); return false;">Accesorios</button>
+            <button id="otrosTab" style="position: absolute; left: -9999px;" onclick="navigateToOtros(); return false;">Otros</button>
             
             <!-- Botón de volver visible -->
             <button class="back-button" onclick="backToMain()">
@@ -47,225 +57,225 @@
     </div>
 
     <style>
-       :root {
-    --primary-color: #4361ee;
-    --primary-hover: #3a56d4;
-    --secondary-color: #3f37c9;
-    --accent-blue: #4cc9f0;
-    --accent-orange: #f8961e;
-    --text-dark: #2b2d42;
-    --text-medium: #4a4e69;
-    --text-light: #8e9aaf;
-    --background-light: #f8f9fa;
-    --white: #ffffff;
-    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
-    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
-    --border-radius: 16px;
-}
+            :root {
+            --primary-color: #4361ee;
+            --primary-hover: #3a56d4;
+            --secondary-color: #3f37c9;
+            --accent-blue: #4cc9f0;
+            --accent-orange: #f8961e;
+            --text-dark: #2b2d42;
+            --text-medium: #4a4e69;
+            --text-light: #8e9aaf;
+            --background-light: #f8f9fa;
+            --white: #ffffff;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
+            --border-radius: 16px;
+        }
 
 
 
-/* ============ PANTALLA PRINCIPAL ============= */
+        /* ============ PANTALLA PRINCIPAL ============= */
 
-.main-screen {
-    width: 100%;
-    padding: 40px 40px;
-    background-color: var(--background-light);
-    text-align: center;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    /* Elimina position: fixed y height: 100vh */
-    /* Agrega min-height para asegurar que ocupe al menos toda la pantalla */
-    min-height: calc(100vh - 60px); /* Ajusta según la altura de tu top-bar */
-    overflow-y: auto; /* Permite el desplazamiento vertical */
-}
+        .main-screen {
+            width: 100%;
+            padding: 20px 20px;
+            background-color: var(--background-light);
+            text-align: center;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            /* Elimina position: fixed y height: 100vh */
+            /* Agrega min-height para asegurar que ocupe al menos toda la pantalla */
+            min-height: calc(100vh - 60px); /* Ajusta según la altura de tu top-bar */
+            overflow-y: auto; /* Permite el desplazamiento vertical */
+        }
 
-.main-header {
-    max-width: 1200px;
-    margin: 0 auto 20px;
-    padding-top: 40px; /* Reduce el padding-top */
-}
+        .main-header {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            padding-top: 40px; /* Reduce el padding-top */
+        }
 
-.main-title {
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-}
+        .main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
 
-.main-title i {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    -webkit-text-fill-color: transparent;
-}
+        .main-title i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-text-fill-color: transparent;
+        }
 
-.main-subtitle {
-    color: var(--text-light);
-    font-size: 1.3rem;
-    font-weight: 400;
-    margin-bottom: 60px;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
-}
+        .main-subtitle {
+            color: var(--text-light);
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
 
-.card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-bottom: 40px; /* Añade espacio en la parte inferior */
-}
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 40px; /* Añade espacio en la parte inferior */
+        }
 
-.inventario-card {
-    background: var(--white);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-sm);
-    padding: 30px 20px; /* Reducido padding */
-    cursor: pointer;
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-}
+        .inventario-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            padding: 30px 20px; /* Reducido padding */
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
 
-.inventario-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.7s ease;
-}
+        .inventario-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.7s ease;
+        }
 
-.inventario-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-lg);
-}
+        .inventario-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
 
-.inventario-card:hover::before {
-    transform: scaleX(1);
-}
+        .inventario-card:hover::before {
+            transform: scaleX(1);
+        }
 
-.card-icon-container {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(63, 55, 201, 0.1));
-    border-radius: 50%;
-    transition: var(--transition);
-}
+        .card-icon-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(63, 55, 201, 0.1));
+            border-radius: 50%;
+            transition: var(--transition);
+        }
 
-.inventario-card:hover .card-icon-container {
-    transform: scale(1.1) rotate(5deg);
-}
+        .inventario-card:hover .card-icon-container {
+            transform: scale(1.1) rotate(5deg);
+        }
 
-.card-icon {
-    font-size: 3.5rem;
-    line-height: 1;
-    transition: transform 0.3s ease;
-}
+        .card-icon {
+            font-size: 3.5rem;
+            line-height: 1;
+            transition: transform 0.3s ease;
+        }
 
-.inventario-card:hover .card-icon {
-    transform: scale(1.2);
-}
+        .inventario-card:hover .card-icon {
+            transform: scale(1.2);
+        }
 
-.inventario-card h3 {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 15px;
-}
+        .inventario-card h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
 
-.card-description {
-    color: var(--text-light);
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    opacity: 1;
-    height: auto;
-}
+        .card-description {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            opacity: 1;
+            height: auto;
+        }
 
-/* ============ RESPONSIVE IMPROVEMENTS ============= */
-@media (max-width: 1200px) {
-    .card-container {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-}
+        /* ============ RESPONSIVE IMPROVEMENTS ============= */
+        @media (max-width: 1200px) {
+            .card-container {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
 
-@media (max-width: 992px) {
-    .inventario-card {
-        min-height: 260px;
-        padding: 25px;
-    }
-    .card-icon-container {
-        width: 90px;
-        height: 90px;
-    }
-}
+        @media (max-width: 992px) {
+            .inventario-card {
+                min-height: 260px;
+                padding: 25px;
+            }
+            .card-icon-container {
+                width: 90px;
+                height: 90px;
+            }
+        }
 
-@media (max-width: 768px) {
-    .card-container {
-        grid-template-columns: 1fr;
-        max-width: 500px;
-        padding: 0 15px;
-    }
-    .inventario-card {
-        min-height: 240px;
-        padding: 30px 20px;
-        max-width: 100%;
-    }
-    .card-icon {
-        font-size: 3rem;
-    }
-}
+        @media (max-width: 768px) {
+            .card-container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                padding: 0 15px;
+            }
+            .inventario-card {
+                min-height: 240px;
+                padding: 30px 20px;
+                max-width: 100%;
+            }
+            .card-icon {
+                font-size: 3rem;
+            }
+        }
 
-@media (max-width: 576px) {
-    .card-container {
-        gap: 20px;
-    }
-    .inventario-card {
-        min-height: 220px;
-        padding: 25px 15px;
-    }
-    .card-icon-container {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 20px;
-    }
-    .inventario-card h3 {
-        font-size: 1.5rem;
-    }
-}
+        @media (max-width: 576px) {
+            .card-container {
+                gap: 20px;
+            }
+            .inventario-card {
+                min-height: 220px;
+                padding: 25px 15px;
+            }
+            .card-icon-container {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 20px;
+            }
+            .inventario-card h3 {
+                font-size: 1.5rem;
+            }
+        }
 
-@media (max-width: 400px) {
-    .card-container {
-        padding: 0 10px;
-    }
-    .inventario-card {
-        min-height: 200px;
-        padding: 20px 15px;
-    }
-    .card-icon {
-        font-size: 2.8rem;
-    }
-}
+        @media (max-width: 400px) {
+            .card-container {
+                padding: 0 10px;
+            }
+            .inventario-card {
+                min-height: 200px;
+                padding: 20px 15px;
+            }
+            .card-icon {
+                font-size: 2.8rem;
+            }
+        }
 
         /* ============================================= */
         /* ============ ESTILOS EXISTENTES ============= */
@@ -444,6 +454,22 @@
             background-color: #27ae60;
         }
 
+        /* Actualiza esta regla CSS para incluir el nuevo botón */
+        #btnExportar, #btnExportarAccesorios, #btnExportarOtros {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        #btnExportar:hover, #btnExportarAccesorios:hover, #btnExportarOtros:hover {
+            background-color: #27ae60;
+        }
+
         /* CONTENEDORES DE GRÁFICAS - IGUALES PARA AMBOS */
         .chart-container {
             margin-top: 20px;
@@ -583,196 +609,176 @@
         }
     </style>
 
-
-    <script>
-// ==========================================================================
-// FUNCIONES DE NAVEGACIÓN (ACTUALIZADAS)
-// ==========================================================================
-function backToMain() {
-    document.getElementById('mainScreen').style.display = 'block';
-    document.getElementById('detailScreen').style.display = 'none';
-    // Ajustar el scroll al inicio
-    window.scrollTo(0, 0);
-}
-
-function showDetailScreen() {
-    document.getElementById('mainScreen').style.display = 'none';
-    document.getElementById('detailScreen').style.display = 'block';
-    // Ajustar el scroll al inicio
-    window.scrollTo(0, 0);
-    // Forzar redibujado para asegurar dimensiones correctas
-    setTimeout(() => {
-        if (chart) chart.resize();
-        if (chartAccesorios) chartAccesorios.resize();
-    }, 100);
-}
-
-function navigateToTuberia() {
-    showDetailScreen();
-    document.getElementById('tuberiaTab').classList.add('active');
-    document.getElementById('accesoriosTab').classList.remove('active');
-    loadTuberia();
-}
-
-function navigateToAccesorios() {
-    showDetailScreen();
-    document.getElementById('accesoriosTab').classList.add('active');
-    document.getElementById('tuberiaTab').classList.remove('active');
-    loadAccesorios();
-}
-
-
+<script>
 
     // ==========================================================================
-    // INVENTARIO TUBERIA 
+    // FUNCIONES DE UTILIDAD
     // ==========================================================================
-    const tuberiasDisponibles = [
-    // Tuberías de Cobre
-    {codigo: "IYR0001", descripcion: "TuberíaCobre K 1/4"},
-    {codigo: "IYR0002", descripcion: "TuberíaCobre K 3/8"},
-    {codigo: "IYR0003", descripcion: "TuberíaCobre K 1/2"},
-    {codigo: "IYR0004", descripcion: "TuberíaCobre K 3/4"},
-    {codigo: "IYR0005", descripcion: "TuberíaCobre K 1"},
-    {codigo: "IYR0006", descripcion: "TuberíaCobre K 1.1/4"},
-    {codigo: "IYR0007", descripcion: "TuberíaCobre K 1.1/2"},
-    {codigo: "IYR0008", descripcion: "TuberíaCobre K 2"},
-    {codigo: "IYR0009", descripcion: "TuberíaCobre K 2.1/2"},
-    {codigo: "IYR0010", descripcion: "TuberíaCobre K 3"},
-    {codigo: "IYR0011", descripcion: "TuberíaCobre L 1/4"},
-    {codigo: "IYR0012", descripcion: "TuberíaCobre L 3/8"},
-    {codigo: "IYR0013", descripcion: "TuberíaCobre L 1/2"},
-    {codigo: "IYR0014", descripcion: "TuberíaCobre L 3/4"},
-    {codigo: "IYR0015", descripcion: "TuberíaCobre L 1"},
-    {codigo: "IYR0016", descripcion: "TuberíaCobre L 1.1/4"},
-    {codigo: "IYR0017", descripcion: "TuberíaCobre L 1.1/2"},
-    {codigo: "IYR0018", descripcion: "TuberíaCobre L 2"},
-    {codigo: "IYR0019", descripcion: "TuberíaCobre L 2.1/2"},
-    {codigo: "IYR0020", descripcion: "TuberíaCobre L 3"},
+
+    /**
+     * Retrasa la ejecución de una función hasta que el usuario deja de invocarla 
+     * por un período de tiempo determinado.
+     * @param {Function} func La función a ejecutar.
+     * @param {number} delay El retraso en milisegundos.
+     * @returns {Function} La nueva función "debounced".
+     */
+    function debounce(func, delay = 300) {
+        let timeoutId;
+        return function(...args) {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
+
+    // ==========================================================================
+    // CONSTANTES Y VARIABLES GLOBALES
+    // ==========================================================================
+    const ubicacionesDisponibles = ["Bogotá", "Cali"];
+    let itemActual = null;
+    let itemActualAccesorio = null;
+    let itemActualOtros = null;
+    let chart = null;
+    let chartAccesorios = null;
+    let chartOtros = null;
     
-    // Tuberías de Acero Inoxidable
-    {codigo: "IYR0021", descripcion: "TuberíaAceroInoxidable Sch10 1/4"},
-    {codigo: "IYR0022", descripcion: "TuberíaAceroInoxidable Sch10 3/8"},
-    {codigo: "IYR0023", descripcion: "TuberíaAceroInoxidable Sch10 1/2"},
-    {codigo: "IYR0024", descripcion: "TuberíaAceroInoxidable Sch10 3/4"},
-    {codigo: "IYR0025", descripcion: "TuberíaAceroInoxidable Sch10 1"},
-    {codigo: "IYR0026", descripcion: "TuberíaAceroInoxidable Sch10 1.1/4"},
-    {codigo: "IYR0027", descripcion: "TuberíaAceroInoxidable Sch10 1.1/2"},
-    {codigo: "IYR0028", descripcion: "TuberíaAceroInoxidable Sch10 2"},
-    {codigo: "IYR0029", descripcion: "TuberíaAceroInoxidable Sch10 2.1/2"},
-    {codigo: "IYR0030", descripcion: "TuberíaAceroInoxidable Sch10 3"},
-    {codigo: "IYR0031", descripcion: "TuberíaAceroInoxidable Sch40 1/4"},
-    {codigo: "IYR0032", descripcion: "TuberíaAceroInoxidable Sch40 3/8"},
-    {codigo: "IYR0033", descripcion: "TuberíaAceroInoxidable Sch40 1/2"},
-    {codigo: "IYR0034", descripcion: "TuberíaAceroInoxidable Sch40 3/4"},
-    {codigo: "IYR0035", descripcion: "TuberíaAceroInoxidable Sch40 1"},
-    {codigo: "IYR0036", descripcion: "TuberíaAceroInoxidable Sch40 1.1/4"},
-    {codigo: "IYR0037", descripcion: "TuberíaAceroInoxidable Sch40 1.1/2"},
-    {codigo: "IYR0038", descripcion: "TuberíaAceroInoxidable Sch40 2"},
-    {codigo: "IYR0039", descripcion: "TuberíaAceroInoxidable Sch40 2.1/2"},
-    {codigo: "IYR0040", descripcion: "TuberíaAceroInoxidable Sch40 3"},
-    {codigo: "IYR0041", descripcion: "TuberíaAceroInoxidable Sch80 1/4"},
-    {codigo: "IYR0042", descripcion: "TuberíaAceroInoxidable Sch80 3/8"},
-    {codigo: "IYR0043", descripcion: "TuberíaAceroInoxidable Sch80 1/2"},
-    {codigo: "IYR0044", descripcion: "TuberíaAceroInoxidable Sch80 3/4"},
-    {codigo: "IYR0045", descripcion: "TuberíaAceroInoxidable Sch80 1"},
-    {codigo: "IYR0046", descripcion: "TuberíaAceroInoxidable Sch80 1.1/4"},
-    {codigo: "IYR0047", descripcion: "TuberíaAceroInoxidable Sch80 1.1/2"},
-    {codigo: "IYR0048", descripcion: "TuberíaAceroInoxidable Sch80 2"},
-    {codigo: "IYR0049", descripcion: "TuberíaAceroInoxidable Sch80 2.1/2"},
-    {codigo: "IYR0050", descripcion: "TuberíaAceroInoxidable Sch80 3"},
+    // ==========================================================================
+    // FUNCIONES DE NAVEGACIÓN 
+    // ==========================================================================
+    function backToMain() {
+        document.getElementById('mainScreen').style.display = 'block';
+        document.getElementById('detailScreen').style.display = 'none';
+        window.scrollTo(0, 0);
+    }
     
-    // Tuberías de Acero Carbono
-    {codigo: "IYR0051", descripcion: "TuberíaAceroCarbono Sch10 1/4"},
-    {codigo: "IYR0052", descripcion: "TuberíaAceroCarbono Sch10 3/8"},
-    {codigo: "IYR0053", descripcion: "TuberíaAceroCarbono Sch10 1/2"},
-    {codigo: "IYR0054", descripcion: "TuberíaAceroCarbono Sch10 3/4"},
-    {codigo: "IYR0055", descripcion: "TuberíaAceroCarbono Sch10 1"},
-    {codigo: "IYR0056", descripcion: "TuberíaAceroCarbono Sch10 1.1/4"},
-    {codigo: "IYR0057", descripcion: "TuberíaAceroCarbono Sch10 1.1/2"},
-    {codigo: "IYR0058", descripcion: "TuberíaAceroCarbono Sch10 2"},
-    {codigo: "IYR0059", descripcion: "TuberíaAceroCarbono Sch10 2.1/2"},
-    {codigo: "IYR0060", descripcion: "TuberíaAceroCarbono Sch10 3"},
-    {codigo: "IYR0061", descripcion: "TuberíaAceroCarbono Sch40 1/4"},
-    {codigo: "IYR0062", descripcion: "TuberíaAceroCarbono Sch40 3/8"},
-    {codigo: "IYR0063", descripcion: "TuberíaAceroCarbono Sch40 1/2"},
-    {codigo: "IYR0064", descripcion: "TuberíaAceroCarbono Sch40 3/4"},
-    {codigo: "IYR0065", descripcion: "TuberíaAceroCarbono Sch40 1"},
-    {codigo: "IYR0066", descripcion: "TuberíaAceroCarbono Sch40 1.1/4"},
-    {codigo: "IYR0067", descripcion: "TuberíaAceroCarbono Sch40 1.1/2"},
-    {codigo: "IYR0068", descripcion: "TuberíaAceroCarbono Sch40 2"},
-    {codigo: "IYR0069", descripcion: "TuberíaAceroCarbono Sch40 2.1/2"},
-    {codigo: "IYR0070", descripcion: "TuberíaAceroCarbono Sch40 3"},
-    {codigo: "IYR0071", descripcion: "TuberíaAceroCarbono Sch80 1/4"},
-    {codigo: "IYR0072", descripcion: "TuberíaAceroCarbono Sch80 3/8"},
-    {codigo: "IYR0073", descripcion: "TuberíaAceroCarbono Sch80 1/2"},
-    {codigo: "IYR0074", descripcion: "TuberíaAceroCarbono Sch80 3/4"},
-    {codigo: "IYR0075", descripcion: "TuberíaAceroCarbono Sch80 1"},
-    {codigo: "IYR0076", descripcion: "TuberíaAceroCarbono Sch80 1.1/4"},
-    {codigo: "IYR0077", descripcion: "TuberíaAceroCarbono Sch80 1.1/2"},
-    {codigo: "IYR0078", descripcion: "TuberíaAceroCarbono Sch80 2"},
-    {codigo: "IYR0079", descripcion: "TuberíaAceroCarbono Sch80 2.1/2"},
-    {codigo: "IYR0080", descripcion: "TuberíaAceroCarbono Sch80 3"},
+    function showDetailScreen() {
+        document.getElementById('mainScreen').style.display = 'none';
+        document.getElementById('detailScreen').style.display = 'block';
+        window.scrollTo(0, 0);
+        setTimeout(() => {
+            if (chart) chart.resize();
+            if (chartAccesorios) chartAccesorios.resize();
+            if (chartOtros) chartOtros.resize();
+        }, 100);
+    }
     
-    // Tuberías de PVC
-    {codigo: "IYR0081", descripcion: "TuberíaPVCPresion 3/8"},
-    {codigo: "IYR0082", descripcion: "TuberíaPVCPresion 1/2"},
-    {codigo: "IYR0083", descripcion: "TuberíaPVCPresion 3/4"},
-    {codigo: "IYR0084", descripcion: "TuberíaPVCPresion 1"},
-    {codigo: "IYR0085", descripcion: "TuberíaPVCPresion 1.1/4"},
-    {codigo: "IYR0086", descripcion: "TuberíaPVCPresion 1.1/2"},
-    {codigo: "IYR0087", descripcion: "TuberíaPVCPresion 2"},
-    {codigo: "IYR0088", descripcion: "TuberíaPVCPresion 2.1/2"},
-    {codigo: "IYR0089", descripcion: "TuberíaPVCPresion 3"},
+    function navigateToTuberia() {
+        showDetailScreen();
+        updateActiveTab('tuberiaTab');
+        loadInventory('tuberia');
+    }
     
-    // Tuberías EMT
-    {codigo: "IYR0090", descripcion: "TuberíaEMT 1/2"},
-    {codigo: "IYR0091", descripcion: "TuberíaEMT 3/4"},
-    {codigo: "IYR0092", descripcion: "TuberíaEMT 1"},
-    {codigo: "IYR0093", descripcion: "TuberíaEMT 1.1/2"},
-    {codigo: "IYR0094", descripcion: "TuberíaEMT 2"}
-];
-// Crear mapeo de descripciones a códigos
-const descripcionToCodigo = {};
-tuberiasDisponibles.forEach(item => {
-    descripcionToCodigo[item.descripcion] = item.codigo;
-});
-
-// Variables globales
-let itemActual = null;
-let chart = null;
-const ubicacionesDisponibles = ["Bogotá", "Cali"];
-
-
-// ==========================================================================
-// INVENTARIO TUBERIA - FUNCIONES AUXILIARES
-// ==========================================================================
-function generarFilasTuberia(productos) {
-    return productos.map(producto => `
-        <tr>
-            <td>${producto.codigo}</td>
-            <td>${producto.descripcion}</td>
-            <td>${producto.ubicacion || 'N/A'}</td>
-            <td>${producto.cantidad}</td>
-            <td>${producto.valor ? '$' + producto.valor.toFixed(2) : 'N/A'}</td>
-        </tr>
-    `).join('');
-}
-
-
-// ==========================================================================
-// FUNCIÓN PRINCIPAL PARA CARGAR TUBERÍA
-// ==========================================================================
-
-
-function loadTuberia() {
+    function navigateToAccesorios() {
+        showDetailScreen();
+        updateActiveTab('accesoriosTab');
+        loadInventory('accesorios');
+    }
     
-    // Obtener productos de tubería del módulo compartido
-    const productosTuberia = InventarioCompartido.obtenerProductos()
-        .filter(p => p.descripcion.includes('Tubería'));
+    function navigateToOtros() {
+        showDetailScreen();
+        updateActiveTab('otrosTab');
+        loadInventory('otros');
+    }
+    
+    function updateActiveTab(activeTabId) {
+        ['tuberiaTab', 'accesoriosTab', 'otrosTab'].forEach(tabId => {
+            document.getElementById(tabId).classList.remove('active');
+        });
+        document.getElementById(activeTabId).classList.add('active');
+    }
+    
+    // ==========================================================================
+    // FUNCIONES PRINCIPALES DE INVENTARIO
+    // ==========================================================================
+    
+    /**
+     * Carga el inventario según el tipo especificado
+     * @param {string} type - Tipo de inventario a cargar ('tuberia', 'accesorios', 'otros')
+     */
+     function loadInventory(type) {
+        // 1. Obtener configuración y productos (sin cambios)
+        const config = getInventoryConfig(type);
+        if (!config) {
+            console.error(`Configuración no encontrada para el tipo: ${type}`);
+            return;
+        }
+        const productos = getFilteredProducts(type);
 
+        // 2. Actualizar pestaña activa (sin cambios)
+        updateActiveTab(config.tabId);
+
+        // 3. Renderizar la tabla (sin cambios)
+        renderInventoryTable(type, productos, config);
+
+        // 4. ¡LA CLAVE! Aplazar la configuración de eventos
+        // Esto asegura que el DOM esté completamente actualizado ANTES de que intentemos
+        // encontrar los elementos y adjuntarles los listeners.
+        setTimeout(() => {
+            configurarEventosInventario(type, productos, config);
+        }, 0); // Un retardo de 0 es suficiente para moverlo al siguiente tick del event loop.
+    }
+    
+    function getInventoryConfig(type) {
+        const configs = {
+            tuberia: {
+                title: 'Tubería',
+                // Lógica: La descripción incluye 'Tubería'
+                filterFn: p => p.descripcion.includes('Tubería'),
+                chartColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                tabId: 'tuberiaTab',
+                chartVar: 'chart'
+            },
+            accesorios: {
+                title: 'Accesorios',
+                // Lógica: NO es tubería y su código NO empieza con 'IYR2'
+                filterFn: p => !p.descripcion.includes('Tubería') && !p.codigo.startsWith('IYR2'),
+                chartColor: 'rgba(255, 99, 132, 0.7)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                tabId: 'accesoriosTab',
+                chartVar: 'chartAccesorios'
+            },
+            otros: {
+                title: 'Otros',
+                // Lógica: Su código EMPIEZA con 'IYR2'
+                filterFn: p => p.codigo.startsWith('IYR2'),
+                chartColor: 'rgba(75, 192, 192, 0.7)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                tabId: 'otrosTab',
+                chartVar: 'chartOtros'
+            }
+        };
+        
+        // Devolvemos la configuración para el tipo solicitado.
+        return configs[type];
+    }
+    
+    function getFilteredProducts(type) {
+        const config = getInventoryConfig(type);
+
+        if (!config || typeof config.filterFn !== 'function') {
+            console.error(`No se encontró configuración de filtro para el tipo: ${type}`);
+            return [];
+        }
+        
+        // 1. Obtenemos TODOS los productos.
+        const todosLosProductos = InventarioCompartido.obtenerProductos();
+
+        // 2. Aplicamos el filtro y GUARDAMOS el resultado en la variable 'productosFiltrados'.
+        const productosFiltrados = todosLosProductos.filter(config.filterFn);
+        
+        // 3. (OPCIONAL PERO RECOMENDADO) Mostramos el resultado de la depuración.
+        //    Esta línea ahora funcionará porque 'productosFiltrados' ya existe.
+        console.log(`[Depuración] Tipo: '${type}'. Productos filtrados: ${productosFiltrados.length}`);
+        
+        // 4. Devolvemos la lista filtrada.
+        return productosFiltrados;
+    }
+
+
+    function renderInventoryTable(type, productos, config) {
     const tableContent = `
         <div class="table-title-container">
-            <div class="section-title vertical-title">Tubería</div>
+            <div class="section-title vertical-title">${config.title}</div>
             <div class="table-container">
                 <table>
                     <thead>
@@ -785,165 +791,175 @@ function loadTuberia() {
                         </tr>
                     </thead>
                     <tbody>
-                        ${generarFilaConsulta()}
+                        ${generarFilaConsulta(type, productos)}
                     </tbody>
                 </table>
                 <div class="export-button-container">
-                    <button id="btnExportar" class="btn-export">Exportar a Excel</button>
+                    <button id="btnExportar-${type}" class="btn-export">Exportar a Excel</button>
                 </div>
             </div>
         </div>
         <div class="chart-container" style="display: none;">
             <h3>Gráfica de Consulta</h3>
-            <canvas id="tuberiaChart"></canvas>
+            <canvas id="chart-${type}"></canvas>
         </div>
     `;
 
     document.getElementById('inventarioContent').innerHTML = tableContent;
-    configurarEventos();
+    if (type === 'accesorios') {
+        document.getElementById('inventarioContent').classList.add('content-transition');
+    }
 }
+    
+    // ==========================================================================
+    // FUNCIONES PARA GENERAR FILAS DE CONSULTA
+    // ==========================================================================
+    
+    function generarFilaConsulta(type, productos) {
+    const prefix = getInputPrefix(type);
+    const cantidadContent = getCantidadInputHtml(type, 0);
 
-
-function generarFilaConsulta() {
+    const listaCodigosId = `listaCodigos${prefix}`;
+    const listaDescripcionesId = `listaDescripciones${prefix}`;
+    
     return `
         <tr class="fila-consulta">
             <td>
-                <input type="text" id="inputCodigo" placeholder="Código" list="listaCodigosTuberias" autocomplete="off">
-                <datalist id="listaCodigosTuberias">
-                    ${tuberiasDisponibles.map(item => 
+                <input type="text" id="inputCodigo${prefix}" placeholder="Código" 
+                    list="${listaCodigosId}" autocomplete="off">
+                <datalist id="${listaCodigosId}">
+                    ${productos.map(item => 
                         `<option value="${item.codigo}" data-descripcion="${item.descripcion}">${item.descripcion}</option>`).join('')}
                 </datalist>
             </td>
             <td>
-                <input type="text" id="inputDescripcion" 
-                    placeholder="Buscar tubería..." 
-                    list="listaTuberias" autocomplete="off">
-                <datalist id="listaTuberias">
-                    ${tuberiasDisponibles.map(item => 
+                <input type="text" id="inputDescripcion${prefix}" 
+                    placeholder="Buscar ${type}..." 
+                    list="${listaDescripcionesId}" autocomplete="off">
+                <datalist id="${listaDescripcionesId}">
+                    ${productos.map(item => 
                         `<option value="${item.descripcion}" data-codigo="${item.codigo}">${item.codigo}</option>`).join('')}
                 </datalist>
             </td>
             <td>
-                <select id="inputUbicacion" class="form-select">
+                <select id="inputUbicacion${prefix}" class="form-select">
                     ${ubicacionesDisponibles.map(ubicacion => 
                         `<option value="${ubicacion}">${ubicacion}</option>`).join('')}
                 </select>
             </td>
-            <td id="cantidadCell">
-                <input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()" disabled>
+            <td id="cantidadCell${prefix}">
+                ${type === 'accesorios' ? `<div class="cantidad-container">${cantidadContent}</div>` : cantidadContent}
             </td>
             <td>
-                <input type="number" id="inputValor" placeholder="Valor" min="0" step="0.01" disabled>
+                <input type="number" id="inputValor${prefix}" placeholder="Valor" 
+                       min="0" step="0.01" disabled>
             </td>
         </tr>
     `;
 }
-
-
-function actualizarEstadoStock() {
-    const cantidadInput = document.getElementById('inputCantidad');
-    const cantidadCell = document.getElementById('cantidadCell');
-    const valor = parseFloat(cantidadInput.value) || 0;
     
-    if (valor === 0) {
-        cantidadCell.innerHTML = `
-            <span class="no-stock" onclick="restaurarInputCantidad()">No Stock</span>
-            <input type="number" id="inputCantidad" value="0" min="0" style="display:none;">
-        `;
-    } else {
-        cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="${valor}" onchange="actualizarEstadoStock()">`;
+    function getInputPrefix(type) {
+        return type === 'tuberia' ? '' : 
+               type === 'accesorios' ? 'Accesorio' : 'Otros';
     }
     
-    if (itemActual) {
-        itemActual.cantidad = valor;
-        actualizarGrafica();
-    }
-}
-
-function restaurarInputCantidad() {
-    const cantidadCell = document.getElementById('cantidadCell');
-    cantidadCell.innerHTML = `<input type="number" id="inputCantidad" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStock()" disabled>`;
-}
-
-// Mejorar la conexión con el inventario global
-function configurarEventos() {
-  const inputCodigo = document.getElementById('inputCodigo');
-  const inputDesc = document.getElementById('inputDescripcion');
-  
-  // Usar el inventario global como fuente de verdad
-  inputCodigo.addEventListener('input', function() {
-    const producto = InventarioCompartido.buscarProducto(this.value);
-    if (producto) {
-      inputDesc.value = producto.descripcion;
-      document.getElementById('inputCantidad').value = producto.cantidad || 0;
-      document.getElementById('inputValor').value = producto.valor || 0;
-      document.getElementById('inputUbicacion').value = producto.ubicacion || 'Bogotá';
-      itemActual = {...producto};
-      actualizarGrafica();
-    }
-  });
-  
-  inputDesc.addEventListener('input', function() {
-    const producto = InventarioCompartido.buscarProducto(this.value);
-    if (producto) {
-      inputCodigo.value = producto.codigo;
-      document.getElementById('inputCantidad').value = producto.cantidad || 0;
-      document.getElementById('inputValor').value = producto.valor || 0;
-      document.getElementById('inputUbicacion').value = producto.ubicacion || 'Bogotá';
-      itemActual = {...producto};
-      actualizarGrafica();
-    }
-  });
-  
-  // Escuchar cambios en el inventario global
-  window.addEventListener('inventarioActualizado', () => {
-    if (itemActual) {
-      const productoActualizado = InventarioCompartido.buscarProducto(itemActual.codigo);
-      if (productoActualizado) {
-        itemActual = {...productoActualizado};
-        actualizarGrafica();
-      }
-    }
-  });
-}
-
-
-function actualizarGrafica() {
-    const chartContainer = document.querySelector('.chart-container');
-    const chartElement = document.getElementById('tuberiaChart');
-    
-    if (!itemActual || itemActual.cantidad <= 0) {
-        chartContainer.style.display = 'none';
-        if (chart) {
-            chart.destroy();
-            chart = null;
+    function getCantidadInputHtml(type, value) {
+        if (value === 0) {
+            return `
+                <span class="no-stock" onclick="restaurarInputCantidad('${type}')">No Stock</span>
+                <input type="number" id="inputCantidad${getInputPrefix(type)}" value="0" min="0" style="display:none;">
+            `;
         }
-        return;
+        return `
+            <input type="number" id="inputCantidad${getInputPrefix(type)}" placeholder="Cantidad" 
+                   min="0" value="${value}" onchange="actualizarEstadoStock('${type}')">
+        `;
     }
     
-    chartContainer.style.display = 'block';
+    // ==========================================================================
+    // FUNCIONES PARA MANEJAR EL ESTADO DEL STOCK
+    // ==========================================================================
     
-    if (chart) {
-        chart.destroy();
+    function actualizarEstadoStock(type) {
+        const prefix = getInputPrefix(type);
+        const cantidadInput = document.getElementById(`inputCantidad${prefix}`);
+        const cantidadCell = document.getElementById(`cantidadCell${prefix}`);
+        const valor = parseFloat(cantidadInput.value) || 0;
+        
+        cantidadCell.innerHTML = type === 'accesorios' ? 
+            `<div class="cantidad-container">${getCantidadInputHtml(type, valor)}</div>` : 
+            getCantidadInputHtml(type, valor);
+        
+        const currentItem = getCurrentItem(type);
+        if (currentItem) {
+            currentItem.cantidad = valor;
+            actualizarGrafica(type, currentItem);
+        }
     }
     
-    // Configurar dimensiones fijas para el canvas
-    chartElement.width = chartElement.offsetWidth;
-    chartElement.height = 250; // Altura fija
+    function restaurarInputCantidad(type) {
+        const prefix = getInputPrefix(type);
+        const cantidadCell = document.getElementById(`cantidadCell${prefix}`);
+        const html = `
+            <input type="number" id="inputCantidad${prefix}" placeholder="Cantidad" min="0" 
+                   value="0" onchange="actualizarEstadoStock('${type}')" disabled>
+        `;
+        
+        cantidadCell.innerHTML = type === 'accesorios' ? 
+            `<div class="cantidad-container">${html}</div>` : html;
+        
+        const currentItem = getCurrentItem(type);
+        if (currentItem) {
+            currentItem.cantidad = 0;
+            actualizarGrafica(type, currentItem);
+        }
+    }
     
-    chart = new Chart(chartElement, {
-        type: 'bar',
-        data: {
-            labels: [itemActual.descripcion],
-            datasets: [{
-                label: 'Cantidad',
-                data: [itemActual.cantidad],
-                backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
+    // ==========================================================================
+    // FUNCIONES PARA MANEJAR GRÁFICAS
+    // ==========================================================================
+    
+    function actualizarGrafica(type, currentItem) {
+        const config = getInventoryConfig(type);
+        const chartContainer = document.querySelector('.chart-container');
+        const chartElement = document.getElementById(`chart-${type}`); // Usar ID dinámico
+        
+        if (!currentItem || currentItem.cantidad <= 0) {
+            chartContainer.style.display = 'none';
+            if (window[config.chartVar]) {
+                window[config.chartVar].destroy();
+                window[config.chartVar] = null;
+            }
+            return;
+        }
+        
+        chartContainer.style.display = 'block';
+    
+        if (window[config.chartVar]) {
+            window[config.chartVar].destroy();
+        }
+        
+        chartElement.width = chartElement.offsetWidth;
+        chartElement.height = type === 'accesorios' ? 300 : 250;
+        
+        window[config.chartVar] = new Chart(chartElement, {
+            type: 'bar',
+            data: {
+                labels: [currentItem.descripcion],
+                datasets: [{
+                    label: 'Cantidad',
+                    data: [currentItem.cantidad],
+                    backgroundColor: config.chartColor,
+                    borderColor: config.borderColor,
+                    borderWidth: 1
+                }]
+            },
+            options: getChartOptions(config, currentItem)
+        });
+    }
+    
+    function getChartOptions(config, currentItem) {
+        return {
             indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
@@ -964,813 +980,293 @@ function actualizarGrafica() {
                 tooltip: {
                     callbacks: {
                         afterLabel: () => {
-                            return `Código: ${itemActual.codigo}\nValor: $${itemActual.valor.toFixed(2)}`;
+                            return `Código: ${currentItem.codigo}\nValor: $${currentItem.valor?.toFixed(2) || 'N/A'}`;
                         }
                     }
                 }
-            }
+            },
+            layout: type === 'accesorios' ? {
+                padding: { top: 10, right: 10, bottom: 10, left: 10 }
+            } : {}
+        };
+    }
+    
+    // ==========================================================================
+    // FUNCIONES PARA EXPORTAR A EXCEL
+    // ==========================================================================
+    
+    function exportarAExcel(type) {
+        const currentItem = getCurrentItem(type);
+        if (!currentItem) {
+            alert("No hay datos para exportar");
+            return;
         }
-    });
-}
-
-function exportarAExcel() {
-    if (!itemActual) {
-        alert("No hay datos para exportar");
-        return;
-    }
-    
-    const cantidadInput = document.getElementById('inputCantidad');
-    const cantidad = parseFloat(cantidadInput.value) || 0;
-    
-    const datos = [{
-        'Código': itemActual.codigo,
-        'Descripción': itemActual.descripcion,
-        'Ubicación': itemActual.ubicacion || 'Bogotá',
-        'Cantidad': cantidad === 0 ? 'No Stock' : cantidad,
-        'Valor': itemActual.valor
-    }];
-    
-    const csvRows = [];
-    const headers = Object.keys(datos[0]);
-    csvRows.push(headers.join(','));
-    
-    for (const row of datos) {
-        const values = headers.map(header => {
-            const escaped = ('' + row[header]).replace(/"/g, '\\"');
-            return `"${escaped}"`;
-        });
-        csvRows.push(values.join(','));
-    }
-    
-    const csvString = csvRows.join('\n');
-    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', `tuberia_${itemActual.codigo}.csv`);
-    link.style.visibility = 'hidden';
-    
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-// ================================================================================
-// INVENTARIO ACCESORIOS
-// ================================================================================
-
-const accesoriosData = {
-    "Cobre": {
-        "Union": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2", "2.1/2", "3"],
-        "Tee": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2", "2.1/2", "3", "Reducida"],
-        "Tee Reducida": ["1*3/4", "1*1/2", "3/4*1/2", "1/2*3/8", "1/2*1", "1.1/4*3/4"],
-        "Codo": ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2", "2.1/2", "3"],
-        "Semicodo": ["1/2", "3/4", "1", "1.1/4", "1.1/2", "2", "3"],
-        "CopaRed": ["3*2.1/2", "3*2", "2*1.1/2", "2*1.1/4", "2*1", "1*3/4", "1*3/8", "1*1/2", "3/4*1/2", "3/4*3/8", "3/4*1/4", "1/2*3/8", "1/2*1/4", "1/2*1/8"],
-        "Universales": ["3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2", "2.1/2", "3"],
-        "Tapon": ["1/8", "1/4", "3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2", "2.1/2", "3"],
-        "Adaptador": {
-            "Soldeo": {
-                "NPTH": ["3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
-                "NPTM": ["3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"]
-            }
-        }
-    },
-    "Acero Inoxidable": {
-        "Conector": {
-            "OD": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
-            "NPTM": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
-            "NPTH": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
-            "OD/NPTM": {
-                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
-                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
-            },
-            "OD/NPTH": {
-                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
-                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
-            },
-            "NPTM/NPTH": {
-                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
-                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
-            }
-        },
-        "Tee": {
-            "OD": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
-            "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
-            "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
-            "Sch40": {
-                "SoldeoTope": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
-                "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
-                "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
-            }
-        },
-        "Codo": {
-            "OD": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
-            "NPTM": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
-            "NPTH": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
-            "OD/NPTM": {
-                "1/8": ["1/8", "1/4", "1/2"],
-                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
-                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
-            },
-            "OD/NPTH": {
-                "1/8": ["1/8", "1/4", "1/2"],
-                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
-                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
-            },
-            "NPTM/NPTH": {
-                "1/8": ["1/8", "1/4", "1/2"],
-                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
-                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
-            },
-            "Sch40": {
-                "SoldeoTope": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
-                "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
-                "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
-            }
-        },
-        "Niple": {
-            "Sch40": {
-                "SoldeoTope": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
-                "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
-                "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
-            }
-        },
-        "Universal": ["1/2", "3/4", "1", "1.1/4", "1.1/2"],
-        "Tapon": {
-            "Sch40": ["1/4", "3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
-            "NPTH": ["1/4", "3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
-            "NPTM": ["1/4", "3/8", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"]
-        },
-        "Bushing": {
-            "Sch40": {
-                "1/4": ["3/8", "1/2", "1"],
-                "1/2": ["1", "1.1/2", "2"],
-                "3/8": ["1/2", "1"],
-                "3/4": ["1", "1.1/4", "1.1/2", "2"],
-                "1": ["1/4", "1/2", "2"],
-                "1.1/4": ["1.1/2", "2"],
-                "1.1/2": ["2"]
-            }
-        },
-        "CopaRed": {
-            "Sch40": {
-                "1/4": ["1/2", "3/4"],
-                "1/2": ["3/4", "1", "1.1/2"],
-                "3/4": ["1", "1.1/2", "2"],
-                "1": ["1.1/2"],
-                "1.1/2": ["2"]
-            }
-        },
-        "Brida": {
-            "Sch40": {
-                "SoldeoTope": ["1/2", "3/4", "1", "1.1/2", "2"]
-            }
-        },
-        "Valvula": {
-            "4Tornillos": ["1/4", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
-            "deBola": ["1/4", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
-            "TipoL": {
-                "OD": ["1/4"],
-                "OD/NPTM": ["1/4*1/4"],
-                "NPTH": ["1/4"],
-                "DosVias": ["1/4 OD"],
-                "Recta": ["1/4 NPTH"]
-            }
-        }
-    },
-
-    "Bronce": {
-        "Niple": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
-        "Conector": {
-            "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"],
-            "OD/NPTM": {
-                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
-                "1/2": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
-                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
-            },
-            "OD/NPTH": {
-                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
-                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
-            },
-            "NPTM/NPTH": {
-                "1/8": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/4": ["1/4", "1/2", "3/4", "3/8", "1"],
-                "1/2": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/8": ["1/4", "1/2", "3/4", "3/8", "1", "1.1/2"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/2"],
-                "1.1/4": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "1.1/2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"],
-                "2": ["1/2", "3/4", "3/8", "1", "1.1/2", "2"]
-            }
-        },
-        "Racore": {
-            "NPTM/DISS": {
-                "1/2": ["aire", "oxigeno", "vacio", "nitrogeno"],
-                "3/4": ["aire", "oxigeno", "vacio", "nitrogeno"]
-            },
-            "RoscaSoldeo": ["1/2", "3/4", "1", "1.1/4", "1.1/2"]
-        },
-        "Tapon": {
-            "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"]
-        },
-        "Bushing": {
-            "1/4": ["3/8", "1/2", "1"],
-            "1/2": ["1", "1.1/2", "2"],
-            "3/8": ["1/2", "1"],
-            "3/4": ["1", "1.1/4", "1.1/2", "2"],
-            "1": ["1/4", "1/2", "2"],
-            "1.1/4": ["1.1/2", "2"],
-            "1.1/2": ["2"]
-        },
-        "Valvula": {
-            "4Tornillos": ["1/4", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
-            "deBola": ["1/4", "1/2", "3/4", "1", "1.1/4", "1.1/2", "2"],
-            "4Vias": ["1/8 NPTH"]
-        },
-        "Codo": {
-            "OD": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
-            "NPTM": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
-            "NPTH": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
-            "OD/NPTM": {
-                "1/8": ["1/8", "1/4", "1/2"],
-                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
-                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
-            },
-            "OD/NPTH": {
-                "1/8": ["1/8", "1/4", "1/2"],
-                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
-                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
-            },
-            "NPTM/NPTH": {
-                "1/8": ["1/8", "1/4", "1/2"],
-                "1/4": ["1/4", "1/8", "1/2", "3/8", "3/4", "1"],
-                "1/2": ["1/8", "1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/8": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "3/4": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4"],
-                "1": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2", "2"]
-            }
-        },
-        "Tee": {
-            "OD": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
-            "NPTM": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"],
-            "NPTH": ["1/4", "1/2", "3/8", "3/4", "1", "1.1/4", "1.1/2"]
-        }
-    },
-    "Acero Carbon": {
-        // Similar a Acero Inoxidable pero con menos variedad
-        "Tee": {
-            "Sch40": {
-                "SoldeoTope": ["1/2", "3/4", "1", "1.1/2", "2"],
-                "NPTM": ["1/2", "3/4", "1", "1.1/2", "2"],
-                "NPTH": ["1/2", "3/4", "1", "1.1/2", "2"]
-            }
-        },
-        "Codo": {
-            "Sch40": {
-                "SoldeoTope": ["1/2", "3/4", "1", "1.1/2", "2"],
-                "NPTM": ["1/2", "3/4", "1", "1.1/2", "2"],
-                "NPTH": ["1/2", "3/4", "1", "1.1/2", "2"]
-            }
-        },
-        "Brida": {
-            "Sch40": {
-                "SoldeoTope": ["1/2", "3/4", "1", "1.1/2", "2"]
-            }
-        },
-        "Bushing": {
-            "Sch40": {
-                "1/2": ["1", "1.1/2", "2"],
-                "3/4": ["1", "1.1/2", "2"],
-                "1": ["1.1/2", "2"],
-                "1.1/2": ["2"]
-            }
-        }
-    }
-};
-
-
-
-
-
-
-        // Generar mapeo de descripciones a códigos para accesorios
-const descripcionToCodigoAccesorios = {};
-const descripcionesDisponiblesAccesorios = [];
-let codigoCounterAccesorios = 95; // Comenzar desde IYR0095
-
-// Función para generar códigos basados en la estructura de datos
-function generarCodigosAccesorios(material, tipo, detalles, prefijo = '') {
-    const materialKey = material.replace(/\s+/g, '');
-    
-    if (Array.isArray(detalles)) {
-        // Para elementos simples como diámetros
-        detalles.forEach(diametro => {
-            const descripcion = `${tipo}${materialKey}${prefijo}${diametro}`;
-            const codigo = "IYR" + codigoCounterAccesorios.toString().padStart(4, '0');
-            
-            descripcionToCodigoAccesorios[descripcion] = codigo;
-            descripcionesDisponiblesAccesorios.push(descripcion);
-            codigoCounterAccesorios++;
-        });
-    } else if (typeof detalles === 'object') {
-        // Para estructuras anidadas
-        for (const [subtipo, subdetalles] of Object.entries(detalles)) {
-            generarCodigosAccesorios(
-                material, 
-                tipo, 
-                subdetalles, 
-                `${prefijo}${prefijo ? ' ' : ''}${subtipo} `
-            );
-        }
-    }
-}
-
-// Generar todos los códigos para cada material
-for (const [material, tipos] of Object.entries(accesoriosData)) {
-    for (const [tipo, detalles] of Object.entries(tipos)) {
-        generarCodigosAccesorios(material, tipo, detalles);
-    }
-}
-
-// Variables para accesorios
-let itemActualAccesorio = null;
-let chartAccesorios;
-
-// Funciones para accesorios
-function loadAccesorios() {
-    const productosAccesorios = InventarioCompartido.obtenerProductos()
-        .filter(p => !p.descripcion.includes('Tubería'));
-    // Actualizar pestaña activa
-    document.getElementById('accesoriosTab').classList.add('active');
-    document.getElementById('tuberiaTab').classList.remove('active');
-    
-    const tableContent = `
-        <div class="table-title-container">
-            <div class="section-title vertical-title">Accesorios</div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Descripción</th>
-                            <th>Ubicación</th>
-                            <th>Cantidad</th>
-                            <th>Valor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${generarFilaConsultaAccesorios()}
-                    </tbody>
-                </table>
-                <div class="export-button-container">
-                    <button id="btnExportarAccesorios">Exportar a Excel</button>
-                </div>
-            </div>
-        </div>
-        <div class="chart-container">
-            <h3>Gráfica de Consulta</h3>
-            <canvas id="accesoriosChart"></canvas>
-        </div>
-    `;
-
-    document.getElementById('inventarioContent').innerHTML = tableContent;
-    document.getElementById('inventarioContent').classList.add('content-transition');
-    
-    // Configurar eventos
-    configurarEventosAccesorios();
-    
-    // Mostrar gráfica (aunque vacía)
-    document.getElementById('accesoriosChart').style.display = 'block';
-}
-
-
-function generarFilaConsultaAccesorios() {
-    return `
-        <tr class="fila-consulta">
-            <td>
-                <input type="text" id="inputCodigoAccesorio" placeholder="Código" list="listaCodigosAccesorios" autocomplete="off">
-                <datalist id="listaCodigosAccesorios">
-                    ${descripcionesDisponiblesAccesorios.map(desc => 
-                        `<option value="${descripcionToCodigoAccesorios[desc]}" data-descripcion="${desc}">${desc}</option>`).join('')}
-                </datalist>
-            </td>
-            <td>
-                <input type="text" id="inputDescripcionAccesorio" 
-                    placeholder="Buscar accesorio..." 
-                    list="listaAccesorios" autocomplete="off">
-                <datalist id="listaAccesorios">
-                    ${descripcionesDisponiblesAccesorios.map(desc => 
-                        `<option value="${desc}" data-codigo="${descripcionToCodigoAccesorios[desc]}">${descripcionToCodigoAccesorios[desc]}</option>`).join('')}
-                </datalist>
-            </td>
-            <td>
-                <select id="inputUbicacionAccesorio" class="form-select">
-                    ${ubicacionesDisponibles.map(ubicacion => 
-                        `<option value="${ubicacion}">${ubicacion}</option>`).join('')}
-                </select>
-            </td>
-            <td id="cantidadCellAccesorio" style="width: 120px;">
-                <div class="cantidad-container">
-                    <input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()" disabled>
-                </div>
-            </td>
-            <td>
-                <input type="number" id="inputValorAccesorio" placeholder="Valor" min="0" step="0.01" disabled>
-            </td>
-        </tr>
-    `;
-}
-
-function actualizarEstadoStockAccesorios() {
-    const cantidadInput = document.getElementById('inputCantidadAccesorio');
-    const cantidadCell = document.getElementById('cantidadCellAccesorio');
-    const valor = parseFloat(cantidadInput.value) || 0;
-    
-    if (valor === 0) {
-        cantidadCell.innerHTML = `
-            <div class="cantidad-container">
-                <span class="no-stock" onclick="restaurarInputCantidadAccesorios()">No Stock</span>
-                <input type="number" id="inputCantidadAccesorio" value="0" min="0" style="display:none;">
-            </div>
-        `;
-    } else {
-        cantidadCell.innerHTML = `
-            <div class="cantidad-container">
-                <input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="${valor}" onchange="actualizarEstadoStockAccesorios()">
-            </div>
-        `;
-    }
-    
-    if (itemActualAccesorio) {
-        itemActualAccesorio.cantidad = valor;
-        actualizarGraficaAccesorios();
-    }
-}
-
-function restaurarInputCantidadAccesorios() {
-    const cantidadCell = document.getElementById('cantidadCellAccesorio');
-    cantidadCell.innerHTML = `<input type="number" id="inputCantidadAccesorio" placeholder="Cantidad" min="0" value="0" onchange="actualizarEstadoStockAccesorios()" disabled>`;
-}
-
-function configurarEventosAccesorios() {
-    const inputCodigo = document.getElementById('inputCodigoAccesorio');
-    const inputDesc = document.getElementById('inputDescripcionAccesorio');
-    
-    // Evento para cuando se escribe en el campo de código
-    inputCodigo.addEventListener('input', function() {
-        const codigo = this.value;
-        const selectedOption = document.querySelector(`#listaCodigosAccesorios option[value="${codigo}"]`);
-        const descripcion = selectedOption ? selectedOption.getAttribute('data-descripcion') : '';
         
-        if (descripcion) {
-            document.getElementById('inputDescripcionAccesorio').value = descripcion;
-            itemActualAccesorio = {
-                codigo: codigo,
-                descripcion: descripcion,
-                ubicacion: document.getElementById('inputUbicacionAccesorio').value || 'Bogotá',
-                cantidad: 0,
-                valor: parseFloat(document.getElementById('inputValorAccesorio').value) || 0
-            };
-            
-            actualizarGraficaAccesorios();
-        } else {
-            document.getElementById('inputDescripcionAccesorio').value = '';
-            if (chartAccesorios) {
-                chartAccesorios.destroy();
-                chartAccesorios = null;
-            }
-        }
-    });
-    
-    // Evento para cuando se escribe en el campo de descripción
-    inputDesc.addEventListener('input', function() {
-        const descripcion = this.value;
-        const codigo = descripcionToCodigoAccesorios[descripcion];
+        const prefix = getInputPrefix(type);
+        const cantidadInput = document.getElementById(`inputCantidad${prefix}`);
+        const cantidad = parseFloat(cantidadInput?.value) || 0;
         
-        document.getElementById('inputCodigoAccesorio').value = codigo || '';
+        const datos = [{
+            'Código': currentItem.codigo,
+            'Descripción': currentItem.descripcion,
+            'Ubicación': currentItem.ubicacion || ubicacionesDisponibles[0],
+            'Cantidad': cantidad === 0 ? 'No Stock' : cantidad,
+            'Valor': currentItem.valor ? '$' + currentItem.valor.toFixed(2) : 'N/A'
+        }];
         
-        if (codigo) {
-            itemActualAccesorio = {
-                codigo: codigo,
-                descripcion: descripcion,
-                ubicacion: document.getElementById('inputUbicacionAccesorio').value || 'Bogotá',
-                cantidad: 0,
-                valor: parseFloat(document.getElementById('inputValorAccesorio').value) || 0
-            };
-            
-            actualizarGraficaAccesorios();
-        } else {
-            if (chartAccesorios) {
-                chartAccesorios.destroy();
-                chartAccesorios = null;
-            }
-        }
-    });
-
-    ['inputUbicacionAccesorio', 'inputValorAccesorio'].forEach(id => {
-        document.getElementById(id).addEventListener('change', function() {
-            if (itemActualAccesorio) {
-                itemActualAccesorio.ubicacion = document.getElementById('inputUbicacionAccesorio').value;
-                itemActualAccesorio.valor = parseFloat(document.getElementById('inputValorAccesorio').value) || 0;
-                actualizarGraficaAccesorios();
-            }
-        });
-    });
+        const csvContent = generarContenidoCSV(datos);
+        descargarCSV(csvContent, `${type}_${currentItem.codigo}.csv`);
+    }
     
-    document.getElementById('btnExportarAccesorios').addEventListener('click', exportarAExcelAccesorios);
-    actualizarEstadoStockAccesorios();
-}
+    function generarContenidoCSV(datos) {
+        const headers = Object.keys(datos[0]);
+        const csvRows = [
+            headers.join(','),
+            ...datos.map(row => 
+                headers.map(header => 
+                    `"${('' + row[header]).replace(/"/g, '\\"')}"`
+                ).join(',')
+            )
+        ];
+        return csvRows.join('\n');
+    }
+    
+    function descargarCSV(content, fileName) {
+        const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        
+        link.setAttribute('href', url);
+        link.setAttribute('download', fileName);
+        link.style.visibility = 'hidden';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+    
+    // ==========================================================================
+    // CONFIGURACIÓN DE EVENTOS
+    // ==========================================================================
 
-        function actualizarGraficaAccesorios() {
-            if (!itemActualAccesorio) {
-                document.getElementById('accesoriosChart').style.display = 'none';
-                return;
-            }
-            
-            const ctx = document.getElementById('accesoriosChart').getContext('2d');
-            ctx.canvas.style.display = 'block';
-            ctx.canvas.width = ctx.canvas.offsetWidth;
-            ctx.canvas.height = 300;
-            
-            if (chartAccesorios) {
-                chartAccesorios.destroy();
-            }
-            
-            chartAccesorios = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: [itemActualAccesorio.descripcion],
-                    datasets: [{
-                        label: 'Cantidad',
-                        data: [itemActualAccesorio.cantidad],
-                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { 
-                            beginAtZero: true,
-                            ticks: { precision: 0 }
-                        },
-                        y: { 
-                            ticks: { 
-                                autoSkip: false,
-                                font: { size: 12 }
-                            } 
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                afterLabel: () => {
-                                    return `Código: ${itemActualAccesorio.codigo}\nValor: $${itemActualAccesorio.valor.toFixed(2)}`;
-                                }
-                            }
-                        }
-                    },
-                    layout: {
-                        padding: {
-                            top: 10,
-                            right: 10,
-                            bottom: 10,
-                            left: 10
-                        }
-                    }
-                }
-            });
-        }
-
-        function exportarAExcelAccesorios() {
-            if (!itemActualAccesorio) {
-                alert("No hay datos para exportar");
-                return;
-            }
-            
-            const cantidadInput = document.getElementById('inputCantidadAccesorio');
-            const cantidad = parseFloat(cantidadInput.value) || 0;
-            
-            const datos = [{
-                'Código': itemActualAccesorio.codigo,
-                'Descripción': itemActualAccesorio.descripcion,
-                'Ubicación': itemActualAccesorio.ubicacion || 'Bogotá',
-                'Cantidad': cantidad === 0 ? 'No Stock' : cantidad,
-                'Valor': itemActualAccesorio.valor
-            }];
-            
-            const csvRows = [];
-            const headers = Object.keys(datos[0]);
-            csvRows.push(headers.join(','));
-            
-            for (const row of datos) {
-                const values = headers.map(header => {
-                    const escaped = ('' + row[header]).replace(/"/g, '\\"');
-                    return `"${escaped}"`;
-                });
-                csvRows.push(values.join(','));
-            }
-            
-            const csvString = csvRows.join('\n');
-            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            
-            const link = document.createElement('a');
-            link.setAttribute('href', url);
-            link.setAttribute('download', `accesorio_${itemActualAccesorio.codigo}.csv`);
-            link.style.visibility = 'hidden';
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        // MODULO COMPARTIDO DE ALMACEN Y INVENTARIO
-        window.InventarioCompartido = {
-            productos: [],
-            
-            init: function() {
-                const datosGuardados = localStorage.getItem('inventarioCompartido');
-                if (datosGuardados) {
-                    this.productos = JSON.parse(datosGuardados);
-                } else {
-                    this.inicializarDatosPorDefecto();
-                }
-                
-                // Escuchar eventos de actualización
-                window.addEventListener('inventarioActualizado', () => {
-                    this.actualizarDesdeLocalStorage();
-                    if (document.getElementById('inventarioContent')) {
-                        // Recargar la vista actual
-                        if (document.getElementById('tuberiaTab').classList.contains('active')) {
-                            loadTuberia();
-                        } else {
-                            loadAccesorios();
-                        }
-                    }
-                });
-            },
-
-            actualizarDesdeLocalStorage: function() {
-                const datosGuardados = localStorage.getItem('inventarioCompartido');
-                if (datosGuardados) {
-                    this.productos = JSON.parse(datosGuardados);
-                }
-            },
-            
-            inicializarDatosPorDefecto: function() {
-                // Tuberías (todos los códigos que proporcionaste)
-                const tuberias = [
-            ];
-                 
-                // Accesorios (generados dinámicamente)
-                const accesorios = [];
-                let codigoCounter = 95; // IYR0095 en adelante
-                
-                // Generar accesorios basados en la estructura de datos
-                for (const [material, tipos] of Object.entries(accesoriosData)) {
-                    for (const [tipo, detalles] of Object.entries(tipos)) {
-                        const nuevosAccesorios = this.generarAccesorios(material, tipo, detalles, codigoCounter);
-                        accesorios.push(...nuevosAccesorios);
-                        codigoCounter += nuevosAccesorios.length;
-                    }
-                }
-                
-                this.productos = [...tuberias, ...accesorios];
-                this.guardarDatos();
-            },
-            
-            generarAccesorios: function(material, tipo, detalles, startCodigo, prefijo = '') {
-                const accesorios = [];
-                let codigoCounter = startCodigo;
-                
-                if (Array.isArray(detalles)) {
-                    // Para elementos simples como diámetros
-                    detalles.forEach(diametro => {
-                        accesorios.push({
-                            codigo: "IYR" + codigoCounter.toString().padStart(4, '0'),
-                            descripcion: `${tipo}${material.replace(/\s+/g, '')}${prefijo}${diametro}`,
-                            cantidad: 0,
-                            valor: 0
-                        });
-                        codigoCounter++;
-                    });
-                } else if (typeof detalles === 'object') {
-                    // Para estructuras anidadas
-                    for (const [subtipo, subdetalles] of Object.entries(detalles)) {
-                        const nuevos = this.generarAccesorios(
-                            material, 
-                            tipo, 
-                            subdetalles, 
-                            codigoCounter,
-                            `${prefijo}${prefijo ? ' ' : ''}${subtipo} `
-                        );
-                        accesorios.push(...nuevos);
-                        codigoCounter += nuevos.length;
-                    }
-                }
-                
-                return accesorios;
-            },
-            
-            buscarProducto: function(codigo) {
-                return this.productos.find(p => p.codigo === codigo);
-            },
-            
-            actualizarProducto: function(codigo, cantidad, valor, ubicacion) {
-                const producto = this.buscarProducto(codigo);
-                if (producto) {
-                    producto.cantidad = (producto.cantidad || 0) + cantidad;
-                    if (valor) producto.valor = valor;
-                    if (ubicacion) producto.ubicacion = ubicacion;
-                    this.guardarDatos();
-                    return true;
-                }
-                return false;
-            },
-            
-            guardarDatos: function() {
-                localStorage.setItem('inventarioCompartido', JSON.stringify(this.productos));
-            },
-            
-            obtenerProductos: function() {
-                return this.productos;
-            }
+    function configurarEventosInventario(type, productos, config) {
+        const prefix = getInputPrefix(type);
+        const elements = getInputElements(prefix, type); 
+        
+        // Solo necesitamos pasar el 'type' y los 'elements'
+        setupEventListeners(type, elements);
+    }
+        
+    function getInputElements(prefix, type) {
+        const idsToFind = {
+            inputCodigo: `inputCodigo${prefix}`,
+            inputDesc: `inputDescripcion${prefix}`,
+            inputUbicacion: `inputUbicacion${prefix}`,
+            inputCantidad: `inputCantidad${prefix}`,
+            inputValor: `inputValor${prefix}`,
+            btnExportar: `btnExportar-${type}`,
+            cantidadCell: `cantidadCell${prefix}`
         };
 
-                
+        console.group(`[Depuración] Buscando elementos para tipo: '${type}', prefijo: '${prefix}'`);
+        console.log("IDs que se van a buscar:", idsToFind);
+        
+        const elements = {};
+        for (const key in idsToFind) {
+            const id = idsToFind[key];
+            elements[key] = document.getElementById(id);
+            if (elements[key] === null) {
+                console.error(`¡ERROR! No se encontró el elemento con ID: '${id}'`);
+            }
+        }
+        console.groupEnd();
+        
+        return elements;
+    }
 
-        // Inicialización robusta al cargar la página
-        document.addEventListener('DOMContentLoaded', function() {
-            // 1. Inicializa el módulo compartido PRIMERO.
-            // Esto asegura que la lista de productos (InventarioCompartido.productos)
-            // se cargue desde localStorage o se cree con los datos por defecto si no existe.
-            InventarioCompartido.init();
+    
+    function setupEventListeners(type, elements) {
+        const config = getInventoryConfig(type); // Obtenemos la config UNA SOLA VEZ al principio.
 
-            // 2. Luego, inicializa el módulo específico de la página (Almacén).
-            // Ahora AlmacenModule puede confiar en que InventarioCompartido está listo y 
-            // tiene todos los productos cargados en memoria.
-            AlmacenModule.init();
+        // --- Lógica de búsqueda en tiempo real (debounced) ---
+        const handleSearch = (searchValue, searchBy) => {
+            let producto = null;
+            if (!searchValue) {
+                clearProductFields(elements, searchBy);
+                resetCurrentItem(type);
+                actualizarGrafica(type, null);
+                return;
+            }
+
+            const searchLower = searchValue.toLowerCase();
+            if (searchBy === 'codigo') {
+                producto = InventarioCompartido.obtenerProductos().find(p => p.codigo.toLowerCase().startsWith(searchLower));
+            } else {
+                producto = InventarioCompartido.obtenerProductos().find(p => p.descripcion.toLowerCase().startsWith(searchLower));
+            }
+            
+            if (producto) {
+                // Validamos que el producto sugerido pertenezca a la pestaña actual
+                if (config.filterFn(producto)) {
+                    updateAuxiliaryFields(producto, elements, searchBy);
+                    setCurrentItem(type, producto, elements);
+                    actualizarGrafica(type, getCurrentItem(type));
+                }
+            } else {
+                clearProductFields(elements, searchBy);
+                resetCurrentItem(type);
+                actualizarGrafica(type, null);
+            }
+        };
+        const debouncedSearch = debounce(handleSearch, 300);
+
+
+        // --- Listener para el input de CÓDIGO ---
+        elements.inputCodigo.addEventListener('input', (event) => {
+            const currentValue = event.target.value;
+            const productoSeleccionado = InventarioCompartido.buscarProducto(currentValue);
+            
+            // Verificamos si es una selección EXACTA y si pertenece a la pestaña actual
+            if (productoSeleccionado && productoSeleccionado.codigo === currentValue) {
+                if (config.filterFn(productoSeleccionado)) {
+                    // El producto es exacto Y del tipo correcto. Fijamos la selección.
+                    updateAllProductFields(productoSeleccionado, elements);
+                    setCurrentItem(type, productoSeleccionado, elements);
+                    actualizarGrafica(type, getCurrentItem(type));
+                }
+                // Si no es del tipo correcto, no hacemos nada, dejamos que el usuario siga escribiendo.
+            } else {
+                // Si no es una selección exacta, realizamos la búsqueda sugerida.
+                debouncedSearch(currentValue, 'codigo');
+            }
         });
 
+        // --- Listener para el input de DESCRIPCIÓN ---
+        elements.inputDesc.addEventListener('input', (event) => {
+            const currentValue = event.target.value;
+            const productoSeleccionado = InventarioCompartido.buscarProductoPorDescripcion(currentValue);
+
+            // Verificamos si es una selección EXACTA y si pertenece a la pestaña actual
+            if (productoSeleccionado && productoSeleccionado.descripcion === currentValue) {
+                if (config.filterFn(productoSeleccionado)) {
+                    // El producto es exacto Y del tipo correcto. Fijamos la selección.
+                    updateAllProductFields(productoSeleccionado, elements);
+                    setCurrentItem(type, productoSeleccionado, elements);
+                    actualizarGrafica(type, getCurrentItem(type));
+                }
+            } else {
+                debouncedSearch(currentValue, 'descripcion');
+            }
+        });
+        
+        // --- Listeners para los otros campos (sin cambios) ---
+        elements.inputUbicacion.addEventListener('change', function() {
+            const currentItem = getCurrentItem(type);
+            if (currentItem) {
+                currentItem.ubicacion = this.value;
+                actualizarGrafica(type, currentItem);
+            }
+        });
+
+        elements.inputValor.addEventListener('change', function() {
+            const currentItem = getCurrentItem(type);
+            if (currentItem) {
+                currentItem.valor = parseFloat(this.value) || 0;
+                actualizarGrafica(type, currentItem);
+            }
+        });
+        
+        elements.btnExportar.addEventListener('click', () => exportarAExcel(type));
+    }
+        
+        
+        function updateAllProductFields(producto, elements) {
+            elements.inputCodigo.value = producto.codigo || '';
+            elements.inputDesc.value = producto.descripcion || '';
+            elements.inputCantidad.value = producto.cantidad || 0;
+            elements.inputValor.value = producto.valor || 0;
+            elements.inputUbicacion.value = producto.ubicacion || ubicacionesDisponibles[0];
+            elements.inputCantidad.disabled = false;
+            elements.inputValor.disabled = false;
+        }
+
+        function updateAuxiliaryFields(producto, elements, searchBy) {
+            if (searchBy === 'codigo') {
+                elements.inputDesc.value = producto.descripcion || '';
+            } else {
+                elements.inputCodigo.value = producto.codigo || '';
+            }
+            
+            elements.inputCantidad.value = producto.cantidad || 0;
+            elements.inputValor.value = producto.valor || 0;
+            elements.inputUbicacion.value = producto.ubicacion || ubicacionesDisponibles[0];
+            elements.inputCantidad.disabled = false;
+            elements.inputValor.disabled = false;
+        }
+
+        function clearProductFields(elements, searchBy) {
+            if (searchBy === 'codigo') {
+                elements.inputDesc.value = '';
+            } else {
+                elements.inputCodigo.value = '';
+            }
+            elements.inputCantidad.value = 0;
+            elements.inputValor.value = '';
+            elements.inputCantidad.disabled = true;
+            elements.inputValor.disabled = true;
+        }
+    
+    // ==========================================================================
+    // MANEJO DE ITEMS ACTUALES
+    // ==========================================================================
+    
+    function getCurrentItem(type) {
+        switch(type) {
+            case 'tuberia': return itemActual;
+            case 'accesorios': return itemActualAccesorio;
+            case 'otros': return itemActualOtros;
+            default: return null;
+        }
+    }
+    
+    function setCurrentItem(type, producto, elements) {
+        const item = {
+            ...producto,
+            ubicacion: elements.inputUbicacion.value,
+            valor: parseFloat(elements.inputValor.value) || 0,
+            cantidad: parseFloat(elements.inputCantidad.value) || 0
+        };
+        
+        switch(type) {
+            case 'tuberia': itemActual = item; break;
+            case 'accesorios': itemActualAccesorio = item; break;
+            case 'otros': itemActualOtros = item; break;
+        }
+    }
+    
+    function resetCurrentItem(type) {
+        switch(type) {
+            case 'tuberia': itemActual = null; break;
+            case 'accesorios': itemActualAccesorio = null; break;
+            case 'otros': itemActualOtros = null; break;
+        }
+    }
+    
+    // ==========================================================================
+    // INICIALIZACIÓN
+    // ==========================================================================
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof InventarioCompartido === 'undefined') {
+            console.error('InventarioCompartido no está disponible');
+            return;
+        }
+        
+        loadInventory('tuberia');
+    });
+    
         
     </script>
-</body>
-</html>
+
+
+</div>

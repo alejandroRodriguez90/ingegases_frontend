@@ -6,172 +6,56 @@
 
 console.log("Cargando inventario-global.js... (Instancia Única)");
 
-// Definir accesoriosData si no existe
-if (typeof accesoriosData === 'undefined') {
-  var accesoriosData = {}; // Objeto vacío como fallback
-}
-
 window.InventarioCompartido = (function() {
-  // 1. CONSTANTES Y VARIABLES PRIVADAS
+  // 1. ÁMBITO PRIVADO DEL MÓDULO
   const STORAGE_KEY = 'inventarioCompartido';
   let productos = [];
   let initialized = false;
     
-// 2. FUNCIONES PRIVADAS DE UTILIDAD
-const normalizarCodigo = (codigo) => codigo.toString().trim().toUpperCase();
+  // --- Funciones privadas de utilidad ---
+  const normalizarCodigo = (codigo) => codigo.toString().trim().toUpperCase();
   
-const cargarDesdeLocalStorage = function() {
-    try {
-        const datosGuardados = localStorage.getItem(STORAGE_KEY);
-        if (datosGuardados) {
-            const parsedData = JSON.parse(datosGuardados);
-            
-            // Validar estructura de datos (corregido el paréntesis faltante)
-            if (Array.isArray(parsedData)) {
-                productos = parsedData;
-                console.log(`Inventario cargado (${productos.length} productos)`);
-            } else {
-                console.warn("Datos en localStorage no son válidos. Reinicializando...");
-                this.inicializarDatosPorDefecto();
-            }
-        }
-    } catch (error) {
-        console.error("Error al cargar desde localStorage:", error);
-        // Recuperación: limpiar datos corruptos
-        localStorage.removeItem(STORAGE_KEY);
-        this.inicializarDatosPorDefecto();
-    }
-};
-
-const guardarDatos = function() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(productos));
-    console.log("Datos guardados en localStorage.");
-    window.dispatchEvent(new CustomEvent('vistaDebeActualizarse'));
-  } catch (error) {
-    console.error("Error al guardar en localStorage:", error);
-  }
-};
-
-const manejarEventoStorage = (event) => {
-  if (event.key === STORAGE_KEY) {
-    console.log("Evento storage recibido. Actualizando inventario...");
-    cargarDesdeLocalStorage();
-    window.dispatchEvent(new CustomEvent('vistaDebeActualizarse', {
-      detail: { source: 'storage' }
-    }));
-  }
-};
-  
-  // 3. FUNCIONALIDAD PÚBLICA
-  return {
-    init: function() {
-      if (initialized) {
-        console.log("Inventario ya inicializado");
-        return;
-      }
-      
+  const cargarDesdeLocalStorage = function() {
       try {
-        cargarDesdeLocalStorage();
-        
-        // Configurar proxy para reactividad
-        this.productos = new Proxy(productos, {
-          get: (target, prop) => {
-            if (prop === 'length') return target.length;
-            if (typeof prop === 'symbol') return target[prop];
-            const index = parseInt(prop);
-            if (!isNaN(index)) return target[index];
-            return target[prop];
-          },
-          set: (target, prop, value) => {
-            const index = parseInt(prop);
-            if (!isNaN(index)) {
-              target[index] = value;
-              guardarDatos();
-            }
-            return true;
+          const datosGuardados = localStorage.getItem(STORAGE_KEY);
+          if (datosGuardados) {
+              const parsedData = JSON.parse(datosGuardados);
+              if (Array.isArray(parsedData) && parsedData.length > 0) {
+                  productos = parsedData;
+                  console.log(`Inventario cargado desde localStorage (${productos.length} productos)`);
+                  return true;
+              }
+              console.warn("Datos en localStorage no son válidos o están vacíos.");
           }
-        });
-        
-        // Configurar listeners
-        window.addEventListener('storage', manejarEventoStorage);
-        
-        initialized = true;
-        window.dispatchEvent(new CustomEvent('inventarioReady'));
-        
       } catch (error) {
-        console.error("Error al inicializar inventario:", error);
-        try {
-          localStorage.removeItem(STORAGE_KEY);
-          this.inicializarDatosPorDefecto();
-          initialized = true;
-        } catch (recoveryError) {
-          console.error("Error en recuperación:", recoveryError);
-        }
+          console.error("Error al cargar desde localStorage:", error);
       }
-    },
+      return false;
+  };
 
-    actualizarDesdeLocalStorage: function() {
+  const guardarDatos = function() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(productos));
+      console.log("Datos guardados en localStorage.");
+      // Disparamos un evento para que otras partes de la app sepan que el inventario cambió.
+      window.dispatchEvent(new CustomEvent('inventarioActualizado'));
+    } catch (error) {
+      console.error("Error al guardar en localStorage:", error);
+    }
+  };
+
+  const manejarEventoStorage = (event) => {
+    if (event.key === STORAGE_KEY) {
+      console.log("Evento storage recibido. Actualizando inventario desde otra pestaña...");
       cargarDesdeLocalStorage();
-      console.log("Inventario actualizado desde localStorage");
-    },
+      window.dispatchEvent(new CustomEvent('inventarioActualizado'));
+    }
+  };
     
-    buscarProducto: function(codigo) {
-      if (!initialized) this.init();
-      if (!productos || productos.length === 0) {
-        console.warn("Inventario vacío. Reinicializando...");
-        this.inicializarDatosPorDefecto();
-      }
-      
-      const codigoBuscado = normalizarCodigo(codigo);
-      
-      // 1. Buscar coincidencia exacta
-      const productoExacto = productos.find(p => 
-        normalizarCodigo(p.codigo) === codigoBuscado
-      );
-      if (productoExacto) return productoExacto;
-      
-      // 2. Buscar coincidencia parcial (solo si el código tiene al menos 3 caracteres)
-      if (codigoBuscado.length >= 3) {
-        return productos.find(p => 
-          normalizarCodigo(p.codigo).includes(codigoBuscado)
-        );
-      }
-      
-      return null;
-    },
-    
-    generarAccesorios: function(material, tipo, detalles, startCodigo, prefijo = '') {
-      const accesorios = [];
-      let codigoCounter = startCodigo;
-      
-      if (Array.isArray(detalles)) {
-        detalles.forEach(diametro => {
-          accesorios.push({
-            codigo: "IYR" + codigoCounter.toString().padStart(4, '0'),
-            descripcion: `${tipo}${material.replace(/\s+/g, '')}${prefijo}${diametro}`
-          });
-          codigoCounter++;
-        });
-      } else if (typeof detalles === 'object' && detalles !== null) {
-        for (const [subtipo, subdetalles] of Object.entries(detalles)) {
-          const nuevos = this.generarAccesorios(
-            material, 
-            tipo, 
-            subdetalles, 
-            codigoCounter,
-            `${prefijo}${prefijo ? ' ' : ''}${subtipo} `
-          );
-          accesorios.push(...nuevos);
-          codigoCounter += nuevos.length;
-        }
-      }
-      
-      return accesorios;
-    },
-    
-    inicializarDatosPorDefecto: function() {
+    const inicializarDatosPorDefecto = function() {
+      console.log("Inicializando con datos por defecto...");
       const tuberias = [
+
         {codigo: "IYR0001", descripcion: "TuberíaCobre K 1/4"},
         {codigo: "IYR0002", descripcion: "TuberíaCobre K 3/8"},
         {codigo: "IYR0003", descripcion: "TuberíaCobre K 1/2"},
@@ -1320,60 +1204,97 @@ const manejarEventoStorage = (event) => {
         {codigo: "IYR1070", descripcion: "Tee Bronce 1.1/2 NPTH"}
       ];
 
-      let codigoCounter = 95 + accesoriosGenerados.length; // Ajustar contador
+      const otrosProductos = [
+        {codigo: "IYR2001", descripcion: "Válvula de seguridad 1/2"},
+        {codigo: "IYR2002", descripcion: "Manómetro 0-100 psi"},
+        {codigo: "IYR2003", descripcion: "Filtro de línea 3/4"},
+        {codigo: "IYR2004", descripcion: "Regulador de presión"},
+        {codigo: "IYR2005", descripcion: "Junta tórica 1/2"},
+        {codigo: "IYR2006", descripcion: "Cinta de teflón"},
+        {codigo: "IYR2007", descripcion: "Soldadura para cobre"},
+        {codigo: "IYR2008", descripcion: "Flux para soldar"},
+        {codigo: "IYR2009", descripcion: "Abrazadera de acero 2 pulg"},
+        {codigo: "IYR2010", descripcion: "Cepillo para tubos"}
+    ];
 
-      // Solo un bucle para procesar accesoriosData
-      if (accesoriosData && typeof accesoriosData === 'object') {
-        for (const [material, tipos] of Object.entries(accesoriosData)) {
-          for (const [tipo, detalles] of Object.entries(tipos)) {
-            const nuevosAccesorios = this.generarAccesorios(
-              material, 
-              tipo, 
-              detalles, 
-              codigoCounter
-            );
-            accesoriosGenerados.push(...nuevosAccesorios);
-            codigoCounter += nuevosAccesorios.length;
-          }
-        }
-      } else {
-        console.warn("accesoriosData no está definido. No se generarán accesorios automáticos.");
+    productos = [...tuberias, ...accesoriosGenerados, ...otrosProductos].map(p => ({
+      ...p,
+      cantidad: 0,
+      valor: 0.00,
+      ubicacion: 'N/A' 
+    }));
+
+    guardarDatos();
+    console.log(`Inventario inicializado con ${productos.length} productos.`);
+  };
+  
+  return {
+    init: function() {
+      if (initialized) {
+        return;
+      }
+      // Intenta cargar desde localStorage. Si falla, usa los datos por defecto.
+      if (!cargarDesdeLocalStorage()) {
+        inicializarDatosPorDefecto();
       }
       
-      productos = [...tuberias, ...accesoriosGenerados].map(p => ({
-        ...p,
-        cantidad: 0,
-        valor: 0.00,
-        ubicacion: 'N/A' 
-      }));
-
-      guardarDatos();
-      console.log(`Inventario inicializado con ${productos.length} productos.`);
-    },
-
-    
-    actualizarCantidadProducto: function(codigo, cantidad, valor, ubicacion) {
-      const producto = this.buscarProducto(codigo);
-      if (producto) {
-        producto.cantidad = (producto.cantidad || 0) + cantidad;
-        if (valor) producto.valor = valor;
-        if (ubicacion) producto.ubicacion = ubicacion;
-        
-        guardarDatos();
-        return true;
-      }
-      console.error(`Producto con código ${codigo} no encontrado.`);
-      return false;
+      window.addEventListener('storage', manejarEventoStorage);
+      initialized = true;
+      console.log("InventarioCompartido listo.");
+      window.dispatchEvent(new CustomEvent('inventarioReady'));
     },
     
     obtenerProductos: function() {
       if (!initialized) this.init();
-      return [...productos];
+      return [...productos]; // Devuelve una copia para evitar mutaciones accidentales.
+    },
+    
+    obtenerProductosPorTipo: function(tipo) {
+      if (!initialized) this.init();
+      const todos = this.obtenerProductos();
+      switch(tipo) {
+        case 'tuberia': 
+          return todos.filter(p => p.descripcion.includes('Tubería'));
+        case 'accesorios':
+          return todos.filter(p => !p.descripcion.includes('Tubería') && !p.codigo.startsWith('IYR2'));
+        case 'otros':
+          return todos.filter(p => p.codigo.startsWith('IYR2'));
+        default:
+          return todos;
+      }
+    },
+
+    buscarProducto: function(codigo) {
+      if (!initialized) this.init();
+      const codigoBuscado = normalizarCodigo(codigo);
+      return productos.find(p => normalizarCodigo(p.codigo) === codigoBuscado);
+    },
+    
+    buscarProductoPorDescripcion: function(descripcion) {
+      if (!initialized) this.init();
+      const descripcionBuscada = descripcion.trim().toLowerCase();
+      return productos.find(p => p.descripcion.toLowerCase() === descripcionBuscada);
+    },
+    
+    actualizarProducto: function(codigo, cantidad, valor = null, ubicacion = null) {
+      if (!initialized) this.init();
+      const productoIndex = productos.findIndex(p => p.codigo === codigo);
+      if (productoIndex === -1) {
+        console.error(`No se pudo actualizar: producto con código ${codigo} no encontrado.`);
+        return false;
+      }
+      
+      productos[productoIndex].cantidad = (productos[productoIndex].cantidad || 0) + cantidad;
+      if (valor !== null) productos[productoIndex].valor = valor;
+      if (ubicacion) productos[productoIndex].ubicacion = ubicacion;
+      
+      guardarDatos();
+      return true;
     }
   };
 })();
 
-// Auto-inicialización
+// Auto-inicialización cuando el DOM esté listo.
 document.addEventListener('DOMContentLoaded', () => {
-    InventarioCompartido.init();
-  });
+  InventarioCompartido.init();
+});
