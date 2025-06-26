@@ -1277,7 +1277,8 @@ window.InventarioCompartido = (function() {
     },
     
     actualizarProducto: function(codigo, cantidad, valor = null, ubicacion = null) {
-      if (!initialized) this.init();
+      if (!initialized) this.init(); // <-- AÑADE ESTA LÍNEA DE SEGURIDAD
+
       const productoIndex = productos.findIndex(p => p.codigo === codigo);
       if (productoIndex === -1) {
         console.error(`No se pudo actualizar: producto con código ${codigo} no encontrado.`);
@@ -1290,7 +1291,9 @@ window.InventarioCompartido = (function() {
       
       guardarDatos();
       return true;
+      
     }
+    
   };
 })();
 

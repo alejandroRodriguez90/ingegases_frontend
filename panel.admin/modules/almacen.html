@@ -797,524 +797,304 @@
         }
     </style>
 
-    <script>
+<script src="js/inventario-global.js"></script>
+<script src="js/almacen-service.js"></script> 
 
+<script>
+
+    
     window.AlmacenModule = {
-        // ========= DATOS =========
-        almacenesData: {
-            'BOG001': { 
-                id: 'BOG001', 
-                nombre: 'Almacén Bogotá', 
-                ubicacion: 'Carrera 54 #17A - 69 Bogota, Barrio Puente Aranda.', 
-                encargado: 'Santiago Ariza', 
-                contacto: 'ingegasesyredes@gmail.com', 
-                productos: [] 
-            },
-            'CAL001': { 
-                id: 'CAL001', 
-                nombre: 'Almacen Cali', 
-                ubicacion: 'Calle 12 # 68 - 109 Cali, Barrio el Limonar', 
-                encargado: 'Carlos Lopez', 
-                contacto: 'ingegasesyredes@gmail.com', 
-                productos: [] 
-            }
-        },
+        // ===================================
+        //         PROPIEDADES
+        // ===================================
+        almacenesData: null,
         currentAlmacenId: null,
-
-        // ========= INICIALIZACIÓN =========
-
+        STORAGE_KEY: 'almacenesData',
+    
+        // ===================================
+        //         INICIALIZACIÓN
+        // ===================================
         init: function() {
-            // Verificar dependencias
-            if (typeof InventarioCompartido === 'undefined') {
-            console.error('InventarioCompartido no está disponible');
-            this.mostrarErrorDependencias();
-            return;
-            }
-
-            // Cargar datos de localStorage si existen
             this.cargarDatosLocales();
-            
-            // Renderizar interfaz
-            this.renderizarInterfaz();
-            
-            // Configurar event listeners
-            this.configurarEventListeners();
+            console.log("✅ AlmacenModule.init() ejecutado. Datos cargados:", JSON.parse(JSON.stringify(this.almacenesData)));
         },
-
-        mostrarSugerencias: function(productos, inputElement, esCodigo) {
-        // Implementar un dropdown con las sugerencias
-        const dropdown = document.createElement('div');
-        dropdown.className = 'autocomplete-dropdown';
-        
-        productos.forEach(producto => {
-            const item = document.createElement('div');
-            item.textContent = esCodigo ? producto.codigo : producto.descripcion;
-            item.onclick = () => {
-            inputElement.value = esCodigo ? producto.codigo : producto.descripcion;
-            const otroCampo = esCodigo 
-                ? document.getElementById('productoDescripcion') 
-                : document.getElementById('productoCodigo');
-            otroCampo.value = esCodigo ? producto.descripcion : producto.codigo;
-            dropdown.remove();
-            };
-            dropdown.appendChild(item);
-        });
-        
-        inputElement.parentNode.appendChild(dropdown);
-        },
-
-
-        // ========= RENDERIZADO DE VISTAS =========
-        renderAlmacenCard: function(almacen) {
-            return `
-                <div class="almacen-card" onclick="AlmacenModule.openAlmacenDetails('${almacen.id}')">
-                    <div class="card-icon-container">
-                        <div class="card-icon">${almacen.id === 'BOG001' ? '🏙️' : '🌇'}</div>
-                    </div>
-                    <h3>${almacen.nombre}</h3>
-                    <p class="card-description">${almacen.ubicacion}</p>
-                </div>`;
-        },
-        
-        renderAlmacenBody: function(almacen) {
-            const tablaHTML = almacen.productos.length > 0 
-                ? this.generarTablaInventario(almacen.productos, almacen.id)
-                : `
-                    <div class="alm-empty-state">
-                        <div class="alm-empty-icon"><i class="fas fa-box-open"></i></div>
-                        <h4>No hay productos registrados</h4>
-                        <p>Agregue productos para comenzar a gestionar el inventario</p>
-                        <button class="alm-btn alm-btn-primary" onclick="AlmacenModule.openProductoModal('${almacen.id}')">
-                            <i class="fas fa-plus"></i> Agregar primer producto
-                        </button>
-                    </div>`;
-            
-            return `
-                <div class="alm-modal-section">
-                    <div class="alm-info-header">
-                        <div class="alm-info-icon"><i class="fas fa-warehouse"></i></div>
-                        <div>
-                            <h3 class="alm-section-title">${almacen.nombre}</h3>
-                            <p class="alm-info-subtitle">${almacen.ubicacion}</p>
-                        </div>
-                    </div>
-                    <div class="alm-info-grid">
-                        <div class="alm-info-card">
-                            <i class="fas fa-user-tie alm-info-card-icon"></i>
-                            <h4>Encargado</h4>
-                            <p>${almacen.encargado}</p>
-                        </div>
-                        <div class="alm-info-card">
-                            <i class="fas fa-envelope alm-info-card-icon"></i>
-                            <h4>Contacto</h4>
-                            <p><a href="mailto:${almacen.contacto}">${almacen.contacto}</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="alm-modal-section">
-                    <div class="alm-section-header">
-                        <h3 class="alm-section-title"><i class="fas fa-boxes"></i> Inventario</h3>
-                        <button class="alm-btn alm-btn-primary" onclick="AlmacenModule.openProductoModal('${almacen.id}')">
-                            <i class="fas fa-plus"></i> Agregar Producto
-                        </button>
-                    </div>
-                    ${tablaHTML}
-                </div>`;
-        },
-
-        generarTablaInventario: function(productos, almacenId) {
-            const filas = productos.map(producto => `
-                <tr>
-                    <td>${producto.codigo}</td>
-                    <td>${producto.descripcion}</td>
-                    <td><div class="alm-quantity-control"><span class="alm-quantity-value">${producto.cantidad}</span></div></td>
-                    <td class="alm-actions">
-                        <button class="alm-btn alm-btn-sm alm-btn-warning" onclick="AlmacenModule.modificarCantidad('${almacenId}', '${producto.id}', -1)">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button class="alm-btn alm-btn-sm alm-btn-success" onclick="AlmacenModule.modificarCantidad('${almacenId}', '${producto.id}', 1)">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <button class="alm-btn alm-btn-sm alm-btn-danger" onclick="AlmacenModule.deleteProducto('${almacenId}', '${producto.id}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>`).join('');
-            
-            return `
-                <div class="alm-table-responsive">
-                    <table class="alm-table">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Descripción</th>
-                                <th>Cantidad</th>
-                                <th class="alm-actions">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>${filas}</tbody>
-                    </table>
-                </div>
-                <div class="alm-inventory-summary">
-                    <div class="alm-summary-item">
-                        <span>Tipos de productos:</span> 
-                        <strong>${productos.length}</strong>
-                    </div>
-                    <div class="alm-summary-item">
-                        <span>Total unidades:</span> 
-                        <strong>${productos.reduce((sum,p)=>sum+p.cantidad,0)}</strong>
-                    </div>
-                </div>`;
-        },
-
-
-       
-         // ========= GESTIÓN DE MODALES =========
-         openProductoModal: function(almacenId) {
-            this.currentAlmacenId = almacenId;
-            document.getElementById('productoModalTitle').innerText = "Agregar Producto";
-            document.getElementById('productoForm').reset();
-            
-            const codigoInput = document.getElementById('productoCodigo');
-            const descripcionInput = document.getElementById('productoDescripcion');
-            const valorInput = document.getElementById('productoValor');
-            
-            // Limpiar datalist existente
-            const datalist = document.getElementById('productoCodigosOptions');
-            datalist.innerHTML = '';
-            
-            // Obtener productos del inventario global
-            const todosProductos = InventarioCompartido.obtenerProductos();
-            console.log("Productos cargados para autocompletar:", todosProductos.length);
-            
-            // Llenar datalist con opciones
-            todosProductos.forEach(producto => {
-                const option = document.createElement('option');
-                option.value = producto.codigo;
-                option.textContent = `${producto.codigo} - ${producto.descripcion}`;
-                option.setAttribute('data-descripcion', producto.descripcion);
-                if (producto.valor) option.setAttribute('data-valor', producto.valor);
-                datalist.appendChild(option);
-            });
-            
-            // Configurar autocompletado - Mejorado
-            const handleAutocomplete = () => {
-                const codigo = codigoInput.value.trim().toUpperCase();
-                const producto = todosProductos.find(p => p.codigo.toUpperCase() === codigo);
-                
-                if (producto) {
-                    descripcionInput.value = producto.descripcion;
-                    if (valorInput) valorInput.value = producto.valor || '';
+    
+        cargarDatosLocales: function() {
+            try {
+                const datosGuardados = localStorage.getItem(this.STORAGE_KEY);
+                if (datosGuardados) {
+                    this.almacenesData = JSON.parse(datosGuardados);
+                    console.log("📦 Datos de almacenes cargados desde localStorage.");
                 } else {
-                    // Si no encuentra coincidencia exacta, buscar parcial
-                    const partialMatch = todosProductos.find(p => 
-                        p.codigo.toUpperCase().includes(codigo)
-                    );
-                    if (partialMatch && codigo.length > 3) {
-                        descripcionInput.value = partialMatch.descripcion;
-                        if (valorInput) valorInput.value = partialMatch.valor || '';
-                    } else {
-                        descripcionInput.value = '';
-                        if (valorInput) valorInput.value = '';
-                    }
+                    console.warn("⚠️ No se encontraron datos de almacén. Creando por defecto.");
+                    this.almacenesData = {
+                        'BOG001': { id: 'BOG001', nombre: 'Almacén Bogotá', ubicacion: 'Carrera 54 #17A - 69 Bogota, Barrio Puente Aranda.', encargado: 'Santiago Ariza', contacto: 'ingegasesyredes@gmail.com', productos: [] },
+                        'CAL001': { id: 'CAL001', nombre: 'Almacen Cali', ubicacion: 'Calle 12 # 68 - 109 Cali, Barrio el Limonar', encargado: 'Carlos Lopez', contacto: 'ingegasesyredes@gmail.com', productos: [] }
+                    };
+                    this.guardarDatosLocales();
                 }
-            };
-            
-            // Remover event listener anterior si existe
-            codigoInput.removeEventListener('input', handleAutocomplete);
-            // Agregar nuevo event listener
-            codigoInput.addEventListener('input', handleAutocomplete);
-            
-            // Abrir modal
-            this.openModal('productoModal');
-            
-            // Enfocar el campo de código
-            setTimeout(() => codigoInput.focus(), 100);
+            } catch (error) {
+                console.error("❌ Error crítico cargando datos de almacenes:", error);
+                this.almacenesData = {};
+            }
         },
-
-
+    
+        guardarDatosLocales: function() {
+            try {
+                localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.almacenesData));
+            } catch (error) {
+                console.error("Error guardando datos de almacenes:", error);
+            }
+        },
+    
+        // ===================================
+        //         GESTIÓN DE MODALES
+        // ===================================
         openAlmacenDetails: function(almacenId) {
-            this.currentAlmacenId = almacenId;
+            if (this.almacenesData === null) {
+                console.warn("⚠️ Datos no listos en el momento del clic. Forzando inicialización ahora...");
+                this.init();
+            }
+            console.log(`🖱️ Clic para abrir el almacén: ${almacenId}.`);
             const almacen = this.almacenesData[almacenId];
-            if (!almacen) return;
-            
+            if (!almacen) {
+                console.error(`❌ No se encontró ningún almacén con el id "${almacenId}".`);
+                return;
+            }
+            this.currentAlmacenId = almacenId;
             document.getElementById('almacenModalTitle').innerText = almacen.nombre;
             document.getElementById('almacenModalBody').innerHTML = this.renderAlmacenBody(almacen);
             this.openModal('almacenDetailModal');
         },
-
+    
+        openProductoModal: function(almacenId) {
+            this.currentAlmacenId = almacenId;
+            document.getElementById('productoForm').reset();
+            document.getElementById('productoModalTitle').innerText = "Agregar Producto";
+            const codigoInput = document.getElementById('productoCodigo');
+            const descripcionInput = document.getElementById('productoDescripcion');
+            const valorInput = document.getElementById('productoValor');
+            const datalist = document.getElementById('productoCodigosOptions');
+            datalist.innerHTML = '';
+            InventarioCompartido.obtenerProductos().forEach(p => {
+                const option = document.createElement('option');
+                option.value = p.codigo;
+                datalist.appendChild(option);
+            });
+            const handleAutocomplete = () => {
+                const producto = InventarioCompartido.buscarProducto(codigoInput.value);
+                descripcionInput.value = producto ? producto.descripcion : '';
+                valorInput.value = producto ? (producto.valor || '') : '';
+            };
+            if (!codigoInput._listenerAttached) {
+                codigoInput.addEventListener('input', handleAutocomplete);
+                codigoInput._listenerAttached = true;
+            }
+            this.openModal('productoModal');
+            setTimeout(() => codigoInput.focus(), 100);
+        },
+    
         openModal: function(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.add('show');
             document.body.classList.add('alm-modal-open');
-            document.getElementById(id).classList.add('show');
         },
-
+    
         closeModal: function(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.remove('show');
             document.body.classList.remove('alm-modal-open');
-            document.getElementById(id).classList.remove('show');
         },
-
-        // ========= OPERACIONES CRUD =========
+    
+        // ===================================
+        //         RENDERIZADO DE VISTAS
+        // ===================================
+        renderAlmacenBody: function(almacen) {
+            const tablaHTML = almacen.productos.length > 0 ? this.generarTablaInventario(almacen.productos, almacen.id) : `<div class="alm-empty-state"><div class="alm-empty-icon"><i class="fas fa-box-open"></i></div><h4>No hay productos registrados</h4><p>Agregue productos para comenzar a gestionar el inventario</p><button class="alm-btn alm-btn-primary" onclick="AlmacenModule.openProductoModal('${almacen.id}')"><i class="fas fa-plus"></i> Agregar primer producto</button></div>`;
+            return `<div class="alm-modal-section"><div class="alm-info-header"><div class="alm-info-icon"><i class="fas fa-warehouse"></i></div><div><h3 class="alm-section-title">${almacen.nombre}</h3><p class="alm-info-subtitle">${almacen.ubicacion}</p></div></div><div class="alm-info-grid"><div class="alm-info-card"><i class="fas fa-user-tie alm-info-card-icon"></i><h4>Encargado</h4><p>${almacen.encargado}</p></div><div class="alm-info-card"><i class="fas fa-envelope alm-info-card-icon"></i><h4>Contacto</h4><p><a href="mailto:${almacen.contacto}">${almacen.contacto}</a></p></div></div></div><div class="alm-modal-section"><div class="alm-section-header"><h3 class="alm-section-title"><i class="fas fa-boxes"></i> Inventario</h3><button class="alm-btn alm-btn-primary" onclick="AlmacenModule.openProductoModal('${almacen.id}')"><i class="fas fa-plus"></i> Agregar Producto</button></div>${tablaHTML}</div>`;
+        },
+    
+        generarTablaInventario: function(productos, almacenId) {
+            const filas = productos.map(producto => `<tr><td>${producto.codigo}</td><td>${producto.descripcion}</td><td><div class="alm-quantity-control"><span class="alm-quantity-value">${producto.cantidad}</span></div></td><td class="alm-actions"><button class="alm-btn alm-btn-sm alm-btn-warning" onclick="AlmacenModule.modificarCantidad('${almacenId}', '${producto.id}', -1)"><i class="fas fa-minus"></i></button><button class="alm-btn alm-btn-sm alm-btn-success" onclick="AlmacenModule.modificarCantidad('${almacenId}', '${producto.id}', 1)"><i class="fas fa-plus"></i></button><button class="alm-btn alm-btn-sm alm-btn-danger" onclick="AlmacenModule.deleteProducto('${almacenId}', '${producto.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+            return `<div class="alm-table-responsive"><table class="alm-table"><thead><tr><th>Código</th><th>Descripción</th><th>Cantidad</th><th class="alm-actions">Acciones</th></tr></thead><tbody>${filas}</tbody></table></div><div class="alm-inventory-summary"><div class="alm-summary-item"><span>Tipos de productos:</span> <strong>${productos.length}</strong></div><div class="alm-summary-item"><span>Total unidades:</span> <strong>${productos.reduce((sum, p) => sum + (p.cantidad || 0), 0)}</strong></div></div>`;
+        },
+    
+        // ===================================
+        //         OPERACIONES CRUD
+        // ===================================
         saveProducto: function() {
             this.mostrarCarga(true);
-            
             try {
+                // 1. Recolectar y validar datos (sin cambios)
                 const codigo = document.getElementById('productoCodigo').value.trim().toUpperCase();
-                const cantidad = parseInt(document.getElementById('productoCantidad').value) || 0;
-                const valorInput = document.getElementById('productoValor');
-                const valor = valorInput ? parseFloat(valorInput.value) || null : null;
+                const cantidad = parseInt(document.getElementById('productoCantidad').value, 10);
+                const valor = parseFloat(document.getElementById('productoValor').value) || 0;
 
-                if (!codigo) throw new Error("El código es requerido");
-                if (cantidad <= 0) throw new Error("La cantidad debe ser mayor a cero");
-
-                // MEJORA: Validar el código contra la fuente de datos, no el DOM.
-                const productoGlobal = InventarioCompartido.buscarProducto(codigo);
-                if (!productoGlobal) {
-                    throw new Error(`El código "${codigo}" no es válido o no existe en el inventario global.`);
+                if (!codigo || !cantidad || cantidad <= 0) {
+                    throw new Error("El Código y una Cantidad positiva son requeridos.");
                 }
                 
-                // Usamos la descripción del inventario global para asegurar consistencia
-                const descripcionFinal = productoGlobal.descripcion;
-                
+                const productoGlobal = InventarioCompartido.buscarProducto(codigo);
+                if (!productoGlobal) {
+                    throw new Error(`El código de producto "${codigo}" no es válido.`);
+                }
+
                 const almacen = this.almacenesData[this.currentAlmacenId];
-                if (!almacen) throw new Error("Almacén no encontrado");
-
-                const exito = InventarioCompartido.actualizarCantidadProducto(codigo, cantidad, valor, almacen.nombre);
-                if (!exito) throw new Error("Error al actualizar el inventario global.");
-
-                const productoExistente = almacen.productos.find(p => p.codigo === codigo);
+                if (!almacen) {
+                    throw new Error("No se ha seleccionado un almacén.");
+                }
                 
-                if (productoExistente) {
-                    productoExistente.cantidad += cantidad;
-                    if (valor) productoExistente.valor = valor;
+                const ubicacionNombre = almacen.nombre.includes('Bogotá') ? 'Bogotá' : 'Cali';
+
+                // 2. Guardar en el servicio global (localStorage) - (Esto ya funcionaba)
+                AlmacenService.actualizarStock(ubicacionNombre, codigo, cantidad, valor);
+
+                const productoEnAlmacen = almacen.productos.find(p => p.codigo === codigo);
+
+                if (productoEnAlmacen) {
+                    // Si el producto ya estaba en la tabla, solo sumamos la cantidad
+                    productoEnAlmacen.cantidad += cantidad;
+                    productoEnAlmacen.valor = valor; // Y actualizamos su valor
                 } else {
+                    // Si era nuevo para este almacén, lo añadimos a la lista `almacen.productos`
                     almacen.productos.push({
-                        id: Date.now().toString(),
+                        id: 'prod_' + Date.now(), // ID único para las acciones de la tabla (+, -, borrar)
                         codigo: codigo,
-                        descripcion: descripcionFinal,
+                        descripcion: productoGlobal.descripcion,
                         cantidad: cantidad,
-                        valor: valor,
-                        ubicacion: almacen.nombre
+                        valor: valor
                     });
                 }
                 
+                // 3. Guardamos el estado completo de los almacenes (con el nuevo producto)
                 this.guardarDatosLocales();
+
+                // 4. Cerramos la modal de agregar y refrescamos la de detalles
                 this.closeModal('productoModal');
-                this.refreshAlmacenDetails();
-                this.mostrarNotificacion('success', 'Producto actualizado', `${cantidad} unidades de ${descripcionFinal} agregadas.`);
+                this.refreshAlmacenDetails(); // Esta función redibuja la tabla
                 
+                this.mostrarNotificacion('success', 'Stock Actualizado', `${cantidad} unidades de "${codigo}" guardadas para ${ubicacionNombre}.`);
+
             } catch (error) {
-                console.error("Error al guardar producto:", error);
+                console.error("❌ Error en saveProducto:", error);
+                this.mostrarNotificacion('error', 'Error al Guardar', error.message);
+            } finally {
+                this.mostrarCarga(false);
+            }
+        },
+    
+        modificarCantidad: function(almacenId, productoId, cambio) {
+            this.mostrarCarga(true);
+            try {
+                const almacen = this.almacenesData[almacenId];
+                const producto = almacen.productos.find(p => p.id === productoId);
+                if (!producto) throw new Error("Producto no encontrado en el almacén.");
+                if (producto.cantidad + cambio < 0) throw new Error("La cantidad no puede ser negativa.");
+                const exitoGlobal = InventarioCompartido.actualizarProducto(producto.codigo, cambio);
+                if (!exitoGlobal) throw new Error("Error actualizando el inventario global.");
+                producto.cantidad += cambio;
+                if (producto.cantidad === 0) {
+                    almacen.productos = almacen.productos.filter(p => p.id !== productoId);
+                    this.mostrarNotificacion('info', 'Producto Eliminado', `Se eliminó "${producto.descripcion}" del almacén al llegar a 0 unidades.`);
+                }
+                this.guardarDatosLocales();
+                this.refreshAlmacenDetails();
+            } catch (error) {
+                console.error("❌ Error en modificarCantidad:", error);
                 this.mostrarNotificacion('error', 'Error', error.message);
             } finally {
                 this.mostrarCarga(false);
             }
         },
-
-            mostrarCarga: function(mostrar) {
-                const loader = document.getElementById('globalLoader') || 
-                    document.createElement('div');
-                loader.id = 'globalLoader';
-                loader.innerHTML = `
-                    <div class="spinner" style="
-                        width: 50px;
-                        height: 50px;
-                        border: 5px solid #f3f3f3;
-                        border-top: 5px solid #3498db;
-                        border-radius: 50%;
-                        animation: spin 1s linear infinite;
-                    "></div>
-                    <style>
-                        @keyframes spin {
-                            0% { transform: rotate(0deg); }
-                            100% { transform: rotate(360deg); }
-                        }
-                    </style>
-                `;
-                loader.style.cssText = `
-                    position: fixed; 
-                    top: 0; 
-                    left: 0; 
-                    width: 100%; 
-                    height: 100%; 
-                    background: rgba(0,0,0,0.5); 
-                    display: ${mostrar ? 'flex' : 'none'}; 
-                    justify-content: center; 
-                    align-items: center;
-                    z-index: 9999;
-                `;
-                
-                if (mostrar && !document.getElementById('globalLoader')) {
-                    document.body.appendChild(loader);
-                } else if (!mostrar && document.getElementById('globalLoader')) {
-                    loader.style.display = 'none';
-                }
-            },
-
-            mostrarNotificacion: function(tipo, titulo, mensaje) {
-                // Eliminar notificación anterior si existe
-                const notifAnterior = document.getElementById('almNotificacion');
-                if (notifAnterior) {
-                    notifAnterior.remove();
-                }
-
-                const iconos = {
-                    success: '✅',
-                    error: '❌',
-                    warning: '⚠️',
-                    info: 'ℹ️'
-                };
-
-                const notificacion = document.createElement('div');
-                notificacion.id = 'almNotificacion';
-                notificacion.innerHTML = `
-                    <div style="
-                        position: fixed;
-                        bottom: 20px;
-                        right: 20px;
-                        padding: 15px 20px;
-                        background: ${tipo === 'error' ? '#f8d7da' : 
-                                    tipo === 'success' ? '#d4edda' : 
-                                    tipo === 'warning' ? '#fff3cd' : '#d1ecf1'};
-                        color: ${tipo === 'error' ? '#721c24' : 
-                                tipo === 'success' ? '#155724' : 
-                                tipo === 'warning' ? '#856404' : '#0c5460'};
-                        border: 1px solid ${tipo === 'error' ? '#f5c6cb' : 
-                                        tipo === 'success' ? '#c3e6cb' : 
-                                        tipo === 'warning' ? '#ffeeba' : '#bee5eb'};
-                        border-radius: 5px;
-                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                        z-index: 10000;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    ">
-                        <span style="font-size: 1.5em;">${iconos[tipo] || 'ℹ️'}</span>
-                        <div>
-                            <strong>${titulo}</strong><br>
-                            ${mensaje}
-                        </div>
-                    </div>
-                `;
-
-                document.body.appendChild(notificacion);
-
-                // Auto-ocultar después de 5 segundos
-                setTimeout(() => {
-                    if (document.getElementById('almNotificacion')) {
-                        document.getElementById('almNotificacion').remove();
-                    }
-                }, 5000);
-            },
-
-    // ========= PERSISTENCIA DE DATOS =========
-    guardarDatosLocales: function() {
-        localStorage.setItem('almacenesData', JSON.stringify(this.almacenesData));
-    },
-
-    // ========= MÉTODOS MODIFICADOS =========
-    modificarCantidad: function(almacenId, productoId, cambio) {
-        this.mostrarCarga(true);
-        try {
-            const almacen = this.almacenesData[almacenId];
-            const producto = almacen.productos.find(p => p.id === productoId);
-            
-            if (!producto) throw new Error("Producto no encontrado");
-            
-            // Validar que no quede cantidad negativa
-            if (producto.cantidad + cambio < 0) {
-                throw new Error("No se puede reducir la cantidad por debajo de cero");
-            }
-
-            // Actualizar inventario global
-            const exito = InventarioCompartido.actualizarCantidadProducto(
-                producto.codigo, 
-                cambio, 
-                producto.valor, 
-                almacen.nombre
-            );
-            
-            if (!exito) throw new Error("Error al actualizar inventario global");
-            
-            // Actualizar inventario local
-            producto.cantidad += cambio;
-            
-            // Eliminar si cantidad llega a cero
-            if (producto.cantidad === 0) {
-                almacen.productos = almacen.productos.filter(p => p.id !== productoId);
-            }
-            
-            this.guardarDatosLocales();
-            this.refreshAlmacenDetails();
-            
-        } catch (error) {
-            this.mostrarNotificacion('error', 'Error', error.message);
-            console.error("Error en modificarCantidad:", error);
-        } finally {
-            this.mostrarCarga(false);
-        }
-    },
-
-    deleteProducto: function(almacenId, productoId) {
-        const almacen = this.almacenesData[almacenId];
-        const producto = almacen.productos.find(p => p.id === productoId);
-        
-        if (producto && confirm('¿Está seguro de eliminar este producto?')) {
-            // Actualizar inventario global (restar la cantidad)
-            const exito = InventarioCompartido.actualizarCantidadProducto(
-                producto.codigo, 
-                -producto.cantidad, 
-                null, 
-                almacen.nombre
-            );
-            
-            if (exito) {
-                // Eliminar del almacén local
-                almacen.productos = almacen.productos.filter(p => p.id !== productoId);
+    
+        deleteProducto: function(almacenId, productoId) {
+            if (!confirm('¿Seguro que desea eliminar todas las unidades de este producto del almacén? Las unidades se devolverán al inventario global.')) return;
+            this.mostrarCarga(true);
+            try {
+                const almacen = this.almacenesData[almacenId];
+                const productoIndex = almacen.productos.findIndex(p => p.id === productoId);
+                if (productoIndex === -1) throw new Error("Producto no encontrado.");
+                const productoAEliminar = almacen.productos[productoIndex];
+                const exitoGlobal = InventarioCompartido.actualizarProducto(productoAEliminar.codigo, -productoAEliminar.cantidad);
+                if (!exitoGlobal) throw new Error("Error actualizando el inventario global.");
+                almacen.productos.splice(productoIndex, 1);
                 this.guardarDatosLocales();
                 this.refreshAlmacenDetails();
+                this.mostrarNotificacion('success', 'Producto Eliminado', `Se devolvieron ${productoAEliminar.cantidad} unidades de "${productoAEliminar.descripcion}" al inventario.`);
+            } catch (error) {
+                console.error("❌ Error en deleteProducto:", error);
+                this.mostrarNotificacion('error', 'Error', error.message);
+            } finally {
+                this.mostrarCarga(false);
             }
-        }
-    },
-
-
-        // ========= FUNCIONES UTILITARIAS =========
+        },
+    
+        // ===================================
+        //         FUNCIONES UTILITARIAS
+        // ===================================
         refreshAlmacenDetails: function() {
             if (this.currentAlmacenId) {
-                document.getElementById('almacenModalBody').innerHTML = 
-                    this.renderAlmacenBody(this.almacenesData[this.currentAlmacenId]);
+                const almacen = this.almacenesData[this.currentAlmacenId];
+                if (almacen) {
+                    document.getElementById('almacenModalBody').innerHTML = this.renderAlmacenBody(almacen);
+                }
             }
+        },
+    
+        mostrarCarga: function(mostrar) {
+            let loader = document.getElementById('globalLoader');
+            if (mostrar && !loader) {
+                loader = document.createElement('div');
+                loader.id = 'globalLoader';
+                loader.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;justify-content:center;align-items:center;z-index:9999;`;
+                loader.innerHTML = `<div style="width:50px;height:50px;border:5px solid #f3f3f3;border-top:5px solid #3498db;border-radius:50%;animation:spin 1s linear infinite;"></div><style>@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}</style>`;
+                document.body.appendChild(loader);
+            }
+            if (loader) loader.style.display = mostrar ? 'flex' : 'none';
+        },
+    
+        mostrarNotificacion: function(tipo, titulo, mensaje) {
+            const notifAnterior = document.getElementById('almNotificacion');
+            if (notifAnterior) notifAnterior.remove();
+            const iconos = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+            const notificacion = document.createElement('div');
+            notificacion.id = 'almNotificacion';
+            const bgColor = { success: '#d4edda', error: '#f8d7da', warning: '#fff3cd', info: '#d1ecf1' };
+            const textColor = { success: '#155724', error: '#721c24', warning: '#856404', info: '#0c5460' };
+            notificacion.innerHTML = `<div style="position:fixed;bottom:20px;right:20px;padding:15px 20px;background:${bgColor[tipo]||'#d1ecf1'};color:${textColor[tipo]||'#0c5460'};border:1px solid ${bgColor[tipo]||'#bee5eb'};border-radius:5px;box-shadow:0 4px 8px rgba(0,0,0,0.1);z-index:10000;display:flex;align-items:center;gap:10px;"><span style="font-size:1.5em;">${iconos[tipo]||'ℹ️'}</span><div><strong>${titulo}</strong><br>${mensaje}</div></div>`;
+            document.body.appendChild(notificacion);
+            setTimeout(() => { if (document.getElementById('almNotificacion')) document.getElementById('almNotificacion').remove() }, 5000);
         },
         
         guardarInventario: function() {
-            // Aquí iría la lógica para guardar los cambios en el almacén
-            alert("Inventario guardado correctamente");
+            this.mostrarNotificacion('info', 'Guardado', 'Los cambios se guardan automáticamente.');
             this.closeModal('almacenDetailModal');
         },
-        
+    
         exportarInventario: function() {
             alert("Función de exportar inventario en desarrollo.");
         }
     };
-
-    function initAlmacenModule() {
-    if (typeof InventarioCompartido === 'undefined' || !InventarioCompartido.initialized) {
-        setTimeout(initAlmacenModule, 100);
-        return;
+    
+    // ===================================
+    //         INICIALIZACIÓN DE LA APP
+    // ===================================
+    function startApp() {
+        console.log("🚀 Arrancando la aplicación...");
+        if (typeof InventarioCompartido === 'undefined') {
+            console.error("❌ ERROR CRÍTICO: El script 'inventario-global.js' no se ha cargado.");
+            return;
+        }
+        InventarioCompartido.init();
+        console.log("✔️ InventarioCompartido inicializado.");
+        AlmacenModule.init();
+        console.log("🏁 Aplicación lista.");
     }
     
-    if (InventarioCompartido.obtenerProductos().length > 0) {
-        AlmacenModule.init();
-    } else {
-        console.error('Inventario vacío. Intentando inicializar datos por defecto...');
-        InventarioCompartido.inicializarDatosPorDefecto();
-        setTimeout(() => AlmacenModule.init(), 500);
-    }
-}
-
-    // Iniciar después de que el DOM esté listo
-    document.addEventListener('DOMContentLoaded', initAlmacenModule);
-
+    document.addEventListener('DOMContentLoaded', startApp);
     </script>
+
+    
 </div>
 
        

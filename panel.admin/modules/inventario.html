@@ -29,7 +29,7 @@
 
                 <div class="inventario-card" onclick="navigateToOtros()">
                     <div class="card-icon-container">
-                        <div class="card-icon">⚠️</div>
+                        <div class="card-icon">⚠️️</div>
                     </div>
                     <h3>Otros</h3>
                     <p class="card-description">Inventario de otros y control detallado.</p>
@@ -435,40 +435,49 @@
         
 
         .export-button-container {
-            padding: 15px;
+            padding: 15px 20px; /* Un poco más de padding lateral */
             text-align: right;
+            background-color: #f8f9fa; /* Un fondo sutil para separar de la tabla */
+            border-top: 1px solid #e0e0e0;
         }
 
-        #btnExportar, #btnExportarAccesorios {
-            background-color: #2ecc71;
+        /* Estilo principal para TODOS los botones de exportar usando su CLASE */
+        .btn-export {
+            /* --- Apariencia --- */
+            background-color: #1D6F42; /* Un verde más corporativo (tipo Excel) */
             color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
+            font-weight: 500;
             font-size: 14px;
-            transition: background-color 0.3s ease;
-        }
-
-        #btnExportar:hover, #btnExportarAccesorios:hover {
-            background-color: #27ae60;
-        }
-
-        /* Actualiza esta regla CSS para incluir el nuevo botón */
-        #btnExportar, #btnExportarAccesorios, #btnExportarOtros {
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
+            padding: 10px 20px; /* Más cómodo al hacer clic */
+            border-radius: 6px; /* Bordes más suaves */
+            border: none; /* Sin borde */
             cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
+
+            /* --- Efectos y Transiciones --- */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Sombra sutil para darle profundidad */
+            transition: all 0.3s ease; /* Transición suave para todos los cambios */
+            
+            /* --- Para alinear icono y texto (ver mejora opcional) --- */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* Espacio entre el icono y el texto */
         }
 
-        #btnExportar:hover, #btnExportarAccesorios:hover, #btnExportarOtros:hover {
-            background-color: #27ae60;
+        /* Efecto al pasar el mouse (hover): el botón se "eleva" y cambia de color */
+        .btn-export:hover {
+            background-color: #28965a; /* Un verde más brillante */
+            transform: translateY(-2px); /* Efecto de "levantarse" */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
         }
+
+        /* Efecto al hacer clic (active): el botón se "hunde" */
+        .btn-export:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        
 
         /* CONTENEDORES DE GRÁFICAS - IGUALES PARA AMBOS */
         .chart-container {
@@ -608,6 +617,9 @@
             /* ... */
         }
     </style>
+
+<script src="js/inventario-global.js"></script>
+<script src="js/almacen-service.js"></script> 
 
 <script>
 
@@ -795,7 +807,13 @@
                     </tbody>
                 </table>
                 <div class="export-button-container">
-                    <button id="btnExportar-${type}" class="btn-export">Exportar a Excel</button>
+                    <button id="btnExportar-${type}" class="btn-export">
+                        <!-- Icono SVG de hoja de cálculo/exportar -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5v2zM3 12v-2h2v2H3zm0 1h2v2H4a1 1 0 0 1-1-1v-1zm3 2v-2h3v2H6zm4 0v-2h2v1a1 1 0 0 1-1 1h-1zm3-3h-2v-2h2v2zm0-3h-2V9h2v2z"/>
+                        </svg>
+                        <span>Exportar a Excel</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -843,7 +861,7 @@
             </td>
             <td>
                 <select id="inputUbicacion${prefix}" class="form-select">
-                    ${ubicacionesDisponibles.map(ubicacion => 
+                    ${AppConfig.ubicacionesDisponibles.map(ubicacion => 
                         `<option value="${ubicacion}">${ubicacion}</option>`).join('')}
                 </select>
             </td>
@@ -954,38 +972,21 @@
                     borderWidth: 1
                 }]
             },
-            options: getChartOptions(config, currentItem)
+            options: getChartOptions(type, config, currentItem)
         });
     }
     
-    function getChartOptions(config, currentItem) {
+    function getChartOptions(type, config, currentItem) { // <-- CAMBIO: Añadimos 'type' aquí
         return {
             indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                x: { 
-                    beginAtZero: true,
-                    ticks: { precision: 0 }
-                },
-                y: { 
-                    ticks: { 
-                        autoSkip: false,
-                        font: { size: 12 }
-                    } 
-                }
-            },
+            scales: { /* ... */ },
             plugins: {
                 legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        afterLabel: () => {
-                            return `Código: ${currentItem.codigo}\nValor: $${currentItem.valor?.toFixed(2) || 'N/A'}`;
-                        }
-                    }
-                }
+                tooltip: { /* ... */ }
             },
-            layout: type === 'accesorios' ? {
+            layout: type === 'accesorios' ? { // <-- AHORA ESTO FUNCIONARÁ
                 padding: { top: 10, right: 10, bottom: 10, left: 10 }
             } : {}
         };
@@ -1045,176 +1046,109 @@
         document.body.removeChild(link);
     }
     
+
     // ==========================================================================
-    // CONFIGURACIÓN DE EVENTOS
+    // CONFIGURACIÓN DE EVENTOS (VERSIÓN FINAL Y CORREGIDA)
     // ==========================================================================
 
     function configurarEventosInventario(type, productos, config) {
         const prefix = getInputPrefix(type);
-        const elements = getInputElements(prefix, type); 
-        
-        // Solo necesitamos pasar el 'type' y los 'elements'
-        setupEventListeners(type, elements);
+        // 1. Obtenemos la colección de elementos del DOM
+        const elements = getInputElements(prefix, type);
+
+        // 2. Verificamos que los elementos se encontraron
+        if (!elements.inputCodigo || !elements.inputDesc || !elements.inputUbicacion) {
+            console.error("❌ Error crítico: No se encontraron los elementos del formulario para la pestaña:", type);
+            return; // Detenemos la ejecución para evitar más errores
+        }
+
+        // 3. Pasamos AMBOS parámetros, 'type' y 'elements', a la función principal.
+        setupEventListeners(type, elements, config);
     }
-        
+
+    // getInputElements ya debería estar bien, pero asegúrate que se parece a esto:
     function getInputElements(prefix, type) {
-        const idsToFind = {
+        const ids = {
             inputCodigo: `inputCodigo${prefix}`,
             inputDesc: `inputDescripcion${prefix}`,
             inputUbicacion: `inputUbicacion${prefix}`,
-            inputCantidad: `inputCantidad${prefix}`,
+            cantidadCell: `cantidadCell${prefix}`, // Celda <td> que contiene el input/span de cantidad
             inputValor: `inputValor${prefix}`,
-            btnExportar: `btnExportar-${type}`,
-            cantidadCell: `cantidadCell${prefix}`
+            btnExportar: `btnExportar-${type}`
         };
-
-        console.group(`[Depuración] Buscando elementos para tipo: '${type}', prefijo: '${prefix}'`);
-        console.log("IDs que se van a buscar:", idsToFind);
-        
         const elements = {};
-        for (const key in idsToFind) {
-            const id = idsToFind[key];
-            elements[key] = document.getElementById(id);
-            if (elements[key] === null) {
-                console.error(`¡ERROR! No se encontró el elemento con ID: '${id}'`);
-            }
+        for (const key in ids) {
+            elements[key] = document.getElementById(ids[key]);
         }
-        console.groupEnd();
-        
         return elements;
     }
 
-    
-    function setupEventListeners(type, elements) {
-        const config = getInventoryConfig(type); // Obtenemos la config UNA SOLA VEZ al principio.
+    // setupEventListeners con la lógica que ya teníamos, pero ahora SÍ recibe 'elements'
+    function setupEventListeners(type, elements, config) {
 
-        // --- Lógica de búsqueda en tiempo real (debounced) ---
-        const handleSearch = (searchValue, searchBy) => {
-            let producto = null;
-            if (!searchValue) {
-                clearProductFields(elements, searchBy);
+        // Función central que actualiza la vista basado en la selección
+        const actualizarVistaPorSeleccion = () => {
+            const codigo = elements.inputCodigo.value;
+            const ubicacion = elements.inputUbicacion.value;
+
+            const productoBase = InventarioCompartido.buscarProducto(codigo);
+            if (!productoBase || !config.filterFn(productoBase)) {
+                elements.inputDesc.value = '';
+                elements.inputValor.value = '';
+                elements.cantidadCell.innerHTML = getCantidadInputHtml(type, 0);
                 resetCurrentItem(type);
                 actualizarGrafica(type, null);
                 return;
             }
-
-            const searchLower = searchValue.toLowerCase();
-            if (searchBy === 'codigo') {
-                producto = InventarioCompartido.obtenerProductos().find(p => p.codigo.toLowerCase().startsWith(searchLower));
-            } else {
-                producto = InventarioCompartido.obtenerProductos().find(p => p.descripcion.toLowerCase().startsWith(searchLower));
-            }
             
-            if (producto) {
-                // Validamos que el producto sugerido pertenezca a la pestaña actual
-                if (config.filterFn(producto)) {
-                    updateAuxiliaryFields(producto, elements, searchBy);
-                    setCurrentItem(type, producto, elements);
-                    actualizarGrafica(type, getCurrentItem(type));
-                }
+            elements.inputDesc.value = productoBase.descripcion;
+            
+            const stockInfo = AlmacenService.consultarStock(ubicacion, codigo);
+            if (stockInfo) {
+                elements.cantidadCell.innerHTML = getCantidadInputHtml(type, stockInfo.cantidad);
+                elements.inputValor.value = stockInfo.valor;
+                setCurrentItem(type, { ...productoBase, ...stockInfo, ubicacion }, elements);
             } else {
-                clearProductFields(elements, searchBy);
-                resetCurrentItem(type);
-                actualizarGrafica(type, null);
+                elements.cantidadCell.innerHTML = getCantidadInputHtml(type, 0);
+                elements.inputValor.value = 0;
+                setCurrentItem(type, { ...productoBase, cantidad: 0, valor: 0, ubicacion }, elements);
             }
+            actualizarGrafica(type, getCurrentItem(type));
         };
-        const debouncedSearch = debounce(handleSearch, 300);
 
+        // --- ASIGNACIÓN DE LISTENERS ---
 
-        // --- Listener para el input de CÓDIGO ---
-        elements.inputCodigo.addEventListener('input', (event) => {
-            const currentValue = event.target.value;
-            const productoSeleccionado = InventarioCompartido.buscarProducto(currentValue);
-            
-            // Verificamos si es una selección EXACTA y si pertenece a la pestaña actual
-            if (productoSeleccionado && productoSeleccionado.codigo === currentValue) {
-                if (config.filterFn(productoSeleccionado)) {
-                    // El producto es exacto Y del tipo correcto. Fijamos la selección.
-                    updateAllProductFields(productoSeleccionado, elements);
-                    setCurrentItem(type, productoSeleccionado, elements);
-                    actualizarGrafica(type, getCurrentItem(type));
-                }
-                // Si no es del tipo correcto, no hacemos nada, dejamos que el usuario siga escribiendo.
-            } else {
-                // Si no es una selección exacta, realizamos la búsqueda sugerida.
-                debouncedSearch(currentValue, 'codigo');
+        const onSelection = (event) => {
+            let producto;
+            // Priorizamos la búsqueda por código si ambos campos tienen algo
+            if (elements.inputCodigo.value) {
+                producto = InventarioCompartido.buscarProducto(elements.inputCodigo.value);
+            } else if (elements.inputDesc.value) {
+                producto = InventarioCompartido.buscarProductoPorDescripcion(elements.inputDesc.value);
             }
-        });
 
-        // --- Listener para el input de DESCRIPCIÓN ---
-        elements.inputDesc.addEventListener('input', (event) => {
-            const currentValue = event.target.value;
-            const productoSeleccionado = InventarioCompartido.buscarProductoPorDescripcion(currentValue);
-
-            // Verificamos si es una selección EXACTA y si pertenece a la pestaña actual
-            if (productoSeleccionado && productoSeleccionado.descripcion === currentValue) {
-                if (config.filterFn(productoSeleccionado)) {
-                    // El producto es exacto Y del tipo correcto. Fijamos la selección.
-                    updateAllProductFields(productoSeleccionado, elements);
-                    setCurrentItem(type, productoSeleccionado, elements);
-                    actualizarGrafica(type, getCurrentItem(type));
-                }
-            } else {
-                debouncedSearch(currentValue, 'descripcion');
+            if (producto) {
+                elements.inputCodigo.value = producto.codigo;
+                elements.inputDesc.value = producto.descripcion;
             }
-        });
+            // Siempre llamamos a actualizar para que limpie si el producto no es válido
+            actualizarVistaPorSeleccion();
+        };
         
-        // --- Listeners para los otros campos (sin cambios) ---
-        elements.inputUbicacion.addEventListener('change', function() {
-            const currentItem = getCurrentItem(type);
-            if (currentItem) {
-                currentItem.ubicacion = this.value;
-                actualizarGrafica(type, currentItem);
-            }
-        });
-
-        elements.inputValor.addEventListener('change', function() {
-            const currentItem = getCurrentItem(type);
-            if (currentItem) {
-                currentItem.valor = parseFloat(this.value) || 0;
-                actualizarGrafica(type, currentItem);
-            }
-        });
-        
+        elements.inputCodigo.addEventListener('change', onSelection);
+        elements.inputDesc.addEventListener('change', onSelection);
+        elements.inputUbicacion.addEventListener('change', actualizarVistaPorSeleccion);
         elements.btnExportar.addEventListener('click', () => exportarAExcel(type));
+
+        // Listener para actualizaciones en tiempo real
+        window.addEventListener('stockActualizado', () => {
+            if (document.body.contains(elements.inputCodigo) && elements.inputCodigo.value) {
+                console.log("Evento 'stockActualizado' recibido. Refrescando...");
+                actualizarVistaPorSeleccion();
+            }
+        });
     }
-        
-        
-        function updateAllProductFields(producto, elements) {
-            elements.inputCodigo.value = producto.codigo || '';
-            elements.inputDesc.value = producto.descripcion || '';
-            elements.inputCantidad.value = producto.cantidad || 0;
-            elements.inputValor.value = producto.valor || 0;
-            elements.inputUbicacion.value = producto.ubicacion || ubicacionesDisponibles[0];
-            elements.inputCantidad.disabled = false;
-            elements.inputValor.disabled = false;
-        }
 
-        function updateAuxiliaryFields(producto, elements, searchBy) {
-            if (searchBy === 'codigo') {
-                elements.inputDesc.value = producto.descripcion || '';
-            } else {
-                elements.inputCodigo.value = producto.codigo || '';
-            }
-            
-            elements.inputCantidad.value = producto.cantidad || 0;
-            elements.inputValor.value = producto.valor || 0;
-            elements.inputUbicacion.value = producto.ubicacion || ubicacionesDisponibles[0];
-            elements.inputCantidad.disabled = false;
-            elements.inputValor.disabled = false;
-        }
-
-        function clearProductFields(elements, searchBy) {
-            if (searchBy === 'codigo') {
-                elements.inputDesc.value = '';
-            } else {
-                elements.inputCodigo.value = '';
-            }
-            elements.inputCantidad.value = 0;
-            elements.inputValor.value = '';
-            elements.inputCantidad.disabled = true;
-            elements.inputValor.disabled = true;
-        }
     
     // ==========================================================================
     // MANEJO DE ITEMS ACTUALES
@@ -1230,11 +1164,21 @@
     }
     
     function setCurrentItem(type, producto, elements) {
+        let cantidadActual = 0;
+        const inputCantidad = elements.cantidadCell.querySelector('input[type="number"]');
+        
+        if (inputCantidad) {
+        
+            cantidadActual = parseFloat(inputCantidad.value) || 0;
+        } else {
+
+        }
+
         const item = {
             ...producto,
             ubicacion: elements.inputUbicacion.value,
             valor: parseFloat(elements.inputValor.value) || 0,
-            cantidad: parseFloat(elements.inputCantidad.value) || 0
+            cantidad: cantidadActual // <-- Usamos la variable que calculamos
         };
         
         switch(type) {
@@ -1263,6 +1207,22 @@
         }
         
         loadInventory('tuberia');
+    });
+
+    // ==========================================================================
+    // LISTENER PARA ACTUALIZACIONES EN TIEMPO REAL
+    // ==========================================================================
+    window.addEventListener('inventarioActualizado', () => {
+        console.log('🔄 Evento "inventarioActualizado" detectado. Refrescando la vista...');
+        
+        // Obtenemos la pestaña activa actualmente
+        const activeTab = document.querySelector('.submenu-inventario button.active');
+        if (activeTab) {
+            // Extraemos el tipo de inventario del ID del botón (ej: 'tuberiaTab' -> 'tuberia')
+            const type = activeTab.id.replace('Tab', '');
+            // Volvemos a cargar el inventario para esa pestaña, que tomará los nuevos datos
+            loadInventory(type);
+        }
     });
     
         
