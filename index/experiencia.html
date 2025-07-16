@@ -1472,6 +1472,7 @@ function animateStats() {
 </section>
 
 
+<!-- ===== INICIO DEL FOOTER ===== -->
 <footer id="contacto" class="footer">
     <div class="footer-content">
         <div class="footer-grid">
@@ -1495,36 +1496,11 @@ function animateStats() {
             <div class="footer-column social-section">
                 <h3>Conéctate con Nosotros</h3>
                 <div class="social-links">
-                    <a href="https://www.facebook.com/Ingegasesyredes/?locale=es_LA" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="social-btn facebook" 
-                    aria-label="Facebook de Ingegases">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.instagram.com/ingegasesyredes/?hl=es-la" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="social-btn instagram" 
-                    aria-label="Instagram de Ingegases">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://wa.me/573112382636" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="social-btn whatsapp" 
-                    aria-label="WhatsApp de Ingegases">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="https://sgsst.co/publico" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="social-btn sgsst" 
-                    aria-label="Sistema de Gestión de Seguridad y Salud en el Trabajo">
-                        <span style="font-weight: bold; font-family: Arial, sans-serif;">S</span>
-                    </a>
+                    <a href="https://www.facebook.com/Ingegasesyredes/?locale=es_LA" target="_blank" rel="noopener noreferrer" class="social-btn facebook" aria-label="Facebook de Ingegases"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ingegasesyredes/?hl=es-la" target="_blank" rel="noopener noreferrer" class="social-btn instagram" aria-label="Instagram de Ingegases"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/573112382636" target="_blank" rel="noopener noreferrer" class="social-btn whatsapp" aria-label="WhatsApp de Ingegases"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://sgsst.co/publico" target="_blank" rel="noopener noreferrer" class="social-btn sgsst" aria-label="Sistema de Gestión de Seguridad y Salud en el Trabajo"><span style="font-weight: bold; font-family: Arial, sans-serif;">S</span></a>
                 </div>
-
                 <div class="business-hours">
                     <h4><i class="fas fa-building"></i> Sedes a Nivel Nacional</h4>
                     <p><i class="fas fa-map-marker-alt"></i> Carrera 54 #17A - 69 Bogota, Barrio Puente Aranda.</p>
@@ -1536,73 +1512,53 @@ function animateStats() {
             <!-- Columna 3: Formulario de cotización -->
             <div class="footer-column quotation-form">
                 <h3>¿Necesitas una Cotización?</h3>
-                <form id="cotizacionForm" class="quote-form" 
-                    action="https://formspree.io/f/roger.herrera@ingegasesyredes.com" 
-                    method="POST">
-                    
-                    <!-- Campos del formulario (agrega 'name' a cada campo) -->
+                <div id="cotizacionFields" class="quote-form">
                     <div class="input-group">
-                        <input type="text" name="nombre" placeholder="Nombre completo" required>
+                        <input type="text" id="quoteNombre" placeholder="Nombre completo" required>
                     </div>
                     <div class="input-group">
-                        <input type="email" name="email" placeholder="Correo electrónico" required>
+                        <input type="email" id="quoteEmail" placeholder="Correo electrónico" required>
                     </div>
                     <div class="input-group">
-                        <input type="tel" name="telefono" placeholder="Teléfono/Celular">
+                        <input type="tel" id="quoteTelefono" placeholder="Teléfono/Celular">
                     </div>
                     <div class="input-group">
-                        <textarea name="mensaje" placeholder="Describe tu proyecto o necesidad"></textarea>
+                        <textarea id="quoteMensaje" placeholder="Describe tu proyecto o necesidad"></textarea>
                     </div>
-                    
-                    <!-- Configuración adicional de Formspree -->
-                    <input type="hidden" name="_subject" value="Nueva cotización desde el sitio web">
-                    <input type="hidden" name="_replyto" value="%email%"> <!-- Auto-respuesta al remitente -->
-                    
-                    <button type="submit" class="btn-quote">
+                    <a href="#" id="enviarCotizacionBtn" class="btn-quote">
                         <span>Enviar Solicitud</span>
                         <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
+                    </a>
+                </div>
             </div>
-            <!-- Nueva Columna 5: Trabaja con Nosotros -->
+
+            <!-- Columna 4: Trabaja con Nosotros -->
             <div class="footer-column work-with-us">
                 <h3>Trabaja con Nosotros</h3>
-                <form id="trabajoForm" class="work-form" 
-                    action="https://formspree.io/f/roger.herrera@ingegasesyredes.com" 
-                    method="POST"
-                    enctype="multipart/form-data">
-                    
+                <div id="trabajoFields" class="work-form">
                     <div class="input-group">
-                        <input type="text" name="nombre" placeholder="Nombre completo" required>
+                        <input type="text" id="workNombre" placeholder="Nombre completo" required>
                     </div>
                     <div class="input-group">
-                        <input type="email" name="email" placeholder="Correo electrónico" required>
+                        <input type="email" id="workEmail" placeholder="Correo electrónico" required>
                     </div>
                     <div class="input-group">
-                        <input type="tel" name="telefono" placeholder="Teléfono/Celular" required>
+                        <input type="tel" id="workTelefono" placeholder="Teléfono/Celular" required>
                     </div>
-
-                    <div class="input-group file-upload">
-                        <label for="hoja-vida">
-                            <i class="fas fa-cloud-upload-alt"></i> Adjunta tu hoja de vida (PDF)
-                            <input type="file" id="hoja-vida" name="hoja_vida" accept=".pdf" required>
-                            <span class="file-name">No se ha seleccionado archivo</span>
-                        </label>
+                    <div class="input-group">
+                        <p style="font-size: 0.85rem; color: #666; text-align: center; padding: 10px; background-color: #f9f9f9; border-radius: 6px;">
+                            <i class="fas fa-info-circle"></i> Al enviar, se abrirá su cliente de correo.
+                            <strong>Por favor, no olvide adjuntar su hoja de vida (PDF).</strong>
+                        </p>
                     </div>
-                    
-                    <!-- Configuración adicional de Formspree -->
-                    <input type="hidden" name="_subject" value="Nueva solicitud de empleo">
-                    <input type="hidden" name="_replyto" value="%email%">
-                    <input type="hidden" name="_cc" value="rrhh@ingegases.com"> <!-- Correo específico para RRHH -->
-                    
-                    <button type="submit" class="btn-work">
+                    <a href="#" id="enviarTrabajoBtn" class="btn-work">
                         <span>Enviar Solicitud</span>
                         <i class="fas fa-briefcase"></i>
-                    </button>
-                </form>
+                    </a>
+                </div>
             </div>
 
-            <!-- Columna 4: Ubicación (MAPA) -->
+            <!-- Columna 5: Ubicación (MAPA) -->
             <div class="footer-column location">
                 <h3>Nuestra Sede Principal</h3>
                 <div class="map-wrapper">
@@ -1629,46 +1585,103 @@ function animateStats() {
                     </div>
                 </div>
             </div>
-
-            
         </div>
     </div>
 
     <!-- Footer inferior -->
-<div class="footer-bottom">
-<div class="footer-legal">
-    <a href="#">Términos y condiciones</a>
-    <span class="divider">•</span>
-    <a href="#">Política de privacidad</a>
-    <span class="divider">•</span>
-    <a href="#">Aviso legal</a>
-</div>
-<p class="copyright">
-    &copy; 2025 Ingegases y Redes s.a.s. Todos los derechos reservados. 
-    <span class="nit">NIT: 900901915</span>
-    <span class="divider">•</span>
-    <a href="firma.html" class="dev-credit">DesarrolloWeb: @SmartDev</a>
-</p>
-</div>
+    <div class="footer-bottom">
+        <div class="footer-legal">
+            <a href="#">Términos y condiciones</a>
+            <span class="divider">•</span>
+            <a href="#">Política de privacidad</a>
+            <span class="divider">•</span>
+            <a href="#">Aviso legal</a>
+        </div>
+        <p class="copyright">
+            © 2025 Ingegases y Redes s.a.s. Todos los derechos reservados. 
+            <span class="nit">NIT: 900901915</span>
+            <span class="divider">•</span>
+            <a href="firma.html" class="dev-credit">DesarrolloWeb: @SmartDev</a>
+        </p>
+    </div>
+</footer>
 
-    <script>
+
+
+<!-- ===== SCRIPT FINAL PARA EXPERIENCIA ===== -->
+<script data-cfasync="false">
+    // --- LÓGICA DEL EFECTO DE CARGA (LOADER) ---
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            const loader = document.querySelector('.loading-overlay');
+            if (loader) {
+                loader.classList.add('fade-out');
+                setTimeout(() => {
+                    loader.remove();
+                }, 800);
+            }
+        }, 500);
+    });
+
+    // --- LÓGICA DE LOS FORMULARIOS  ---
+    document.addEventListener('DOMContentLoaded', function() {
         
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const loader = document.querySelector('.loading-overlay');
-                if (loader) {
-                    loader.classList.add('fade-out');
-                    
-                    // Elimina el loader después de la animación
-                    setTimeout(() => {
-                        loader.remove();
-                    }, 800);
-                }
-            }, 500); // Ajusta este tiempo según tu carga real
-        });
-    
-        </script>
-    
-    
+        // --- LÓGICA DE LOS FORMULARIOS DEL FOOTER ---
+        (function initContactForms() {
+            // FORMULARIO DE COTIZACIÓN
+            const quoteBtn = document.getElementById('enviarCotizacionBtn');
+            const quoteInputs = [
+                document.getElementById('quoteNombre'),
+                document.getElementById('quoteEmail'),
+                document.getElementById('quoteTelefono'),
+                document.getElementById('quoteMensaje')
+            ];
+
+            function updateQuoteLink() {
+                const nombre = quoteInputs[0].value;
+                const email = quoteInputs[1].value;
+                if (!nombre || !email) { return; }
+                const telefono = quoteInputs[2].value;
+                const mensaje = quoteInputs[3].value;
+                const destinatario = 'roger.herrera@ingegasesyredes.com';
+                const asunto = `Solicitud de Cotización de: ${nombre}`;
+                const cuerpo = `Hola, mi nombre es ${nombre}.\n\nEstoy interesado/a en una cotización y me gustaría que me contactaran.\n\nDetalles de mi solicitud:\n${mensaje}\n\nInformación de contacto:\nCorreo: ${email}\nTeléfono: ${telefono}\n\nGracias.`;
+                quoteBtn.href = `mailto:${destinatario}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+            }
+
+            if (quoteBtn) {
+                quoteInputs.forEach(input => input.addEventListener('keyup', updateQuoteLink));
+                quoteBtn.addEventListener('mouseover', updateQuoteLink);
+            }
+
+            // FORMULARIO TRABAJA CON NOSOTROS
+            const workBtn = document.getElementById('enviarTrabajoBtn');
+            const workInputs = [
+                document.getElementById('workNombre'),
+                document.getElementById('workEmail'),
+                document.getElementById('workTelefono')
+            ];
+            
+            function updateWorkLink() {
+                const nombre = workInputs[0].value;
+                const email = workInputs[1].value;
+                const telefono = workInputs[2].value;
+                if (!nombre || !email || !telefono) { return; }
+                const destinatario = 'roger.herrera@ingegasesyredes.com';
+                const asunto = `Solicitud de Empleo - ${nombre}`;
+                const cuerpo = `Hola, mi nombre es ${nombre} y estoy interesado/a en trabajar con ustedes.\n\nAdjunto mi hoja de vida para su consideración.\n\nMis datos de contacto son:\nCorreo: ${email}\nTeléfono: ${telefono}\n\n------------------------------------------------------\n(RECORDATORIO: Por favor, no olvide adjuntar su CV antes de enviar este correo).\n------------------------------------------------------\n`;
+                workBtn.href = `mailto:${destinatario}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+            }
+
+            if (workBtn) {
+                workInputs.forEach(input => input.addEventListener('keyup', updateWorkLink));
+                workBtn.addEventListener('mouseover', updateWorkLink);
+            }
+        })();
+    });
+</script>
+
+
 </body>
 </html>
+    

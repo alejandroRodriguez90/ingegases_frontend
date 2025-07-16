@@ -733,7 +733,6 @@
         const configs = {
             tuberia: {
                 title: 'Tubería',
-                // Lógica: La descripción incluye 'Tubería'
                 filterFn: p => p.descripcion.includes('Tubería'),
                 chartColor: 'rgba(54, 162, 235, 0.7)',
                 borderColor: 'rgba(54, 162, 235, 1)',
@@ -742,8 +741,8 @@
             },
             accesorios: {
                 title: 'Accesorios',
-                // Lógica: NO es tubería y su código NO empieza con 'IYR2'
-                filterFn: p => !p.descripcion.includes('Tubería') && !p.codigo.startsWith('IYR2'),
+                // Lógica actualizada: NO es tubería y su código NO empieza con 'IYR12'
+                filterFn: p => !p.descripcion.includes('Tubería') && !p.codigo.startsWith('IYR12'),
                 chartColor: 'rgba(255, 99, 132, 0.7)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 tabId: 'accesoriosTab',
@@ -751,16 +750,14 @@
             },
             otros: {
                 title: 'Otros',
-                // Lógica: Su código EMPIEZA con 'IYR2'
-                filterFn: p => p.codigo.startsWith('IYR2'),
+                // Lógica actualizada: Su código EMPIEZA con 'IYR12'
+                filterFn: p => p.codigo.startsWith('IYR12'),
                 chartColor: 'rgba(75, 192, 192, 0.7)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 tabId: 'otrosTab',
                 chartVar: 'chartOtros'
             }
         };
-        
-        // Devolvemos la configuración para el tipo solicitado.
         return configs[type];
     }
     

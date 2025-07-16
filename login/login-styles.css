@@ -69,8 +69,8 @@ h2 {
 
 /* Estilos para los grupos de entrada (inputs) */
 .input-group {
-    position: relative; /* Permite posicionar elementos hijos de manera absoluta */
-    margin-bottom: 30px; /* Espacio entre los campos */
+    position: relative; 
+    margin-bottom: 30px;
 }
 
 /* Estilos para los placeholders */
@@ -85,18 +85,21 @@ h2 {
 /* Estilos para los íconos dentro de los campos de entrada */
 .input-group .icon {
     position: absolute; /* Posicionamiento absoluto dentro del grupo */
+    top: 40px; /* Alinea verticalmente al 60% del grupo */
     left: 15px; /* Distancia desde la izquierda */
-    top: 65%; /* Alinea verticalmente al 60% del grupo */
-    transform: translateY(-50%); /* Ajuste fino para centrar verticalmente */
+    transform: translateY(50%); /* Ajuste fino para centrar verticalmente */
     font-size: 18px; /* Tamaño del ícono */
     color: #000000ef; /* Color del ícono */
     transition: left 0.5s ease; /* Transición suave para el movimiento */
+    pointer-events: none; /* Importante para no interferir con el click */
+    z-index: 2;
 }
 
+
 /* Efecto al hacer hover sobre los grupos de entrada o al enfocar el input */
-.input-group:hover .icon,
-.input-group input:focus + .icon {
-    left: calc(100% - 30px); /* Mueve el ícono hacia la derecha */
+.input-group input:focus ~ .icon,
+.input-group input:not(:placeholder-shown) ~ .icon {
+    left: calc(100% - 45px); /* <-- AJUSTE CLAVE: Usamos 45px para que quede dentro del padding */
 }
 
 /* Estilos para los campos de entrada (inputs) */

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login con Imagen de Fondo</title>
     <link rel="stylesheet" href="login-styles.css">
-    <script src="dashboard/admin-dashboard.html"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -19,14 +18,14 @@
                 <div class="input-group">
                     <span class="placeholder">Correo Electrónico</span>
                     <label for="email"></label>
-                    <i class="fas fa-envelope icon"></i>
                     <input type="email" id="email" name="email" required placeholder=" ">
+                    <i class="fas fa-envelope icon"></i>
                 </div>
                 <div class="input-group">
                     <span class="placeholder">Contraseña</span>
                     <label for="password"></label>
-                    <i class="fas fa-lock icon"></i>
                     <input type="password" id="password" name="password" required placeholder=" ">
+                    <i class="fas fa-lock icon"></i>
                 </div>
 
                 <div class="options-container">
@@ -56,26 +55,26 @@
                 <div class="input-group">
                     <span class="placeholder">Nombre</span>
                     <label for="regNombre"></label>
-                    <i class="fas fa-user icon"></i>
                     <input type="text" id="regNombre" name="regNombre" required placeholder=" ">
+                    <i class="fas fa-user icon"></i>
                 </div>
                 <div class="input-group">
                     <span class="placeholder">Correo Electrónico</span>
                     <label for="regEmail"></label>
-                    <i class="fas fa-envelope icon"></i>
                     <input type="email" id="regEmail" name="regEmail" required placeholder=" ">
+                    <i class="fas fa-envelope icon"></i>
                 </div>
                 <div class="input-group">
                     <span class="placeholder">Contraseña</span>
                     <label for="regPassword"></label>
-                    <i class="fas fa-lock icon"></i>
                     <input type="password" id="regPassword" name="regPassword" required placeholder=" ">
+                    <i class="fas fa-lock icon"></i>
                 </div>
                 <div class="input-group">
                     <span class="placeholder">Confirmar Contraseña</span>
                     <label for="regConfirmPassword"></label>
-                    <i class="fas fa-lock icon"></i>
                     <input type="password" id="regConfirmPassword" name="regConfirmPassword" required placeholder=" ">
+                    <i class="fas fa-lock icon"></i>
                 </div>
 
                 <!-- Botones de Registrarse y Volver -->
@@ -89,25 +88,61 @@
 
 
     <script>
-        const apiURL = 'http://127.0.0.1:8000'; // Reemplaza con la URL de tu API
-
-        // --- LOGIN ---
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const correo = document.getElementById('email').value;
-            const contrasena = document.getElementById('password').value;
-
-            const loginData = {
-                correo: correo,
-                contrasena: contrasena
-            };
-
-            fetch(`${apiURL}/login`, {
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CONSTANTES Y ELEMENTOS DEL DOM ---
+            const apiURL = 'http://127.0.0.1:8000';
+            
+            // Elementos del Formulario de Login
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const rememberMeCheckbox = document.getElementById('rememberMe');
+            
+            // Elementos del Formulario de Registro
+            const registerForm = document.getElementById('registerForm');
+    
+            // Elementos de la Animación
+            const loginContainer = document.getElementById('loginContainer');
+            const registerBtn = document.getElementById('registerBtn');
+            const backToLoginBtn = document.getElementById('backToLogin');
+    
+            // --- LÓGICA DE "RECUÉRDAME" ---
+    
+            // 1. Al cargar la página, rellenar los datos si "Recuérdame" estaba activado.
+            if (localStorage.getItem('rememberMe') === 'true') {
+                rememberMeCheckbox.checked = true;
+                emailInput.value = localStorage.getItem('email') || '';
+                passwordInput.value = localStorage.getItem('password') || '';
+                
+                // Disparamos un evento 'input' para que la animación del icono se active si hay datos
+                emailInput.dispatchEvent(new Event('input', { bubbles: true }));
+                passwordInput.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+    
+            // --- EVENT LISTENER PARA EL LOGIN ---
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+    
+                // 2. Al hacer login, guardar o borrar los datos según el estado del checkbox.
+                if (rememberMeCheckbox.checked) {
+                    localStorage.setItem('rememberMe', 'true');
+                    localStorage.setItem('email', emailInput.value);
+                    localStorage.setItem('password', passwordInput.value);
+                } else {
+                    localStorage.removeItem('rememberMe');
+                    localStorage.removeItem('email');
+                    localStorage.removeItem('password');
+                }
+    
+                // Lógica de fetch para el login (tu código original)
+                const loginData = {
+                    correo: emailInput.value,
+                    contrasena: passwordInput.value
+                };
+    
+                fetch(`${apiURL}/login`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(loginData)
                 })
                 .then(response => {
@@ -119,94 +154,75 @@
                 .then(data => {
                     console.log('Login exitoso:', data);
                     alert('Login exitoso!');
-                    // Redirigir a la página del dashboard
                     window.location.href = '/ingegases_frontend/dashboard/admin-dashboard.html';
                 })
                 .catch(error => {
                     console.error('Error al iniciar sesión:', error);
                     alert('Usuario o contraseña incorrectos. Por favor, intenta de nuevo.');
                 });
-        });
-
-
-
-        // --- REGISTRO DE USUARIO ---
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const nombre = document.getElementById('regNombre').value;
-            const correo = document.getElementById('regEmail').value;
-            const usuario = document.getElementById('regUsername').value;
-            const contrasena = document.getElementById('regPassword').value;
-            const confirmarContrasena = document.getElementById('regConfirmPassword').value;
-
-            // Validar que las contraseñas coincidan
-            if (contrasena !== confirmarContrasena) {
-                alert("Las contraseñas no coinciden.");
-                return;
-            }
-
-            const userData = {
-                nombre: nombre,
-                correo: correo,
-                usuario: usuario,
-                contrasena: contrasena,
-                rol_id: 1 // Asumiendo que el rol_id por defecto es 1
-            };
-
-            fetch(`${apiURL}/usuarios`, {
+            });
+    
+            // --- REGISTRO DE USUARIO (tu código original) ---
+            registerForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+    
+                const nombre = document.getElementById('regNombre').value;
+                const correo = document.getElementById('regEmail').value;
+                // OJO: No tienes un input con id 'regUsername'. Lo comento para evitar errores.
+                // const usuario = document.getElementById('regUsername').value; 
+                const contrasena = document.getElementById('regPassword').value;
+                const confirmarContrasena = document.getElementById('regConfirmPassword').value;
+    
+                if (contrasena !== confirmarContrasena) {
+                    alert("Las contraseñas no coinciden.");
+                    return;
+                }
+    
+                const userData = {
+                    nombre: nombre,
+                    correo: correo,
+                    // usuario: usuario,
+                    contrasena: contrasena,
+                    rol_id: 1
+                };
+    
+                fetch(`${apiURL}/usuarios`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(userData)
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
                     console.log('Usuario registrado exitosamente:', data);
                     alert('Usuario registrado exitosamente!');
-                    flipToLogin(); // Volver al formulario de login después del registro
+                    flipToLogin();
                 })
                 .catch(error => {
                     console.error('Error al registrar usuario:', error);
                     alert('Error al registrar usuario. Por favor, intenta de nuevo.');
                 });
+            });
+    
+            // --- ANIMACIÓN DE GIRO (tu código original) ---
+            function flipToRegister() {
+                loginContainer.classList.add('turning');
+                setTimeout(() => {
+                    loginContainer.classList.add('flipped');
+                    loginContainer.classList.remove('turning');
+                }, 700);
+            }
+    
+            function flipToLogin() {
+                loginContainer.classList.add('turning');
+                setTimeout(() => {
+                    loginContainer.classList.remove('flipped');
+                    loginContainer.classList.remove('turning');
+                }, 400);
+            }
+    
+            registerBtn.addEventListener('click', flipToRegister);
+            backToLoginBtn.addEventListener('click', flipToLogin);
         });
-
-        // --- ANIMACIÓN DE GIRO ---
-        const loginContainer = document.getElementById('loginContainer');
-        const registerBtn = document.getElementById('registerBtn');
-        const backToLoginBtn = document.getElementById('backToLogin');
-        const formContent = document.querySelector('.form-back .form-content');
-
-        registerBtn.addEventListener('click', flipToRegister);
-        backToLoginBtn.addEventListener('click', flipToLogin);
-
-        function flipToRegister() {
-            loginContainer.classList.add('turning'); // Añade la clase 'turning'
-            setTimeout(() => {
-                loginContainer.classList.add('flipped');
-                //loginContainer.style.transform = 'rotateY(360deg)';
-                loginContainer.classList.remove('turning'); // Remueve la clase 'turning'
-            }, 700); // Espera 0.7 segundos antes de completar el giro
-            formContent.style.transform = 'rotateY(0deg)';
-        }
-
-        function flipToLogin() {
-            loginContainer.classList.add('turning');
-            setTimeout(() => {
-                loginContainer.classList.remove('flipped');
-                loginContainer.style.transform = 'rotateY(0deg)';
-                loginContainer.classList.remove('turning');
-            }, 400);
-            formContent.style.transform = 'rotateY(0deg)';
-        }
-
     </script>
 </body>
 </html>

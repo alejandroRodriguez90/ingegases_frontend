@@ -20,115 +20,116 @@
             </a>
         </div>
 
-        <style>
-            /* ESTILOS PARA LOGO-PESTAÑA CON EFECTO DE BAJADA */
-.logo-absolute {
-    position: absolute;
-    top: 0;
-    left: 280px;
-    z-index: 10000;
-    pointer-events: auto;
-    overflow: visible;
-    transform: translateY(-100%);
-    animation: logoSlideDown 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s forwards;
-}
+    <style>
 
-.isolated-logo {
-    height: 80px;
-    width: 100px;
-    object-fit: contain;
-    border-radius: 0 0 20px 20px;
-    background: rgba(255, 255, 255, 0.96);
-    box-shadow: 
-        0 2px 10px rgba(0,0,0,0.15),
-        0 1px 0 rgba(255,255,255,0.8) inset;
-    transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-    margin: 0 !important;
-    border: none !important;
-    display: block !important;
-    border: 1px solid rgba(0,0,0,0.08);
-    border-top: none;
-    transform-origin: top center;
-}
+/* ESTILOS PARA LOGO-PESTAÑA CON EFECTO DE BAJADA */
+            .logo-absolute {
+                position: absolute;
+                top: 0;
+                left: 250px;
+                z-index: 10000;
+                pointer-events: auto;
+                overflow: visible;
+                transform: translateY(-100%);
+                animation: logoSlideDown 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s forwards;
+            }
 
-/* Efecto hover */
-.logo-absolute:hover .isolated-logo {
-    transform: scaleY(1.1) scaleX(1.05);
-    padding-bottom: 15px;
-    background: rgba(255, 255, 255, 0.98);
-    box-shadow: 
-        0 5px 15px rgba(0,0,0,0.2),
-        0 2px 0 rgba(255,255,255,0.9) inset;
-}
+            .isolated-logo {
+                height: 80px;
+                width: 100px;
+                object-fit: contain;
+                border-radius: 0 0 20px 20px;
+                background: rgba(255, 255, 255, 0.96);
+                box-shadow: 
+                    0 2px 10px rgba(0,0,0,0.15),
+                    0 1px 0 rgba(255,255,255,0.8) inset;
+                transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+                margin: 0 !important;
+                border: none !important;
+                display: block !important;
+                border: 1px solid rgba(0,0,0,0.08);
+                border-top: none;
+                transform-origin: top center;
+            }
 
-/* Efecto click */
-.logo-absolute:active .isolated-logo {
-    transform: scaleY(0.98) scaleX(0.99);
-    transition: all 0.2s ease;
-}
+            /* Efecto hover */
+            .logo-absolute:hover .isolated-logo {
+                transform: scaleY(1.1) scaleX(1.05);
+                padding-bottom: 15px;
+                background: rgba(255, 255, 255, 0.98);
+                box-shadow: 
+                    0 5px 15px rgba(0,0,0,0.2),
+                    0 2px 0 rgba(255,255,255,0.9) inset;
+            }
 
-/* Animación de bajada */
-@keyframes logoSlideDown {
-    0% { transform: translateY(-100%); }
-    60% { transform: translateY(15px); }
-    80% { transform: translateY(-5px); }
-    100% { transform: translateY(0); }
-}
- 
-/* Responsive */
-@media (max-width: 1200px) {
-    .logo-absolute { left: 180px; }
-}
+            /* Efecto click */
+            .logo-absolute:active .isolated-logo {
+                transform: scaleY(0.98) scaleX(0.99);
+                transition: all 0.2s ease;
+            }
 
-@media (max-width: 992px) {
-    .isolated-logo {
-        height: 70px;
-        width: 100px;
-        padding: 12px 8px 18px;
-        border-radius: 0 0 15px 15px;
-    }
-}
+            /* Animación de bajada */
+            @keyframes logoSlideDown {
+                0% { transform: translateY(-100%); }
+                60% { transform: translateY(15px); }
+                80% { transform: translateY(-5px); }
+                100% { transform: translateY(0); }
+            }
+            
+            /* Responsive */
+            @media (max-width: 1200px) {
+                .logo-absolute { left: 180px; }
+            }
 
-@media (max-width: 768px) {
-    .logo-absolute {
-        position: fixed;
-        left: 0;
-        top: 50px; /* Posición más abajo (ajustar este valor según necesidad) */
-        transform: none;
-        animation: none;
-        z-index: 9999;
-    }
-    
-    .isolated-logo {
-        height: 50px;
-        width: 70px;
-        padding: 8px 10px;
-        border-radius: 0 12px 12px 0;
-        background: rgba(255, 255, 255, 0.92);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-        border: 1px solid rgba(0,0,0,0.1);
-        border-left: none;
-    }
-    
-    /* Efecto hover simplificado para móvil */
-    .logo-absolute:hover .isolated-logo {
-        transform: scale(1.05);
-        padding-bottom: 8px;
-    }
-}
+            @media (max-width: 992px) {
+                .isolated-logo {
+                    height: 70px;
+                    width: 100px;
+                    padding: 12px 8px 18px;
+                    border-radius: 0 0 15px 15px;
+                }
+            }
 
-@media (max-width: 480px) {
-    .logo-absolute {
-        top: 60px; /* Posición ligeramente más alta en móviles pequeños */
-    }
-    
-    .isolated-logo {
-        height: 45px;
-        width: 65px;
-        padding: 6px 8px;
-        border-radius: 0 10px 10px 0;
-    }
-}
+            @media (max-width: 768px) {
+                .logo-absolute {
+                    position: fixed;
+                    left: 0;
+                    top: 50px; /* Posición más abajo (ajustar este valor según necesidad) */
+                    transform: none;
+                    animation: none;
+                    z-index: 9999;
+                }
+                
+                .isolated-logo {
+                    height: 50px;
+                    width: 70px;
+                    padding: 8px 10px;
+                    border-radius: 0 12px 12px 0;
+                    background: rgba(255, 255, 255, 0.92);
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+                    border: 1px solid rgba(0,0,0,0.1);
+                    border-left: none;
+                }
+                
+                /* Efecto hover simplificado para móvil */
+                .logo-absolute:hover .isolated-logo {
+                    transform: scale(1.05);
+                    padding-bottom: 8px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .logo-absolute {
+                    top: 60px; /* Posición ligeramente más alta en móviles pequeños */
+                }
+                
+                .isolated-logo {
+                    height: 45px;
+                    width: 65px;
+                    padding: 6px 8px;
+                    border-radius: 0 10px 10px 0;
+                }
+            }
 
         /* 
         =====================
@@ -147,7 +148,7 @@
         }
 
         .navbar {
-            width: 80%;
+            width: 65%;
             display: flex;
             justify-content: center;
         }
@@ -539,1059 +540,1062 @@
             }
         }
 
-/* ================================
-   SECCIÓN QUIÉNES SOMOS
-================================ */
-.about-section {
-    background-image: url('imagenes/IngegasesBlanco11.PNG');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 120px 20px;
-    min-height: 80vh;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    background-color: white;
-}
+        /* 
+        ================================
+        SECCIÓN QUIÉNES SOMOS
+        ================================ 
+        */
+        .about-section {
+            background-image: url('imagenes/IngegasesBlanco11.PNG');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 120px 20px;
+            min-height: 80vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            background-color: white;
+        }
 
-.about-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 40px;
-    align-items: center;
-    padding: 40px;
-    background-color: rgba(255, 255, 255, 0.7); /* Mayor opacidad para mejor legibilidad */
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            align-items: center;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.7); /* Mayor opacidad para mejor legibilidad */
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
 
-.about-text {
-    padding-right: 40px;
-}
+        .about-text {
+            padding-right: 40px;
+        }
 
-.about-text h2 {
-    font-size: 2.8rem;
-    color: #222;
-    margin-bottom: 30px;
-    position: relative;
-    padding-bottom: 15px;
-    font-weight: 700;
-    line-height: 1.2;
-}
+        .about-text h2 {
+            font-size: 2.8rem;
+            color: #222;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
 
-.about-text h2::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 80px;
-    height: 4px;
-    background: #0066cc;
-    border-radius: 2px;
-    transition: width 0.3s ease;
-}
+        .about-text h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 80px;
+            height: 4px;
+            background: #0066cc;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
 
-.about-text:hover h2::after {
-    width: 120px;
-}
+        .about-text:hover h2::after {
+            width: 120px;
+        }
 
-.about-text p {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    color: #444;
-    margin-bottom: 25px;
-}
+        .about-text p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 25px;
+        }
 
-.services-list {
-    list-style: none;
-    padding-left: 0;
-    margin: 30px 0;
-}
+        .services-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 30px 0;
+        }
 
-.services-list li {
-    padding: 10px 0 10px 35px;
-    position: relative;
-    color: #555;
-    font-size: 1.1rem;
-    transition: transform 0.3s ease;
-}
+        .services-list li {
+            padding: 10px 0 10px 35px;
+            position: relative;
+            color: #555;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
 
-.services-list li:hover {
-    transform: translateX(5px);
-}
+        .services-list li:hover {
+            transform: translateX(5px);
+        }
 
-.services-list li::before {
-    content: '▹';
-    position: absolute;
-    left: 0;
-    color: #0066cc;
-    font-size: 1.4rem;
-    transition: color 0.3s ease;
-}
+        .services-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: #0066cc;
+            font-size: 1.4rem;
+            transition: color 0.3s ease;
+        }
 
-.services-list li:hover::before {
-    color: #004080;
-}
+        .services-list li:hover::before {
+            color: #004080;
+        }
 
-.read-more-btn {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 14px 35px;
-    background: linear-gradient(135deg, #0066cc, #004d99);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
-    position: relative;
-    overflow: hidden;
-}
+        .read-more-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 35px;
+            background: linear-gradient(135deg, #0066cc, #004d99);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
 
-.read-more-btn::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: 0.5s;
-}
+        .read-more-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
 
-.read-more-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 102, 204, 0.4);
-}
+        .read-more-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 102, 204, 0.4);
+        }
 
-.read-more-btn:hover::after {
-    left: 100%;
-}
+        .read-more-btn:hover::after {
+            left: 100%;
+        }
 
-/* Media Queries para Quiénes Somos */
-@media (max-width: 1200px) {
-    .about-container {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    .about-text {
-        padding-right: 0;
-    }
-}
+        /* Media Queries para Quiénes Somos */
+        @media (max-width: 1200px) {
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .about-text {
+                padding-right: 0;
+            }
+        }
 
-@media (max-width: 768px) {
-    .about-section {
-        padding: 80px 15px;
-        min-height: auto;
-    }
-    .about-container {
-        padding: 30px 20px;
-    }
-}
+        @media (max-width: 768px) {
+            .about-section {
+                padding: 80px 15px;
+                min-height: auto;
+            }
+            .about-container {
+                padding: 30px 20px;
+            }
+        }
 
-@media (max-width: 576px) {
-    .about-section {
-        padding: 60px 10px;
-        background-size: contain;
-    }
-    .about-text h2 {
-        font-size: 2.2rem;
-    }
-}
+        @media (max-width: 576px) {
+            .about-section {
+                padding: 60px 10px;
+                background-size: contain;
+            }
+            .about-text h2 {
+                font-size: 2.2rem;
+            }
+        }
 
-/* ================================
-   SECCIÓN GALERÍA
-   ================================ */
-.gallery-3d-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: 400px; /* Altura mínima garantizada */
-    overflow: hidden; /* Asegura que nada se desborde */
-}
+        /* ================================
+        SECCIÓN GALERÍA
+        ================================ */
+        .gallery-3d-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 400px; /* Altura mínima garantizada */
+            overflow: hidden; /* Asegura que nada se desborde */
+        }
 
-.gallery-3d {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    min-height: 400px;
-    perspective: 1000px;
-    overflow: visible; /* Cambiado de hidden a visible */
-}
+        .gallery-3d {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            perspective: 1000px;
+            overflow: visible; /* Cambiado de hidden a visible */
+        }
 
-.photo-card {
-    position: absolute;
-    width: 90%; /* Reducido del 100% */
-    height: 90%; /* Reducido del 100% */
-    left: 5%; /* Centrado horizontal */
-    top: 5%; /* Centrado vertical */
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    backface-visibility: hidden;
-    transform-origin: center center;
-    transform: rotateY(75deg) translateZ(-150px);
-    opacity: 0;
-    visibility: hidden;
-    z-index: -1;
-    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
+        .photo-card {
+            position: absolute;
+            width: 90%; /* Reducido del 100% */
+            height: 90%; /* Reducido del 100% */
+            left: 5%; /* Centrado horizontal */
+            top: 5%; /* Centrado vertical */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            backface-visibility: hidden;
+            transform-origin: center center;
+            transform: rotateY(75deg) translateZ(-150px);
+            opacity: 0;
+            visibility: hidden;
+            z-index: -1;
+            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
 
-.photo-card:first-child {
-    transform: rotateY(0deg) translateZ(0);
-    opacity: 1;
-    visibility: visible;
-    z-index: 10;
-}
-
-/* Media Queries para Galería */
-@media (max-width: 1200px) {
-    .gallery-3d-container {
-        height: 450px;
-    }
-}
-
-@media (max-width: 768px) {
-    .gallery-3d-container {
-        height: 400px;
-    }
-}
-
-@media (max-width: 576px) {
-    .gallery-3d-container {
-        height: 350px;
-    }
-}
-
-.photo-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.photo-card[data-card="1"] {
-    transform: rotateY(0deg) translateZ(0);
-    z-index: 3;
-}
-
-.photo-card[data-card="2"] {
-    transform: rotateY(60deg) translateZ(-100px);
-    z-index: 2;
-    opacity: 0.8;
-}
-
-.photo-card[data-card="3"] {
-    transform: rotateY(-60deg) translateZ(-100px);
-    z-index: 2;
-    opacity: 0.8;
-}
-
-.gallery-nav {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 10;
-}
-
-.nav-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.nav-dot.active {
-    background: white;
-    transform: scale(1.2);
-}
-
-/* Media Queries para Galería - ACTUALIZADAS */
-@media (max-width: 1200px) {
-    .about-container {
-        grid-template-columns: 1fr;
-    }
-    .gallery-3d-container {
-        min-height: 500px;
-        order: -1; /* Mover la galería arriba en móviles */
-        margin-bottom: 40px;
-    }
-}
-
-@media (max-width: 768px) {
-    .gallery-3d {
-        min-height: 350px;
-    }
-    .photo-card {
-        width: 95%;
-        height: 95%;
-        left: 2.5%;
-        top: 2.5%;
-    }
-}
-
-@media (max-width: 576px) {
-    .gallery-3d {
-        min-height: 300px;
-        perspective: 800px;
-    }
-}
-
-/* 
-================================
-ESTILOS BASE PARA TODOS LOS DISPOSITIVOS
-================================
-*/
-.header-content {
-    text-align: center;
-    display: flex;
-    padding: 40px 10px;
-    width: auto;
-    perspective: 1000px;
-    overflow: hidden;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.header-txt {
-    transform-style: preserve-3d;
-    animation: textIntro 1.5s ease-out forwards;
-    opacity: 0;
-    transform: translateY(10px) rotateX(60deg);
-    width: 100%;
-    max-width: 100%;
-}
-
-/* 
-================================
-VERSIÓN PARA ESCRITORIO (≥992px)
-================================
-*/
-@media (min-width: 992px) {
-    .header-content {
-        padding: 80px 10px;
-    }
-    
-    .header-txt h1 {
-        font-size: 100px;
-        margin-top: 50px;
-    }
-}
-
-/* 
-================================
-VERSIÓN PARA TABLET (768px - 991px)
-================================
-*/
-@media (max-width: 991px) and (min-width: 768px) {
-    .header-txt h1 {
-        font-size: 72px;
-        margin-top: 40px;
-    }
-}
-
-/* 
-================================
-VERSIÓN PARA MÓVIL (≤767px)
-================================
-*/
-@media (max-width: 767px) {
-    .header-content {
-        padding: 30px 15px;
-        perspective: 800px;
-    }
-    
-    .header-txt h1 {
-        font-size: 42px;
-        background-size: 50%;
-        margin-top: 30px;
-        line-height: 1.2;
-        filter: 
-            drop-shadow(3px 3px 6px rgb(0, 0, 9))
-            brightness(0.9);
-    }
-    
-    .header-txt {
-        transform: translateY(5px) rotateX(45deg);
-    }
-    
-    /* Optimización de efectos 3D para móvil */
-    .header-txt::before {
-        transform: translateZ(-10px);
-    }
-    
-    .header-txt:hover p {
-        transform: translateZ(2px);
-    }
-    
-    /* Reducción de animación para mejor rendimiento */
-    @keyframes textIntro {
-        to {
+        .photo-card:first-child {
+            transform: rotateY(0deg) translateZ(0);
             opacity: 1;
-            transform: translateY(0) rotateX(0);
+            visibility: visible;
+            z-index: 10;
         }
-    }
-}
 
-/* 
-================================
-EFECTOS DE TEXTO COMUNES
-================================
-*/
-.header-txt h1 {
-    background-image: url('imagenes/PHOTO-2025-01-22-08-45-11.jpg');
-    background-size: 50%;
-    background-position: center;
-    background-clip: text;
-    text-transform: uppercase;
-    -webkit-background-clip: text;
-    color: transparent;
-    filter: 
-        drop-shadow(5px 5px 10px rgb(0, 0, 9))
-        brightness(0.9);
-    transition: all 0.3s ease;
-    /* Una sola línea */
-    display: inline-block;
-  
-}
+        /* Media Queries para Galería */
+        @media (max-width: 1200px) {
+            .gallery-3d-container {
+                height: 450px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-3d-container {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .gallery-3d-container {
+                height: 350px;
+            }
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-card[data-card="1"] {
+            transform: rotateY(0deg) translateZ(0);
+            z-index: 3;
+        }
+
+        .photo-card[data-card="2"] {
+            transform: rotateY(60deg) translateZ(-100px);
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        .photo-card[data-card="3"] {
+            transform: rotateY(-60deg) translateZ(-100px);
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        /* Media Queries para Galería - ACTUALIZADAS */
+        @media (max-width: 1200px) {
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+            .gallery-3d-container {
+                min-height: 500px;
+                order: -1; /* Mover la galería arriba en móviles */
+                margin-bottom: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-3d {
+                min-height: 350px;
+            }
+            .photo-card {
+                width: 95%;
+                height: 95%;
+                left: 2.5%;
+                top: 2.5%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .gallery-3d {
+                min-height: 300px;
+                perspective: 800px;
+            }
+        }
+
+        /* 
+        ================================
+        ESTILOS BASE PARA TODOS LOS DISPOSITIVOS
+        ================================
+        */
+        .header-content {
+            text-align: center;
+            display: flex;
+            padding: 40px 10px;
+            width: auto;
+            perspective: 1000px;
+            overflow: hidden;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-txt {
+            transform-style: preserve-3d;
+            animation: textIntro 1.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px) rotateX(60deg);
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* 
+        ================================
+        VERSIÓN PARA ESCRITORIO (≥992px)
+        ================================
+        */
+        @media (min-width: 992px) {
+            .header-content {
+                padding: 80px 10px;
+            }
+            
+            .header-txt h1 {
+                font-size: 100px;
+                margin-top: 50px;
+            }
+        }
+
+        /* 
+        ================================
+        VERSIÓN PARA TABLET (768px - 991px)
+        ================================
+        */
+        @media (max-width: 991px) and (min-width: 768px) {
+            .header-txt h1 {
+                font-size: 72px;
+                margin-top: 40px;
+            }
+        }
+
+        /* 
+        ================================
+        VERSIÓN PARA MÓVIL (≤767px)
+        ================================
+        */
+        @media (max-width: 767px) {
+            .header-content {
+                padding: 30px 15px;
+                perspective: 800px;
+            }
+            
+            .header-txt h1 {
+                font-size: 42px;
+                background-size: 50%;
+                margin-top: 30px;
+                line-height: 1.2;
+                filter: 
+                    drop-shadow(3px 3px 6px rgb(0, 0, 9))
+                    brightness(0.9);
+            }
+            
+            .header-txt {
+                transform: translateY(5px) rotateX(45deg);
+            }
+            
+            /* Optimización de efectos 3D para móvil */
+            .header-txt::before {
+                transform: translateZ(-10px);
+            }
+            
+            .header-txt:hover p {
+                transform: translateZ(2px);
+            }
+            
+            /* Reducción de animación para mejor rendimiento */
+            @keyframes textIntro {
+                to {
+                    opacity: 1;
+                    transform: translateY(0) rotateX(0);
+                }
+            }
+        }
+
+        /* 
+        ================================
+        EFECTOS DE TEXTO COMUNES
+        ================================
+        */
+        .header-txt h1 {
+            background-image: url('imagenes/PHOTO-2025-01-22-08-45-11.jpg');
+            background-size: 50%;
+            background-position: center;
+            background-clip: text;
+            text-transform: uppercase;
+            -webkit-background-clip: text;
+            color: transparent;
+            filter: 
+                drop-shadow(5px 5px 10px rgb(0, 0, 9))
+                brightness(0.9);
+            transition: all 0.3s ease;
+            /* Una sola línea */
+            display: inline-block;
+        
+        }
+
+        .header-txt::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            z-index: 1;
+            transform: translateZ(-20px);
+        }
+
+        .header-txt:hover p {
+            transform: translateZ(4px);
+        }
+
+        /* 
+        ================================
+        ANIMACIÓN DE ENTRADA
+        ================================
+        */
+        @keyframes textIntro {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        /* ========== FOOTER FULL RESPONSIVE ========== */
+        .footer {
+            background: #ffffff;
+            color: #535353;
+            padding: clamp(50px, 6vw, 80px) 0 0;
+            font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            position: relative;
+            border-top: 1px solid #f0f0f0;
+            overflow: hidden;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        .footer::before {
+            content: '';
+            display: block;
+            height: 3px;
+            background: linear-gradient(90deg, #0066cc, #003366);
+            margin-bottom: clamp(30px, 4vw, 50px);
+        }
+
+        .footer-content {
+            max-width: min(1400px, 95vw);
+            margin: 0 auto;
+            padding: 0 clamp(20px, 4vw, 40px);
+            box-sizing: border-box;
+        }
 
-.header-txt::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 15px;
-    z-index: 1;
-    transform: translateZ(-20px);
-}
-
-.header-txt:hover p {
-    transform: translateZ(4px);
-}
-
-/* 
-================================
-ANIMACIÓN DE ENTRADA
-================================
-*/
-@keyframes textIntro {
-    to {
-        opacity: 1;
-        transform: translateY(0) rotateX(0);
-    }
-}
-
-/* ========== FOOTER FULL RESPONSIVE ========== */
-.footer {
-    background: #ffffff;
-    color: #535353;
-    padding: clamp(50px, 6vw, 80px) 0 0;
-    font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    position: relative;
-    border-top: 1px solid #f0f0f0;
-    overflow: hidden;
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-}
-
-.footer::before {
-    content: '';
-    display: block;
-    height: 3px;
-    background: linear-gradient(90deg, #0066cc, #003366);
-    margin-bottom: clamp(30px, 4vw, 50px);
-}
-
-.footer-content {
-    max-width: min(1400px, 95vw);
-    margin: 0 auto;
-    padding: 0 clamp(20px, 4vw, 40px);
-    box-sizing: border-box;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: clamp(20px, 3vw, 30px);
-    margin-bottom: clamp(25px, 3vw, 30px);
-}
-
-.footer-column {
-    padding: 0 clamp(10px, 1.5vw, 15px);
-    display: flex;
-    flex-direction: column;
-    margin-bottom: clamp(25px, 3vw, 30px);
-    min-width: 0;
-}
-
-.footer-column h3 {
-    color: #222222;
-    margin-bottom: clamp(15px, 2vw, 25px);
-    font-size: clamp(1.2rem, 1.5vw, 1.4rem);
-    position: relative;
-    padding-bottom: clamp(10px, 1vw, 15px);
-    font-weight: 700;
-    line-height: 1.3;
-}
-
-.footer-column h3::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: clamp(40px, 5vw, 50px);
-    height: 3px;
-    background: #0066cc;
-    border-radius: 3px;
-}
-
-/* Logo Section */
-.logo-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(20px, 2.5vw, 30px);
-}
-
-.logo-container {
-    margin-bottom: 0;
-}
-
-.footer-logo {
-    max-width: min(220px, 100%);
-    height: auto;
-    transition: transform 0.3s ease;
-}
-
-.footer-logo:hover {
-    transform: translateY(-3px);
-}
-
-.company-description {
-    margin-bottom: 0;
-    line-height: 1.7;
-    color: #555555;
-    font-size: clamp(0.9rem, 1.1vw, 1rem);
-}
-
-.contact-info p {
-    margin: clamp(12px, 1.5vw, 18px) 0;
-    display: flex;
-    align-items: center;
-    color: #444444;
-    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
-}
-
-.contact-info i {
-    margin-right: clamp(10px, 1vw, 15px);
-    color: #0066cc;
-    font-size: clamp(1rem, 1.2vw, 1.2rem);
-    min-width: 25px;
-    text-align: center;
-}
-
-/* Social Links */
-.social-links {
-    display: flex;
-    gap: clamp(12px, 1.5vw, 15px);
-    margin-bottom: clamp(25px, 3vw, 30px);
-    flex-wrap: wrap;
-}
-
-.social-btn {
-    width: clamp(40px, 4vw, 44px);
-    height: clamp(40px, 4vw, 44px);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: clamp(18px, 2vw, 20px);
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-}
-
-.social-btn.facebook { background: #3b5998; border: 1px solid #3b5998; }
-.social-btn.instagram { background: linear-gradient(45deg, #405de6, #833ab4, #c13584, #e1306c); border: 1px solid #c13584; }
-.social-btn.whatsapp { background: #25D366; border: 1px solid #25D366; }
-.social-btn.sgsst { background: #0066cc; border: 1px solid #0066cc; }
-
-.social-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    opacity: 0.9;
-}
-
-/* Business Hours */
-.business-hours {
-    margin-top: auto;
-    background: #f9f9f9;
-    padding: clamp(20px, 2.5vw, 25px);
-    border-radius: 8px;
-    border-left: 3px solid #0066cc;
-}
-
-.business-hours h4 {
-    color: #222222;
-    margin-bottom: clamp(12px, 1.5vw, 15px);
-    font-size: clamp(1rem, 1.2vw, 1.15rem);
-    display: flex;
-    align-items: center;
-    gap: clamp(10px, 1vw, 12px);
-}
-
-.business-hours h4 i {
-    color: #0066cc;
-}
-
-.business-hours p {
-    margin: clamp(10px, 1.2vw, 14px) 0;
-    color: #555555;
-    font-size: clamp(0.9rem, 1.1vw, 1rem);
-    display: flex;
-    align-items: flex-start;
-    gap: clamp(10px, 1vw, 12px);
-}
-
-.business-hours p i {
-    color: #948525;
-}
-
-/* Quote Form */
-.quote-form {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(15px, 2vw, 20px);
-}
-
-.quote-form .input-group {
-    margin-bottom: clamp(15px, 2vw, 20px);
-}
-
-.quote-form input,
-.quote-form textarea {
-    width: 100%;
-    padding: clamp(14px, 1.5vw, 16px) clamp(18px, 2vw, 20px);
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    background: #f9f9f9;
-    color: #333333;
-    transition: all 0.3s ease;
-    font-family: inherit;
-    font-size: clamp(0.95rem, 1.1vw, 1rem);
-}
-
-.quote-form textarea {
-    min-height: clamp(100px, 12vw, 120px);
-    resize: vertical;
-}
-
-.quote-form input:focus,
-.quote-form textarea:focus {
-    outline: none;
-    border-color: #0066cc;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
-}
-
-.btn-quote {
-    background: #0066cc;
-    color: #ffffff;
-    border: none;
-    padding: clamp(14px, 1.5vw, 16px) clamp(25px, 3vw, 30px);
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    width: 100%;
-    font-size: clamp(1rem, 1.1vw, 1.05rem);
-    letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(8px, 1vw, 10px);
-}
-
-.btn-quote:hover {
-    background: #004d99;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
-}
-
-/* Work With Us Form - CORRECCIONES */
-.footer-column.work-with-us {
-    padding: 0 clamp(10px, 1.5vw, 15px);
-}
-
-.work-form {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(15px, 2vw, 20px);
-    background: #f9f9f9;
-    padding: clamp(20px, 2.5vw, 25px);
-    border-radius: 8px;
-    
-}
-
-.work-form .input-group {
-    margin-bottom: 0;
-}
-
-.work-form input {
-    width: 100%;
-    padding: clamp(14px, 1.5vw, 16px) clamp(18px, 2vw, 20px);
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    background: #ffffff;
-    color: #333333;
-    transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
-    font-size: clamp(0.95rem, 1.1vw, 1rem);
-}
-
-.work-form input:focus {
-    outline: none;
-    border-color: #0066cc;
-    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
-}
-
-.file-upload {
-    position: relative;
-    margin-bottom: clamp(15px, 2vw, 20px);
-}
-
-.file-upload label {
-    display: flex;
-    align-items: center;
-    gap: clamp(8px, 1vw, 10px);
-    padding: clamp(14px, 1.5vw, 16px) clamp(18px, 2vw, 20px);
-    border: 1px dashed #e0e0e0;
-    border-radius: 6px;
-    background: #f9f9f9;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #555555;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.file-upload label:hover {
-    border-color: #0066cc;
-    background: #f0f7ff;
-}
-
-.file-upload i {
-    color: #0066cc;
-    font-size: clamp(1rem, 1.2vw, 1.2rem);
-}
-
-.file-upload input[type="file"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
-
-.file-name {
-    margin-left: auto;
-    font-size: 0.85rem;
-    color: #777;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 40%;
-}
-
-.btn-work {
-    background: #0066cc;
-    color: #ffffff;
-    border: none;
-    padding: clamp(14px, 1.5vw, 16px) clamp(25px, 3vw, 30px);
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    width: 100%;
-    font-size: clamp(1rem, 1.1vw, 1.05rem);
-    letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(8px, 1vw, 10px);
-    margin-top: 10px;
-}
-
-.btn-work:hover {
-    background: #004d99;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
-}
-
-.btn-work i {
-    font-size: 1.1em;
-}
-
-/* Location Map */
-.location {
-    grid-column: 1 / -1;
-    margin-top: clamp(15px, 2vw, 20px);
-    padding: 0;
-}
-
-.map-wrapper {
-    background: #f9f9f9;
-    border-radius: 8px;
-    padding: clamp(12px, 1.5vw, 15px);
-    border: 1px solid #e0e0e0;
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-}
-
-.google-map {
-    border-radius: 6px;
-    margin-bottom: clamp(15px, 2vw, 20px);
-    border: 1px solid #e0e0e0;
-    width: 100%;
-    min-height: clamp(250px, 35vw, 300px);
-}
-
-.location-info {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(12px, 1.5vw, 15px);
-}
-
-.map-address {
-    color: #444444;
-    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
-    display: flex;
-    align-items: center;
-    gap: clamp(10px, 1vw, 12px);
-}
-
-.map-address i {
-    color: #0066cc;
-}
-
-.btn-directions {
-    display: inline-flex;
-    align-items: center;
-    gap: clamp(6px, 0.8vw, 8px);
-    color: #0066cc;
-    text-decoration: none;
-    font-weight: 600;
-    padding: clamp(8px, 1vw, 10px) clamp(15px, 2vw, 20px);
-    border-radius: 6px;
-    background: rgba(0, 102, 204, 0.1);
-    border: 1px solid rgba(0, 102, 204, 0.2);
-    transition: all 0.3s ease;
-    margin-top: clamp(8px, 1vw, 10px);
-    font-size: clamp(0.9rem, 1.1vw, 1rem);
-}
-
-.btn-directions:hover {
-    background: rgba(0, 102, 204, 0.2);
-    color: #004d99;
-}
-
-/* Footer Bottom */
-.footer-bottom {
-    background: #000;
-    padding: clamp(25px, 3vw, 30px) 0;
-    text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    position: relative;
-}
-
-.footer-legal {
-    margin-bottom: clamp(15px, 2vw, 20px);
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: clamp(10px, 1.5vw, 15px);
-    align-items: center;
-}
-
-.footer-legal a {
-    color: #ffffff;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-size: clamp(0.85rem, 1vw, 0.95rem);
-}
-
-.footer-legal a:hover {
-    color: #cccccc;
-    text-decoration: underline;
-}
-
-.divider {
-    color: #ffffff;
-    opacity: 0.6;
-}
-
-.copyright {
-    margin: 0;
-    font-size: clamp(0.85rem, 1vw, 0.95rem);
-    color: #ffffff;
-    line-height: 1.6;
-}
-
-.nit {
-    color: #ffffff;
-    font-weight: 600;
-    display: inline-block;
-    margin-top: clamp(3px, 0.5vw, 5px);
-}
-
-.dev-credit {
-    color: #fefefe;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    margin-left: 5px;
-    font-size: 1rem;
-}
-
-.dev-credit:hover {
-    color: #a5a5a5;
-    text-decoration: underline;
-}
-
-.copyright .divider {
-    margin: 0 5px;
-    color: #666;
-}
-
-/* ========== MEDIA QUERIES ========== */
-@media (max-width: 1024px) {
-    .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .footer-column.work-with-us {
-        grid-column: span 2;
-    }
-}
-
-@media (max-width: 768px) {
-    .footer {
-        padding-top: clamp(40px, 8vw, 60px);
-    }
-    
-    .footer::before {
-        margin-bottom: clamp(25px, 5vw, 35px);
-    }
-    
-    .footer-grid {
-        gap: clamp(15px, 4vw, 25px);
-    }
-    
-    .footer-column {
-        margin-bottom: clamp(20px, 5vw, 30px);
-    }
-    
-    .footer-column.work-with-us {
-        grid-column: span 1;
-    }
-    
-    .file-name {
-        display: none;
-    }
-    
-    .copyright {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .nit, .dev-credit {
-        display: block;
-        width: 100%;
-        text-align: center;
-        margin: 5px 0 0 0;
-    }
-    
-    .copyright .divider {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .footer-column {
-        padding: 0;
-    }
-    
-    .social-links {
-        justify-content: center;
-    }
-    
-    .work-form {
-        padding: 15px;
-    }
-    
-    .file-upload label {
-        flex-direction: column;
-        text-align: center;
-        padding: 12px;
-    }
-}
-
-/* Safari/iOS specific fixes */
-@supports (-webkit-touch-callout: none) {
-    .footer {
-        padding-top: max(50px, env(safe-area-inset-top));
-    }
-    
-    .footer-bottom {
-        padding-bottom: max(30px, env(safe-area-inset-bottom));
-    }
-}
-
-/* Edge specific fixes */
-@supports (-ms-ime-align: auto) {
-    .footer-grid {
-        display: -ms-grid;
-        -ms-grid-columns: 1fr 1fr 1fr 1fr;
-    }
-    
-    @media (max-width: 1024px) {
         .footer-grid {
-            -ms-grid-columns: 1fr 1fr;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(20px, 3vw, 30px);
+            margin-bottom: clamp(25px, 3vw, 30px);
         }
-    }
-    
-    @media (max-width: 480px) {
-        .footer-grid {
-            -ms-grid-columns: 1fr;
+
+        .footer-column {
+            padding: 0 clamp(10px, 1.5vw, 15px);
+            display: flex;
+            flex-direction: column;
+            margin-bottom: clamp(25px, 3vw, 30px);
+            min-width: 0;
         }
-    }
-}
+
+        .footer-column h3 {
+            color: #222222;
+            margin-bottom: clamp(15px, 2vw, 25px);
+            font-size: clamp(1.2rem, 1.5vw, 1.4rem);
+            position: relative;
+            padding-bottom: clamp(10px, 1vw, 15px);
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: clamp(40px, 5vw, 50px);
+            height: 3px;
+            background: #0066cc;
+            border-radius: 3px;
+        }
+
+        /* Logo Section */
+        .logo-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(20px, 2.5vw, 30px);
+        }
+
+        .logo-container {
+            margin-bottom: 0;
+        }
+
+        .footer-logo {
+            max-width: min(220px, 100%);
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-logo:hover {
+            transform: translateY(-3px);
+        }
+
+        .company-description {
+            margin-bottom: 0;
+            line-height: 1.7;
+            color: #555555;
+            font-size: clamp(0.9rem, 1.1vw, 1rem);
+        }
+
+        .contact-info p {
+            margin: clamp(12px, 1.5vw, 18px) 0;
+            display: flex;
+            align-items: center;
+            color: #444444;
+            font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+        }
+
+        .contact-info i {
+            margin-right: clamp(10px, 1vw, 15px);
+            color: #0066cc;
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+            min-width: 25px;
+            text-align: center;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: clamp(12px, 1.5vw, 15px);
+            margin-bottom: clamp(25px, 3vw, 30px);
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            width: clamp(40px, 4vw, 44px);
+            height: clamp(40px, 4vw, 44px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: clamp(18px, 2vw, 20px);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .social-btn.facebook { background: #3b5998; border: 1px solid #3b5998; }
+        .social-btn.instagram { background: linear-gradient(45deg, #405de6, #833ab4, #c13584, #e1306c); border: 1px solid #c13584; }
+        .social-btn.whatsapp { background: #25D366; border: 1px solid #25D366; }
+        .social-btn.sgsst { background: #0066cc; border: 1px solid #0066cc; }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0.9;
+        }
+
+        /* Business Hours */
+        .business-hours {
+            margin-top: auto;
+            background: #f9f9f9;
+            padding: clamp(20px, 2.5vw, 25px);
+            border-radius: 8px;
+            border-left: 3px solid #0066cc;
+        }
+
+        .business-hours h4 {
+            color: #222222;
+            margin-bottom: clamp(12px, 1.5vw, 15px);
+            font-size: clamp(1rem, 1.2vw, 1.15rem);
+            display: flex;
+            align-items: center;
+            gap: clamp(10px, 1vw, 12px);
+        }
+
+        .business-hours h4 i {
+            color: #0066cc;
+        }
+
+        .business-hours p {
+            margin: clamp(10px, 1.2vw, 14px) 0;
+            color: #555555;
+            font-size: clamp(0.9rem, 1.1vw, 1rem);
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(10px, 1vw, 12px);
+        }
+
+        .business-hours p i {
+            color: #948525;
+        }
+
+        /* Quote Form */
+        .quote-form {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(15px, 2vw, 20px);
+        }
+
+        .quote-form .input-group {
+            margin-bottom: clamp(15px, 2vw, 20px);
+        }
+
+        .quote-form input,
+        .quote-form textarea {
+            width: 100%;
+            padding: clamp(14px, 1.5vw, 16px) clamp(18px, 2vw, 20px);
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background: #f9f9f9;
+            color: #333333;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: clamp(0.95rem, 1.1vw, 1rem);
+        }
+
+        .quote-form textarea {
+            min-height: clamp(100px, 12vw, 120px);
+            resize: vertical;
+        }
+
+        .quote-form input:focus,
+        .quote-form textarea:focus {
+            outline: none;
+            border-color: #0066cc;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .btn-quote {
+            background: #0066cc;
+            color: #ffffff;
+            border: none;
+            padding: clamp(14px, 1.5vw, 16px) clamp(25px, 3vw, 30px);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: clamp(1rem, 1.1vw, 1.05rem);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(8px, 1vw, 10px);
+        }
+
+        .btn-quote:hover {
+            background: #004d99;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+        }
+
+        /* Work With Us Form - CORRECCIONES */
+        .footer-column.work-with-us {
+            padding: 0 clamp(10px, 1.5vw, 15px);
+        }
+
+        .work-form {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(15px, 2vw, 20px);
+            background: #f9f9f9;
+            padding: clamp(20px, 2.5vw, 25px);
+            border-radius: 8px;
+            
+        }
+
+        .work-form .input-group {
+            margin-bottom: 0;
+        }
+
+        .work-form input {
+            width: 100%;
+            padding: clamp(14px, 1.5vw, 16px) clamp(18px, 2vw, 20px);
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #333333;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(0.95rem, 1.1vw, 1rem);
+        }
+
+        .work-form input:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .file-upload {
+            position: relative;
+            margin-bottom: clamp(15px, 2vw, 20px);
+        }
+
+        .file-upload label {
+            display: flex;
+            align-items: center;
+            gap: clamp(8px, 1vw, 10px);
+            padding: clamp(14px, 1.5vw, 16px) clamp(18px, 2vw, 20px);
+            border: 1px dashed #e0e0e0;
+            border-radius: 6px;
+            background: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #555555;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .file-upload label:hover {
+            border-color: #0066cc;
+            background: #f0f7ff;
+        }
+
+        .file-upload i {
+            color: #0066cc;
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .file-name {
+            margin-left: auto;
+            font-size: 0.85rem;
+            color: #777;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 40%;
+        }
+
+        .btn-work {
+            background: #0066cc;
+            color: #ffffff;
+            border: none;
+            padding: clamp(14px, 1.5vw, 16px) clamp(25px, 3vw, 30px);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: clamp(1rem, 1.1vw, 1.05rem);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(8px, 1vw, 10px);
+            margin-top: 10px;
+        }
+
+        .btn-work:hover {
+            background: #004d99;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-work i {
+            font-size: 1.1em;
+        }
+
+        /* Location Map */
+        .location {
+            grid-column: 1 / -1;
+            margin-top: clamp(15px, 2vw, 20px);
+            padding: 0;
+        }
+
+        .map-wrapper {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: clamp(12px, 1.5vw, 15px);
+            border: 1px solid #e0e0e0;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .google-map {
+            border-radius: 6px;
+            margin-bottom: clamp(15px, 2vw, 20px);
+            border: 1px solid #e0e0e0;
+            width: 100%;
+            min-height: clamp(250px, 35vw, 300px);
+        }
+
+        .location-info {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(12px, 1.5vw, 15px);
+        }
+
+        .map-address {
+            color: #444444;
+            font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+            display: flex;
+            align-items: center;
+            gap: clamp(10px, 1vw, 12px);
+        }
+
+        .map-address i {
+            color: #0066cc;
+        }
+
+        .btn-directions {
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(6px, 0.8vw, 8px);
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 600;
+            padding: clamp(8px, 1vw, 10px) clamp(15px, 2vw, 20px);
+            border-radius: 6px;
+            background: rgba(0, 102, 204, 0.1);
+            border: 1px solid rgba(0, 102, 204, 0.2);
+            transition: all 0.3s ease;
+            margin-top: clamp(8px, 1vw, 10px);
+            font-size: clamp(0.9rem, 1.1vw, 1rem);
+        }
+
+        .btn-directions:hover {
+            background: rgba(0, 102, 204, 0.2);
+            color: #004d99;
+        }
+
+        /* Footer Bottom */
+        .footer-bottom {
+            background: #000;
+            padding: clamp(25px, 3vw, 30px) 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            position: relative;
+        }
+
+        .footer-legal {
+            margin-bottom: clamp(15px, 2vw, 20px);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: clamp(10px, 1.5vw, 15px);
+            align-items: center;
+        }
+
+        .footer-legal a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
+        }
+
+        .footer-legal a:hover {
+            color: #cccccc;
+            text-decoration: underline;
+        }
+
+        .divider {
+            color: #ffffff;
+            opacity: 0.6;
+        }
+
+        .copyright {
+            margin: 0;
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .nit {
+            color: #ffffff;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: clamp(3px, 0.5vw, 5px);
+        }
+
+        .dev-credit {
+            color: #fefefe;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin-left: 5px;
+            font-size: 1rem;
+        }
+
+        .dev-credit:hover {
+            color: #a5a5a5;
+            text-decoration: underline;
+        }
+
+        .copyright .divider {
+            margin: 0 5px;
+            color: #666;
+        }
+
+        /* ========== MEDIA QUERIES ========== */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-column.work-with-us {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                padding-top: clamp(40px, 8vw, 60px);
+            }
+            
+            .footer::before {
+                margin-bottom: clamp(25px, 5vw, 35px);
+            }
+            
+            .footer-grid {
+                gap: clamp(15px, 4vw, 25px);
+            }
+            
+            .footer-column {
+                margin-bottom: clamp(20px, 5vw, 30px);
+            }
+            
+            .footer-column.work-with-us {
+                grid-column: span 1;
+            }
+            
+            .file-name {
+                display: none;
+            }
+            
+            .copyright {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nit, .dev-credit {
+                display: block;
+                width: 100%;
+                text-align: center;
+                margin: 5px 0 0 0;
+            }
+            
+            .copyright .divider {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-column {
+                padding: 0;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+            
+            .work-form {
+                padding: 15px;
+            }
+            
+            .file-upload label {
+                flex-direction: column;
+                text-align: center;
+                padding: 12px;
+            }
+        }
+
+        /* Safari/iOS specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .footer {
+                padding-top: max(50px, env(safe-area-inset-top));
+            }
+            
+            .footer-bottom {
+                padding-bottom: max(30px, env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Edge specific fixes */
+        @supports (-ms-ime-align: auto) {
+            .footer-grid {
+                display: -ms-grid;
+                -ms-grid-columns: 1fr 1fr 1fr 1fr;
+            }
+            
+            @media (max-width: 1024px) {
+                .footer-grid {
+                    -ms-grid-columns: 1fr 1fr;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .footer-grid {
+                    -ms-grid-columns: 1fr;
+                }
+            }
+        }
+            
 
 
-</style>
+    </style>
 
         <div class="menu container">
 
@@ -1795,11 +1799,6 @@ ANIMACIÓN DE ENTRADA
         </div>
     </section>
 
-    
-
-    
-
-    
     <section class="ingegases-stats-section">
         <div class="ingegases-stats-container">
             <!-- Eslogan -->
@@ -1821,10 +1820,9 @@ ANIMACIÓN DE ENTRADA
             </div>
         </div>
     </section>
-    
+
     <Script>
-    
-    // Versión mejorada del script
+    // Versión del script
     document.addEventListener('DOMContentLoaded', function() {
     // Configuración adaptable a dispositivos
     const isMobile = window.innerWidth <= 768;
@@ -1832,7 +1830,7 @@ ANIMACIÓN DE ENTRADA
     const animationDuration = isMobile ? 1500 : 2000;
     const frameRate = isMobile ? 30 : 60; // Reducir frames en móviles para mejor rendimiento
     
-    // Polyfill mejorado para IntersectionObserver
+    // Polyfill para IntersectionObserver
     if (!('IntersectionObserver' in window) || (isEdge && !window.IntersectionObserverEntry)) {
         const statsNumbers = document.querySelectorAll('.ingegases-stat-number');
         statsNumbers.forEach(number => {
@@ -1846,7 +1844,7 @@ ANIMACIÓN DE ENTRADA
     const statsNumbers = document.querySelectorAll('.ingegases-stat-number');
     if (!statsNumbers.length) return;
 
-    // Función de animación optimizada para móviles y Edge
+    // Función de animación para móviles y Edge
     const animateCounter = (element, target, prefix) => {
         let start = null;
         const frameDuration = 1000 / frameRate;
@@ -1934,303 +1932,265 @@ ANIMACIÓN DE ENTRADA
         }, 250);
     });
 });
+    </script>
+    
+    <!-- ===== INICIO DEL FOOTER  ===== -->
+<footer id="contacto" class="footer">
+    <div class="footer-content">
+        <div class="footer-grid">
+            <!-- Columna 1: Logo e información -->
+            <div class="footer-column logo-info">
+                <div class="logo-container">
+                    <img class="footer-logo" src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Logo Ingegases">
+                </div>
+                <div class="footer-info">
+                    <h3>Ingegases y Redes S.A.S.</h3>
+                    <p class="company-description">Especialistas en instalación y mantenimiento de sistemas de gases y redes industriales con más de 15 años de experiencia.</p>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín</p>
+                        <p><i class="fas fa-phone"></i> 311 238 26 36</p>
+                        <p><i class="fas fa-envelope"></i> ingegasesyredes@gmail.com</p>
+                    </div>
+                </div>
+            </div>
 
-    </Script>
-    
-    <footer id="contacto" class="footer">
-        <div class="footer-content">
-            <div class="footer-grid">
-                <!-- Columna 1: Logo e información -->
-                <div class="footer-column logo-info">
-                    <div class="logo-container">
-                        <img class="footer-logo" src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Logo Ingegases">
-                    </div>
-                    <div class="footer-info">
-                        <h3>Ingegases y Redes S.A.S.</h3>
-                        <p class="company-description">Especialistas en instalación y mantenimiento de sistemas de gases y redes industriales con más de 15 años de experiencia.</p>
-                        <div class="contact-info">
-                            <p><i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín</p>
-                            <p><i class="fas fa-phone"></i> 311 238 26 36</p>
-                            <p><i class="fas fa-envelope"></i> ingegasesyredes@gmail.com</p>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- Columna 2: Redes sociales -->
-                <div class="footer-column social-section">
-                    <h3>Conéctate con Nosotros</h3>
-                    <div class="social-links">
-                        <a href="https://www.facebook.com/Ingegasesyredes/?locale=es_LA" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        class="social-btn facebook" 
-                        aria-label="Facebook de Ingegases">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://www.instagram.com/ingegasesyredes/?hl=es-la" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        class="social-btn instagram" 
-                        aria-label="Instagram de Ingegases">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://wa.me/573112382636" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        class="social-btn whatsapp" 
-                        aria-label="WhatsApp de Ingegases">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a href="https://sgsst.co/publico" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        class="social-btn sgsst" 
-                        aria-label="Sistema de Gestión de Seguridad y Salud en el Trabajo">
-                            <span style="font-weight: bold; font-family: Arial, sans-serif;">S</span>
-                        </a>
-                    </div>
-    
-                    <div class="business-hours">
-                        <h4><i class="fas fa-building"></i> Sedes a Nivel Nacional</h4>
-                        <p><i class="fas fa-map-marker-alt"></i> Carrera 54 #17A - 69 Bogota, Barrio Puente Aranda.</p>
-                        <p><i class="fas fa-map-marker-alt"></i> Calle 12 # 68 - 109 Cali, Barrio el Limonar</p>
-                        <p><i class="fas fa-map-marker-alt"></i> Cra 1 C2 No 47-67, Ciudadela 20 Julio Barranquilla</p>
-                    </div>
-                </div>
-    
-                <!-- Columna 3: Formulario de cotización -->
-                <div class="footer-column quotation-form">
-                    <h3>¿Necesitas una Cotización?</h3>
-                    <form id="cotizacionForm" class="quote-form" 
-                        action="https://formspree.io/f/roger.herrera@ingegasesyredes.com" 
-                        method="POST">
-                        
-                        <!-- Campos del formulario (agrega 'name' a cada campo) -->
-                        <div class="input-group">
-                            <input type="text" name="nombre" placeholder="Nombre completo" required>
-                        </div>
-                        <div class="input-group">
-                            <input type="email" name="email" placeholder="Correo electrónico" required>
-                        </div>
-                        <div class="input-group">
-                            <input type="tel" name="telefono" placeholder="Teléfono/Celular">
-                        </div>
-                        <div class="input-group">
-                            <textarea name="mensaje" placeholder="Describe tu proyecto o necesidad"></textarea>
-                        </div>
-                        
-                        <!-- Configuración adicional de Formspree -->
-                        <input type="hidden" name="_subject" value="Nueva cotización desde el sitio web">
-                        <input type="hidden" name="_replyto" value="%email%"> <!-- Auto-respuesta al remitente -->
-                        
-                        <button type="submit" class="btn-quote">
-                            <span>Enviar Solicitud</span>
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-                </div>
-                <!-- Nueva Columna 5: Trabaja con Nosotros -->
-                <div class="footer-column work-with-us">
-                    <h3>Trabaja con Nosotros</h3>
-                    <form id="trabajoForm" class="work-form" 
-                        action="https://formspree.io/f/roger.herrera@ingegasesyredes.com" 
-                        method="POST"
-                        enctype="multipart/form-data">
-                        
-                        <div class="input-group">
-                            <input type="text" name="nombre" placeholder="Nombre completo" required>
-                        </div>
-                        <div class="input-group">
-                            <input type="email" name="email" placeholder="Correo electrónico" required>
-                        </div>
-                        <div class="input-group">
-                            <input type="tel" name="telefono" placeholder="Teléfono/Celular" required>
-                        </div>
-
-                        <div class="input-group file-upload">
-                            <label for="hoja-vida">
-                                <i class="fas fa-cloud-upload-alt"></i> Adjunta tu hoja de vida (PDF)
-                                <input type="file" id="hoja-vida" name="hoja_vida" accept=".pdf" required>
-                                <span class="file-name">No se ha seleccionado archivo</span>
-                            </label>
-                        </div>
-                        
-                        <!-- Configuración adicional de Formspree -->
-                        <input type="hidden" name="_subject" value="Nueva solicitud de empleo">
-                        <input type="hidden" name="_replyto" value="%email%">
-                        <input type="hidden" name="_cc" value="rrhh@ingegases.com"> <!-- Correo específico para RRHH -->
-                        
-                        <button type="submit" class="btn-work">
-                            <span>Enviar Solicitud</span>
-                            <i class="fas fa-briefcase"></i>
-                        </button>
-                    </form>
-                </div>
-    
-                <!-- Columna 4: Ubicación (MAPA) -->
-                <div class="footer-column location">
-                    <h3>Nuestra Sede Principal</h3>
-                    <div class="map-wrapper">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521673867072!2d-75.57890792468696!3d6.201604493739862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4429d3a5d5d5a5%3A0x5b5b5b5b5b5b5b5b!2sCl.%2012b%20Sur%20%2352a-77%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1620000000000!5m2!1ses!2sco" 
-                            width="100%" 
-                            height="250" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy"
-                            class="google-map"
-                            aria-label="Mapa de ubicación de Ingegases"
-                        ></iframe>
-                        <div class="location-info">
-                            <p class="map-address">
-                                <i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín
-                            </p>
-                            <a href="https://www.google.com/maps/place/Cl.+12b+Sur+%2352a-77,+Medell%C3%ADn,+Antioquia/@6.2016045,-75.5789079,17z/data=!3m1!4b1!4m5!3m4!1s0x8e4429d3a5d5d5a5:0x5b5b5b5b5b5b5b5b!8m2!3d6.2016045!4d-75.5767192" 
-                            class="btn-directions" 
-                            target="_blank"
-                            rel="noopener noreferrer">
-                                <i class="fas fa-directions"></i> Cómo llegar
-                            </a>
-                        </div>
-                    </div>
+            <!-- Columna 2: Redes sociales -->
+            <div class="footer-column social-section">
+                <h3>Conéctate con Nosotros</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/Ingegasesyredes/?locale=es_LA" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="social-btn facebook" 
+                    aria-label="Facebook de Ingegases">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ingegasesyredes/?hl=es-la" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="social-btn instagram" 
+                    aria-label="Instagram de Ingegases">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/573112382636" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="social-btn whatsapp" 
+                    aria-label="WhatsApp de Ingegases">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://sgsst.co/publico" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="social-btn sgsst" 
+                    aria-label="Sistema de Gestión de Seguridad y Salud en el Trabajo">
+                        <span style="font-weight: bold; font-family: Arial, sans-serif;">S</span>
+                    </a>
                 </div>
 
-                
+                <div class="business-hours">
+                    <h4><i class="fas fa-building"></i> Sedes a Nivel Nacional</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Carrera 54 #17A - 69 Bogota, Barrio Puente Aranda.</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Calle 12 # 68 - 109 Cali, Barrio el Limonar</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Cra 1 C2 No 47-67, Ciudadela 20 Julio Barranquilla</p>
+                </div>
+            </div>
+
+            <!-- Columna 3: Formulario de cotización -->
+            <div class="footer-column quotation-form">
+                <h3>¿Necesitas una Cotización?</h3>
+                <div id="cotizacionFields" class="quote-form">
+                    <div class="input-group">
+                        <input type="text" id="quoteNombre" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="quoteEmail" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" id="quoteTelefono" placeholder="Teléfono/Celular">
+                    </div>
+                    <div class="input-group">
+                        <textarea id="quoteMensaje" placeholder="Describe tu proyecto o necesidad"></textarea>
+                    </div>
+                    <a href="#" id="enviarCotizacionBtn" class="btn-quote">
+                        <span>Enviar Solicitud</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Columna 4: Trabaja con Nosotros -->
+            <div class="footer-column work-with-us">
+                <h3>Trabaja con Nosotros</h3>
+                <div id="trabajoFields" class="work-form">
+                    <div class="input-group">
+                        <input type="text" id="workNombre" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="workEmail" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" id="workTelefono" placeholder="Teléfono/Celular" required>
+                    </div>
+                    <div class="input-group">
+                        <p style="font-size: 0.85rem; color: #666; text-align: center; padding: 10px; background-color: #f9f9f9; border-radius: 6px;">
+                            <i class="fas fa-info-circle"></i> Al enviar, se abrirá su cliente de correo.
+                            <strong>Por favor, no olvide adjuntar su hoja de vida (PDF).</strong>
+                        </p>
+                    </div>
+                    <a href="#" id="enviarTrabajoBtn" class="btn-work">
+                        <span>Enviar Solicitud</span>
+                        <i class="fas fa-briefcase"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Columna 5: Ubicación (MAPA) -->
+            <div class="footer-column location">
+                <h3>Nuestra Sede Principal</h3>
+                <div class="map-wrapper">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521673867072!2d-75.57890792468696!3d6.201604493739862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4429d3a5d5d5a5%3A0x5b5b5b5b5b5b5b5b!2sCl.%2012b%20Sur%20%2352a-77%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1620000000000!5m2!1ses!2sco" 
+                        width="100%" 
+                        height="250" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy"
+                        class="google-map"
+                        aria-label="Mapa de ubicación de Ingegases"
+                    ></iframe>
+                    <div class="location-info">
+                        <p class="map-address">
+                            <i class="fas fa-map-marker-alt"></i> Calle 12b Sur 52A 77, Medellín
+                        </p>
+                        <a href="https://www.google.com/maps/place/Cl.+12b+Sur+%2352a-77,+Medell%C3%ADn,+Antioquia/@6.2016045,-75.5789079,17z/data=!3m1!4b1!4m5!3m4!1s0x8e4429d3a5d5d5a5:0x5b5b5b5b5b5b5b5b!8m2!3d6.2016045!4d-75.5767192" 
+                        class="btn-directions" 
+                        target="_blank"
+                        rel="noopener noreferrer">
+                            <i class="fas fa-directions"></i> Cómo llegar
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    
-        <!-- Footer inferior -->
-<div class="footer-bottom">
-    <div class="footer-legal">
-        <a href="#">Términos y condiciones</a>
-        <span class="divider">•</span>
-        <a href="#">Política de privacidad</a>
-        <span class="divider">•</span>
-        <a href="#">Aviso legal</a>
     </div>
-    <p class="copyright">
-        &copy; 2025 Ingegases y Redes s.a.s. Todos los derechos reservados. 
-        <span class="nit">NIT: 900901915</span>
-        <span class="divider">•</span>
-        <a href="firma.html" class="dev-credit">DesarrolloWeb: @SmartDev</a>
-    </p>
-</div>
+
+    <!-- Footer inferior -->
+    <div class="footer-bottom">
+        <div class="footer-legal">
+            <a href="#">Términos y condiciones</a>
+            <span class="divider">•</span>
+            <a href="#">Política de privacidad</a>
+            <span class="divider">•</span>
+            <a href="#">Aviso legal</a>
+        </div>
+        <p class="copyright">
+            © 2025 Ingegases y Redes s.a.s. Todos los derechos reservados. 
+            <span class="nit">NIT: 900901915</span>
+            <span class="divider">•</span>
+            <a href="firma.html" class="dev-credit">DesarrolloWeb: @SmartDev</a>
+        </p>
+    </div>
+</footer>
 
 
-<script>
-    // Carrusel 3D Autoejecutable - Versión Optimizada
-(function() {
+<!-- ===== INICIO DEL SCRIPT ===== -->
+<script data-cfasync="false">
+
+    // FUNCIÓN PARA INICIALIZAR LA GALERÍA 3D (Sin cambios)
     function init3DGallery() {
         const gallery = document.querySelector('.gallery-3d');
         if (!gallery) return;
-
+        // ... (El código interno de la galería es el mismo, lo omito por brevedad) ...
         const cards = document.querySelectorAll('.photo-card');
         const dots = document.querySelectorAll('.nav-dot');
         if (cards.length === 0 || dots.length === 0) return;
-
         let currentIndex = 0;
         let rotateInterval;
-
-        // Configuración optimizada
-        const config = {
-            rotationSpeed: 4000,       // Mantenemos los 4000ms de rotación
-            initialDelay: 100,        // Reducido de 1000ms a 100ms
-            transitionDuration: '0.5s', // Transición más rápida
-            activeZIndex: 10,
-            hiddenZIndex: -1,
-            rotationAngle: 75,
-            translateZ: -150
-        };
-
-        // Aplicar estilos iniciales de forma más eficiente
-        function applyInitialStyles() {
-            const style = document.createElement('style');
-            style.textContent = `
-                .photo-card {
-                    transition: transform ${config.transitionDuration} ease, 
-                                opacity ${config.transitionDuration} ease;
-                    will-change: transform, opacity;
-                }
-            `;
-            document.head.appendChild(style);
-        }
-
-        // Función de rotación optimizada
-        function rotateGallery(index) {
-            currentIndex = index;
-
-            cards.forEach((card, i) => {
-                const isActive = i === index;
-                const isNext = i === (index + 1) % cards.length;
-
-                card.style.transform = isActive
-                    ? 'rotateY(0deg) translateZ(0)'
-                    : `rotateY(${isNext ? config.rotationAngle : -config.rotationAngle}deg) translateZ(${config.translateZ}px)`;
-
-                card.style.zIndex = isActive ? config.activeZIndex : config.hiddenZIndex;
-                card.style.opacity = isActive ? '1' : '0';
-                card.style.visibility = isActive ? 'visible' : 'hidden';
-            });
-
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
-        }
-
-        // Auto-rotación con inicio más rápido
-        function startAutoRotate() {
-            clearInterval(rotateInterval);
-            rotateGallery(currentIndex); // Mostrar el primer elemento inmediatamente
-            
-            // Iniciar el intervalo después de un pequeño delay
-            rotateInterval = setInterval(() => {
-                rotateGallery((currentIndex + 1) % cards.length);
-            }, config.rotationSpeed);
-        }
-
-        // Event listeners mejorados
-        function setupEventListeners() {
-            dots.forEach(dot => {
-                dot.addEventListener('click', function() {
-                    const index = parseInt(this.dataset.index);
-                    if (index !== currentIndex) {
-                        rotateGallery(index);
-                        clearInterval(rotateInterval);
-                        setTimeout(startAutoRotate, config.rotationSpeed);
-                    }
-                });
-            });
-
-            gallery.addEventListener('mouseenter', () => {
-                clearInterval(rotateInterval);
-            });
-
-            gallery.addEventListener('mouseleave', startAutoRotate);
-        }
-
-        // Inicialización optimizada
+        const config = { rotationSpeed: 3000, initialDelay: 100, transitionDuration: '0.5s', activeZIndex: 10, hiddenZIndex: -1, rotationAngle: 75, translateZ: -150 };
+        function applyInitialStyles() { const style = document.createElement('style'); style.textContent = `.photo-card { transition: transform ${config.transitionDuration} ease, opacity ${config.transitionDuration} ease; will-change: transform, opacity; }`; document.head.appendChild(style); }
+        function rotateGallery(index) { currentIndex = index; cards.forEach((card, i) => { const isActive = i === index; const isNext = i === (index + 1) % cards.length; card.style.transform = isActive ? 'rotateY(0deg) translateZ(0)' : `rotateY(${isNext ? config.rotationAngle : -config.rotationAngle}deg) translateZ(${config.translateZ}px)`; card.style.zIndex = isActive ? config.activeZIndex : config.hiddenZIndex; card.style.opacity = isActive ? '1' : '0'; card.style.visibility = isActive ? 'visible' : 'hidden'; }); dots.forEach((dot, i) => { dot.classList.toggle('active', i === index); }); }
+        function startAutoRotate() { clearInterval(rotateInterval); rotateGallery(currentIndex); rotateInterval = setInterval(() => { rotateGallery((currentIndex + 1) % cards.length); }, config.rotationSpeed); }
+        function setupEventListeners() { dots.forEach(dot => { dot.addEventListener('click', function() { const index = parseInt(this.dataset.index); if (index !== currentIndex) { rotateGallery(index); clearInterval(rotateInterval); setTimeout(startAutoRotate, config.rotationSpeed); } }); }); gallery.addEventListener('mouseenter', () => clearInterval(rotateInterval)); gallery.addEventListener('mouseleave', startAutoRotate); }
         applyInitialStyles();
         setupEventListeners();
-        
-        // Inicio más rápido con pequeño delay
         setTimeout(startAutoRotate, config.initialDelay);
     }
 
-    // Carga más inteligente
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        init3DGallery();
-    } else {
-        document.addEventListener('DOMContentLoaded', init3DGallery);
-    }
-})();
-</script>
+    // FUNCIÓN PARA INICIALIZAR LOS FORMULARIOS
+    function initContactForms() {
+        
+        // --- LÓGICA PARA EL FORMULARIO DE COTIZACIÓN ---
+        const quoteBtn = document.getElementById('enviarCotizacionBtn');
+        const quoteInputs = [
+            document.getElementById('quoteNombre'),
+            document.getElementById('quoteEmail'),
+            document.getElementById('quoteTelefono'),
+            document.getElementById('quoteMensaje')
+        ];
 
-    
-    
-    <script src="index.js"></script>
-    
+        function updateQuoteLink() {
+            const nombre = quoteInputs[0].value;
+            const email = quoteInputs[1].value;
+            const telefono = quoteInputs[2].value;
+            const mensaje = quoteInputs[3].value;
+            
+            // Solo actualizamos si hay nombre y correo
+            if (!nombre || !email) { return; }
+
+            const destinatario = 'roger.herrera@ingegasesyredes.com';
+            const asunto = `Solicitud de Cotización de: ${nombre}`;
+            const cuerpo = `Hola, mi nombre es ${nombre}.\n\nEstoy interesado/a en una cotización y me gustaría que me contactaran.\n\nDetalles de mi solicitud:\n${mensaje}\n\nInformación de contacto:\nCorreo: ${email}\nTeléfono: ${telefono}\n\nGracias.`;
+            const mailtoLink = `mailto:${destinatario}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+            
+            quoteBtn.href = mailtoLink; 
+        }
+
+        if (quoteBtn) {
+            // Actualizamos el enlace cada vez que el usuario escribe en un campo
+            quoteInputs.forEach(input => input.addEventListener('keyup', updateQuoteLink));
+            // También actualizamos cuando el ratón pasa por encima, como último seguro
+            quoteBtn.addEventListener('mouseover', updateQuoteLink);
+        }
+
+        // --- LÓGICA PARA EL FORMULARIO TRABAJA CON NOSOTROS ---
+        const workBtn = document.getElementById('enviarTrabajoBtn');
+        const workInputs = [
+            document.getElementById('workNombre'),
+            document.getElementById('workEmail'),
+            document.getElementById('workTelefono')
+        ];
+        
+        function updateWorkLink() {
+            const nombre = workInputs[0].value;
+            const email = workInputs[1].value;
+            const telefono = workInputs[2].value;
+
+            if (!nombre || !email || !telefono) { return; }
+
+            const destinatario = 'roger.herrera@ingegasesyredes.com';
+            const asunto = `Solicitud de Empleo - ${nombre}`;
+            const cuerpo = `Hola, mi nombre es ${nombre} y estoy interesado/a en trabajar con ustedes.\n\nAdjunto mi hoja de vida para su consideración.\n\nMis datos de contacto son:\nCorreo: ${email}\nTeléfono: ${telefono}\n\n------------------------------------------------------\n(RECORDATORIO: Por favor, no olvide adjuntar su CV antes de enviar este correo).\n------------------------------------------------------\n`;
+            const mailtoLink = `mailto:${destinatario}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+
+            workBtn.href = mailtoLink; // Actualizamos el href del botón de trabajo.
+        }
+
+        if (workBtn) {
+            workInputs.forEach(input => input.addEventListener('keyup', updateWorkLink));
+            workBtn.addEventListener('mouseover', updateWorkLink);
+        }
+    }
+
+    // EVENT LISTENER PRINCIPAL (Sin cambios)
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("✅ DOM cargado. Inicializando componentes.");
+        init3DGallery();
+        initContactForms();
+    });
+
+</script>
 
 
 </body>
-
 </html>

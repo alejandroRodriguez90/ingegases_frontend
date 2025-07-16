@@ -1201,21 +1201,98 @@ window.InventarioCompartido = (function() {
         {codigo: "IYR1067", descripcion: "Tee Bronce 3/4 NPTH"},
         {codigo: "IYR1068", descripcion: "Tee Bronce 1 NPTH"},
         {codigo: "IYR1069", descripcion: "Tee Bronce 1.1/4 NPTH"},
-        {codigo: "IYR1070", descripcion: "Tee Bronce 1.1/2 NPTH"}
-      ];
+        {codigo: "IYR1070", descripcion: "Tee Bronce 1.1/2 NPTH"},
 
-      const otrosProductos = [
-        {codigo: "IYR2001", descripcion: "Válvula de seguridad 1/2"},
-        {codigo: "IYR2002", descripcion: "Manómetro 0-100 psi"},
-        {codigo: "IYR2003", descripcion: "Filtro de línea 3/4"},
-        {codigo: "IYR2004", descripcion: "Regulador de presión"},
-        {codigo: "IYR2005", descripcion: "Junta tórica 1/2"},
-        {codigo: "IYR2006", descripcion: "Cinta de teflón"},
-        {codigo: "IYR2007", descripcion: "Soldadura para cobre"},
-        {codigo: "IYR2008", descripcion: "Flux para soldar"},
-        {codigo: "IYR2009", descripcion: "Abrazadera de acero 2 pulg"},
-        {codigo: "IYR2010", descripcion: "Cepillo para tubos"}
-    ];
+         // ============= BRIDAS BRONCE (1070-1105) =============
+         {codigo: "IYR1071", descripcion: "Brida Bronce 1/2 SoldeoTope"},
+         {codigo: "IYR1072", descripcion: "Brida Bronce 3/4 SoldeoTope"},
+         {codigo: "IYR1073", descripcion: "Brida Bronce 1 SoldeoTope"},
+         {codigo: "IYR1074", descripcion: "Brida Bronce 1.1/2 SoldeoTope"},
+         {codigo: "IYR1075", descripcion: "Brida Bronce 2 SoldeoTope"},
+         {codigo: "IYR1076", descripcion: "Brida Bronce 2.1/2 SoldeoTope"},
+         {codigo: "IYR1077", descripcion: "Brida Bronce 3 SoldeoTope"},
+         {codigo: "IYR1078", descripcion: "Brida Bronce 4 SoldeoTope"},
+         {codigo: "IYR1079", descripcion: "Niple AceroCarbon Sch40 2.1/2 SoldeoTope"},
+         {codigo: "IYR1080", descripcion: "Niple AceroCarbon Sch40 3 SoldeoTope"},
+         {codigo: "IYR1081", descripcion: "Niple AceroCarbon Sch40 4 SoldeoTope"},
+         {codigo: "IYR1082", descripcion: "Niple AceroCarbon Sch40 2.1/2 NPTM"},
+         {codigo: "IYR1083", descripcion: "Niple AceroCarbon Sch40 3 NPTM"},
+         {codigo: "IYR1084", descripcion: "Niple AceroCarbon Sch40 4 NPTM"},
+         {codigo: "IYR1085", descripcion: "Niple AceroCarbon Sch40 2.1/2 NPTH"},
+         {codigo: "IYR1086", descripcion: "Niple AceroCarbon Sch40 3 NPTH"},
+         {codigo: "IYR1087", descripcion: "Niple AceroCarbon Sch40 4 NPTH"},
+         {codigo: "IYR1088", descripcion: "Codo AceroCarbon Sch40 2.1/2 SoldeoTope"},
+         {codigo: "IYR1089", descripcion: "Codo AceroCarbon Sch40 3 SoldeoTope"},
+         {codigo: "IYR1090", descripcion: "Codo AceroCarbon Sch40 4 SoldeoTope"},
+         {codigo: "IYR1091", descripcion: "Codo AceroCarbon Sch40 2.1/2 NPTM"},
+         {codigo: "IYR1092", descripcion: "Codo AceroCarbon Sch40 3 NPTM"},
+         {codigo: "IYR1093", descripcion: "Codo AceroCarbon Sch40 4 NPTM"},
+         {codigo: "IYR1094", descripcion: "Codo AceroCarbon Sch40 2.1/2 NPTH"},
+         {codigo: "IYR1095", descripcion: "Codo AceroCarbon Sch40 3 NPTH"},
+         {codigo: "IYR1096", descripcion: "Codo AceroCarbon Sch40 4 NPTH"},
+         {codigo: "IYR1097", descripcion: "Tee AceroCarbon Sch40 2.1/2 SoldeoTope"},
+         {codigo: "IYR1098", descripcion: "Tee AceroCarbon Sch40 3 SoldeoTope"},
+         {codigo: "IYR1099", descripcion: "Tee AceroCarbon Sch40 4 SoldeoTope"},
+         {codigo: "IYR1100", descripcion: "Tee AceroCarbon Sch40 2.1/2 NPTM"},
+         {codigo: "IYR1101", descripcion: "Tee AceroCarbon Sch40 3 NPTM"},
+         {codigo: "IYR1102", descripcion: "Tee AceroCarbon Sch40 4 NPTM"},
+         {codigo: "IYR1103", descripcion: "Tee AceroCarbon Sch40 2.1/2 NPTH"},
+         {codigo: "IYR1104", descripcion: "Tee AceroCarbon Sch40 3 NPTH"},
+         {codigo: "IYR1105", descripcion: "Tee AceroCarbon Sch40 4 NPTH"}
+       ];
+ 
+       const otrosProductos = [
+         // <<<<<<<------------ MATERIALES ELÉCTRICOS --------------------- >>>>>>>>
+         {codigo: "IYR1200", descripcion: "Curva EMT 1/2"},
+         {codigo: "IYR1201", descripcion: "Curva EMT 3/4"},
+         {codigo: "IYR1202", descripcion: "Unión EMT 1/2"},
+         {codigo: "IYR1203", descripcion: "Unión EMT 3/4"},
+         {codigo: "IYR1204", descripcion: "Terminal EMT 1/2"},
+         {codigo: "IYR1205", descripcion: "Terminal EMT 3/4"},
+         {codigo: "IYR1206", descripcion: "Conector Recto EMT 1/2"},
+         {codigo: "IYR1207", descripcion: "Conector Recto EMT 3/4"},
+         {codigo: "IYR1208", descripcion: "Clavija Macho"},
+         {codigo: "IYR1209", descripcion: "Clavija Hembra"},
+         {codigo: "IYR1210", descripcion: "Conduleta Tipo T 1/2"},
+         {codigo: "IYR1211", descripcion: "Conduleta Tipo T 3/4"},
+         {codigo: "IYR1212", descripcion: "Conduleta Tipo L 1/2"},
+         {codigo: "IYR1213", descripcion: "Conduleta Tipo L 3/4"},
+         {codigo: "IYR1214", descripcion: "Caja Octagonal 1/2"},
+         {codigo: "IYR1215", descripcion: "Caja Octagonal 3/4"},
+ 
+         // <<<<<<<------------ CABLES Y ACCESORIOS --------------------- >>>>>>>>
+         {codigo: "IYR1216", descripcion: "Cable Encauchetado 3/16"},
+         {codigo: "IYR1217", descripcion: "Cable UTP Cat6"},
+         {codigo: "IYR1218", descripcion: "Cable Polo a Tierra #6"},
+         {codigo: "IYR1219", descripcion: "Señalización Oxígeno"},
+         {codigo: "IYR1220", descripcion: "Señalización Aire Medicinal"},
+         {codigo: "IYR1221", descripcion: "Señalización Vacío"},
+         {codigo: "IYR1222", descripcion: "Señalización Aire Instrumental"},
+         {codigo: "IYR1223", descripcion: "Señalización Nitrógeno"},
+         {codigo: "IYR1224", descripcion: "Señalización Dióxido de Carbono"},
+         {codigo: "IYR1225", descripcion: "Señalización Mantenimiento"},
+ 
+         // <<<<<<<------------ PINTURAS Y QUÍMICOS --------------------- >>>>>>>>
+         {codigo: "IYR1226", descripcion: "Pintura Verde (Galón)"},
+         {codigo: "IYR1227", descripcion: "Pintura Blanco (Galón)"},
+         {codigo: "IYR1228", descripcion: "Pintura Negro (Galón)"},
+         {codigo: "IYR1229", descripcion: "Pintura Amarillo (Galón)"},
+         {codigo: "IYR1230", descripcion: "Poliuretano Blanco (Galón)"},
+         {codigo: "IYR1231", descripcion: "Ajustador de Poliuretano (Galón)"},
+         {codigo: "IYR1232", descripcion: "Catalizador 1/4"},
+         {codigo: "IYR1233", descripcion: "Thinner (Galón)"},
+         {codigo: "IYR1234", descripcion: "Masilla (Kg)"},
+         {codigo: "IYR1235", descripcion: "Epóxico (Galón)"},
+ 
+         // <<<<<<<------------ SOLDADURAS --------------------- >>>>>>>>
+         {codigo: "IYR1236", descripcion: "Soldadura Autógena 0%"},
+         {codigo: "IYR1237", descripcion: "Soldadura Autógena 5%"},
+         {codigo: "IYR1238", descripcion: "Soldadura Autógena 35%"},
+         {codigo: "IYR1239", descripcion: "Soldadura Revestida Electrodo 6013"},
+         {codigo: "IYR1240", descripcion: "Soldadura Revestida Electrodo 7018"},
+         {codigo: "IYR1241", descripcion: "Soldadura TIG Acero al Carbono"},
+         {codigo: "IYR1242", descripcion: "Soldadura TIG Acero Inoxidable"}
+     ];
 
     productos = [...tuberias, ...accesoriosGenerados, ...otrosProductos].map(p => ({
       ...p,
@@ -1256,9 +1333,11 @@ window.InventarioCompartido = (function() {
         case 'tuberia': 
           return todos.filter(p => p.descripcion.includes('Tubería'));
         case 'accesorios':
-          return todos.filter(p => !p.descripcion.includes('Tubería') && !p.codigo.startsWith('IYR2'));
+          // Accesorios: NO es tubería y NO empieza con IYR12
+          return todos.filter(p => !p.descripcion.includes('Tubería') && !p.codigo.startsWith('IYR12'));
         case 'otros':
-          return todos.filter(p => p.codigo.startsWith('IYR2'));
+          // Otros: EMPIEZA con IYR12
+          return todos.filter(p => p.codigo.startsWith('IYR12'));
         default:
           return todos;
       }
