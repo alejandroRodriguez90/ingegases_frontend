@@ -715,6 +715,138 @@
         background-repeat: no-repeat;
     }
 
+    /* ========================================================== */
+/* == ESTILOS PARA LA SECCIÓN DE REPORTES (MODIFICACIONES) == */
+/* ========================================================== */
+
+/* --- Contenedor de la barra de navegación de meses --- */
+.reportes-meses-nav {
+    flex: 0 0 120px; /* No crece, no se encoge, base de 180px */
+    background-color: #f8f9fa;
+    border-right: 1px solid #e9ecef;
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px 0 0 8px;
+}
+
+.reportes-meses-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.reportes-meses-nav li a {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: var(--text-medium);
+    font-weight: 500;
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+/* --- Efecto hover y estado activo para los meses --- */
+.reportes-meses-nav li a:hover {
+    background-color: #e9ecef;
+    color: var(--text-dark);
+    border-left-color: var(--accent-orange);
+}
+
+.reportes-meses-nav li a.active {
+    background-color: #e9f5ff;
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* --- Contenedor de acciones de reporte y botones --- */
+.report-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+    gap: 15px; /* Espacio entre botones */
+    padding: 20px 15px;
+    border-top: 1px solid #e9ecef;
+    margin-top: 20px;
+}
+
+/* --- Estilo base reutilizable para botones de exportación --- */
+.btn-exportar-estilizado {
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px; /* Más redondeado para un look moderno */
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre icono y texto */
+    box-shadow: var(--shadow-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-exportar-estilizado i {
+    font-size: 1.2rem; /* Tamaño del icono */
+}
+
+.btn-exportar-estilizado:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-exportar-estilizado:active {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* --- Colores específicos para cada botón --- */
+.btn-exportar-estilizado.btn-excel {
+    background-color: #1D6F42; /* Verde oscuro de Excel */
+}
+.btn-exportar-estilizado.btn-excel:hover {
+    background-color: #175734; /* Verde más oscuro */
+}
+
+.btn-exportar-estilizado.btn-pdf {
+    background-color: #D93025; /* Rojo de Adobe PDF */
+}
+.btn-exportar-estilizado.btn-pdf:hover {
+    background-color: #B5281F; /* Rojo más oscuro */
+}
+
+/* --- Ajuste responsivo para la sección de reportes --- */
+@media (max-width: 992px) {
+    .reportes-meses-nav {
+        flex-basis: 100%; /* Ocupa todo el ancho */
+        border-radius: 8px 8px 0 0;
+        border-right: none;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .reportes-meses-nav ul {
+        display: flex;
+        overflow-x: auto; /* Permite scroll horizontal si no caben */
+        padding-bottom: 5px;
+    }
+
+    .reportes-meses-nav li a {
+        white-space: nowrap; /* Evita que el texto del mes se rompa */
+        border-left: none;
+        border-bottom: 3px solid transparent;
+    }
+
+    .reportes-meses-nav li a:hover {
+        border-bottom-color: var(--accent-orange);
+    }
+    .reportes-meses-nav li a.active {
+        border-bottom-color: var(--primary-color);
+    }
+}
+
     /* ============================================= */
     /* ============== VISIBILIDAD ================== */
     /* ============================================= */
@@ -1033,503 +1165,3 @@
 
 </style>
 
-<script>
-        // Módulo de Proyectos - Namespace para evitar colisiones
-        const ProyectosModule = (function() {
-        // Constantes
-        const PROJECT_ID_PREFIX = 'OT-';
-        const ADDITION_ID_PREFIX = 'AD-';
-        
-        // Variables de estado
-        let proyectosData = [];
-        let proyectoEditandoId = null;
-        
-        // Campos editables para proyectos principales
-        const MAIN_PROJECT_EDITABLE_FIELDS = ['descripcion', 'encargado', 'estado'];
-        
-        // Campos editables para adiciones
-        const ADDITION_EDITABLE_FIELDS = ['descripcion', 'ubicacion', 'fechaInicio', 'fechaFin', 'encargado', 'estado', 'presupuesto'];
-        
-        // Funciones públicas
-        return {
-            // Cargar pantalla principal
-            loadProyectos: function() {
-                document.querySelector('.proyectos-main-screen').style.display = 'none';
-                document.querySelector('.proyectos-detail-screen').style.display = 'block';
-                
-                const tableContent = `
-                    <div class="table-title-container">
-                        <div class="section-title vertical-title">Proyectos</div>
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>ID</th>
-                                        <th>Proyecto</th>
-                                        <th>Descripción</th>
-                                        <th>Ubicación</th>
-                                        <th>Fecha de Inicio</th>
-                                        <th>Fecha de Fin</th>
-                                        <th>Encargado</th>
-                                        <th>Estado</th>
-                                        <th>Presupuesto</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="proyectosTableBody">
-                                    ${this.renderProyectosRecursivamente(proyectosData)}
-                                </tbody>
-                            </table>
-                            <div class="export-button-container">
-                                <button id="createProjectButton">Crear Proyecto</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('proyectosContent').innerHTML = tableContent;
-                this.assignEventListeners();
-            },
-            
-            // Cargar pantalla de reportes
-            loadReportes: function() {
-                document.querySelector('.proyectos-main-screen').style.display = 'none';
-                document.querySelector('.proyectos-detail-screen').style.display = 'block';
-                
-                const reportesContent = `
-                    <div class="table-title-container">
-                        <div class="section-title vertical-title">Reportes</div>
-                        <div class="table-container">
-                            <h3>Estadísticas de Proyectos</h3>
-                            <div class="chart-container">
-                                <canvas id="proyectosChart"></canvas>
-                            </div>
-                            <div class="report-actions">
-                                <button class="btn-export" onclick="ProyectosModule.generarReporteExcel()">
-                                    <i class="fas fa-file-excel"></i> Exportar a Excel
-                                </button>
-                                <button class="btn-export" onclick="ProyectosModule.generarReportePDF()">
-                                    <i class="fas fa-file-pdf"></i> Exportar a PDF
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('proyectosContent').innerHTML = reportesContent;
-                this.renderProyectosChart();
-            },
-            
-            // Volver a la pantalla principal
-            backToMain: function() {
-                document.querySelector('.proyectos-main-screen').style.display = 'block';
-                document.querySelector('.proyectos-detail-screen').style.display = 'none';
-                document.getElementById('proyectosContent').innerHTML = '';
-            },
-            
-            // Renderizar proyectos recursivamente (para mostrar jerarquía)
-            renderProyectosRecursivamente: function(proyectos, parentId = null) {
-                let html = '';
-                const proyectosFiltrados = proyectos.filter(proyecto => proyecto.parentId === parentId);
-                
-                proyectosFiltrados.forEach(proyecto => {
-                    let actionIcons = '';
-                    
-                    if (proyecto.isAddition) {
-                        actionIcons = `
-                            <i class="fas fa-edit edit-project" data-id="${proyecto.id}" title="Editar"></i>
-                            <i class="fas fa-trash delete-project" data-id="${proyecto.id}" title="Eliminar"></i>
-                        `;
-                    } else {
-                        actionIcons = `
-                            <i class="fas fa-edit edit-project" data-id="${proyecto.id}" title="Editar"></i>
-                            <i class="fas fa-plus-square add-addition" data-id="${proyecto.id}" title="Adición"></i>
-                            <i class="fas fa-file-pdf load-pdf" data-id="${proyecto.id}" title="Cargar PDF"></i>
-                            <i class="fas fa-download download-project" data-id="${proyecto.id}" title="Descargar"></i>
-                            <i class="fas fa-trash delete-project" data-id="${proyecto.id}" title="Eliminar"></i>
-                        `;
-                    }
-                    
-                    const rowClass = proyecto.isAddition ? 'project-row addition-row' : 'project-row';
-                    
-                    let eyeIcon = '';
-                    if (!proyecto.isAddition && proyectosData.some(p => p.parentId === proyecto.id)) {
-                        eyeIcon = `<i class="fas fa-eye toggle-additions" data-project-id="${proyecto.id}" title="Mostrar/Ocultar Adiciones"></i>`;
-                    }
-                    
-                    html += `
-                        <tr class="${rowClass}" data-id="${proyecto.id}" data-parent-id="${proyecto.parentId || ''}">
-                            <td class="eye-icon-cell">${eyeIcon}</td>
-                            <td>${proyecto.id}</td>
-                            <td>${proyecto.nombre}</td>
-                            <td>${proyecto.descripcion}</td>
-                            <td>${proyecto.ubicacion}</td>
-                            <td>${proyecto.fechaInicio}</td>
-                            <td>${proyecto.fechaFin}</td>
-                            <td>${proyecto.encargado}</td>
-                            <td>${proyecto.estado}</td>
-                            <td>${proyecto.presupuesto}</td>
-                            <td class="action-icons">${actionIcons}</td>
-                        </tr>
-                    `;
-                    
-                    html += this.renderProyectosRecursivamente(proyectos, proyecto.id);
-                });
-                
-                return html;
-            },
-            
-            // Asignar eventos a los elementos
-            assignEventListeners: function() {
-                const tableBody = document.querySelector('#proyectosTableBody');
-                if (tableBody) {
-                    tableBody.addEventListener('click', (event) => {
-                        const target = event.target;
-                        const projectId = target.dataset.id;
-                        
-                        if (target.classList.contains('edit-project')) {
-                            this.editProject(projectId);
-                        } else if (target.classList.contains('add-addition')) {
-                            this.addAddition(projectId);
-                        } else if (target.classList.contains('load-pdf')) {
-                            this.loadPDF(projectId);
-                        } else if (target.classList.contains('download-project')) {
-                            this.downloadProject(projectId);
-                        } else if (target.classList.contains('delete-project')) {
-                            proyectoEditandoId = projectId;
-                            this.openConfirmModal();
-                        } else if (target.classList.contains('toggle-additions')) {
-                            const parentProjectId = target.dataset.projectId;
-                            this.toggleAdditions(parentProjectId);
-                        }
-                    });
-                }
-                
-                document.getElementById('createProjectButton')?.addEventListener('click', () => {
-                    this.createProject();
-                });
-            },
-            
-            // Alternar visibilidad de adiciones
-            toggleAdditions: function(projectId) {
-                const additionRows = document.querySelectorAll(`.project-row[data-parent-id="${projectId}"]`);
-                additionRows.forEach(row => {
-                    row.classList.toggle('show-additions');
-                });
-            },
-            
-            // Crear nuevo proyecto
-            createProject: function() {
-                proyectoEditandoId = null;
-                this.openModal("Crear Proyecto");
-                this.renderProjectForm();
-            },
-            
-            // Editar proyecto existente
-            editProject: function(projectId) {
-                proyectoEditandoId = projectId;
-                const proyecto = proyectosData.find(p => p.id === projectId);
-                
-                if (!proyecto) return;
-                
-                this.openModal("Editar Proyecto");
-                this.renderProjectForm(proyecto);
-            },
-            
-            // Añadir adición a proyecto
-            addAddition: function(projectId) {
-                proyectoEditandoId = null;
-                this.openModal("Adición a Proyecto");
-                this.renderProjectForm(null, projectId);
-            },
-
-             // Renderizar formulario de proyecto (crear o editar)
-            renderProjectForm: function(proyecto = null, parentId = null) {
-                 const isNew = proyecto === null;
-                const isAddition = parentId !== null;
-                const title = isNew ? (isAddition ? "Crear Adición" : "Crear Proyecto") : "Editar Proyecto";
-                const modalTitle = isNew ? (isAddition ? "Adición a Proyecto" : "Crear Proyecto") : "Editar Proyecto";
-
-                const projectData = proyecto || {
-                    id: this.generateId(isAddition ? ADDITION_ID_PREFIX : PROJECT_ID_PREFIX),
-                    nombre: '',
-                    descripcion: '',
-                    ubicacion: '',
-                    fechaInicio: '',
-                    fechaFin: '',
-                    encargado: 'Ing Alexander Herrera',
-                    estado: 'Asignado',
-                    presupuesto: ''
-                };
-                
-                let projectForm = `
-                    <div class="modal-content">
-                        <span class="close" onclick="ProyectosModule.closeModal()">×</span>
-                        <h2 id="modalTitle">${modalTitle}</h2>
-                        <form id="projectForm">
-                            <label for="projectId">ID:</label>
-                            <input type="text" id="projectId" name="projectId" value="${projectData.id}" ${!isNew ? 'readonly' : ''} required>
-                            
-                            <label for="projectName">Proyecto:</label>
-                            <input type="text" id="projectName" name="projectName" value="${projectData.nombre}" ${!isNew ? 'readonly' : ''} required>
-                            
-                            <label for="projectDescription">Descripción:</label>
-                            <textarea id="projectDescription" name="projectDescription" required>${projectData.descripcion}</textarea>
-                            
-                            <label for="projectLocation">Ubicación:</label>
-                            <input type="text" id="projectLocation" name="projectLocation" value="${projectData.ubicacion}" ${!isNew ? 'readonly' : ''} required>
-                            
-                            <label for="projectStartDate">Fecha de Inicio:</label>
-                            <input type="date" id="projectStartDate" name="projectStartDate" value="${projectData.fechaInicio}" ${!isNew ? 'readonly' : ''} required>
-                            
-                            <label for="projectEndDate">Fecha de Fin:</label>
-                            <input type="date" id="projectEndDate" name="projectEndDate" value="${projectData.fechaFin}" ${!isNew ? 'readonly' : ''} required>
-                            
-                            <label for="projectManager">Encargado:</label>
-                            <select id="projectManager" name="projectManager" required>
-                                <option value="Ing Alexander Herrera" ${projectData.encargado === 'Ing Alexander Herrera' ? 'selected' : ''}>Ing Alexander Herrera</option>
-                                <option value="Ing Javier Sierra" ${projectData.encargado === 'Ing Javier Sierra' ? 'selected' : ''}>Ing Javier Sierra</option>
-                                <option value="Ing Daniel Buitrago" ${projectData.encargado === 'Ing Daniel Buitrago' ? 'selected' : ''}>Ing Daniel Buitrago</option>
-                                <option value="Ing Javier Penagos" ${projectData.encargado === 'Ing Javier Penagos' ? 'selected' : ''}>Ing Javier Penagos</option>
-                                <option value="Ing Nicolás Saavedra" ${projectData.encargado === 'Ing Nicolás Saavedra' ? 'selected' : ''}>Ing Nicolás Saavedra</option>
-                                <option value="Ing Melissa Gonzalez" ${projectData.encargado === 'Ing Melissa Gonzalez' ? 'selected' : ''}>Ing Melissa Gonzalez</option>
-                            </select>
-                            
-                            <label for="projectStatus">Estado:</label>
-                            <select id="projectStatus" name="projectStatus" required>
-                                <option value="Asignado" ${projectData.estado === 'Asignado' ? 'selected' : ''}>Asignado</option>
-                                <option value="En Ejecución" ${projectData.estado === 'En Ejecución' ? 'selected' : ''}>En Ejecución</option>
-                                <option value="Realizado" ${projectData.estado === 'Realizado' ? 'selected' : ''}>Realizado</option>
-                                <option value="Facturado" ${projectData.estado === 'Facturado' ? 'selected' : ''}>Facturado</option>
-                                <option value="Anulado" ${projectData.estado === 'Anulado' ? 'selected' : ''}>Anulado</option>
-                            </select>
-                            
-                            <label for="projectBudget">Presupuesto:</label>
-                            <input type="text" id="projectBudget" name="projectBudget" value="${projectData.presupuesto}" required>
-                            
-                            ${parentId ? `<input type="hidden" id="parentProjectId" name="parentProjectId" value="${parentId}">` : ''}
-                            
-                            <button type="submit" id="saveButton">${isNew ? 'Guardar' : 'Actualizar'}</button>
-                        </form>
-                    </div>
-                `;
-                
-                document.getElementById('projectModal').innerHTML = projectForm;
-                document.getElementById('projectForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.saveProject();
-                });
-                document.getElementById('projectModal').style.display = 'block';
-            },
-            
-            // Guardar proyecto (crear o actualizar)
-            saveProject: function() {
-                const form = document.getElementById('projectForm');
-                if (!form.checkValidity()) {
-                    form.reportValidity();
-                    return;
-                }
-                
-                const isNew = proyectoEditandoId === null;
-                const isAddition = document.getElementById('parentProjectId') !== null;
-
-                const projectData = {
-                    id: document.getElementById('projectId').value,
-                    nombre: document.getElementById('projectName').value,
-                    descripcion: document.getElementById('projectDescription').value,
-                    ubicacion: document.getElementById('projectLocation').value,
-                    fechaInicio: document.getElementById('projectStartDate').value,
-                    fechaFin: document.getElementById('projectEndDate').value,
-                    encargado: document.getElementById('projectManager').value,
-                    estado: document.getElementById('projectStatus').value,
-                    presupuesto: document.getElementById('projectBudget').value,
-                    parentId: document.getElementById('parentProjectId')?.value || null,
-                    isAddition: isAddition
-                };
-                
-                if (!isNew) {
-                    // Actualizar proyecto existente
-                    const index = proyectosData.findIndex(p => p.id === proyectoEditandoId);
-                    if (index !== -1) {
-                        const existingProject = proyectosData[index];
-                        
-                        let fieldsToUpdate = MAIN_PROJECT_EDITABLE_FIELDS;
-                        if (existingProject.isAddition) {
-                            fieldsToUpdate = ADDITION_EDITABLE_FIELDS;
-                        }
-
-                        fieldsToUpdate.forEach(field => {
-                            if (projectData.hasOwnProperty(field)) {
-                                existingProject[field] = projectData[field];
-                            }
-                        });
-                        
-                        proyectosData[index] = existingProject;
-                    }
-                } else {
-                    // Crear nuevo proyecto o adición
-                    proyectosData.push(projectData);
-                }
-                
-                this.closeModal();
-                this.loadProyectos();
-                proyectoEditandoId = null;
-            },
-            
-            // Eliminar proyecto y sus adiciones
-            deleteProjectAndAdditions: function(projectId) {
-                proyectosData = proyectosData.filter(p => p.id !== projectId);
-                
-                // Eliminar adiciones recursivamente
-                const additionsToDelete = proyectosData.filter(p => p.parentId === projectId).map(p => p.id);
-                additionsToDelete.forEach(addId => this.deleteProjectAndAdditions(addId));
-                
-                this.loadProyectos();
-            },
-            
-            // Cargar PDF (simulado)
-            loadPDF: function(projectId) {
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = 'application/pdf';
-                input.click();
-                
-                input.addEventListener('change', function(event) {
-                    const file = event.target.files[0];
-                    if (file) {
-                        alert(`PDF cargado para el proyecto ${projectId}: ${file.name}`);
-                    }
-                });
-            },
-            
-            // Descargar proyecto
-            downloadProject: function(projectId) {
-                const proyecto = proyectosData.find(p => p.id === projectId);
-                if (proyecto) {
-                    const blob = new Blob([JSON.stringify(proyecto, null, 2)], { type: 'application/json' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `proyecto_${proyecto.id}.json`;
-                    a.click();
-                    URL.revokeObjectURL(url);
-                }
-            },
-            
-            // Generar ID único
-            generateId: function(prefix) {
-                return prefix + Math.floor(Math.random() * 10000);
-            },
-            
-            // Abrir modal de confirmación
-            openConfirmModal: function() {
-                const confirmModal = document.getElementById('confirmModal');
-                confirmModal.style.display = 'block';
-
-                const confirmDeleteButton = document.getElementById('confirmDelete');
-                confirmDeleteButton.onclick = () => {
-                  this.deleteProjectAndAdditions(proyectoEditandoId);
-                  this.closeConfirmModal();
-                  this.loadProyectos();
-                };
-                const cancelDeleteButton = document.getElementById('cancelDelete');
-                cancelDeleteButton.onclick = () => {
-                    this.closeConfirmModal();
-                };
-
-            },
-            
-            // Cerrar modal de confirmación
-            closeConfirmModal: function() {
-                const confirmModal = document.getElementById('confirmModal');
-                confirmModal.style.display = 'none';
-                proyectoEditandoId = null;
-            },
-            
-            // Abrir modal genérico
-            openModal: function(title) {
-                const modalTitle = document.getElementById('modalTitle');
-                modalTitle.textContent = title;
-                document.getElementById('projectModal').style.display = 'block';
-            },
-            
-            // Cerrar modal genérico
-            closeModal: function() {
-                 document.getElementById('projectModal').style.display = 'none';
-                 const projectForm = document.getElementById('projectForm');
-                 if (projectForm) {
-                    projectForm.removeEventListener('submit', this.saveProject);
-                 }
-            },
-            
-            // Renderizar gráfico de proyectos
-            renderProyectosChart: function() {
-                const ctx = document.getElementById('proyectosChart').getContext('2d');
-                
-                // Datos de ejemplo para el gráfico
-                const data = {
-                    labels: ['Asignado', 'En Ejecución', 'Realizado', 'Facturado', 'Anulado'],
-                    datasets: [{
-                        label: 'Estado de Proyectos',
-                        data: [
-                            proyectosData.filter(p => p.estado === 'Asignado' && !p.isAddition).length,
-                            proyectosData.filter(p => p.estado === 'En Ejecución' && !p.isAddition).length,
-                            proyectosData.filter(p => p.estado === 'Realizado' && !p.isAddition).length,
-                            proyectosData.filter(p => p.estado === 'Facturado' && !p.isAddition).length,
-                            proyectosData.filter(p => p.estado === 'Anulado' && !p.isAddition).length
-                        ],
-                        backgroundColor: [
-                            'rgba(54, 162, 235, 0.7)',
-                            'rgba(255, 206, 86, 0.7)',
-                            'rgba(75, 192, 192, 0.7)',
-                            'rgba(153, 102, 255, 0.7)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                };
-                
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: data,
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            },
-            
-            // Generar reporte en Excel
-            generarReporteExcel: function() {
-                alert('Generando reporte en Excel...');
-                // Implementación real usaría una librería como SheetJS
-            },
-            
-            // Generar reporte en PDF
-            generarReportePDF: function() {
-                alert('Generando reporte en PDF...');
-                // Implementación real usaría una librería como jsPDF
-            }
-        };
-    })();
-
-    // Inicialización del módulo
-    document.addEventListener('DOMContentLoaded', function() {
-        // Datos de ejemplo para proyectos
-        proyectosData = [
-            
-        ];
-    });
-</script>
