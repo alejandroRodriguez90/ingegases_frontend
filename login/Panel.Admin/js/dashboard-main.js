@@ -24,29 +24,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(`HTML del módulo '${moduleName}' cargado. Inyectando en el DOM...`);
                 dynamicContentElement.innerHTML = html;
 
-                console.log(`Llamando al inicializador (.init()) del módulo '${moduleName}'...`);
-                // Después de inyectar el HTML, el "Director" decide qué "Músico" debe activarse.
+                // Tu lógica original de switch que sí funciona.
                 switch (moduleName) {
                     case 'inventario':
-                        if (window.InventarioModule) InventarioModule.init();
+                        // No se necesita llamar a init, la carga se maneja por sus funciones globales
                         break;
                     case 'almacen':
-                        // Dejamos este vacío intencionalmente por ahora.
-                        // Si el módulo de almacén necesita ejecutar algo tras la carga, se añade aquí.
-                        break;
-                    case 'soporte': 
-                        if (window.SoporteModule) SoporteModule.init();
-                        break;
-                     case 'proyectos': 
-                        if (window.ProyectosModule) ProyectosModule.init();
+                        // El init ya se llamó al principio.
                         break;
                     case 'requisicion':
                         if (window.RequisicionesModule) RequisicionesModule.init();
                         break;
-                    case 'proveedores': 
-                        if (window.ProveedoresModule) ProveedoresModule.init();
-                        break;
-                    // Aquí añadirás los casos para 'proyectos', 'requisicion', etc.
+                    // ... otros casos
                 }
             })
             .catch(error => {

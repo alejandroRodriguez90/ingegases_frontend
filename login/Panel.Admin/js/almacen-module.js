@@ -11,7 +11,18 @@
         //         INICIALIZACIÓN
         // ===================================
         init: function() {
-            this.cargarDatosLocales();
+            // CORRECCIÓN CLAVE: Solo cargamos/creamos datos por defecto si el inventario global está VACÍO.
+            if (InventarioCompartido && InventarioCompartido.obtenerProductos().length === 0) {
+                console.log("Inventario global vacío. Se procederá a crear datos por defecto desde AlmacenModule.");
+                this.cargarDatosLocales(); // Esta es la función que crea los datos por defecto
+            } else {
+                console.log("📦 Datos ya existen en InventarioCompartido. AlmacenModule no creará datos por defecto.");
+                // Si ya hay datos, solo nos aseguramos de que la variable local del módulo los tenga.
+                if (!this.almacenesData) {
+                    this.cargarDatosLocales();
+                }
+            }
+            
             console.log("✅ AlmacenModule.init() ejecutado. Datos cargados:", JSON.parse(JSON.stringify(this.almacenesData)));
         },
     
@@ -67,25 +78,66 @@
             this.currentAlmacenId = almacenId;
             document.getElementById('productoForm').reset();
             document.getElementById('productoModalTitle').innerText = "Agregar Producto";
+
+            // 1. Obtenemos las referencias a todos los elementos del formulario
             const codigoInput = document.getElementById('productoCodigo');
             const descripcionInput = document.getElementById('productoDescripcion');
             const valorInput = document.getElementById('productoValor');
             const datalist = document.getElementById('productoCodigosOptions');
+
+            // 2. Llenamos el datalist con todos los códigos de productos del inventario
             datalist.innerHTML = '';
             InventarioCompartido.obtenerProductos().forEach(p => {
                 const option = document.createElement('option');
                 option.value = p.codigo;
+                option.innerText = p.descripcion; // Ayuda visual en algunos navegadores
                 datalist.appendChild(option);
             });
+
+            // 3. Creamos una función reutilizable para formatear el valor
+            const formatearValor = (valorNumerico) => {
+                if (isNaN(valorNumerico) || valorNumerico === null || valorNumerico === 0) {
+                    return '';
+                }
+                return valorNumerico.toLocaleString('es-CO');
+            };
+
+            // 4. Definimos el manejador de autocompletado (¡El corazón de la funcionalidad!)
             const handleAutocomplete = () => {
                 const producto = InventarioCompartido.buscarProducto(codigoInput.value);
-                descripcionInput.value = producto ? producto.descripcion : '';
-                valorInput.value = producto ? (producto.valor || '') : '';
+                if (producto) {
+                    // Si el código es válido, rellenamos los otros campos
+                    descripcionInput.value = producto.descripcion;
+                    // También rellenamos y formateamos el valor unitario que ya tiene el producto
+                    valorInput.value = formatearValor(producto.valor);
+                } else {
+                    // Si el código se borra o no es válido, limpiamos los campos para evitar errores
+                    descripcionInput.value = '';
+                    valorInput.value = '';
+                }
             };
+
+            // 5. Adjuntamos los listeners, asegurándonos de hacerlo solo una vez
+            
+            // Listener para el campo CÓDIGO (restaura el autocompletado)
             if (!codigoInput._listenerAttached) {
                 codigoInput.addEventListener('input', handleAutocomplete);
                 codigoInput._listenerAttached = true;
             }
+
+            // Listener para el campo VALOR (mantiene el formato de moneda)
+            if (!valorInput._listenerAttached) {
+                valorInput.addEventListener('input', (event) => {
+                    let valor = event.target.value;
+                    // Quita todo lo que no sea un dígito
+                    let valorNumerico = parseInt(valor.replace(/\D/g, ''), 10);
+                    // Vuelve a aplicar el formato
+                    event.target.value = formatearValor(valorNumerico);
+                });
+                valorInput._listenerAttached = true;
+            }
+
+            // 6. Mostramos el modal y ponemos el foco en el campo de código
             this.openModal('productoModal');
             setTimeout(() => codigoInput.focus(), 100);
         },
@@ -111,8 +163,60 @@
         },
     
         generarTablaInventario: function(productos, almacenId) {
-            const filas = productos.map(producto => `<tr><td>${producto.codigo}</td><td>${producto.descripcion}</td><td><div class="alm-quantity-control"><span class="alm-quantity-value">${producto.cantidad}</span></div></td><td class="alm-actions"><button class="alm-btn alm-btn-sm alm-btn-warning" onclick="AlmacenModule.modificarCantidad('${almacenId}', '${producto.id}', -1)"><i class="fas fa-minus"></i></button><button class="alm-btn alm-btn-sm alm-btn-success" onclick="AlmacenModule.modificarCantidad('${almacenId}', '${producto.id}', 1)"><i class="fas fa-plus"></i></button><button class="alm-btn alm-btn-sm alm-btn-danger" onclick="AlmacenModule.deleteProducto('${almacenId}', '${producto.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
-            return `<div class="alm-table-responsive"><table class="alm-table"><thead><tr><th>Código</th><th>Descripción</th><th>Cantidad</th><th class="alm-actions">Acciones</th></tr></thead><tbody>${filas}</tbody></table></div><div class="alm-inventory-summary"><div class="alm-summary-item"><span>Tipos de productos:</span> <strong>${productos.length}</strong></div><div class="alm-summary-item"><span>Total unidades:</span> <strong>${productos.reduce((sum, p) => sum + (p.cantidad || 0), 0)}</strong></div></div>`;
+    
+            const filas = productos.map(producto => `
+                <tr>
+                    <td>${producto.codigo}</td>
+                    <td>${producto.descripcion}</td>
+                    <td>
+                        <div class="alm-quantity-control">
+                            <span class="alm-quantity-value">${producto.cantidad}</span>
+                        </div>
+                    </td>
+                    
+                    <!-- AHORA: Columna para el valor total calculado -->
+                    <td>
+                        <strong>
+                            ${( (producto.cantidad || 0) * (producto.valor || 0) ).toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}
+                        </strong>
+                    </td>
+
+                    <td class="alm-actions">
+                        <button class="alm-btn alm-btn-sm alm-btn-warning" onclick="AlmacenModule.modificarCantidad('${almacenId}', '${producto.id}', -1)"><i class="fas fa-minus"></i></button>
+                        <button class="alm-btn alm-btn-sm alm-btn-success" onclick="AlmacenModule.modificarCantidad('${almacenId}', '${producto.id}', 1)"><i class="fas fa-plus"></i></button>
+                        <button class="alm-btn alm-btn-sm alm-btn-danger" onclick="AlmacenModule.deleteProducto('${almacenId}', '${producto.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Los cálculos para el resumen se mantienen igual y son correctos.
+            const totalUnidades = productos.reduce((sum, p) => sum + (p.cantidad || 0), 0);
+            const valorTotalInventario = productos.reduce((sum, p) => sum + ( (p.cantidad || 0) * (p.valor || 0) ), 0);
+
+            return `
+                <div class="alm-table-responsive">
+                    <table class="alm-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>Valor Total</th>  <!-- CAMBIO: Se eliminó "Valor Unit." -->
+                                <th class="alm-actions">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>${filas}</tbody>
+                    </table>
+                </div>
+                <div class="alm-inventory-summary">
+                    <div class="alm-summary-item"><span>Tipos de productos:</span> <strong>${productos.length}</strong></div>
+                    <div class="alm-summary-item"><span>Total unidades:</span> <strong>${totalUnidades}</strong></div>
+                    <div class="alm-summary-item">
+                        <span>Valor Total Inventario:</span> 
+                        <strong>${valorTotalInventario.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</strong>
+                    </div>
+                </div>
+            `;
         },
     
         // ===================================
@@ -121,15 +225,15 @@
         saveProducto: function() {
             this.mostrarCarga(true);
             try {
-                // 1. Recolectar y validar datos (sin cambios)
+                // --- 1. Recolectar y Validar Datos ---
                 const codigo = document.getElementById('productoCodigo').value.trim().toUpperCase();
                 const cantidad = parseInt(document.getElementById('productoCantidad').value, 10);
-                const valor = parseFloat(document.getElementById('productoValor').value) || 0;
+                const valorInput = document.getElementById('productoValor').value || '0';
+                const valorNumerico = parseFloat(valorInput.replace(/\./g, ''));
 
                 if (!codigo || !cantidad || cantidad <= 0) {
                     throw new Error("El Código y una Cantidad positiva son requeridos.");
                 }
-                
                 const productoGlobal = InventarioCompartido.buscarProducto(codigo);
                 if (!productoGlobal) {
                     throw new Error(`El código de producto "${codigo}" no es válido.`);
@@ -139,37 +243,43 @@
                 if (!almacen) {
                     throw new Error("No se ha seleccionado un almacén.");
                 }
-                
                 const ubicacionNombre = almacen.nombre.includes('Bogotá') ? 'Bogotá' : 'Cali';
 
-                // 2. Guardar en el servicio global (localStorage) - (Esto ya funcionaba)
-                AlmacenService.actualizarStock(ubicacionNombre, codigo, cantidad, valor);
+                // --- 2. Actualizar Servicios de Datos ---
+                
+                // 2.1: Actualizamos el stock GLOBAL, usando el modo 'reemplazar'
+                InventarioCompartido.actualizarProducto(codigo, cantidad, valorNumerico, ubicacionNombre, 'reemplazar');
 
+                // 2.2: Actualizamos el stock por ubicación (Lógica de AlmacenService)
+                if (window.AlmacenService) {
+                    AlmacenService.actualizarStock(ubicacionNombre, codigo, cantidad, valorNumerico, 'reemplazar');
+                }
+                
+                // --- 3. Actualizar la Vista Local del Modal ---
                 const productoEnAlmacen = almacen.productos.find(p => p.codigo === codigo);
-
                 if (productoEnAlmacen) {
-                    // Si el producto ya estaba en la tabla, solo sumamos la cantidad
-                    productoEnAlmacen.cantidad += cantidad;
-                    productoEnAlmacen.valor = valor; // Y actualizamos su valor
+                    productoEnAlmacen.cantidad = cantidad; 
+                    productoEnAlmacen.valor = valorNumerico;
                 } else {
-                    // Si era nuevo para este almacén, lo añadimos a la lista `almacen.productos`
                     almacen.productos.push({
-                        id: 'prod_' + Date.now(), // ID único para las acciones de la tabla (+, -, borrar)
+                        id: 'prod_' + Date.now(),
                         codigo: codigo,
                         descripcion: productoGlobal.descripcion,
                         cantidad: cantidad,
-                        valor: valor
+                        valor: valorNumerico
                     });
                 }
                 
-                // 3. Guardamos el estado completo de los almacenes (con el nuevo producto)
+                // --- 4. Guardar, Refrescar y Notificar ---
                 this.guardarDatosLocales();
-
-                // 4. Cerramos la modal de agregar y refrescamos la de detalles
                 this.closeModal('productoModal');
-                this.refreshAlmacenDetails(); // Esta función redibuja la tabla
+                this.refreshAlmacenDetails();
                 
-                this.mostrarNotificacion('success', 'Stock Actualizado', `${cantidad} unidades de "${codigo}" guardadas para ${ubicacionNombre}.`);
+                this.mostrarNotificacion(
+                    'success',
+                    'Guardado Exitosamente', 
+                    `Stock para <strong>${codigo}</strong> establecido en <strong>${cantidad}</strong>.`
+                );
 
             } catch (error) {
                 console.error("❌ Error en saveProducto:", error);
@@ -178,21 +288,42 @@
                 this.mostrarCarga(false);
             }
         },
-    
-        modificarCantidad: function(almacenId, productoId, cambio) {
+       
+       modificarCantidad: function(almacenId, productoId, cambio) {
             this.mostrarCarga(true);
             try {
                 const almacen = this.almacenesData[almacenId];
                 const producto = almacen.productos.find(p => p.id === productoId);
                 if (!producto) throw new Error("Producto no encontrado en el almacén.");
-                if (producto.cantidad + cambio < 0) throw new Error("La cantidad no puede ser negativa.");
-                const exitoGlobal = InventarioCompartido.actualizarProducto(producto.codigo, cambio);
-                if (!exitoGlobal) throw new Error("Error actualizando el inventario global.");
+                
+                if (producto.cantidad + cambio < 0) {
+                    this.mostrarNotificacion('warning', 'Operación denegada', 'La cantidad no puede ser negativa.');
+                    this.mostrarCarga(false); // No olvides ocultar el loader aquí
+                    return;
+                }
+
+                const ubicacionNombre = almacen.nombre.includes('Bogotá') ? 'Bogotá' : 'Cali';
+
+                // --- ¡¡¡LA CORRECCIÓN CLAVE!!! ---
+                // Ahora informamos al AlmacenService del cambio en cantidad Y valor.
+                // Tu service está diseñado para tomar un 'cambio' y el 'valor unitario' de ese cambio.
+                if (window.AlmacenService) {
+                    AlmacenService.actualizarStock(ubicacionNombre, producto.codigo, cambio, producto.valor);
+                } else {
+                    console.warn("AlmacenService no está disponible para actualizar el stock por ubicación.");
+                }
+
+                // Actualizamos también el inventario global para consistencia general.
+                InventarioCompartido.actualizarProducto(producto.codigo, cambio, producto.valor);
+
+                // Actualizamos la cantidad en el estado LOCAL del modal.
                 producto.cantidad += cambio;
+
                 if (producto.cantidad === 0) {
                     almacen.productos = almacen.productos.filter(p => p.id !== productoId);
-                    this.mostrarNotificacion('info', 'Producto Eliminado', `Se eliminó "${producto.descripcion}" del almacén al llegar a 0 unidades.`);
+                    this.mostrarNotificacion('info', 'Producto Retirado', `Se retiró "${producto.descripcion}" del almacén.`);
                 }
+
                 this.guardarDatosLocales();
                 this.refreshAlmacenDetails();
             } catch (error) {
@@ -202,21 +333,36 @@
                 this.mostrarCarga(false);
             }
         },
-    
+
+        // ¡¡¡VERSIÓN FINAL Y CORREGIDA de deleteProducto!!!
         deleteProducto: function(almacenId, productoId) {
-            if (!confirm('¿Seguro que desea eliminar todas las unidades de este producto del almacén? Las unidades se devolverán al inventario global.')) return;
+            if (!confirm('¿Seguro que desea eliminar todas las unidades de este producto del almacén?')) return;
             this.mostrarCarga(true);
             try {
                 const almacen = this.almacenesData[almacenId];
                 const productoIndex = almacen.productos.findIndex(p => p.id === productoId);
                 if (productoIndex === -1) throw new Error("Producto no encontrado.");
+                
                 const productoAEliminar = almacen.productos[productoIndex];
-                const exitoGlobal = InventarioCompartido.actualizarProducto(productoAEliminar.codigo, -productoAEliminar.cantidad);
-                if (!exitoGlobal) throw new Error("Error actualizando el inventario global.");
+                const cantidadARestar = -productoAEliminar.cantidad; // El cambio es la cantidad total en negativo
+
+                const ubicacionNombre = almacen.nombre.includes('Bogotá') ? 'Bogotá' : 'Cali';
+
+                // --- ¡¡¡LA CORRECCIÓN CLAVE!!! ---
+                // Informamos al AlmacenService que estamos quitando TODAS las unidades.
+                if (window.AlmacenService) {
+                    AlmacenService.actualizarStock(ubicacionNombre, productoAEliminar.codigo, cantidadARestar, productoAEliminar.valor);
+                }
+
+                // Informamos al inventario global para que también reste las unidades.
+                InventarioCompartido.actualizarProducto(productoAEliminar.codigo, cantidadARestar);
+                
+                // Eliminamos el producto de la lista local del modal.
                 almacen.productos.splice(productoIndex, 1);
+                
                 this.guardarDatosLocales();
                 this.refreshAlmacenDetails();
-                this.mostrarNotificacion('success', 'Producto Eliminado', `Se devolvieron ${productoAEliminar.cantidad} unidades de "${productoAEliminar.descripcion}" al inventario.`);
+                this.mostrarNotificacion('success', 'Producto Eliminado', `Se retiraron ${productoAEliminar.cantidad} unidades de "${productoAEliminar.descripcion}".`);
             } catch (error) {
                 console.error("❌ Error en deleteProducto:", error);
                 this.mostrarNotificacion('error', 'Error', error.message);
@@ -224,6 +370,7 @@
                 this.mostrarCarga(false);
             }
         },
+
     
         // ===================================
         //         FUNCIONES UTILITARIAS

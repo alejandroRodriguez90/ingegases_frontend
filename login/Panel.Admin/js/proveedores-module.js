@@ -54,7 +54,24 @@ window.ProveedoresModule = (function() {
                     <div class="form-row"><div class="form-group"><label for="provNombre">Nombre o Razón Social</label><input type="text" id="provNombre" value="${proveedor.nombre || ''}" required></div><div class="form-group"><label for="provNit">NIT o Cédula</label><input type="text" id="provNit" value="${proveedor.nit || ''}" required></div></div>
                     <div class="form-row"><div class="form-group"><label for="provDireccion">Dirección</label><input type="text" id="provDireccion" value="${proveedor.direccion || ''}"></div><div class="form-group"><label for="provCiudad">Ciudad</label><input type="text" id="provCiudad" value="${proveedor.ciudad || ''}"></div></div>
                     <div class="form-row"><div class="form-group"><label for="provTelefono">Teléfono</label><input type="text" id="provTelefono" value="${proveedor.telefono || ''}"></div><div class="form-group"><label for="provEmail">Email</label><input type="email" id="provEmail" value="${proveedor.email || ''}"></div></div>
-                    <div class="form-row"><div class="form-group"><label for="provContacto">Nombre de Contacto</label><input type="text" id="provContacto" value="${proveedor.contacto || ''}"></div><div class="form-group"><label for="provCategoria">Categoría</label><select id="provCategoria"><option value="">Seleccione...</option><option value="Materiales" ${proveedor.categoria === 'Materiales' ? 'selected' : ''}>Materiales de Construcción</option><option value="Herramientas" ${proveedor.categoria === 'Herramientas' ? 'selected' : ''}>Herramientas</option><option value="Servicios" ${proveedor.categoria === 'Servicios' ? 'selected' : ''}>Servicios</option></select></div></div>
+                    
+                    <!-- ===== ESTE ES EL BLOQUE CORREGIDO ===== -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="provContacto">Nombre de Contacto</label>
+                            <input type="text" id="provContacto" value="${proveedor.contacto || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label for="provCategoria">Categoría</label>
+                            <select id="provCategoria">
+                                <option value="">Seleccione...</option>
+                                <option value="Tubería" ${proveedor.categoria === 'Tubería' ? 'selected' : ''}>Tubería</option>
+                                <option value="Accesorios" ${proveedor.categoria === 'Accesorios' ? 'selected' : ''}>Accesorios</option>
+                                <option value="Otros" ${proveedor.categoria === 'Otros' ? 'selected' : ''}>Otros</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-row"><div class="form-group full-width"><label for="provNotas">Notas</label><textarea id="provNotas">${proveedor.notas || ''}</textarea></div></div>
                     <div class="action-buttons"><button type="button" class="btn btn-secondary" onclick="ProveedoresModule.backToMain()">Cancelar</button><button type="submit" class="btn btn-success">${botonTexto}</button></div>
                 </form>`;

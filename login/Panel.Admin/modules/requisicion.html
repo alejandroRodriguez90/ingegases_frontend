@@ -1,15 +1,16 @@
 <div class="requisiciones-module">
-    <!-- Pantalla principal con tarjetas (no se modifica, se oculta/muestra con JS) -->
+    <!-- ¡¡NUEVA ESTRUCTURA!! - Pantalla principal con solo dos tarjetas -->
     <div class="requisiciones-main-screen">
         <div class="main-header">
             <h1 class="main-title">
                 <div class="title-icon-container">
                     <div class="title-icon">🧾</div>
                 </div>
-                Creación de Requisiciones
+                Gestión de Requisiciones
             </h1>
-            <p class="main-subtitle">Solicita y administra tus requisiciones de manera eficiente.</p>
+            <p class="main-subtitle">Crea requisiciones o gestiona las órdenes de compra asociadas.</p>
             <div class="card-container">
+                <!-- Tarjeta 1: Crear Requisición (sin cambios en su llamada) -->
                 <div class="requisicion-card" onclick="RequisicionesModule.loadCrearRequisicion()">
                     <div class="card-icon-container">
                         <div class="card-icon">📜</div>
@@ -17,39 +18,59 @@
                     <h3>Crear Requisición</h3>
                     <p class="card-description">Genera una nueva solicitud de materiales.</p>
                 </div>
-                <div class="requisicion-card" onclick="RequisicionesModule.loadHistorialRequisiciones()">
-                    <div class="card-icon-container">
-                        <div class="title-icon">🔍</div>
-                    </div>
-                    <h3>Historial</h3>
-                    <p class="card-description">Consulta y gestiona requisiciones anteriores.</p>
-                </div>
 
-                <div class="requisicion-card" onclick="RequisicionesModule.loadOrdenDeCompra()">
+                <!-- Tarjeta 2: Orden de Compra (llama al nuevo menú intermedio) -->
+                <div class="requisicion-card" onclick="RequisicionesModule.showOrdenDeCompraMenu()">
                     <div class="card-icon-container">
                         <div class="card-icon">🛒</div>
                     </div>
                     <h3>Orden de Compra</h3>
-                    <p class="card-description">Crea y gestiona órdenes de compra.</p>
+                    <p class="card-description">Crea nuevas órdenes de compra o consulta el historial.</p>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- Contenedor para la vista de detalle (formulario/historial) -->
+    <!-- Contenedor para las vistas de detalle (su estructura no cambia) -->
     <div class="requisiciones-detail-screen" style="display: none;">
+        <!-- El botón "Volver" se actualizará dinámicamente con JS -->
         <div class="submenu-requisiciones">
-            <button class="back-button" onclick="RequisicionesModule.backToMain()">
+            <button class="back-button" id="requisicionesBackButton">
                 <i class="fas fa-arrow-left"></i> Volver
             </button>
         </div>
-
-        <!-- Contenido dinámico (aquí se carga el formulario o el historial) -->
         <div id="requisicionesContent" class="content-transition"></div>
     </div>
+
+    <!-- Modal de Vista Previa (sin cambios) -->
+    <div class="preview-modal" id="requisicionPreviewModal" style="display: none;">
+        <div class="preview-modal-content">
+            <div class="preview-modal-header">
+                <h3 id="previewModalTitle">Detalle de Requisición</h3>
+                <button class="preview-modal-close" onclick="RequisicionesModule.closePreviewModal()">&times;</button>
+            </div>
+            <div class="preview-modal-body" id="previewModalBody"></div>
+        </div>
+    </div>
+    <style>
+        .preview-modal{position:fixed;z-index:1060;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}.preview-modal-content{background-color:#fff;padding:20px;border-radius:8px;width:90%;max-width:800px;max-height:90vh;display:flex;flex-direction:column}.preview-modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;padding-bottom:10px;margin-bottom:15px}.preview-modal-body{overflow-y:auto}.preview-modal-close{background:0 0;border:none;font-size:1.5rem;cursor:pointer}
+    </style>
 </div>
 
+
+<!-- Agrega este nuevo modal a tu archivo HTML principal -->
+<div id="genericModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 id="genericModalTitle" class="modal-title"></h5>
+            <button type="button" class="close-button" onclick="RequisicionesModule.closeGenericModal()">
+                <span>&times;</span>
+            </button>
+        </div>
+        <div id="genericModalBody" class="modal-body">
+        </div>
+    </div>
+</div>
 <style>
    /* ============================================= */
 /* ========== MÓDULO DE REQUISICIONES ========= */
@@ -530,6 +551,18 @@
 .btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+.btn-info {
+    background-color: #0d6efd; /* Un color azul estándar */
+}
+.btn-info:hover {
+    transform: translateY(-1px);
+}
+.btn-warning {
+    background-color: #ffc107; /* Un color naranja/amarillo estándar */
+}
+.btn-warning:hover {
+    transform: translateY(-1px);
 }
 
 /* ===================== */

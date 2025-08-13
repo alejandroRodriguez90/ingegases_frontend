@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Ingegases</title>
+    <title>Ingegases Y Redes </title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:,">
     <style>
         /* Estilos para el loader */
         .module-loader {
@@ -60,6 +61,8 @@
         .retry-btn i {
             margin-right: 8px;
         }
+
+        
     </style>
 </head>
 <body>
@@ -69,34 +72,34 @@
             <img src="imagenes/PHOTO-2025-01-22-08-45-11.jpg" alt="Logo Ingegases">
         </div>
         <div class="logout">
-            <button onclick="window.location.href='../login/login.html'">
+            <button onclick="window.location.href='../login.html'">
                 <i class="fas fa-sign-out-alt"></i> Cerrar sesión
             </button>
         </div>
     </div>
     
     <!-- Barra lateral -->
-    <div class="sidebar">
+   <div class="sidebar">
         <ul>
+            <li><a href="#" onclick="loadModule('almacen')">
+                <i class="fas fa-warehouse icon"></i>
+                <span class="text">Almacén</span>
+            </a></li>
             <li><a href="#" onclick="loadModule('inventario')">
                 <i class="fas fa-boxes icon"></i>
                 <span class="text">Inventario</span>
-            </a></li>
-            <li><a href="#" onclick="loadModule('proyectos')">
-                <i class="fas fa-project-diagram icon"></i>
-                <span class="text">Proyectos</span>
             </a></li>
             <li><a href="#" onclick="loadModule('requisicion')">
                 <i class="fas fa-file-alt icon"></i>
                 <span class="text">Requisición</span>
             </a></li>
+            <li><a href="#" onclick="loadModule('proyectos')">
+                <i class="fas fa-project-diagram icon"></i>
+                <span class="text">Proyectos</span>
+            </a></li>
             <li><a href="#" onclick="loadModule('proveedores')">
                 <i class="fas fa-truck icon"></i>
                 <span class="text">Proveedores</span>
-            </a></li>
-            <li><a href="#" onclick="loadModule('almacen')">
-                <i class="fas fa-warehouse icon"></i>
-                <span class="text">Almacén</span>
             </a></li>
             <li><a href="#" onclick="loadModule('soporte')">
                 <i class="fas fa-headset icon"></i>
@@ -251,3 +254,6 @@
     </script>
 </body>
 </html>
+
+
+

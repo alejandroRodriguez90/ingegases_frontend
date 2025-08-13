@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login con Imagen de Fondo</title>
+    <title>Login Ingegases y Redes</title>
     <link rel="stylesheet" href="login-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
+    <link rel="icon" href="data:,">
 </head>
 <body>
     <div class="login-container" id="loginContainer">
@@ -27,7 +26,6 @@
                     <input type="password" id="password" name="password" required placeholder=" ">
                     <i class="fas fa-lock icon"></i>
                 </div>
-
                 <div class="options-container">
                     <div class="remember-me">
                         <input type="checkbox" id="rememberMe" name="rememberMe">
@@ -35,14 +33,9 @@
                     </div>
                     <a href="#" class="forgot-password">Recuperar contraseña</a>
                 </div>
-
-
-                <!-- Botones de Ingresar y Registrar -->
                 <button type="submit" class="login-submit">Ingresar</button>
                 <button type="button" class="login-submit" id="registerBtn">Registrar</button>
                 <button class="login-submit back-button" onclick="window.location.href='../index/index.html'">Volver</button>
-
-                <!-- Mensaje de Error -->
                 <div id="error-message" class="error-message hidden">Usuario o contraseña incorrectos</div>
             </form>
         </div>
@@ -54,177 +47,134 @@
             <form id="registerForm">
                 <div class="input-group">
                     <span class="placeholder">Nombre</span>
-                    <label for="regNombre"></label>
                     <input type="text" id="regNombre" name="regNombre" required placeholder=" ">
                     <i class="fas fa-user icon"></i>
                 </div>
                 <div class="input-group">
                     <span class="placeholder">Correo Electrónico</span>
-                    <label for="regEmail"></label>
                     <input type="email" id="regEmail" name="regEmail" required placeholder=" ">
                     <i class="fas fa-envelope icon"></i>
                 </div>
                 <div class="input-group">
                     <span class="placeholder">Contraseña</span>
-                    <label for="regPassword"></label>
                     <input type="password" id="regPassword" name="regPassword" required placeholder=" ">
                     <i class="fas fa-lock icon"></i>
                 </div>
                 <div class="input-group">
                     <span class="placeholder">Confirmar Contraseña</span>
-                    <label for="regConfirmPassword"></label>
                     <input type="password" id="regConfirmPassword" name="regConfirmPassword" required placeholder=" ">
                     <i class="fas fa-lock icon"></i>
                 </div>
-
-                <!-- Botones de Registrarse y Volver -->
                 <button type="submit" class="login-submit">Registrarse</button>
                 <button type="button" class="login-submit back-button" id="backToLogin">Volver</button>
             </form>
         </div>
     </div>
 
-
-
-
+    <!-- ===== INICIO DEL SCRIPT CORREGIDO Y COMPLETO ===== -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- CONSTANTES Y ELEMENTOS DEL DOM ---
-            const apiURL = 'http://127.0.0.1:8000';
-            
-            // Elementos del Formulario de Login
             const loginForm = document.getElementById('loginForm');
             const emailInput = document.getElementById('email');
             const passwordInput = document.getElementById('password');
             const rememberMeCheckbox = document.getElementById('rememberMe');
-            
-            // Elementos del Formulario de Registro
             const registerForm = document.getElementById('registerForm');
-    
-            // Elementos de la Animación
             const loginContainer = document.getElementById('loginContainer');
             const registerBtn = document.getElementById('registerBtn');
             const backToLoginBtn = document.getElementById('backToLogin');
     
             // --- LÓGICA DE "RECUÉRDAME" ---
-    
-            // 1. Al cargar la página, rellenar los datos si "Recuérdame" estaba activado.
             if (localStorage.getItem('rememberMe') === 'true') {
                 rememberMeCheckbox.checked = true;
                 emailInput.value = localStorage.getItem('email') || '';
                 passwordInput.value = localStorage.getItem('password') || '';
-                
-                // Disparamos un evento 'input' para que la animación del icono se active si hay datos
-                emailInput.dispatchEvent(new Event('input', { bubbles: true }));
-                passwordInput.dispatchEvent(new Event('input', { bubbles: true }));
+                if (emailInput.value) emailInput.dispatchEvent(new Event('input', { bubbles: true }));
+                if (passwordInput.value) passwordInput.dispatchEvent(new Event('input', { bubbles: true }));
             }
     
-            // --- EVENT LISTENER PARA EL LOGIN ---
+          
+            // --- EVENT LISTENER PARA EL LOGIN (CON RUTA CORREGIDA) ---
             loginForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-    
-                // 2. Al hacer login, guardar o borrar los datos según el estado del checkbox.
-                if (rememberMeCheckbox.checked) {
-                    localStorage.setItem('rememberMe', 'true');
-                    localStorage.setItem('email', emailInput.value);
-                    localStorage.setItem('password', passwordInput.value);
-                } else {
-                    localStorage.removeItem('rememberMe');
-                    localStorage.removeItem('email');
-                    localStorage.removeItem('password');
-                }
-    
-                // Lógica de fetch para el login (tu código original)
-                const loginData = {
-                    correo: emailInput.value,
-                    contrasena: passwordInput.value
-                };
-    
-                fetch(`${apiURL}/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(loginData)
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                
+                // --- Tus datos de configuración (no los cambies) ---
+                const correosAutorizados = [
+                    'davidalejandro.rx@live.com',
+                    'alexander.herrera@ingegasesyredes.com',
+                    'berta.bravo@ingegasesyredes.com',
+                    'carolina.caceres@ingegasesyredes.com',
+                    'javier.sierra@ingegasesyredes.com',
+                    'santiago.ariza@ingegasesyredes.com',
+                    'nicolas.paez@ingegasesyredes.com', 
+                    'daniel.buitrago@ingegasesyredes.com',
+                    'roger.herrera@ingegasesyredes.com',
+                    'javier.penagos@ingegasesyredes.com',
+                ];
+                const contrasenaUniversal = 'INGEYR2025'; // Tu contraseña real
+
+                // --- Recogida y validación ---
+                const correoIngresado = emailInput.value;
+                const contrasenaIngresada = passwordInput.value;
+                const errorMessage = document.getElementById('error-message');
+
+                if (correosAutorizados.includes(correoIngresado.toLowerCase()) && contrasenaIngresada === contrasenaUniversal) {
+                    if (rememberMeCheckbox.checked) {
+                        localStorage.setItem('rememberMe', 'true');
+                        localStorage.setItem('email', correoIngresado);
+                        localStorage.setItem('password', contrasenaIngresada);
+                    } else {
+                        localStorage.removeItem('rememberMe');
+                        localStorage.removeItem('email');
+                        localStorage.removeItem('password');
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Login exitoso:', data);
-                    alert('Login exitoso!');
-                    window.location.href = '/ingegases_frontend/dashboard/admin-dashboard.html';
-                })
-                .catch(error => {
-                    console.error('Error al iniciar sesión:', error);
-                    alert('Usuario o contraseña incorrectos. Por favor, intenta de nuevo.');
-                });
+                    
+                    alert('¡Inicio de sesión exitoso!');
+                    
+                    // ===== ESTA ES LA LÍNEA CORREGIDA =====
+                    window.location.href = 'Panel.Admin/dashboard.html';
+                    
+                } else {
+                    errorMessage.classList.remove('hidden');
+                    setTimeout(() => { errorMessage.classList.add('hidden'); }, 3000);
+                }
             });
     
-            // --- REGISTRO DE USUARIO (tu código original) ---
+            // --- SIMULACIÓN DE REGISTRO (SIN BACKEND) ---
             registerForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-    
                 const nombre = document.getElementById('regNombre').value;
-                const correo = document.getElementById('regEmail').value;
-                // OJO: No tienes un input con id 'regUsername'. Lo comento para evitar errores.
-                // const usuario = document.getElementById('regUsername').value; 
                 const contrasena = document.getElementById('regPassword').value;
                 const confirmarContrasena = document.getElementById('regConfirmPassword').value;
     
                 if (contrasena !== confirmarContrasena) {
-                    alert("Las contraseñas no coinciden.");
+                    alert("Error: Las contraseñas no coinciden.");
+                    return;
+                }
+                if (contrasena.length < 8) {
+                    alert("Error: La contraseña debe tener al menos 8 caracteres.");
                     return;
                 }
     
-                const userData = {
-                    nombre: nombre,
-                    correo: correo,
-                    // usuario: usuario,
-                    contrasena: contrasena,
-                    rol_id: 1
-                };
-    
-                fetch(`${apiURL}/usuarios`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(userData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Usuario registrado exitosamente:', data);
-                    alert('Usuario registrado exitosamente!');
-                    flipToLogin();
-                })
-                .catch(error => {
-                    console.error('Error al registrar usuario:', error);
-                    alert('Error al registrar usuario. Por favor, intenta de nuevo.');
-                });
+                alert(`¡Registro de ${nombre} exitoso!\n\nAhora puedes intentar iniciar sesión.`);
+                flipToLogin();
             });
     
-            // --- ANIMACIÓN DE GIRO (tu código original) ---
+            // --- ANIMACIÓN DE GIRO ---
             function flipToRegister() {
                 loginContainer.classList.add('turning');
-                setTimeout(() => {
-                    loginContainer.classList.add('flipped');
-                    loginContainer.classList.remove('turning');
-                }, 700);
+                setTimeout(() => { loginContainer.classList.add('flipped'); loginContainer.classList.remove('turning'); }, 700);
             }
     
             function flipToLogin() {
                 loginContainer.classList.add('turning');
-                setTimeout(() => {
-                    loginContainer.classList.remove('flipped');
-                    loginContainer.classList.remove('turning');
-                }, 400);
+                setTimeout(() => { loginContainer.classList.remove('flipped'); loginContainer.classList.remove('turning'); }, 400);
             }
     
             registerBtn.addEventListener('click', flipToRegister);
             backToLoginBtn.addEventListener('click', flipToLogin);
         });
     </script>
+    <!-- ===== FIN DEL SCRIPT CORREGIDO Y COMPLETO ===== -->
 </body>
-</html>
-
 </html>

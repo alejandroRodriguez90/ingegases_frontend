@@ -207,47 +207,44 @@
     // ==========================================================================
     
     function generarFilaConsulta(type, productos) {
-    const prefix = getInputPrefix(type);
-    const cantidadContent = getCantidadInputHtml(type, 0);
+        const prefix = getInputPrefix(type);
+        const cantidadContent = getCantidadInputHtml(type, 0);
 
-    const listaCodigosId = `listaCodigos${prefix}`;
-    const listaDescripcionesId = `listaDescripciones${prefix}`;
-    
-    return `
-        <tr class="fila-consulta">
-            <td>
-                <input type="text" id="inputCodigo${prefix}" placeholder="Código" 
-                    list="${listaCodigosId}" autocomplete="off">
-                <datalist id="${listaCodigosId}">
-                    ${productos.map(item => 
-                        `<option value="${item.codigo}" data-descripcion="${item.descripcion}">${item.descripcion}</option>`).join('')}
-                </datalist>
-            </td>
-            <td>
-                <input type="text" id="inputDescripcion${prefix}" 
-                    placeholder="Buscar ${type}..." 
-                    list="${listaDescripcionesId}" autocomplete="off">
-                <datalist id="${listaDescripcionesId}">
-                    ${productos.map(item => 
-                        `<option value="${item.descripcion}" data-codigo="${item.codigo}">${item.codigo}</option>`).join('')}
-                </datalist>
-            </td>
-            <td>
-                <select id="inputUbicacion${prefix}" class="form-select">
-                    ${AppConfig.ubicacionesDisponibles.map(ubicacion => 
-                        `<option value="${ubicacion}">${ubicacion}</option>`).join('')}
-                </select>
-            </td>
-            <td id="cantidadCell${prefix}">
-                ${type === 'accesorios' ? `<div class="cantidad-container">${cantidadContent}</div>` : cantidadContent}
-            </td>
-            <td>
-                <input type="number" id="inputValor${prefix}" placeholder="Valor" 
-                       min="0" step="0.01" disabled>
-            </td>
-        </tr>
-    `;
-}
+        // Se definen los IDs únicos para los datalists de esta fila
+        const listaCodigosId = `listaCodigos${prefix}`;
+        const listaDescripcionesId = `listaDescripciones${prefix}`;
+        
+        // Se retorna el HTML como una cadena de texto.
+        // Cada input está correctamente cerrado y con sus atributos.
+        return `
+            <tr class="fila-consulta">
+                <td>
+                    <input type="text" id="inputCodigo${prefix}" placeholder="Código" list="${listaCodigosId}" autocomplete="off">
+                    <datalist id="${listaCodigosId}">
+                        ${productos.map(item => `<option value="${item.codigo}" data-descripcion="${item.descripcion}">${item.descripcion}</option>`).join('')}
+                    </datalist>
+                </td>
+                <td>
+                    <input type="text" id="inputDescripcion${prefix}" placeholder="Buscar ${type}..." list="${listaDescripcionesId}" autocomplete="off">
+                    <datalist id="${listaDescripcionesId}">
+                        ${productos.map(item => `<option value="${item.descripcion}" data-codigo="${item.codigo}">${item.codigo}</option>`).join('')}
+                    </datalist>
+                </td>
+                <td>
+                    <select id="inputUbicacion${prefix}" class="form-select">
+                        ${AppConfig.ubicacionesDisponibles.map(ubicacion => `<option value="${ubicacion}">${ubicacion}</option>`).join('')}
+                    </select>
+                </td>
+                <td id="cantidadCell${prefix}">
+                    ${type === 'accesorios' ? `<div class="cantidad-container">${cantidadContent}</div>` : cantidadContent}
+                </td>
+                <td>
+                    <input type="text" id="inputValor${prefix}" placeholder="Valor" disabled>
+                </td>
+            </tr>
+        `;
+    } 
+
     
     function getInputPrefix(type) {
         return type === 'tuberia' ? '' : 
@@ -255,56 +252,21 @@
     }
     
     function getCantidadInputHtml(type, value) {
-        if (value === 0) {
-            return `
-                <span class="no-stock" onclick="restaurarInputCantidad('${type}')">No Stock</span>
-                <input type="number" id="inputCantidad${getInputPrefix(type)}" value="0" min="0" style="display:none;">
-            `;
+        const prefix = getInputPrefix(type);
+
+        // Si no hay stock, mostramos un texto claro y no interactivo.
+        if (value === 0 || value === null) {
+            // Mantenemos el estilo visual, pero eliminamos el evento 'onclick'.
+            return `<span class="no-stock">No Stock</span>`;
         }
+
+        // Si hay stock, mostramos un input numérico PERO CON EL ATRIBUTO 'disabled'.
+        // Esto lo hace de solo lectura, igual que el campo "Valor".
         return `
-            <input type="number" id="inputCantidad${getInputPrefix(type)}" placeholder="Cantidad" 
-                   min="0" value="${value}" onchange="actualizarEstadoStock('${type}')">
+            <input type="number" id="inputCantidad${prefix}" value="${value}" disabled>
         `;
     }
     
-    // ==========================================================================
-    // FUNCIONES PARA MANEJAR EL ESTADO DEL STOCK
-    // ==========================================================================
-    
-    function actualizarEstadoStock(type) {
-        const prefix = getInputPrefix(type);
-        const cantidadInput = document.getElementById(`inputCantidad${prefix}`);
-        const cantidadCell = document.getElementById(`cantidadCell${prefix}`);
-        const valor = parseFloat(cantidadInput.value) || 0;
-        
-        cantidadCell.innerHTML = type === 'accesorios' ? 
-            `<div class="cantidad-container">${getCantidadInputHtml(type, valor)}</div>` : 
-            getCantidadInputHtml(type, valor);
-        
-        const currentItem = getCurrentItem(type);
-        if (currentItem) {
-            currentItem.cantidad = valor;
-            actualizarGrafica(type, currentItem);
-        }
-    }
-    
-    function restaurarInputCantidad(type) {
-        const prefix = getInputPrefix(type);
-        const cantidadCell = document.getElementById(`cantidadCell${prefix}`);
-        const html = `
-            <input type="number" id="inputCantidad${prefix}" placeholder="Cantidad" min="0" 
-                   value="0" onchange="actualizarEstadoStock('${type}')" disabled>
-        `;
-        
-        cantidadCell.innerHTML = type === 'accesorios' ? 
-            `<div class="cantidad-container">${html}</div>` : html;
-        
-        const currentItem = getCurrentItem(type);
-        if (currentItem) {
-            currentItem.cantidad = 0;
-            actualizarGrafica(type, currentItem);
-        }
-    }
     
     // ==========================================================================
     // FUNCIONES PARA MANEJAR GRÁFICAS
@@ -456,16 +418,18 @@
         return elements;
     }
 
-    // setupEventListeners con la lógica que ya teníamos, pero ahora SÍ recibe 'elements'
     function setupEventListeners(type, elements, config) {
 
         // Función central que actualiza la vista basado en la selección
+        // ¡¡¡AQUÍ DENTRO ESTÁ LA CORRECCIÓN!!!
         const actualizarVistaPorSeleccion = () => {
             const codigo = elements.inputCodigo.value;
             const ubicacion = elements.inputUbicacion.value;
 
+            // Buscamos el producto en el inventario global
             const productoBase = InventarioCompartido.buscarProducto(codigo);
             if (!productoBase || !config.filterFn(productoBase)) {
+                // Si no es válido, limpiamos todos los campos
                 elements.inputDesc.value = '';
                 elements.inputValor.value = '';
                 elements.cantidadCell.innerHTML = getCantidadInputHtml(type, 0);
@@ -474,26 +438,39 @@
                 return;
             }
             
+            // Autocompletamos la descripción
             elements.inputDesc.value = productoBase.descripcion;
             
+            // Consultamos el stock específico de la ubicación
             const stockInfo = AlmacenService.consultarStock(ubicacion, codigo);
-            if (stockInfo) {
+            
+            if (stockInfo && stockInfo.cantidad > 0) {
+                // Si hay stock, mostramos la cantidad correcta
                 elements.cantidadCell.innerHTML = getCantidadInputHtml(type, stockInfo.cantidad);
-                elements.inputValor.value = stockInfo.valor;
+                
+                // --- ¡¡¡LA CORRECCIÓN CLAVE!!! ---
+                // 1. Calculamos el valor TOTAL
+                const valorTotal = stockInfo.cantidad * stockInfo.valor;
+                // 2. Mostramos el valor TOTAL en el campo de valor
+                elements.inputValor.value = valorTotal.toLocaleString('es-CO');
+                
+                // Actualizamos el item actual con todos los datos
                 setCurrentItem(type, { ...productoBase, ...stockInfo, ubicacion }, elements);
+
             } else {
+                // Si no hay stock, mostramos 0
                 elements.cantidadCell.innerHTML = getCantidadInputHtml(type, 0);
-                elements.inputValor.value = 0;
+                elements.inputValor.value = 0; // El valor total es 0
                 setCurrentItem(type, { ...productoBase, cantidad: 0, valor: 0, ubicacion }, elements);
             }
+
+            // Actualizamos la gráfica
             actualizarGrafica(type, getCurrentItem(type));
         };
 
-        // --- ASIGNACIÓN DE LISTENERS ---
-
+        // --- ASIGNACIÓN DE LISTENERS (sin cambios) ---
         const onSelection = (event) => {
             let producto;
-            // Priorizamos la búsqueda por código si ambos campos tienen algo
             if (elements.inputCodigo.value) {
                 producto = InventarioCompartido.buscarProducto(elements.inputCodigo.value);
             } else if (elements.inputDesc.value) {
@@ -504,7 +481,6 @@
                 elements.inputCodigo.value = producto.codigo;
                 elements.inputDesc.value = producto.descripcion;
             }
-            // Siempre llamamos a actualizar para que limpie si el producto no es válido
             actualizarVistaPorSeleccion();
         };
         
@@ -513,10 +489,9 @@
         elements.inputUbicacion.addEventListener('change', actualizarVistaPorSeleccion);
         elements.btnExportar.addEventListener('click', () => exportarAExcel(type));
 
-        // Listener para actualizaciones en tiempo real
+        // Listener para actualizaciones en tiempo real (sin cambios)
         window.addEventListener('stockActualizado', () => {
             if (document.body.contains(elements.inputCodigo) && elements.inputCodigo.value) {
-                console.log("Evento 'stockActualizado' recibido. Refrescando...");
                 actualizarVistaPorSeleccion();
             }
         });
@@ -570,19 +545,3 @@
     }
     
 
-    // ==========================================================================
-    // LISTENER PARA ACTUALIZACIONES EN TIEMPO REAL
-    // ==========================================================================
-    window.addEventListener('inventarioActualizado', () => {
-        console.log('🔄 Evento "inventarioActualizado" detectado. Refrescando la vista...');
-        
-        // Obtenemos la pestaña activa actualmente
-        const activeTab = document.querySelector('.submenu-inventario button.active');
-        if (activeTab) {
-            // Extraemos el tipo de inventario del ID del botón (ej: 'tuberiaTab' -> 'tuberia')
-            const type = activeTab.id.replace('Tab', '');
-            // Volvemos a cargar el inventario para esa pestaña, que tomará los nuevos datos
-            loadInventory(type);
-        }
-    });
-    

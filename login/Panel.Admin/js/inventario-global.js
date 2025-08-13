@@ -1326,6 +1326,7 @@ window.InventarioCompartido = (function() {
       return [...productos]; // Devuelve una copia para evitar mutaciones accidentales.
     },
     
+    
     obtenerProductosPorTipo: function(tipo) {
       if (!initialized) this.init();
       const todos = this.obtenerProductos();
@@ -1354,29 +1355,83 @@ window.InventarioCompartido = (function() {
       const descripcionBuscada = descripcion.trim().toLowerCase();
       return productos.find(p => p.descripcion.toLowerCase() === descripcionBuscada);
     },
-    
-    actualizarProducto: function(codigo, cantidad, valor = null, ubicacion = null) {
-      if (!initialized) this.init(); // <-- AÑADE ESTA LÍNEA DE SEGURIDAD
 
-      const productoIndex = productos.findIndex(p => p.codigo === codigo);
-      if (productoIndex === -1) {
-        console.error(`No se pudo actualizar: producto con código ${codigo} no encontrado.`);
-        return false;
-      }
-      
-      productos[productoIndex].cantidad = (productos[productoIndex].cantidad || 0) + cantidad;
-      if (valor !== null) productos[productoIndex].valor = valor;
-      if (ubicacion) productos[productoIndex].ubicacion = ubicacion;
-      
-      guardarDatos();
-      return true;
-      
-    }
-    
-  };
+      actualizarProducto: function(codigo, cantidad, valor = null, ubicacion = null, modo = 'sumar') {
+            if (!initialized) this.init();
+
+            const productoIndex = productos.findIndex(p => p.codigo === codigo);
+            if (productoIndex === -1) {
+                console.error(`No se pudo actualizar: producto con código ${codigo} no encontrado.`);
+                return false;
+            }
+
+            const cantidadNumerica = parseInt(cantidad, 10);
+            if (isNaN(cantidadNumerica)) {
+                console.error(`La cantidad "${cantidad}" proporcionada para el código ${codigo} no es un número válido.`);
+                return false;
+            }
+
+            // --- LÓGICA MEJORADA ---
+            if (modo === 'reemplazar') {
+                // MODO REEMPLAZAR: Establece la cantidad directamente.
+                productos[productoIndex].cantidad = cantidadNumerica;
+            } else {
+                // MODO SUMAR (por defecto): Suma (o resta si es negativo) a la cantidad existente.
+                const cantidadActual = parseInt(productos[productoIndex].cantidad) || 0;
+                productos[productoIndex].cantidad = cantidadActual + cantidadNumerica;
+            }
+            // --- FIN DE LA LÓGICA ---
+            
+            // Solo actualizamos el valor si se proporciona uno nuevo y válido.
+            if (valor !== null && !isNaN(parseFloat(valor))) {
+                productos[productoIndex].valor = parseFloat(valor);
+            }
+            
+            if (ubicacion) {
+                productos[productoIndex].ubicacion = ubicacion;
+            }
+            
+            guardarDatos();
+            console.log(`Inventario global actualizado para ${codigo}: Cantidad = ${productos[productoIndex].cantidad}, Modo = ${modo}`);
+            return true;
+      },
+
+      // --- ¡NUEVA FUNCIÓN  ---
+      restarStock: function(codigoProducto, cantidadARestar) {
+            if (!initialized) this.init();
+            
+            const producto = this.buscarProducto(codigoProducto);
+
+            if (!producto) {
+                console.error(`Error de inventario al restar: Producto con código ${codigoProducto} no encontrado.`);
+                return { exito: false, mensaje: `El producto ${codigoProducto} no existe en el inventario.` };
+            }
+
+            const stockActual = parseInt(producto.cantidad, 10);
+            const cantidad = parseInt(cantidadARestar, 10);
+
+            if (isNaN(stockActual) || isNaN(cantidad) || cantidad <= 0) {
+                return { exito: false, mensaje: `La cantidad a restar para ${codigoProducto} no es válida.` };
+            }
+
+            if (stockActual < cantidad) {
+                const mensaje = `¡Stock insuficiente para ${producto.descripcion} (${codigoProducto})! Disponible: ${stockActual}, Requerido: ${cantidad}.`;
+                return { exito: false, mensaje: mensaje };
+            }
+
+            // Realiza la resta
+            producto.cantidad = stockActual - cantidad;
+            
+            // Llama a la función interna para guardar los cambios en localStorage
+            guardarDatos(); 
+            
+            console.log(`✅ Stock RESTADO para ${codigoProducto}. Nueva cantidad: ${producto.cantidad}`);
+            return { exito: true };
+        }
+    };
 })();
 
 // Auto-inicialización cuando el DOM esté listo.
 document.addEventListener('DOMContentLoaded', () => {
-  InventarioCompartido.init();
+    InventarioCompartido.init();
 });
